@@ -1,6 +1,4 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
-namespace Behaviors.Extensions
+﻿namespace Behaviors.Extensions
 {
     using System.Diagnostics.CodeAnalysis;
     using System.Windows;
@@ -10,6 +8,9 @@ namespace Behaviors.Extensions
     /// </summary>
     public class DependencyPropertyChangedEventTrigger : DependencyPropertyChangedEventTriggerBase<object>
     {
+        /// <summary>
+        /// The event name property
+        /// </summary>
         public static readonly DependencyProperty EventNameProperty = DependencyProperty.Register("EventName",
                                                                                                     typeof(string),
                                                                                                     typeof(DependencyPropertyChangedEventTrigger),
@@ -36,7 +37,9 @@ namespace Behaviors.Extensions
         /// <summary>
         /// Gets or sets the name of the event to listen for. This is a dependency property.
         /// </summary>
-        /// <value>The name of the event.</value>
+        /// <value>
+        /// The name of the event.
+        /// </value>
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
         public string EventName
         {
@@ -44,11 +47,20 @@ namespace Behaviors.Extensions
             set { this.SetValue(EventNameProperty, value); }
         }
 
+        /// <summary>
+        /// Specifies the name of the Event this EventTriggerBase is listening for.
+        /// </summary>
+        /// <returns></returns>
         protected override string GetEventName()
         {
             return this.EventName;
         }
 
+        /// <summary>
+        /// Called when [event name changed].
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
         private static void OnEventNameChanged(object sender, DependencyPropertyChangedEventArgs args)
         {
             ((DependencyPropertyChangedEventTrigger)sender).OnEventNameChanged((string)args.OldValue, (string)args.NewValue);

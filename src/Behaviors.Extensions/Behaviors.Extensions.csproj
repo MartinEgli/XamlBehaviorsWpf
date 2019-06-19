@@ -44,10 +44,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SetTimeTargetedTriggerAction.cs" />
     <Compile Include="ToggleEnabledTargetedTriggerAction.cs" />
     <Compile Include="DependencyPropertyChangedEventTrigger.cs" />
     <Compile Include="DependencyPropertyChangedEventTriggerBase.cs" />
-    <Compile Include="EventTriggerBase{T}.cs" />
+    <Compile Include="DependencyPropertyChangedEventTriggerBase{T}.cs" />
     <Compile Include="ExceptionStringTable.Designer.cs">
       <DependentUpon>ExceptionStringTable.resx</DependentUpon>
       <AutoGen>True</AutoGen>

@@ -1,16 +1,15 @@
 ﻿namespace Behaviors.Extensions
 {
-    using System.Data;
-    using System.Windows;
+    using System;
     using System.Windows.Controls;
 
     using Microsoft.Xaml.Behaviors;
 
     /// <summary>
-    /// ToggleEnabledTargetedTriggerAction class
+    /// SetTimeTargetedTriggerAction Class
     /// </summary>
-    /// <seealso cref="Microsoft.Xaml.Behaviors.TargetedTriggerAction{System.Windows.Controls.Button}" />
-    public class ToggleEnabledTargetedTriggerAction : TargetedTriggerAction<Button>
+    /// <seealso cref="Microsoft.Xaml.Behaviors.TargetedTriggerAction{System.Windows.Controls.TextBox}" />
+    public class SetTimeTargetedTriggerAction : TargetedTriggerAction<TextBox>
     {
         /// <summary>
         /// Invokes the action.
@@ -18,9 +17,9 @@
         /// <param name="parameter">The parameter to the action. If the action does not require a parameter, the parameter may be set to a null reference.</param>
         protected override void Invoke(object parameter)
         {
-            if (this.Target != null && this.Target is UIElement c)
+            if (this.Target != null)
             {
-                c.IsEnabled = !c.IsEnabled;
+                this.Target.Text = DateTime.Now.ToLongTimeString();
             }
         }
     }

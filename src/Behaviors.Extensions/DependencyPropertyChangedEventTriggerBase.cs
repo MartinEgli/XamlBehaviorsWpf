@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="EventTriggerBase.cs" company="bfa solutions ltd">
-// Copyright (c) bfa solutions ltd. All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Behaviors.Extensions
+﻿namespace Behaviors.Extensions
 {
     using System;
     using System.ComponentModel;
@@ -27,77 +21,39 @@ namespace Behaviors.Extensions
     /// </remarks>
     public abstract class DependencyPropertyChangedEventTriggerBase : TriggerBase
     {
-        public static readonly DependencyProperty SourceObjectProperty = DependencyProperty.Register(
-            "SourceObject",
-            typeof(object),
-            typeof(DependencyPropertyChangedEventTriggerBase),
-            new PropertyMetadata(OnSourceObjectChanged));
-
+        /// <summary>
+        ///     The source name property
+        /// </summary>
         public static readonly DependencyProperty SourceNameProperty = DependencyProperty.Register(
             "SourceName",
             typeof(string),
             typeof(DependencyPropertyChangedEventTriggerBase),
             new PropertyMetadata(OnSourceNameChanged));
 
+        /// <summary>
+        ///     The source object property
+        /// </summary>
+        public static readonly DependencyProperty SourceObjectProperty = DependencyProperty.Register(
+            "SourceObject",
+            typeof(object),
+            typeof(DependencyPropertyChangedEventTriggerBase),
+            new PropertyMetadata(OnSourceObjectChanged));
+
+        /// <summary>
+        ///     The event handler method information
+        /// </summary>
         private MethodInfo eventHandlerMethodInfo;
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="DependencyPropertyChangedEventTriggerBase" /> class.
+        /// </summary>
+        /// <param name="sourceTypeConstraint">The source type constraint.</param>
         protected DependencyPropertyChangedEventTriggerBase(Type sourceTypeConstraint)
             : base(typeof(DependencyObject))
         {
             this.SourceTypeConstraint = sourceTypeConstraint;
             this.SourceNameResolver = new NameResolver();
             this.RegisterSourceChanged();
-        }
-
-        /// <summary>
-        ///     Gets the type constraint of the associated object.
-        /// </summary>
-        /// <value>The associated object type constraint.</value>
-        /// <remarks>Define a TypeConstraintAttribute on a derived type to constrain the types it may be attached to.</remarks>
-        protected sealed override Type AssociatedObjectTypeConstraint
-        {
-            get
-            {
-                var attributes = TypeDescriptor.GetAttributes(this.GetType());
-
-                if (attributes[typeof(TypeConstraintAttribute)] is TypeConstraintAttribute typeConstraintAttribute)
-                {
-                    return typeConstraintAttribute.Constraint;
-                }
-
-                return typeof(DependencyObject);
-            }
-        }
-
-        /// <summary>
-        ///     Gets the source type constraint.
-        /// </summary>
-        /// <value>The source type constraint.</value>
-        protected Type SourceTypeConstraint { get; }
-
-        /// <summary>
-        ///     Gets or sets the target object. If TargetObject is not set, the target will look for the object specified by
-        ///     TargetName. If an element referred to by TargetName cannot be found, the target will default to the
-        ///     AssociatedObject. This is a dependency property.
-        /// </summary>
-        /// <value>The target object.</value>
-        public object SourceObject
-        {
-            get => this.GetValue(SourceObjectProperty);
-
-            set => this.SetValue(SourceObjectProperty, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets the name of the element this EventTriggerBase listens for as a source. If the name is not set or
-        ///     cannot be resolved, the AssociatedObject will be used.  This is a dependency property.
-        /// </summary>
-        /// <value>The name of the source element.</value>
-        public string SourceName
-        {
-            get => (string)this.GetValue(SourceNameProperty);
-
-            set => this.SetValue(SourceNameProperty, value);
         }
 
         /// <summary>
@@ -138,42 +94,107 @@ namespace Behaviors.Extensions
             }
         }
 
-        private NameResolver SourceNameResolver { get; }
+        /// <summary>
+        ///     Gets or sets the name of the element this EventTriggerBase listens for as a source. If the name is not set or
+        ///     cannot be resolved, the AssociatedObject will be used.  This is a dependency property.
+        /// </summary>
+        /// <value>The name of the source element.</value>
+        public string SourceName
+        {
+            get => (string)this.GetValue(SourceNameProperty);
 
+            set => this.SetValue(SourceNameProperty, value);
+        }
+
+        /// <summary>
+        ///     Gets or sets the target object. If TargetObject is not set, the target will look for the object specified by
+        ///     TargetName. If an element referred to by TargetName cannot be found, the target will default to the
+        ///     AssociatedObject. This is a dependency property.
+        /// </summary>
+        /// <value>The target object.</value>
+        public object SourceObject
+        {
+            get => this.GetValue(SourceObjectProperty);
+
+            set => this.SetValue(SourceObjectProperty, value);
+        }
+
+        /// <summary>
+        ///     Gets the type constraint of the associated object.
+        /// </summary>
+        /// <value>
+        ///     The associated object type constraint.
+        /// </value>
+        /// <remarks>
+        ///     Define a TypeConstraintAttribute on a derived type to constrain the types it may be attached to.
+        /// </remarks>
+        protected sealed override Type AssociatedObjectTypeConstraint
+        {
+            get
+            {
+                AttributeCollection attributes = TypeDescriptor.GetAttributes(this.GetType());
+
+                if (attributes[typeof(TypeConstraintAttribute)] is TypeConstraintAttribute typeConstraintAttribute)
+                {
+                    return typeConstraintAttribute.Constraint;
+                }
+
+                return typeof(DependencyObject);
+            }
+        }
+
+        /// <summary>
+        ///     Gets the source type constraint.
+        /// </summary>
+        /// <value>The source type constraint.</value>
+        protected Type SourceTypeConstraint { get; }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether this instance is loaded registered.
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if this instance is loaded registered; otherwise, <c>false</c>.
+        /// </value>
+        private bool IsLoadedRegistered { get; set; }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether this instance is source changed registered.
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if this instance is source changed registered; otherwise, <c>false</c>.
+        /// </value>
         private bool IsSourceChangedRegistered { get; set; }
 
+        /// <summary>
+        ///     Gets a value indicating whether this instance is source name set.
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if this instance is source name set; otherwise, <c>false</c>.
+        /// </value>
         private bool IsSourceNameSet =>
             !string.IsNullOrEmpty(this.SourceName)
             || this.ReadLocalValue(SourceNameProperty) != DependencyProperty.UnsetValue;
 
-        private bool IsLoadedRegistered { get; set; }
+        /// <summary>
+        ///     Gets the source name resolver.
+        /// </summary>
+        /// <value>
+        ///     The source name resolver.
+        /// </value>
+        private NameResolver SourceNameResolver { get; }
 
         /// <summary>
-        ///     Specifies the name of the Event this EventTriggerBase is listening for.
+        ///     Called when [event name changed].
         /// </summary>
-        /// <returns></returns>
-        [SuppressMessage(
-            "Microsoft.Design",
-            "CA1024:UsePropertiesWhereAppropriate",
-            Justification = "NikhilKo convinced us this was the right choice.")]
-        protected abstract string GetEventName();
-
-        /// <summary>
-        ///     Called when the event associated with this EventTriggerBase is fired. By default, this will invoke all actions on
-        ///     the trigger.
-        /// </summary>
-        /// <param name="eventArgs">The <see cref="System.EventArgs" /> instance containing the event data.</param>
-        /// <remarks>Override this to provide more granular control over when actions associated with this trigger will be invoked.</remarks>
-        protected virtual void OnEvent(DependencyPropertyChangedEventArgs eventArgs)
-        {
-            this.InvokeActions(eventArgs);
-        }
-
-        private void OnSourceChanged(object oldSource, object newSource)
+        /// <param name="oldEventName">Old name of the event.</param>
+        /// <param name="newEventName">New name of the event.</param>
+        internal void OnEventNameChanged(string oldEventName, string newEventName)
         {
             if (this.AssociatedObject != null)
             {
-                this.OnSourceChangedImpl(oldSource, newSource);
+                this.UnregisterEvent(this.Source, oldEventName);
+
+                this.RegisterEvent(this.Source, newEventName);
             }
         }
 
@@ -205,6 +226,16 @@ namespace Behaviors.Extensions
         }
 
         /// <summary>
+        ///     Specifies the name of the Event this EventTriggerBase is listening for.
+        /// </summary>
+        /// <returns></returns>
+        [SuppressMessage(
+            "Microsoft.Design",
+            "CA1024:UsePropertiesWhereAppropriate",
+            Justification = "NikhilKo convinced us this was the right choice.")]
+        protected abstract string GetEventName();
+
+        /// <summary>
         ///     Called after the trigger is attached to an AssociatedObject.
         /// </summary>
         protected override void OnAttached()
@@ -226,7 +257,8 @@ namespace Behaviors.Extensions
             {
                 newHost = ((IAttachedObject)newBehavior).AssociatedObject;
                 newBehavior.AssociatedObjectChanged += this.OnBehaviorHostChanged;
-            } else if (this.SourceObject != null || newHostElement == null)
+            }
+            else if (this.SourceObject != null || newHostElement == null)
             {
                 try
                 {
@@ -238,7 +270,8 @@ namespace Behaviors.Extensions
                     // been attached to something that doesn't meet the target type constraint, accessing Source
                     // will throw.
                 }
-            } else
+            }
+            else
             {
                 this.SourceNameResolver.NameScopeReferenceElement = newHostElement;
             }
@@ -271,15 +304,59 @@ namespace Behaviors.Extensions
             this.SourceNameResolver.NameScopeReferenceElement = null;
         }
 
-        private void OnBehaviorHostChanged(object sender, EventArgs e)
+        /// <summary>
+        ///     Called when the event associated with this EventTriggerBase is fired. By default, this will invoke all actions on
+        ///     the trigger.
+        /// </summary>
+        /// <param name="eventArgs">The <see cref="System.EventArgs" /> instance containing the event data.</param>
+        /// <remarks>Override this to provide more granular control over when actions associated with this trigger will be invoked.</remarks>
+        protected virtual void OnEvent(DependencyPropertyChangedEventArgs eventArgs)
         {
-            this.SourceNameResolver.NameScopeReferenceElement =
-                ((IAttachedObject)sender).AssociatedObject as FrameworkElement;
+            this.InvokeActions(eventArgs);
         }
 
+        /// <summary>
+        ///     Determines whether [is valid event] [the specified event information].
+        /// </summary>
+        /// <param name="eventInfo">The event information.</param>
+        /// <returns>
+        ///     <c>true</c> if [is valid event] [the specified event information]; otherwise, <c>false</c>.
+        /// </returns>
+        private static bool IsValidEvent(EventInfo eventInfo)
+        {
+            Type eventHandlerType = eventInfo.EventHandlerType;
+            if (typeof(Delegate).IsAssignableFrom(eventInfo.EventHandlerType))
+            {
+                MethodInfo invokeMethod = eventHandlerType.GetMethod("Invoke");
+                ParameterInfo[] parameters = invokeMethod.GetParameters();
+                return parameters.Length == 2 && typeof(object).IsAssignableFrom(parameters[0].ParameterType)
+                                              && typeof(DependencyPropertyChangedEventArgs).IsAssignableFrom(
+                                                  parameters[1].ParameterType);
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        ///     Called when [source name changed].
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <param name="args">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
+        private static void OnSourceNameChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            DependencyPropertyChangedEventTriggerBase trigger = (DependencyPropertyChangedEventTriggerBase)obj;
+            trigger.SourceNameResolver.Name = (string)args.NewValue;
+        }
+
+        /// <summary>
+        ///     Called when [source object changed].
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <param name="args">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
         private static void OnSourceObjectChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
-            DependencyPropertyChangedEventTriggerBase dependencyPropertyChangedEventTriggerBase = (DependencyPropertyChangedEventTriggerBase)obj;
+            DependencyPropertyChangedEventTriggerBase dependencyPropertyChangedEventTriggerBase =
+                (DependencyPropertyChangedEventTriggerBase)obj;
             object sourceNameObject = dependencyPropertyChangedEventTriggerBase.SourceNameResolver.Object;
             if (args.NewValue == null)
             {
@@ -288,37 +365,54 @@ namespace Behaviors.Extensions
             {
                 if (args.OldValue == null && sourceNameObject != null)
                 {
-                    dependencyPropertyChangedEventTriggerBase.UnregisterEvent(sourceNameObject, dependencyPropertyChangedEventTriggerBase.GetEventName());
+                    dependencyPropertyChangedEventTriggerBase.UnregisterEvent(
+                        sourceNameObject,
+                        dependencyPropertyChangedEventTriggerBase.GetEventName());
                 }
 
                 dependencyPropertyChangedEventTriggerBase.OnSourceChanged(args.OldValue, args.NewValue);
             }
         }
 
-        private static void OnSourceNameChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        /// <summary>
+        ///     Called when [behavior host changed].
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        private void OnBehaviorHostChanged(object sender, EventArgs e)
         {
-            DependencyPropertyChangedEventTriggerBase trigger = (DependencyPropertyChangedEventTriggerBase)obj;
-            trigger.SourceNameResolver.Name = (string)args.NewValue;
+            this.SourceNameResolver.NameScopeReferenceElement =
+                ((IAttachedObject)sender).AssociatedObject as FrameworkElement;
         }
 
-        private void RegisterSourceChanged()
+        /// <summary>
+        ///     Called when [event implementation].
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="eventArgs">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
+        private void OnEventImpl(object sender, DependencyPropertyChangedEventArgs eventArgs)
         {
-            if (!this.IsSourceChangedRegistered)
+            this.OnEvent(eventArgs);
+        }
+
+        /// <summary>
+        ///     Called when [source changed].
+        /// </summary>
+        /// <param name="oldSource">The old source.</param>
+        /// <param name="newSource">The new source.</param>
+        private void OnSourceChanged(object oldSource, object newSource)
+        {
+            if (this.AssociatedObject != null)
             {
-                this.SourceNameResolver.ResolvedElementChanged += this.OnSourceNameResolverElementChanged;
-                this.IsSourceChangedRegistered = true;
+                this.OnSourceChangedImpl(oldSource, newSource);
             }
         }
 
-        private void UnregisterSourceChanged()
-        {
-            if (this.IsSourceChangedRegistered)
-            {
-                this.SourceNameResolver.ResolvedElementChanged -= this.OnSourceNameResolverElementChanged;
-                this.IsSourceChangedRegistered = false;
-            }
-        }
-
+        /// <summary>
+        ///     Called when [source name resolver element changed].
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="NameResolvedEventArgs" /> instance containing the event data.</param>
         private void OnSourceNameResolverElementChanged(object sender, NameResolvedEventArgs e)
         {
             if (this.SourceObject == null)
@@ -327,14 +421,21 @@ namespace Behaviors.Extensions
             }
         }
 
+        /// <summary>
+        ///     Registers the event.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <param name="eventName">Name of the event.</param>
+        /// <exception cref="System.ArgumentException">
+        /// </exception>
         /// <exception cref="ArgumentException">Could not find eventName on the Target.</exception>
         private void RegisterEvent(object obj, string eventName)
         {
             Debug.Assert(
                 this.eventHandlerMethodInfo == null
                 && string.Compare(eventName, "Loaded", StringComparison.Ordinal) != 0);
-            var targetType = obj.GetType();
-            var eventInfo = targetType.GetEvent(eventName);
+            Type targetType = obj.GetType();
+            EventInfo eventInfo = targetType.GetEvent(eventName);
             if (eventInfo == null)
             {
                 if (this.SourceObject != null)
@@ -373,25 +474,33 @@ namespace Behaviors.Extensions
                 Delegate.CreateDelegate(eventInfo.EventHandlerType, this, this.eventHandlerMethodInfo));
         }
 
-        private static bool IsValidEvent(EventInfo eventInfo)
+        /// <summary>
+        ///     Registers the source changed.
+        /// </summary>
+        private void RegisterSourceChanged()
         {
-            Type eventHandlerType = eventInfo.EventHandlerType;
-            if (typeof(Delegate).IsAssignableFrom(eventInfo.EventHandlerType))
+            if (!this.IsSourceChangedRegistered)
             {
-                MethodInfo invokeMethod = eventHandlerType.GetMethod("Invoke");
-                ParameterInfo[] parameters = invokeMethod.GetParameters();
-                return parameters.Length == 2 && typeof(object).IsAssignableFrom(parameters[0].ParameterType)
-                                              && typeof(DependencyPropertyChangedEventArgs).IsAssignableFrom(parameters[1].ParameterType);
+                this.SourceNameResolver.ResolvedElementChanged += this.OnSourceNameResolverElementChanged;
+                this.IsSourceChangedRegistered = true;
             }
-
-            return false;
         }
 
+        /// <summary>
+        ///     Unregisters the event.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <param name="eventName">Name of the event.</param>
         private void UnregisterEvent(object obj, string eventName)
         {
             this.UnregisterEventImpl(obj, eventName);
         }
 
+        /// <summary>
+        ///     Unregisters the event implementation.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <param name="eventName">Name of the event.</param>
         private void UnregisterEventImpl(object obj, string eventName)
         {
             Type targetType = obj.GetType();
@@ -410,18 +519,15 @@ namespace Behaviors.Extensions
             this.eventHandlerMethodInfo = null;
         }
 
-        private void OnEventImpl(object sender, DependencyPropertyChangedEventArgs eventArgs)
+        /// <summary>
+        ///     Unregisters the source changed.
+        /// </summary>
+        private void UnregisterSourceChanged()
         {
-            this.OnEvent(eventArgs);
-        }
-
-        internal void OnEventNameChanged(string oldEventName, string newEventName)
-        {
-            if (this.AssociatedObject != null)
+            if (this.IsSourceChangedRegistered)
             {
-                this.UnregisterEvent(this.Source, oldEventName);
-
-                this.RegisterEvent(this.Source, newEventName);
+                this.SourceNameResolver.ResolvedElementChanged -= this.OnSourceNameResolverElementChanged;
+                this.IsSourceChangedRegistered = false;
             }
         }
     }
