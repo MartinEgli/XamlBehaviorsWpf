@@ -12,16 +12,16 @@ namespace Microsoft.Xaml.Behaviors.DesignTools
 {
     internal class MetadataTableProvider : IProvideAttributeTable
     {
-        private AttributeTableBuilder _attributeTableBuilder;
+        private AttributeTableBuilder attributeTableBuilder;
 
         // Accessed by the designer to register any design-time metadata.
         public AttributeTable AttributeTable
         {
             get
             {
-                if (_attributeTableBuilder == null)
+                if (attributeTableBuilder == null)
                 {
-                    _attributeTableBuilder = new AttributeTableBuilder();
+                    attributeTableBuilder = new AttributeTableBuilder();
                 }
 
                 #region EventTrigger
@@ -325,18 +325,18 @@ namespace Microsoft.Xaml.Behaviors.DesignTools
                     new CategoryAttribute(Resources.Category_Common_Properties));
                 #endregion CallMethodAction
 
-                return _attributeTableBuilder.CreateTable();
+                return attributeTableBuilder.CreateTable();
             }
         }
 
         private void AddAttributes(string typeIdentifier, params Attribute[] attributes)
         {
-            _attributeTableBuilder.AddCustomAttributes(typeIdentifier, attributes);
+            attributeTableBuilder.AddCustomAttributes(typeIdentifier, attributes);
         }
 
         private void AddAttributes(string typeIdentifier, string propertyName, params Attribute[] attributes)
         {
-            _attributeTableBuilder.AddCustomAttributes(typeIdentifier, propertyName, attributes);
+            attributeTableBuilder.AddCustomAttributes(typeIdentifier, propertyName, attributes);
         }
     }
 }

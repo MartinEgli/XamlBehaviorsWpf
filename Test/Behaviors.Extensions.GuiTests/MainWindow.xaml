@@ -7,6 +7,7 @@
     xmlns:extensions="clr-namespace:Behaviors.Extensions;assembly=Behaviors.Extensions"
     xmlns:local="clr-namespace:Behaviors.Extensions.GuiTests"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="Window"
     Title="MainWindow"
     Width="800"
     Height="450"
@@ -15,8 +16,9 @@
 
         <Button>
             <Behaviors:Interaction.Triggers>
-                <Behaviors:EventTrigger EventName="Click">
-                    <extensions:ToggleEnabledTargetedTriggerAction TargetName="Button2" />
+                <Behaviors:EventTrigger EventName="{local:NameOf Click1, Button, ThrowRuntimeException=True}">
+                    <extensions:ToggleEnabledTargetedTriggerAction TargetName="{local:NameOfElement Button2, Type={x:Type local:MainWindow}}" />
+                    <extensions:ToggleEnabledTargetedTriggerAction TargetName="{local:NameOfElement Button3, Type={x:Type local:MainWindow}}" />
                 </Behaviors:EventTrigger>
             </Behaviors:Interaction.Triggers>
             <Button.Content>Button 1</Button.Content>
@@ -24,12 +26,28 @@
 
         <Button x:Name="Button2">
             <Behaviors:Interaction.Triggers>
-                <extensions:DependencyPropertyChangedEventTrigger EventName="IsEnabledChanged">
-                    <extensions:SetTimeTargetedTriggerAction TargetName="Box" />
+                <!--<Behaviors:EventTrigger EventName="{local:NameOf IsEnabledChanged, Button}">
+                </Behaviors:EventTrigger>-->
+
+                <extensions:DependencyPropertyChangedEventTrigger EventName="{local:NameOf IsEnabledChanged, Button}">
+                    <!--<extensions:SetTimeTargetedTriggerAction TargetName="{local:NameOf Member=Box1, Type={x:Type local:MainWindow}}" />-->
+                    <extensions:SetTimeTargetedTriggerAction TargetName="{local:NameOfElement Binding={Binding ElementName=Box1}, Type={x:Type local:MainWindow}, ElementType={x:Type Control}}" />
                 </extensions:DependencyPropertyChangedEventTrigger>
             </Behaviors:Interaction.Triggers>
             <Button.Content>Button 2</Button.Content>
         </Button>
-        <TextBox x:Name="Box" />
+        <TextBox x:Name="Box1" />
+        <Button x:Name="Button3">
+            <Behaviors:Interaction.Triggers>
+                <Behaviors:PropertyChangedTrigger Binding="{Binding IsEnabled, ElementName=Button3}">
+                    <extensions:SetTimeTargetedTriggerAction TargetName="Box2" />
+                </Behaviors:PropertyChangedTrigger>
+                <Behaviors:PropertyChangedTrigger Binding="{Binding IsEnabled, ElementName=Button3}">
+                    <extensions:SetTimeTargetedTriggerAction TargetName="Box2" />
+                </Behaviors:PropertyChangedTrigger>
+            </Behaviors:Interaction.Triggers>
+            <Button.Content>Button 3</Button.Content>
+        </Button>
+        <TextBox x:Name="Box2" />
     </StackPanel>
 </Window>

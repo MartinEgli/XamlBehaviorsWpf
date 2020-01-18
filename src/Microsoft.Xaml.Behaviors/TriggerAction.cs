@@ -1,12 +1,12 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Microsoft.Xaml.Behaviors
 {
     using System;
-    using System.Windows;
-    using System.Windows.Media.Animation;
     using System.Globalization;
+    using System.Windows;
     using System.Windows.Controls.Primitives;
+    using System.Windows.Media.Animation;
 
     /// <summary>
     /// Represents an attachable object that encapsulates a unit of functionality.
@@ -231,6 +231,6 @@ namespace Microsoft.Xaml.Behaviors
             this.WritePostscript();
         }
 
-        #endregion
+        #endregion IAttachedObject Members
     }
 }

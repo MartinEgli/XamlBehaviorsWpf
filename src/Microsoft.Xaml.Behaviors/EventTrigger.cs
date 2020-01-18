@@ -51,6 +51,8 @@ namespace Microsoft.Xaml.Behaviors
 
         private static void OnEventNameChanged(object sender, DependencyPropertyChangedEventArgs args)
         {
+        
+
             ((EventTrigger)sender).OnEventNameChanged((string)args.OldValue, (string)args.NewValue);
         }
     }
