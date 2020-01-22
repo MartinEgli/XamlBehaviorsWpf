@@ -16,7 +16,7 @@
 
         <Button>
             <Behaviors:Interaction.Triggers>
-                <Behaviors:EventTrigger EventName="{local:NameOf Click1, Button, ThrowRuntimeException=True}">
+                <Behaviors:EventTrigger EventName="{local:NameOf Click, Button, ThrowRuntimeException=True}">
                     <extensions:ToggleEnabledTargetedTriggerAction TargetName="{local:NameOfElement Button2, Type={x:Type local:MainWindow}}" />
                     <extensions:ToggleEnabledTargetedTriggerAction TargetName="{local:NameOfElement Button3, Type={x:Type local:MainWindow}}" />
                 </Behaviors:EventTrigger>
@@ -37,12 +37,27 @@
             <Button.Content>Button 2</Button.Content>
         </Button>
         <TextBox x:Name="Box1" />
-        <Button x:Name="Button3">
+
+        <Button x:Name="ButtonObservable">
             <Behaviors:Interaction.Triggers>
-                <Behaviors:PropertyChangedTrigger Binding="{Binding IsEnabled, ElementName=Button3}">
+                <!--<Behaviors:EventTrigger EventName="{local:NameOf IsEnabledChanged, Button}">
+                </Behaviors:EventTrigger>-->
+
+                <extensions:ObservableTrigger ObservableName="{local:NameOf IsEnabledChanged, Button}">
+                    <!--<extensions:SetTimeTargetedTriggerAction TargetName="{local:NameOf Member=Box1, Type={x:Type local:MainWindow}}" />-->
+                    <extensions:SetTimeTargetedTriggerAction TargetName="{local:NameOfElement Binding={Binding ElementName=Box1}, Type={x:Type local:MainWindow}, ElementType={x:Type Control}}" />
+                </extensions:ObservableTrigger>
+            </Behaviors:Interaction.Triggers>
+            <Button.Content>Button Observable</Button.Content>
+        </Button>
+        <TextBox x:Name="BoxObservable" />
+
+        <Button x:Name="Button4">
+            <Behaviors:Interaction.Triggers>
+                <Behaviors:PropertyChangedTrigger Binding="{Binding IsEnabled, ElementName=Button4}">
                     <extensions:SetTimeTargetedTriggerAction TargetName="Box2" />
                 </Behaviors:PropertyChangedTrigger>
-                <Behaviors:PropertyChangedTrigger Binding="{Binding IsEnabled, ElementName=Button3}">
+                <Behaviors:PropertyChangedTrigger Binding="{Binding IsEnabled, ElementName=Button4}">
                     <extensions:SetTimeTargetedTriggerAction TargetName="Box2" />
                 </Behaviors:PropertyChangedTrigger>
             </Behaviors:Interaction.Triggers>

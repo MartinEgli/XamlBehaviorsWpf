@@ -230,11 +230,11 @@
   </data>
   <data name="EventTriggerBaseInvalidEventExceptionMessage" xml:space="preserve">
     <value>The event "{0}" on type "{1}" has an incompatible signature. Make sure the event is public and satisfies the EventHandler delegate.</value>
-    <comment>{0} is the EventName property value specified by the user. {1} is the Type we are trying to find an event on</comment>
+    <comment>{0} is the ObservableName property value specified by the user. {1} is the Type we are trying to find an event on</comment>
   </data>
   <data name="EventTriggerCannotFindEventNameExceptionMessage" xml:space="preserve">
     <value>Cannot find an event named "{0}" on type "{1}".</value>
-    <comment>{0} is the EventName property value specified by the user. {1} is the Type we are trying to find an event on</comment>
+    <comment>{0} is the ObservableName property value specified by the user. {1} is the Type we are trying to find an event on</comment>
   </data>
   <data name="RetargetedTypeConstraintViolatedExceptionMessage" xml:space="preserve">
     <value>An object of type "{0}" cannot have a {3} property of type "{1}". Instances of type "{0}" can have only a {3} property of type "{2}".</value>

@@ -1,17 +1,15 @@
-﻿namespace Behaviors.Extensions
+﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Reflection;
+using System.Windows;
+using Microsoft.Xaml.Behaviors;
+using TriggerBase = Microsoft.Xaml.Behaviors.TriggerBase;
+
+namespace Behaviors.Extensions
 {
-    using System;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Globalization;
-    using System.Reflection;
-    using System.Windows;
-
-    using Microsoft.Xaml.Behaviors;
-
-    using TriggerBase = Microsoft.Xaml.Behaviors.TriggerBase;
-
     /// <summary>
     ///     Represents a trigger that can listen to an object other than its AssociatedObject.
     /// </summary>
@@ -82,7 +80,7 @@
                         throw new InvalidOperationException(
                             string.Format(
                                 CultureInfo.CurrentCulture,
-                                ExceptionStringTable.RetargetedTypeConstraintViolatedExceptionMessage,
+                                ExceptionStrings.RetargetedTypeConstraintViolatedExceptionMessage,
                                 this.GetType().Name,
                                 source.GetType(),
                                 this.SourceTypeConstraint,
@@ -190,12 +188,14 @@
         /// <param name="newEventName">New name of the event.</param>
         internal void OnEventNameChanged(string oldEventName, string newEventName)
         {
-            if (this.AssociatedObject != null)
+            if (this.AssociatedObject == null)
             {
-                this.UnregisterEvent(this.Source, oldEventName);
-
-                this.RegisterEvent(this.Source, newEventName);
+                return;
             }
+
+            this.UnregisterEvent(this.Source, oldEventName);
+
+            this.RegisterEvent(this.Source, newEventName);
         }
 
         /// <summary>
@@ -226,7 +226,7 @@
         }
 
         /// <summary>
-        ///     Specifies the name of the Event this EventTriggerBase is listening for.
+        /// Specifies the name of the Event this EventTriggerBase is listening for.
         /// </summary>
         /// <returns></returns>
         [SuppressMessage(
@@ -236,17 +236,10 @@
         protected abstract string GetEventName();
 
         /// <summary>
-        ///     Called after the trigger is attached to an AssociatedObject.
+        /// Called after the trigger is attached to an AssociatedObject.
         /// </summary>
         protected override void OnAttached()
         {
-            // We can't resolve element names using a Behavior, as it isn't a FrameworkElement.
-            // Hence, if we are Hosted on a Behavior, we need to resolve against the Behavior's
-            // Host rather than our own. See comment in TargetedTriggerAction.
-            // TODO jekelly 6/20/08: Ideally we could do a namespace walk, but SL doesn't expose
-            // 						 a way to do this. This solution only looks one level deep.
-            // 						 A Behavior with a Behavior attached won't work. This is OK
-            // 						 for now, but should consider a more general solution if needed.
             base.OnAttached();
             DependencyObject newHost = this.AssociatedObject;
             Behavior newBehavior = newHost as Behavior;
@@ -255,8 +248,7 @@
             this.RegisterSourceChanged();
             if (newBehavior != null)
             {
-                newHost = ((IAttachedObject)newBehavior).AssociatedObject;
-                newBehavior.AssociatedObjectChanged += this.OnBehaviorHostChanged;
+               newBehavior.AssociatedObjectChanged += this.OnBehaviorHostChanged;
             }
             else if (this.SourceObject != null || newHostElement == null)
             {
@@ -270,8 +262,7 @@
                     // been attached to something that doesn't meet the target type constraint, accessing Source
                     // will throw.
                 }
-            }
-            else
+            } else
             {
                 this.SourceNameResolver.NameScopeReferenceElement = newHostElement;
             }
@@ -310,10 +301,7 @@
         /// </summary>
         /// <param name="eventArgs">The <see cref="System.EventArgs" /> instance containing the event data.</param>
         /// <remarks>Override this to provide more granular control over when actions associated with this trigger will be invoked.</remarks>
-        protected virtual void OnEvent(DependencyPropertyChangedEventArgs eventArgs)
-        {
-            this.InvokeActions(eventArgs);
-        }
+        protected virtual void OnEvent(DependencyPropertyChangedEventArgs eventArgs) => this.InvokeActions(eventArgs);
 
         /// <summary>
         ///     Determines whether [is valid event] [the specified event information].
@@ -325,16 +313,22 @@
         private static bool IsValidEvent(EventInfo eventInfo)
         {
             Type eventHandlerType = eventInfo.EventHandlerType;
-            if (typeof(Delegate).IsAssignableFrom(eventInfo.EventHandlerType))
+            if (!typeof(Delegate).IsAssignableFrom(eventInfo.EventHandlerType))
             {
-                MethodInfo invokeMethod = eventHandlerType.GetMethod("Invoke");
-                ParameterInfo[] parameters = invokeMethod.GetParameters();
-                return parameters.Length == 2 && typeof(object).IsAssignableFrom(parameters[0].ParameterType)
-                                              && typeof(DependencyPropertyChangedEventArgs).IsAssignableFrom(
-                                                  parameters[1].ParameterType);
+                return false;
             }
 
-            return false;
+            MethodInfo invokeMethod = eventHandlerType.GetMethod("Invoke");
+            if (invokeMethod == null)
+            {
+                throw new BehaviorExtensionException("Method Invoke EventHandler no exists!");
+            }
+
+            ParameterInfo[] parameters = invokeMethod.GetParameters();
+            return parameters.Length == 2
+                   && typeof(object).IsAssignableFrom(parameters[0].ParameterType)
+                   && typeof(DependencyPropertyChangedEventArgs).IsAssignableFrom(
+                       parameters[1].ParameterType);
         }
 
         /// <summary>
@@ -386,14 +380,11 @@
         }
 
         /// <summary>
-        ///     Called when [event implementation].
+        /// Called when [event implementation].
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="eventArgs">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
-        private void OnEventImpl(object sender, DependencyPropertyChangedEventArgs eventArgs)
-        {
-            this.OnEvent(eventArgs);
-        }
+        private void OnEventImplementation(object sender, DependencyPropertyChangedEventArgs eventArgs) => this.OnEvent(eventArgs);
 
         /// <summary>
         ///     Called when [source changed].
@@ -426,6 +417,7 @@
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <param name="eventName">Name of the event.</param>
+        /// <exception cref="BehaviorExtensionException"></exception>
         /// <exception cref="System.ArgumentException">
         /// </exception>
         /// <exception cref="ArgumentException">Could not find eventName on the Target.</exception>
@@ -443,7 +435,7 @@
                     throw new ArgumentException(
                         string.Format(
                             CultureInfo.CurrentCulture,
-                            ExceptionStringTable.EventTriggerCannotFindEventNameExceptionMessage,
+                            ExceptionStrings.EventTriggerCannotFindEventNameExceptionMessage,
                             eventName,
                             obj.GetType().Name));
                 }
@@ -458,7 +450,7 @@
                     throw new ArgumentException(
                         string.Format(
                             CultureInfo.CurrentCulture,
-                            ExceptionStringTable.EventTriggerBaseInvalidEventExceptionMessage,
+                            ExceptionStrings.EventTriggerBaseInvalidEventExceptionMessage,
                             eventName,
                             obj.GetType().Name));
                 }
@@ -466,12 +458,15 @@
                 return;
             }
 
-            this.eventHandlerMethodInfo = typeof(DependencyPropertyChangedEventTriggerBase).GetMethod(
-                nameof(this.OnEventImpl),
+            var methodInfo = typeof(DependencyPropertyChangedEventTriggerBase).GetMethod(
+                nameof(this.OnEventImplementation),
                 BindingFlags.NonPublic | BindingFlags.Instance);
+            
+            this.eventHandlerMethodInfo = methodInfo ?? throw new BehaviorExtensionException("EventHandler is nothing!");
             eventInfo.AddEventHandler(
-                obj,
-                Delegate.CreateDelegate(eventInfo.EventHandlerType, this, this.eventHandlerMethodInfo));
+                    obj,
+                    Delegate.CreateDelegate(eventInfo.EventHandlerType, this, methodInfo));
+           
         }
 
         /// <summary>
@@ -479,11 +474,13 @@
         /// </summary>
         private void RegisterSourceChanged()
         {
-            if (!this.IsSourceChangedRegistered)
+            if (this.IsSourceChangedRegistered)
             {
-                this.SourceNameResolver.ResolvedElementChanged += this.OnSourceNameResolverElementChanged;
-                this.IsSourceChangedRegistered = true;
+                return;
             }
+
+            this.SourceNameResolver.ResolvedElementChanged += this.OnSourceNameResolverElementChanged;
+            this.IsSourceChangedRegistered = true;
         }
 
         /// <summary>
@@ -493,7 +490,7 @@
         /// <param name="eventName">Name of the event.</param>
         private void UnregisterEvent(object obj, string eventName)
         {
-            this.UnregisterEventImpl(obj, eventName);
+            this.UnregisterEventImplementation(obj, eventName);
         }
 
         /// <summary>
@@ -501,7 +498,7 @@
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <param name="eventName">Name of the event.</param>
-        private void UnregisterEventImpl(object obj, string eventName)
+        private void UnregisterEventImplementation(object obj, string eventName)
         {
             Type targetType = obj.GetType();
             Debug.Assert(this.eventHandlerMethodInfo != null || targetType.GetEvent(eventName) == null);
@@ -524,11 +521,13 @@
         /// </summary>
         private void UnregisterSourceChanged()
         {
-            if (this.IsSourceChangedRegistered)
+            if (!this.IsSourceChangedRegistered)
             {
-                this.SourceNameResolver.ResolvedElementChanged -= this.OnSourceNameResolverElementChanged;
-                this.IsSourceChangedRegistered = false;
+                return;
             }
+
+            this.SourceNameResolver.ResolvedElementChanged -= this.OnSourceNameResolverElementChanged;
+            this.IsSourceChangedRegistered = false;
         }
     }
 }

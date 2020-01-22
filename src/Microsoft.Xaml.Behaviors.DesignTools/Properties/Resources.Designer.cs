@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Microsoft.Xaml.Behaviors.DesignTools.Properties {
+namespace Microsoft.Xaml.Behaviors.DesignTools {
     using System;
     
     

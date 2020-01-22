@@ -1,7 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="MSBuild.Sdk.Extras/2.0.43">
   <PropertyGroup>
-    <TargetFrameworks>net45</TargetFrameworks>
+    <TargetFrameworks>net45;netcoreapp3.0</TargetFrameworks>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeProjectToProjectAssets</TargetsForTfmSpecificBuildOutput>
+    <OutputType>Library</OutputType>
     <PackageId>Microsoft.Xaml.Behaviors.Wpf</PackageId>
     <Title>Microsoft.Xaml.Behaviors.Wpf</Title>
     <Authors>Microsoft</Authors>
@@ -20,13 +21,22 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DefineConstants>WPF;$(DefineConstants)</DefineConstants>
-    <Platforms>AnyCPU;x86</Platforms>
-    <ApplicationIcon />
-    <OutputType>Library</OutputType>
-    <StartupObject />
+    <UseWPF>true</UseWPF>
+    <AssemblyOriginatorKeyFile>$(ProjectDir)Behaviors.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <GenerateNuspecDependsOn>$(GenerateNuspecDependsOn);TimestampNugetPackage</GenerateNuspecDependsOn>
   </PropertyGroup>
-
-  <ItemGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>FinalPublicKey.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>true</DelaySign>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(SignType)' == 'real'">
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>true</DelaySign>
+  </PropertyGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework)'=='net45'">
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml" />
@@ -43,7 +53,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    
     <Compile Update="ExceptionStringTable.Designer.cs">
       <SubType>Code</SubType>
       <AutoGen>True</AutoGen>
@@ -58,17 +67,57 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="MicroBuild.Core" Version="0.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
-    <PackageReference Include="Nerdbank.GitVersioning" Version=" 2.3.38" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup Label="Package">
-    <None Include="bin\Release\net45\Microsoft.Xaml.Behaviors.DesignTools.dll" PackagePath="lib\net45" Pack="true" />
-    <None Include="bin\Release\net45\Microsoft.Xaml.Behaviors.DesignTools.pdb" PackagePath="lib\net45" Pack="true" />
+    <PackageReference Include="Microsoft.VisualStudioEng.MicroBuild.Core" Version="0.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Nerdbank.GitVersioning" Version="2.3.38" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Xaml.Behaviors.DesignTools\Microsoft.Xaml.Behaviors.DesignTools.csproj" />
+    <None Include="FinalPublicKey.snk" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <FilesToSign Include="$(OutputPath)$(AssemblyName).dll">
+      <Authenticode>Microsoft400</Authenticode>
+      <StrongName>StrongName</StrongName>
+    </FilesToSign>
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Install.ps1 is for .NET Framework projects (not .NET Core).
+    The script removes the reference to the .Design.dll in the referencing project.
+    It is placed in the root of the project so that it is correctly picked up
+    and placed in the tools/ directory of the NuGet package. -->
+    <Content Include="Install.ps1">
+      <PackagePath>tools\</PackagePath>
+    </Content>
+  </ItemGroup>
+
+  <Target Name="IncludeProjectToProjectAssets">
+    <ItemGroup>
+      <BuildOutputInPackage Include="$(ProjectDir)bin\$(Configuration)\net45\Design\Microsoft.Xaml.Behaviors.DesignTools.dll"
+                            Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
+        <TargetPath>Design</TargetPath>
+      </BuildOutputInPackage>
+      <BuildOutputInPackage Include="$(ProjectDir)bin\$(Configuration)\net45\Design\Microsoft.Xaml.Behaviors.Design.dll"
+                              Condition="'$(TargetFramework)' == 'net45'">
+        <TargetPath>Design</TargetPath>
+      </BuildOutputInPackage>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="TimestampNugetPackage">
+    <PropertyGroup>
+      <CurrentDate>$([System.DateTime]::Now.ToString(yyyyMMdd-HHmm))</CurrentDate>
+      <PackageVersion Condition="'$(TimestampPackage)' == 'true'">$(PackageVersion)-CI-$(CurrentDate)</PackageVersion>
+      <NuspecProperties>version=$(PackageVersion)</NuspecProperties>
+    </PropertyGroup>
+  </Target>
 </Project>

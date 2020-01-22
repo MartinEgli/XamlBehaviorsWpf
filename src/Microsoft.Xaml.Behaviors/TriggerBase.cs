@@ -1,22 +1,22 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft. All rights reserved. 
+// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
 namespace Microsoft.Xaml.Behaviors
 {
     using System;
-    using System.Globalization;
     using System.Windows;
     using System.Windows.Markup;
     using System.Windows.Media.Animation;
+    using System.Globalization;
 
     /// <summary>
     /// Represents an object that can invoke actions conditionally.
     /// </summary>
     /// <typeparam name="T">The type to which this trigger can be attached.</typeparam>
     /// <remarks>
-    ///		TriggerBase is the base class for controlling actions. Override OnAttached() and
-    ///		OnDetaching() to hook and unhook handlers on the AssociatedObject. You may
-    ///		constrain the types that a derived TriggerBase may be attached to by specifying
-    ///		the generic parameter. Call InvokeActions() to fire all Actions associated with
+    ///		TriggerBase is the base class for controlling actions. Override OnAttached() and 
+    ///		OnDetaching() to hook and unhook handlers on the AssociatedObject. You may 
+    ///		constrain the types that a derived TriggerBase may be attached to by specifying 
+    ///		the generic parameter. Call InvokeActions() to fire all Actions associated with 
     ///		this TriggerBase.
     ///	</remarks>
     public abstract class TriggerBase<T> : TriggerBase where T : DependencyObject
@@ -140,7 +140,7 @@ namespace Microsoft.Xaml.Behaviors
         {
             if (this.PreviewInvoke != null)
             {
-                // Fire the previewInvoke event
+                // Fire the previewInvoke event 
                 PreviewInvokeEventArgs previewInvokeEventArg = new PreviewInvokeEventArgs();
                 this.PreviewInvoke(this, previewInvokeEventArg);
                 // If a handler has cancelled the event, abort the invoke
@@ -240,6 +240,6 @@ namespace Microsoft.Xaml.Behaviors
             this.Actions.Detach();
         }
 
-        #endregion IAttachedObject Members
+        #endregion
     }
 }

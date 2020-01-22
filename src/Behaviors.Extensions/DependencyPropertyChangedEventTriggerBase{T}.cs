@@ -16,7 +16,7 @@
         where T : class
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="DependencyPropertyChangedEventTriggerBase{T}.
+        ///     Initializes a new instance of the <see cref="DependencyPropertyChangedEventTriggerBase{T}"/>.
         /// </summary>
         protected DependencyPropertyChangedEventTriggerBase()
             : base(typeof(T))
