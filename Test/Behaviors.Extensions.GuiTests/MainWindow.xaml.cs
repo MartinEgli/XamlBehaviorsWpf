@@ -23,6 +23,7 @@ namespace Behaviors.Extensions.GuiTests
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new ViewModel();
         }
     }
 }
