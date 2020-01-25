@@ -4,13 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Bfa.Common.WPF.Conditions
+namespace Anori.WPF.Conditions
 {
     using System;
     using System.Globalization;
 
-    using Bfa.Common.WPF.Converters;
-    using Bfa.Common.WPF.Resources;
+    using Anori.WPF.Converters;
+    using Anori.WPF.Resources;
 
     using JetBrains.Annotations;
 

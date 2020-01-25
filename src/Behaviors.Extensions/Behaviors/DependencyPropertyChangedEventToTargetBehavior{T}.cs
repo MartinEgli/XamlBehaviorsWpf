@@ -4,13 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Bfa.Common.WPF.Behaviors
+namespace Anori.WPF.Behaviors
 {
     /// <summary>
     ///     DependencyPropertyChangedEventToTargetBehavior class
     /// </summary>
     /// <typeparam name="T">The Type.</typeparam>
-    /// <seealso cref="Bfa.Common.WPF.Behaviors.DependencyPropertyChangedEventToTargetBehavior" />
+    /// <seealso cref="Anori.WPF.Behaviors.DependencyPropertyChangedEventToTargetBehavior" />
     public abstract class
         DependencyPropertyChangedEventToTargetBehavior<T> : DependencyPropertyChangedEventToTargetBehavior
         where T : class

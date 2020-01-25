@@ -4,11 +4,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Bfa.Common.WPF.Behaviors
+namespace Anori.WPF.Behaviors
 {
     using System.Windows;
 
-    using Bfa.Common.WPF.Extensions;
+    using Anori.WPF.Extensions;
 
     /// <summary>
     ///     The BindAllChildrenBehavior class.

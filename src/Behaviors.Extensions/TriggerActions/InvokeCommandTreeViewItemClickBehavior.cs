@@ -4,15 +4,15 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Bfa.Common.WPF.TriggerActions
+namespace Anori.WPF.TriggerActions
 {
     using System;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
 
-    using Bfa.Common.WPF.Behaviors;
-    using Bfa.Common.WPF.Extensions;
+    using Anori.WPF.Behaviors;
+    using Anori.WPF.Extensions;
 
     /// <summary>
     ///     Behavior to invoke command on TreeViewItem click

@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Bfa.Common.WPF.Behaviors
+namespace Anori.WPF.Behaviors
 {
     using System;
     using System.Globalization;

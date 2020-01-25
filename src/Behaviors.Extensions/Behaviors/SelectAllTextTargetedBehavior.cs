@@ -4,14 +4,14 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Bfa.Common.WPF.Behaviors
+namespace Anori.WPF.Behaviors
 {
     using System.Threading;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
 
-    using Bfa.Common.WPF.Extensions;
+    using Anori.WPF.Extensions;
 
     /// <summary>
     ///     SelectAllTextTargetedTriggerAction Class

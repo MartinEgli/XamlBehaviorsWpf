@@ -4,14 +4,14 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Bfa.Common.WPF.Behaviors
+namespace Anori.WPF.Behaviors
 {
     using System;
     using System.Windows;
     using System.Windows.Input;
 
-    using Bfa.Common.WPF.Extensions;
-    using Bfa.Common.WPF.Triggers;
+    using Anori.WPF.Extensions;
+    using Anori.WPF.Triggers;
 
     /// <summary>
     ///     Blend Behavior to catch a bubbling RoutedEvents and raise a ICommand
