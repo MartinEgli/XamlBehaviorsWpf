@@ -16,7 +16,7 @@ Getting Started
 
 Using Behaviors SDK
 -------------------
-To use behaviors in your project, add the [Microsoft.Xaml.Behaviors.Wpf](https://www.nuget.org/packages/Microsoft.Xaml.Behaviors.Wpf) NuGet package to your project.
+To use behaviors in your project, add the [Anori.Xaml.Behaviors.Wpf](https://www.nuget.org/packages/Anori.Xaml.Behaviors.Wpf) NuGet package to your project.
 
 Buiding Behaviors from Source
 ------------------------------
@@ -32,7 +32,7 @@ Buiding Behaviors from Source
 **Build and Create XAML Behaviors NuGet**
  - Open a Visual Studio developer command prompt
  - Navigate to the XAML Behaviors for WPF repository
- - Run msbuild src\Microsoft.Xaml.Behaviors\Microsoft.Xaml.Behaviors.csproj /t:Pack
+ - Run msbuild src\Anori.Xaml.Behaviors\Anori.Xaml.Behaviors.csproj /t:Pack
 
 # Contributing
 

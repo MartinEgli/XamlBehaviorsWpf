@@ -3,18 +3,18 @@
     <TargetFrameworks>net45;netcoreapp3.0</TargetFrameworks>
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeProjectToProjectAssets</TargetsForTfmSpecificBuildOutput>
     <OutputType>Library</OutputType>
-    <PackageId>Microsoft.Xaml.Behaviors.Wpf</PackageId>
-    <Title>Microsoft.Xaml.Behaviors.Wpf</Title>
-    <Authors>Microsoft</Authors>
+    <PackageId>Anori.Xaml.Behaviors.Wpf</PackageId>
+    <Title>Anori.Xaml.Behaviors.Wpf</Title>
+    <Authors>Anorisoft</Authors>
     <Description>Easily add interactivity to your apps using XAML Behaviors for WPF. Behaviors encapsulate reusable functionalities for elements that can be easily added to your XAML without the need for more imperative code.</Description>
-    <Company>Microsoft Corporation</Company>
-    <Product>Microsoft.Xaml.Behaviors</Product>
+    <Company>Anorisoft</Company>
+    <Product>Anori.Xaml.Behaviors</Product>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://go.microsoft.com/fwlink/?linkid=2026353</PackageProjectUrl>
     <PackageIconUrl>http://go.microsoft.com/fwlink/?LinkID=708511</PackageIconUrl>
-    <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
+    <Copyright>© Anorisoft. All rights reserved.</Copyright>
     <PackageTags>Behavior Action Behaviors Actions Blend Managed C# Interaction Interactivity Interactions</PackageTags>
-    <PackageProjectUrl>https://github.com/Microsoft/XamlBehaviorsWpf</PackageProjectUrl>
+    <PackageProjectUrl></PackageProjectUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
@@ -102,12 +102,10 @@
 
   <Target Name="IncludeProjectToProjectAssets">
     <ItemGroup>
-      <BuildOutputInPackage Include="$(ProjectDir)bin\$(Configuration)\net45\Design\Microsoft.Xaml.Behaviors.DesignTools.dll"
-                            Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
+      <BuildOutputInPackage Include="$(ProjectDir)bin\$(Configuration)\net45\Design\Anori.Xaml.Behaviors.DesignTools.dll" Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
         <TargetPath>Design</TargetPath>
       </BuildOutputInPackage>
-      <BuildOutputInPackage Include="$(ProjectDir)bin\$(Configuration)\net45\Design\Microsoft.Xaml.Behaviors.Design.dll"
-                              Condition="'$(TargetFramework)' == 'net45'">
+      <BuildOutputInPackage Include="$(ProjectDir)bin\$(Configuration)\net45\Design\Anori.Xaml.Behaviors.Design.dll" Condition="'$(TargetFramework)' == 'net45'">
         <TargetPath>Design</TargetPath>
       </BuildOutputInPackage>
     </ItemGroup>

@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved. 
 // Licensed under the MIT license. See LICENSE file in the project root for full license information. 
-namespace Microsoft.Xaml.Behaviors.Core
+namespace Anori.Xaml.Behaviors.Core
 {
     using System;
     using System.Collections;
@@ -8,7 +8,7 @@ namespace Microsoft.Xaml.Behaviors.Core
     using System.Windows;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
-    using Microsoft.Xaml.Behaviors;
+    using Anori.Xaml.Behaviors;
 
     /// <summary>
     /// Toggles between two states based on a conditional statement.

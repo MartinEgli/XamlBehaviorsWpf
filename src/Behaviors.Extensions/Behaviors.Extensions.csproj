@@ -79,9 +79,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Xaml.Behaviors\Microsoft.Xaml.Behaviors.csproj">
+    <ProjectReference Include="..\Microsoft.Xaml.Behaviors\Anori.Xaml.Behaviors.csproj">
       <Project>{8620c598-b704-429e-bca5-7e5dde506923}</Project>
-      <Name>Microsoft.Xaml.Behaviors</Name>
+      <Name>Anori.Xaml.Behaviors</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

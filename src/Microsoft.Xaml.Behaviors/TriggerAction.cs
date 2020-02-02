@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved. 
 // Licensed under the MIT license. See LICENSE file in the project root for full license information. 
-namespace Microsoft.Xaml.Behaviors
+namespace Anori.Xaml.Behaviors
 {
     using System;
     using System.Windows;
@@ -23,7 +23,7 @@ namespace Microsoft.Xaml.Behaviors
         }
 
         /// <summary>
-        /// Gets the object to which this <see cref="Microsoft.Xaml.Behaviors.TriggerAction&lt;T&gt;"/> is attached.
+        /// Gets the object to which this <see cref="Anori.Xaml.Behaviors.TriggerAction&lt;T&gt;"/> is attached.
         /// </summary>
         /// <value>The associated object.</value>
         protected new T AssociatedObject
@@ -51,8 +51,8 @@ namespace Microsoft.Xaml.Behaviors
     /// Represents an attachable object that encapsulates a unit of functionality.
     /// </summary>
     /// <remarks>This is an infrastructure class. Action authors should derive from TriggerAction&lt;T&gt; instead of this class.</remarks>
-    [DefaultTrigger(typeof(UIElement), typeof(Microsoft.Xaml.Behaviors.EventTrigger), "MouseLeftButtonDown")]
-    [DefaultTrigger(typeof(ButtonBase), typeof(Microsoft.Xaml.Behaviors.EventTrigger), "Click")]
+    [DefaultTrigger(typeof(UIElement), typeof(Anori.Xaml.Behaviors.EventTrigger), "MouseLeftButtonDown")]
+    [DefaultTrigger(typeof(ButtonBase), typeof(Anori.Xaml.Behaviors.EventTrigger), "Click")]
     public abstract class TriggerAction :
         Animatable,
         IAttachedObject

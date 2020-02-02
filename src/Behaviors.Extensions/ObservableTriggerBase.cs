@@ -5,15 +5,15 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
 using System.Windows;
-using Microsoft.Xaml.Behaviors;
-using TriggerBase = Microsoft.Xaml.Behaviors.TriggerBase;
+using Anori.Xaml.Behaviors;
+using TriggerBase = Anori.Xaml.Behaviors.TriggerBase;
 
 namespace Behaviors.Extensions
 {
     /// <summary>
     /// Represents a trigger that can listen to an object other than its AssociatedObject.
     /// </summary>
-    /// <seealso cref="Microsoft.Xaml.Behaviors.TriggerBase" />
+    /// <seealso cref="Anori.Xaml.Behaviors.TriggerBase" />
     public abstract class ObservableTriggerBase<TPayload> : TriggerBase, IObserver<TPayload>
     {
         /// <summary>

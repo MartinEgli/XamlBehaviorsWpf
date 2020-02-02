@@ -2,12 +2,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information. 
 
 using System;
-using Microsoft.Xaml.Behaviors.Core;
-using Microsoft.Xaml.Behaviors.Input;
-using Microsoft.Xaml.Behaviors.Layout;
-using Microsoft.Xaml.Behaviors.Media;
+using Anori.Xaml.Behaviors.Core;
+using Anori.Xaml.Behaviors.Input;
+using Anori.Xaml.Behaviors.Layout;
+using Anori.Xaml.Behaviors.Media;
 
-namespace Microsoft.Xaml.Behaviors.DesignTools
+namespace Anori.Xaml.Behaviors.DesignTools
 {
     partial class MetadataTableProvider
     {

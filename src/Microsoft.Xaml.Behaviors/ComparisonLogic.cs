@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft. All rights reserved. 
 // Licensed under the MIT license. See LICENSE file in the project root for full license information. 
-namespace Microsoft.Xaml.Behaviors
+namespace Anori.Xaml.Behaviors
 {
     using System;
     using System.ComponentModel;
     using System.Globalization;
-    using Microsoft.Xaml.Behaviors.Core;
+    using Anori.Xaml.Behaviors.Core;
 
     internal static class ComparisonLogic
     {

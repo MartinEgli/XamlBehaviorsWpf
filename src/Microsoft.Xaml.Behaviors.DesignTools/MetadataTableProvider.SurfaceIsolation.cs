@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Microsoft.Xaml.Behaviors.DesignTools
+namespace Anori.Xaml.Behaviors.DesignTools
 {
     partial class MetadataTableProvider
     {
@@ -22,24 +22,24 @@ namespace Microsoft.Xaml.Behaviors.DesignTools
         /// </summary>
         private static class Targets
         {
-            internal const string EventTrigger = "Microsoft.Xaml.Behaviors.EventTrigger";
-            internal const string EventTriggerBase = "Microsoft.Xaml.Behaviors.EventTriggerBase";
-            internal const string TriggerBase = "Microsoft.Xaml.Behaviors.TriggerBase";
-            internal const string TriggerAction = "Microsoft.Xaml.Behaviors.TriggerAction";
-            internal const string TargetedTriggerAction = "Microsoft.Xaml.Behaviors.TargetedTriggerAction";
-            internal const string ChangePropertyAction = "Microsoft.Xaml.Behaviors.Core.ChangePropertyAction";
-            internal const string InvokeCommandAction = "Microsoft.Xaml.Behaviors.InvokeCommandAction";
-            internal const string LaunchUriOrFileAction = "Microsoft.Xaml.Behaviors.Core.LaunchUriOrFileAction";
-            internal const string MouseDragElementBehavior = "Microsoft.Xaml.Behaviors.Layout.MouseDragElementBehavior";
-            internal const string DataStateBehavior = "Microsoft.Xaml.Behaviors.Core.DataStateBehavior";
-            internal const string FluidMoveBehavior = "Microsoft.Xaml.Behaviors.Layout.FluidMoveBehavior";
-            internal const string FluidMoveBehaviorBase = "Microsoft.Xaml.Behaviors.Layout.FluidMoveBehaviorBase";
-            internal const string StoryboardAction = "Microsoft.Xaml.Behaviors.Media.StoryboardAction";
-            internal const string ControlStoryboardAction = "Microsoft.Xaml.Behaviors.Media.ControlStoryboardAction";
-            internal const string GoToStateAction = "Microsoft.Xaml.Behaviors.Core.GoToStateAction";
-            internal const string TranslateZoomRotateBehavior = "Microsoft.Xaml.Behaviors.Input.TranslateZoomRotateBehavior";
-            internal const string PlaySoundAction = "Microsoft.Xaml.Behaviors.Media.PlaySoundAction";
-            internal const string CallMethodAction = "Microsoft.Xaml.Behaviors.Core.CallMethodAction";
+            internal const string EventTrigger = "Anori.Xaml.Behaviors.EventTrigger";
+            internal const string EventTriggerBase = "Anori.Xaml.Behaviors.EventTriggerBase";
+            internal const string TriggerBase = "Anori.Xaml.Behaviors.TriggerBase";
+            internal const string TriggerAction = "Anori.Xaml.Behaviors.TriggerAction";
+            internal const string TargetedTriggerAction = "Anori.Xaml.Behaviors.TargetedTriggerAction";
+            internal const string ChangePropertyAction = "Anori.Xaml.Behaviors.Core.ChangePropertyAction";
+            internal const string InvokeCommandAction = "Anori.Xaml.Behaviors.InvokeCommandAction";
+            internal const string LaunchUriOrFileAction = "Anori.Xaml.Behaviors.Core.LaunchUriOrFileAction";
+            internal const string MouseDragElementBehavior = "Anori.Xaml.Behaviors.Layout.MouseDragElementBehavior";
+            internal const string DataStateBehavior = "Anori.Xaml.Behaviors.Core.DataStateBehavior";
+            internal const string FluidMoveBehavior = "Anori.Xaml.Behaviors.Layout.FluidMoveBehavior";
+            internal const string FluidMoveBehaviorBase = "Anori.Xaml.Behaviors.Layout.FluidMoveBehaviorBase";
+            internal const string StoryboardAction = "Anori.Xaml.Behaviors.Media.StoryboardAction";
+            internal const string ControlStoryboardAction = "Anori.Xaml.Behaviors.Media.ControlStoryboardAction";
+            internal const string GoToStateAction = "Anori.Xaml.Behaviors.Core.GoToStateAction";
+            internal const string TranslateZoomRotateBehavior = "Anori.Xaml.Behaviors.Input.TranslateZoomRotateBehavior";
+            internal const string PlaySoundAction = "Anori.Xaml.Behaviors.Media.PlaySoundAction";
+            internal const string CallMethodAction = "Anori.Xaml.Behaviors.Core.CallMethodAction";
         }
     }
 }

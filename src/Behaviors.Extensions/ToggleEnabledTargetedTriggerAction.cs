@@ -4,12 +4,12 @@
     using System.Windows;
     using System.Windows.Controls;
 
-    using Microsoft.Xaml.Behaviors;
+    using Anori.Xaml.Behaviors;
 
     /// <summary>
     /// ToggleEnabledTargetedTriggerAction class
     /// </summary>
-    /// <seealso cref="Microsoft.Xaml.Behaviors.TargetedTriggerAction{System.Windows.Controls.Button}" />
+    /// <seealso cref="Anori.Xaml.Behaviors.TargetedTriggerAction{System.Windows.Controls.Button}" />
     public class ToggleEnabledTargetedTriggerAction : TargetedTriggerAction<Button>
     {
         /// <summary>

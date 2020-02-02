@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved. 
 // Licensed under the MIT license. See LICENSE file in the project root for full license information. 
-namespace Microsoft.Xaml.Behaviors.Core
+namespace Anori.Xaml.Behaviors.Core
 {
-    using Microsoft.Xaml.Behaviors;
+    using Anori.Xaml.Behaviors;
     using System.Windows.Markup;
 
     /// <summary>

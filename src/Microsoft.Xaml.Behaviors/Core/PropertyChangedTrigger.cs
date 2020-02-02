@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft. All rights reserved. 
 // Licensed under the MIT license. See LICENSE file in the project root for full license information. 
-namespace Microsoft.Xaml.Behaviors.Core
+namespace Anori.Xaml.Behaviors.Core
 {
     using System;
     using System.Windows;
-    using Microsoft.Xaml.Behaviors;
+    using Anori.Xaml.Behaviors;
 
     /// <summary>
     /// Represents a trigger that performs actions when the bound data have changed. 

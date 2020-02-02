@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28407.52
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Xaml.Behaviors", "Microsoft.Xaml.Behaviors\Microsoft.Xaml.Behaviors.csproj", "{8620C598-B704-429E-BCA5-7E5DDE506923}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.Xaml.Behaviors", "Microsoft.Xaml.Behaviors\Anori.Xaml.Behaviors.csproj", "{8620C598-B704-429E-BCA5-7E5DDE506923}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "..\Test\UnitTests\UnitTests.csproj", "{76E3CE29-A9BC-4417-8224-CE18C6FE51B4}"
 EndProject

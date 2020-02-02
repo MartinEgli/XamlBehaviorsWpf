@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved. 
 // Licensed under the MIT license. See LICENSE file in the project root for full license information. 
-namespace Microsoft.Xaml.Behaviors.Core
+namespace Anori.Xaml.Behaviors.Core
 {
     using System;
     using System.Collections.Generic;
@@ -8,7 +8,7 @@ namespace Microsoft.Xaml.Behaviors.Core
     using System.Linq;
     using System.Reflection;
     using System.Windows;
-    using Microsoft.Xaml.Behaviors;
+    using Anori.Xaml.Behaviors;
 
     /// <summary>
     /// Calls a method on a specified object when invoked.

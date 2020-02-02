@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved. 
 // Licensed under the MIT license. See LICENSE file in the project root for full license information. 
-namespace Microsoft.Xaml.Behaviors.Layout
+namespace Anori.Xaml.Behaviors.Layout
 {
     using System;
     using System.Collections.Generic;
@@ -11,8 +11,8 @@ namespace Microsoft.Xaml.Behaviors.Layout
     using System.Windows.Media;
     using System.Windows.Media.Animation;
     using System.Windows.Shapes;
-    using Microsoft.Xaml.Behaviors.Core;
-    using Microsoft.Xaml.Behaviors;
+    using Anori.Xaml.Behaviors.Core;
+    using Anori.Xaml.Behaviors;
 
     /// <summary>
     /// This enumerated type indicates whether a FluidMoveBehavior applies to the element to which it is attached, or to the children of that element.

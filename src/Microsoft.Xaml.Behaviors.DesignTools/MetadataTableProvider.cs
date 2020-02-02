@@ -13,8 +13,8 @@ using Microsoft.Windows.Design.PropertyEditing;
 using Editors = Microsoft.Windows.Design.PropertyEditing.Editors;
 #endif
 
-[assembly: ProvideMetadata(typeof(Microsoft.Xaml.Behaviors.DesignTools.MetadataTableProvider))]
-namespace Microsoft.Xaml.Behaviors.DesignTools
+[assembly: ProvideMetadata(typeof(Anori.Xaml.Behaviors.DesignTools.MetadataTableProvider))]
+namespace Anori.Xaml.Behaviors.DesignTools
 {
     internal partial class MetadataTableProvider : IProvideAttributeTable
     {
