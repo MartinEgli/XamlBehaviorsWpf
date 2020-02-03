@@ -18,9 +18,9 @@
             <Style.Setters>
                 <Setter Property="b:Interaction.BehaviorCollection">
                     <Setter.Value>
-                        <b:MyBehaviorCollection>
+                        <b:BehaviorCreateCollection>
                             <local:SelectOnFocus />
-                        </b:MyBehaviorCollection>
+                        </b:BehaviorCreateCollection>
                     </Setter.Value>
                 </Setter>
             </Style.Setters>

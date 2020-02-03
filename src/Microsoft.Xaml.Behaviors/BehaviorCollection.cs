@@ -10,7 +10,12 @@ namespace Anori.Xaml.Behaviors
     using System.Windows;
     using System.ComponentModel;
 
-    public sealed class MyBehaviorCollection : Collection<Behavior>
+    public interface IBehaviorCreator
+    {
+        Behavior Create();
+    }
+
+    public sealed class BehaviorCreateCollection : Collection<IBehaviorCreator>
     {
     }
 

@@ -51,11 +51,12 @@ namespace Anori.Xaml.Behaviors
             typeof(Interaction),
             new FrameworkPropertyMetadata(OnBehaviorsChanged));
 
-        public static readonly DependencyProperty BehaviorCollectionProperty = DependencyProperty.RegisterAttached(
-            "BehaviorCollection",
-            typeof(MyBehaviorCollection),
-            typeof(Interaction),
-            new FrameworkPropertyMetadata(OnBehaviorCollectionChanged));
+        public static readonly DependencyProperty BehaviorCreateCollectionProperty =
+            DependencyProperty.RegisterAttached(
+                "BehaviorCreateCollection",
+                typeof(BehaviorCreateCollection),
+                typeof(Interaction),
+                new FrameworkPropertyMetadata(OnBehaviorCreateCollectionChanged));
 
         static Interaction()
         {
@@ -81,22 +82,22 @@ namespace Anori.Xaml.Behaviors
             set;
         }
 
-        public static void SetBehaviorCollection(DependencyObject element, MyBehaviorCollection value)
+        public static void SetBehaviorCreateCollection(DependencyObject element, BehaviorCreateCollection value)
         {
-            element.SetValue(BehaviorCollectionProperty, value);
+            element.SetValue(BehaviorCreateCollectionProperty, value);
         }
 
-        public static MyBehaviorCollection GetBehaviorCollection(DependencyObject element)
+        public static BehaviorCreateCollection GetBehaviorCreateCollection(DependencyObject element)
         {
-            MyBehaviorCollection behaviorCollection =
-                (MyBehaviorCollection)element.GetValue(BehaviorCollectionProperty);
-            if (behaviorCollection == null)
+            BehaviorCreateCollection behaviorCreateCollection =
+                (BehaviorCreateCollection)element.GetValue(BehaviorCreateCollectionProperty);
+            if (behaviorCreateCollection == null)
             {
-                behaviorCollection = new MyBehaviorCollection();
-                element.SetValue(BehaviorCollectionProperty, behaviorCollection);
+                behaviorCreateCollection = new BehaviorCreateCollection();
+                element.SetValue(BehaviorCreateCollectionProperty, behaviorCreateCollection);
             }
 
-            return behaviorCollection;
+            return behaviorCreateCollection;
         }
 
         /// <summary>
@@ -159,16 +160,26 @@ namespace Anori.Xaml.Behaviors
             }
         }
 
-        private static void OnBehaviorCollectionChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        private static void OnBehaviorCreateCollectionChanged(
+            DependencyObject obj,
+            DependencyPropertyChangedEventArgs args)
         {
-            MyBehaviorCollection oldCollection = (MyBehaviorCollection)args.OldValue;
-            MyBehaviorCollection newCollection = (MyBehaviorCollection)args.NewValue;
-
-            BehaviorCollection behaviors = GetBehaviors(obj);
-            behaviors.Clear();
-            foreach (Behavior behavior in newCollection)
+            if (!(args.NewValue is BehaviorCreateCollection))
             {
-                behaviors.Add(behavior);
+                return;
+            }
+
+            if (!(args.NewValue is BehaviorCreateCollection newBehaviorCollection))
+            {
+                return;
+            }
+
+            BehaviorCollection behaviorCollection = GetBehaviors(obj);
+            behaviorCollection.Clear();
+
+            foreach (IBehaviorCreator behavior in newBehaviorCollection)
+            {
+                behaviorCollection.Add(behavior.Create());
             }
         }
 
