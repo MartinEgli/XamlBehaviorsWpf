@@ -4,12 +4,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Bfa.Common.WPF.Behaviors
+namespace Anori.WPF.Behaviors
 {
     using System.Windows;
     using System.Windows.Input;
 
-    using Bfa.Common.WPF.Inputs;
+    using Anori.WPF.Inputs;
 
     /// <summary>
     ///     Behavior on TreeViewItem click

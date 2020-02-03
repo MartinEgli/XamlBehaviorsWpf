@@ -4,13 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Bfa.Common.WPF.TriggerActions
+namespace Anori.WPF.TriggerActions
 {
     using System;
     using System.Windows;
     using System.Windows.Input;
 
-    using Bfa.Common.WPF.Extensions;
+    using Anori.WPF.Extensions;
 
     /// <summary>
     ///     Base behavior to handle connecting a <see cref="System.Windows.Controls.Control" /> to a Command.

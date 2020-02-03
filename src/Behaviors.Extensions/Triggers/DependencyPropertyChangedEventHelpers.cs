@@ -4,12 +4,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Bfa.Common.WPF.Triggers
+namespace Anori.WPF.Triggers
 {
     using System;
     using System.Windows;
 
-    using Bfa.Common.WPF.TriggerActions;
+    using Anori.WPF.TriggerActions;
 
     /// <summary>
     ///     RoutedEventHelpers class.

@@ -4,12 +4,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Bfa.Common.WPF.TriggerActions
+namespace Anori.WPF.TriggerActions
 {
     using System;
     using System.Windows;
 
-    using Bfa.Common.WPF.Extensions;
+    using Anori.WPF.Extensions;
 
     using JetBrains.Annotations;
 

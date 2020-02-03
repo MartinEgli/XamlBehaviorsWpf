@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Bfa.Common.WPF.Conditions
+namespace Anori.WPF.Conditions
 {
     using System.Windows;
 

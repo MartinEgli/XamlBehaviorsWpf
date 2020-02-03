@@ -4,13 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Bfa.Common.WPF.Triggers
+namespace Anori.WPF.Triggers
 {
     using System;
     using System.Windows;
     using System.Windows.Input;
 
-    using Bfa.Common.WPF.Extensions;
+    using Anori.WPF.Extensions;
 
     using Microsoft.Xaml.Behaviors;
     using Microsoft.Xaml.Behaviors.Input;

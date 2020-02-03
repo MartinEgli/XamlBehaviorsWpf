@@ -3,7 +3,7 @@
 // Copyright (c) bfa solutions ltd. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
-namespace Bfa.Common.WPF.Triggers
+namespace Anori.WPF.Triggers
 {
     /// <summary>
     /// Dependency Property Changed Event Parameter Pattern

@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------
 #pragma warning disable SA1119 // StatementMustNotUseUnnecessaryParenthesis
 
-namespace Bfa.Common.WPF.Behaviors
+namespace Anori.WPF.Behaviors
 {
     using System.Windows.Controls;
 

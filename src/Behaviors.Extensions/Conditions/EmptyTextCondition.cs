@@ -4,16 +4,16 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Bfa.Common.WPF.Conditions
+namespace Anori.WPF.Conditions
 {
     using System.Windows;
 
-    using Bfa.Common.Strings;
+    using Anori.Strings;
 
     /// <summary>
     ///     Not Empty Text Condition
     /// </summary>
-    /// <seealso cref="Bfa.Common.WPF.Conditions.ConditionBase" />
+    /// <seealso cref="Anori.WPF.Conditions.ConditionBase" />
     /// <inheritdoc />
     public class EmptyTextCondition : ConditionBase
     {

@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Bfa.Common.WPF.Triggers
+namespace Anori.WPF.Triggers
 {
     using System;
     using System.Windows;

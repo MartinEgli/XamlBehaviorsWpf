@@ -4,11 +4,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Bfa.Common.WPF.TriggerActions
+namespace Anori.WPF.TriggerActions
 {
     using System.Windows.Controls;
 
-    using Bfa.Common.WPF.Extensions;
+    using Anori.WPF.Extensions;
 
     using Microsoft.Xaml.Behaviors;
 

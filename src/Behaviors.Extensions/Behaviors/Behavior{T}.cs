@@ -4,18 +4,18 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Bfa.Common.WPF.Behaviors
+namespace Anori.WPF.Behaviors
 {
     using System;
     using System.Windows;
 
-    using Bfa.Common.WPF.WeakEventManagers;
+    using Anori.WPF.WeakEventManagers;
 
     /// <summary>
     ///     Blend Behavior with weak loaded event
     /// </summary>
     /// <typeparam name="T">The type.</typeparam>
-    /// <seealso cref="Bfa.Common.WPF.Behaviors.INotifyAttachedObjectLoaded{T}" />
+    /// <seealso cref="Anori.WPF.Behaviors.INotifyAttachedObjectLoaded{T}" />
     /// <seealso cref="System.Windows.IWeakEventListener" />
     /// <seealso cref="T:System.Windows.IWeakEventListener" />
     public abstract class Behavior<T> : Microsoft.Xaml.Behaviors.Behavior<T>,

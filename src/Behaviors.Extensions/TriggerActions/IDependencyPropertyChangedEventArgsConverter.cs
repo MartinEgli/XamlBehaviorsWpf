@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Bfa.Common.WPF.TriggerActions
+namespace Anori.WPF.TriggerActions
 {
     using System;
     using System.Windows;

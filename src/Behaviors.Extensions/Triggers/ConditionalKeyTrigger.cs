@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Bfa.Common.WPF.Triggers
+namespace Anori.WPF.Triggers
 {
     using System;
     using System.ComponentModel;
@@ -12,11 +12,11 @@ namespace Bfa.Common.WPF.Triggers
     using System.Windows;
     using System.Windows.Input;
 
-    using Bfa.Common.WPF.Extensions;
+    using Anori.WPF.Extensions;
 
     using Microsoft.Xaml.Behaviors.Input;
 
-    using ConditionCollection = Bfa.Common.WPF.Conditions.ConditionCollection;
+    using ConditionCollection = Anori.WPF.Conditions.ConditionCollection;
 
     /// <inheritdoc />
     /// <summary>

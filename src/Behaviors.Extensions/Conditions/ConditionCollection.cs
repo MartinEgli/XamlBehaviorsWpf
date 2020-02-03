@@ -1,13 +1,7 @@
-// -----------------------------------------------------------------------
-// <copyright file="ConditionCollection.cs" company="bfa solutions ltd">
-// Copyright (c) bfa solutions ltd. All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
+﻿using System.Windows;
 
-namespace Bfa.Common.WPF.Conditions
+namespace Anori.WPF.Conditions
 {
-    using System.Windows;
-
     /// <summary>
     ///     Condition Collection Class
     /// </summary>
@@ -23,8 +17,8 @@ namespace Bfa.Common.WPF.Conditions
         /// </returns>
         public bool IsAny(bool parameter = true)
         {
-            var any = false;
-            foreach (var condition in this)
+            bool any = false;
+            foreach (ConditionBase condition in this)
             {
                 if (condition.Inverted)
                 {
@@ -32,8 +26,7 @@ namespace Bfa.Common.WPF.Conditions
                     {
                         continue;
                     }
-                }
-                else
+                } else
                 {
                     if (condition.Evaluate() != parameter)
                     {
@@ -57,8 +50,8 @@ namespace Bfa.Common.WPF.Conditions
         /// </returns>
         public bool AreAll(bool parameter = true)
         {
-            var all = true;
-            foreach (var condition in this)
+            bool all = true;
+            foreach (ConditionBase condition in this)
             {
                 if (condition.Inverted)
                 {
@@ -66,8 +59,7 @@ namespace Bfa.Common.WPF.Conditions
                     {
                         continue;
                     }
-                }
-                else
+                } else
                 {
                     if (condition.Evaluate() == parameter)
                     {

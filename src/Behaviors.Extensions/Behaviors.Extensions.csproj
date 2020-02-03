@@ -50,6 +50,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JetBrains.Annotations, Version=10.2.1.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.10.2.1\lib\net\JetBrains.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -64,6 +67,36 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BehaviorExtensionException.cs" />
+    <Compile Include="Behaviors\Behavior.cs" />
+    <Compile Include="Behaviors\Behavior{T}.cs" />
+    <Compile Include="Behaviors\BindableSelectedTreeViewItemBehavior.cs" />
+    <Compile Include="Behaviors\BindAllChildrenBehavior.cs" />
+    <Compile Include="Behaviors\DependencyPropertyChangedEventBehaviorBase.cs" />
+    <Compile Include="Behaviors\DependencyPropertyChangedEventToCommandBehavior.cs" />
+    <Compile Include="Behaviors\DependencyPropertyChangedEventToTargetBehavior.cs" />
+    <Compile Include="Behaviors\DependencyPropertyChangedEventToTargetBehavior{T}.cs" />
+    <Compile Include="Behaviors\IClickCommand.cs" />
+    <Compile Include="Behaviors\ICommandParameterConverter.cs" />
+    <Compile Include="Behaviors\INotifyAttachedObjectLoaded{T}.cs" />
+    <Compile Include="Behaviors\IRoutedEventArgsConverter.cs" />
+    <Compile Include="Behaviors\ItemClickBehavior.cs" />
+    <Compile Include="Behaviors\ListBoxItemClickCommandBehavior.cs" />
+    <Compile Include="Behaviors\NameResolvedEventArgs.cs" />
+    <Compile Include="Behaviors\NameResolver.cs" />
+    <Compile Include="Behaviors\RadGridViewMultiSelectBehavior.cs" />
+    <Compile Include="Behaviors\RoutedEventToCommandBehavior.cs" />
+    <Compile Include="Behaviors\SelectAllTextTargetedBehavior.cs" />
+    <Compile Include="Behaviors\TreeViewItemClickCommandBehavior.cs" />
+    <Compile Include="Behaviors\UiElementClickBehavior.cs" />
+    <Compile Include="Behaviors\UiElementMouseClickBehavior.cs" />
+    <Compile Include="Conditions\BooleanCondition.cs" />
+    <Compile Include="Conditions\ComparisonCondition.cs" />
+    <Compile Include="Conditions\ComparisonLogic.cs" />
+    <Compile Include="Conditions\ConditionBase.cs" />
+    <Compile Include="Conditions\ConditionCollection.cs" />
+    <Compile Include="Conditions\ConditionCollectionExtensions.cs" />
+    <Compile Include="Conditions\DataBindingHelper.cs" />
+    <Compile Include="Conditions\EmptyTextCondition.cs" />
     <Compile Include="ObservableTrigger.cs" />
     <Compile Include="ObservableTriggerBase.cs" />
     <Compile Include="SetTimeTargetedTriggerAction.cs" />
@@ -77,6 +110,31 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TriggerActions\CommandBehaviorBase.cs" />
+    <Compile Include="TriggerActions\ExecutableDependencyPropertyChangedEventArgsCommandBehavior.cs" />
+    <Compile Include="TriggerActions\ExecutableEventArgsCommandBehavior.cs" />
+    <Compile Include="TriggerActions\IDependencyPropertyChangedEventArgsConverter.cs" />
+    <Compile Include="TriggerActions\IEventArgsConverter.cs" />
+    <Compile Include="TriggerActions\InvokeCommandAction.cs" />
+    <Compile Include="TriggerActions\InvokeCommandTreeViewItemClickBehavior.cs" />
+    <Compile Include="TriggerActions\InvokeDependencyPropertyCommandAction.cs" />
+    <Compile Include="TriggerActions\InvokeEventToCommandAction.cs" />
+    <Compile Include="TriggerActions\InvokeRoutedEventToCommandAction.cs" />
+    <Compile Include="TriggerActions\SelectAllTextTargetedTriggerAction.cs" />
+    <Compile Include="TriggerActions\SelectAllTextTriggerAction.cs" />
+    <Compile Include="TriggerActions\SetFocusTriggerAction.cs" />
+    <Compile Include="Triggers\ConditionalEventTrigger.cs" />
+    <Compile Include="Triggers\ConditionalEventTriggerCollection.cs" />
+    <Compile Include="Triggers\ConditionalKeyTrigger.cs" />
+    <Compile Include="Triggers\DependencyPropertyChangedEventHelpers.cs" />
+    <Compile Include="Triggers\DependencyPropertyChangedEventParameterPattern.cs" />
+    <Compile Include="Triggers\KeyTrigger.cs" />
+    <Compile Include="Triggers\KeyTriggerRoute.cs" />
+    <Compile Include="Triggers\LoadedEventTrigger.cs" />
+    <Compile Include="Triggers\ParameterPattern.cs" />
+    <Compile Include="Triggers\RoutedEventHelpers.cs" />
+    <Compile Include="Triggers\RoutedEventTrigger.cs" />
+    <Compile Include="Triggers\ToggledKeyTrigger.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.Xaml.Behaviors\Anori.Xaml.Behaviors.csproj">
@@ -89,6 +147,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ExceptionStringTable.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
