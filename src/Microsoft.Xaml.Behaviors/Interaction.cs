@@ -1,6 +1,6 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
-namespace Microsoft.Xaml.Behaviors
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+namespace Anori.WPF.Behaviors
 {
     using System;
     using System.Collections.Generic;
@@ -53,6 +53,11 @@ namespace Microsoft.Xaml.Behaviors
                                                                                                                         new FrameworkPropertyMetadata(
                                                                                                                             new PropertyChangedCallback(OnBehaviorsChanged)));
 
+        private static readonly DependencyProperty StyleBehaviorsProperty = DependencyProperty.RegisterAttached("ShadowStyleBehaviors",
+                                                                                                                               typeof(BehaviorCollection),
+                                                                                                                               typeof(Interaction),
+                                                                                                                               new FrameworkPropertyMetadata(
+                                                                                                                                   new PropertyChangedCallback(OnBehaviorsChanged)));
 
         /// <summary>
         /// Gets the TriggerCollection containing the triggers associated with the specified object.
@@ -82,6 +87,17 @@ namespace Microsoft.Xaml.Behaviors
             {
                 behaviorCollection = new BehaviorCollection();
                 obj.SetValue(Interaction.BehaviorsProperty, behaviorCollection);
+            }
+            return behaviorCollection;
+        }
+
+        public static BehaviorCollection GetStyleBehaviors(DependencyObject obj)
+        {
+            BehaviorCollection behaviorCollection = (BehaviorCollection)obj.GetValue(Interaction.StyleBehaviorsProperty);
+            if (behaviorCollection == null)
+            {
+                behaviorCollection = new BehaviorCollection();
+                obj.SetValue(Interaction.StyleBehaviorsProperty, behaviorCollection);
             }
             return behaviorCollection;
         }

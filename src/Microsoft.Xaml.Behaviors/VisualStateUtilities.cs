@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved. 
 // Licensed under the MIT license. See LICENSE file in the project root for full license information. 
-namespace Microsoft.Xaml.Behaviors
+namespace Anori.WPF.Behaviors
 {
     using System;
     using System.Collections;
@@ -9,7 +9,7 @@ namespace Microsoft.Xaml.Behaviors
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
-    using Microsoft.Xaml.Behaviors.Core;
+    using Anori.WPF.Behaviors.Core;
 
     /// <summary>
     /// This class provides various platform agnostic standard operations for working with VisualStateManager.

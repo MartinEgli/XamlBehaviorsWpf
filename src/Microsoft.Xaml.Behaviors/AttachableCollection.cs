@@ -1,6 +1,6 @@
-// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
-namespace Microsoft.Xaml.Behaviors
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+namespace Anori.WPF.Behaviors
 {
     using System;
     using System.Collections.ObjectModel;
@@ -9,6 +9,7 @@ namespace Microsoft.Xaml.Behaviors
     using System.Windows;
     using System.ComponentModel;
     using System.Globalization;
+    using Anori.WPF.Behaviors;
 
     /// <summary>
     /// Represents a collection of IAttachedObject with a shared AssociatedObject and provides change notifications to its contents when that AssociatedObject changes.
@@ -105,8 +106,7 @@ namespace Microsoft.Xaml.Behaviors
                         {
                             this.VerifyAdd(item);
                             this.ItemAdded(item);
-                        }
-                        finally
+                        } finally
                         {
                             this.snapshot.Insert(this.IndexOf(item), item);
                         }
@@ -125,8 +125,7 @@ namespace Microsoft.Xaml.Behaviors
                         {
                             this.VerifyAdd(item);
                             this.ItemAdded(item);
-                        }
-                        finally
+                        } finally
                         {
                             this.snapshot.Insert(this.IndexOf(item), item);
                         }
@@ -153,13 +152,14 @@ namespace Microsoft.Xaml.Behaviors
                         this.ItemAdded(item);
                     }
                     break;
+
                 case NotifyCollectionChangedAction.Move:
                 default:
                     Debug.Fail("Unsupported collection operation attempted.");
                     break;
             }
 #if DEBUG
-			this.VerifySnapshotIntegrity();
+            this.VerifySnapshotIntegrity();
 #endif
         }
 
@@ -212,6 +212,6 @@ namespace Microsoft.Xaml.Behaviors
             this.WritePostscript();
         }
 
-        #endregion
+        #endregion IAttachedObject Members
     }
 }

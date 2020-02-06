@@ -3,12 +3,12 @@
     using System;
     using System.Windows.Controls;
 
-    using Microsoft.Xaml.Behaviors;
+    using Anori.WPF.Behaviors;
 
     /// <summary>
     /// SetTimeTargetedTriggerAction Class
     /// </summary>
-    /// <seealso cref="Microsoft.Xaml.Behaviors.TargetedTriggerAction{System.Windows.Controls.TextBox}" />
+    /// <seealso cref="Anori.WPF.Behaviors.TargetedTriggerAction{System.Windows.Controls.TextBox}" />
     public class SetTimeTargetedTriggerAction : TargetedTriggerAction<TextBox>
     {
         /// <summary>

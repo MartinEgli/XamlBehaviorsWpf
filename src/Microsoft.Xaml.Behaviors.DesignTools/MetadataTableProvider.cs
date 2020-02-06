@@ -1,36 +1,44 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.ComponentModel;
+using Anori.WPF.Behaviors.DesignTools;
 
 #if SurfaceIsolation
+
 using Microsoft.VisualStudio.DesignTools.Extensibility.Metadata;
 using Microsoft.VisualStudio.DesignTools.Extensibility.PropertyEditing;
+using Microsoft.Xaml.Behaviors.DesignTools;
 using Editors = Microsoft.VisualStudio.DesignTools.Extensibility.PropertyEditing.Editors;
+
 #else
+
 using Microsoft.Windows.Design.Metadata;
 using Microsoft.Windows.Design.PropertyEditing;
 using Editors = Microsoft.Windows.Design.PropertyEditing.Editors;
+
 #endif
 
-[assembly: ProvideMetadata(typeof(Microsoft.Xaml.Behaviors.DesignTools.MetadataTableProvider))]
-namespace Microsoft.Xaml.Behaviors.DesignTools
+[assembly: ProvideMetadata(typeof(MetadataTableProvider))]
+
+namespace Anori.WPF.Behaviors.DesignTools
 {
     internal partial class MetadataTableProvider : IProvideAttributeTable
     {
-        private AttributeTableBuilder attributeTableBuilder;
+        private AttributeTableBuilder _attributeTableBuilder;
 
         // Accessed by the designer to register any design-time metadata.
         public AttributeTable AttributeTable
         {
             get
             {
-                if (attributeTableBuilder == null)
+                if (this._attributeTableBuilder == null)
                 {
-                    attributeTableBuilder = new AttributeTableBuilder();
+                    this._attributeTableBuilder = new AttributeTableBuilder();
                 }
-                
+
                 #region EventTrigger
+
                 AddAttributes(Targets.EventTrigger,
                     new DescriptionAttribute(Resources.Description_EventTriggerBehavior));
 
@@ -38,9 +46,11 @@ namespace Microsoft.Xaml.Behaviors.DesignTools
                     new DescriptionAttribute(Resources.Description_EventTriggerBehavior_EventName),
                     new CategoryAttribute(Resources.Category_Common_Properties),
                     PropertyValueEditor.CreateEditorAttribute(typeof(Editors.EventPickerPropertyValueEditor)));
+
                 #endregion EventTrigger
 
                 #region EventTriggerBase
+
                 AddAttributes(Targets.EventTriggerBase, new DefaultBindingPropertyAttribute("SourceObject"));
 
                 AddAttributes(Targets.EventTriggerBase, "SourceObject",
@@ -53,20 +63,36 @@ namespace Microsoft.Xaml.Behaviors.DesignTools
                     new DescriptionAttribute(Resources.Description_EventTriggerBase_SourceName),
                     // This is mapped to BehaviorElementPickerPropertyValueEditor in legacy.
                     PropertyValueEditor.CreateEditorAttribute(typeof(Editors.PropertyPickerPropertyValueEditor)));
+
                 #endregion EventTriggerBase
-                
+
+                //#region NameOfEvent
+
+                //AddAttributes(Targets.NameOfElementExtension, new DefaultBindingPropertyAttribute("Element"));
+
+                //AddAttributes(Targets.NameOfElementExtension, "Element",
+                //    new PropertyOrderAttribute(PropertyOrder.CreateBefore(PropertyOrder.Early)),
+                //    PropertyValueEditor.CreateEditorAttribute(typeof(Editors.ElementBindingPickerPropertyValueEditor)));
+
+                //#endregion NameOfEvent
+
                 #region TriggerBase
+
                 AddAttributes(Targets.TriggerBase, "Actions", new BrowsableAttribute(false));
+
                 #endregion TriggerBase
 
                 #region TriggerAction
+
                 AddAttributes(Targets.TriggerAction, "IsEnabled",
                     new DescriptionAttribute(Resources.Description_TriggerAction_IsEnabled),
                     new CategoryAttribute(Resources.Category_Common_Properties),
                     new EditorBrowsableAttribute(EditorBrowsableState.Advanced));
+
                 #endregion TriggerAction
 
                 #region TargetedTriggerAction
+
                 AddAttributes(Targets.TargetedTriggerAction, new DefaultBindingPropertyAttribute("TargetObject"));
 
                 AddAttributes(Targets.TargetedTriggerAction, "TargetObject",
@@ -81,10 +107,13 @@ namespace Microsoft.Xaml.Behaviors.DesignTools
                     new CategoryAttribute(Resources.Category_Common_Properties),
                     // This is mapped to BehaviorElementPickerPropertyValueEditor in legacy.
                     PropertyValueEditor.CreateEditorAttribute(typeof(Editors.PropertyPickerPropertyValueEditor)));
+
                 #endregion TargetedTriggerAction
 
                 #region ChangePropertyAction
-                AddAttributes(Targets.ChangePropertyAction, new DescriptionAttribute(Resources.Description_ChangePropertyAction));
+
+                AddAttributes(Targets.ChangePropertyAction,
+                    new DescriptionAttribute(Resources.Description_ChangePropertyAction));
 
                 AddAttributes(Targets.ChangePropertyAction, "PropertyName",
                     new CategoryAttribute(Resources.Category_Common_Properties),
@@ -94,17 +123,19 @@ namespace Microsoft.Xaml.Behaviors.DesignTools
                 AddAttributes(Targets.ChangePropertyAction, "Duration",
                     new CategoryAttribute(Resources.Category_Animation_Properties),
                     new DescriptionAttribute(Resources.Description_ChangePropertyAction_Duration));
-                
+
                 AddAttributes(Targets.ChangePropertyAction, "Increment",
                     new CategoryAttribute(Resources.Category_Common_Properties),
                     new DescriptionAttribute(Resources.Description_ChangePropertyAction_Increment));
 
-                AddAttributes(Targets.ChangePropertyAction, "Value", 
-                    new DescriptionAttribute(Resources.Description_ChangePropertyAction_Value), 
+                AddAttributes(Targets.ChangePropertyAction, "Value",
+                    new DescriptionAttribute(Resources.Description_ChangePropertyAction_Value),
                     new CategoryAttribute(Resources.Category_Common_Properties));
+
                 #endregion ChangePropertyAction
 
                 #region InvokeCommandAction
+
                 AddAttributes(Targets.InvokeCommandAction,
                     new DescriptionAttribute(Resources.Description_InvokeCommandAction),
                     new DefaultBindingPropertyAttribute("Command"));
@@ -112,7 +143,8 @@ namespace Microsoft.Xaml.Behaviors.DesignTools
                 AddAttributes(Targets.InvokeCommandAction, "Command",
                     new DescriptionAttribute(Resources.Description_InvokeCommandAction_Command),
                     new CategoryAttribute(Resources.Category_Common_Properties),
-                    PropertyValueEditor.CreateEditorAttribute(typeof(Editors.PropertyBindingPickerPropertyValueEditor)));
+                    PropertyValueEditor.CreateEditorAttribute(
+                        typeof(Editors.PropertyBindingPickerPropertyValueEditor)));
 
                 AddAttributes(Targets.InvokeCommandAction, "CommandParameter",
                     new TypeConverterAttribute(typeof(StringConverter)),
@@ -124,18 +156,22 @@ namespace Microsoft.Xaml.Behaviors.DesignTools
                     new DescriptionAttribute(Resources.Description_InvokeCommandAction_CommandName),
                     new CategoryAttribute(Resources.Category_Common_Properties),
                     new EditorBrowsableAttribute(EditorBrowsableState.Advanced));
+
                 #endregion InvokeCommandAction
 
                 #region InvokeCommandAction
+
                 AddAttributes(Targets.LaunchUriOrFileAction,
                     new DescriptionAttribute(Resources.Description_LaunchURLOrFileAction));
-                
+
                 AddAttributes(Targets.LaunchUriOrFileAction, "Path",
                     new DescriptionAttribute(Resources.Description_LaunchURLOrFileAction_Path),
                     new CategoryAttribute(Resources.Category_Common_Properties));
+
                 #endregion InvokeCommandAction
 
                 #region MouseDragElementBehavior
+
                 AddAttributes(Targets.MouseDragElementBehavior,
                     new DescriptionAttribute(Resources.Description_MouseDragElementBehavior));
 
@@ -154,19 +190,22 @@ namespace Microsoft.Xaml.Behaviors.DesignTools
                 AddAttributes(Targets.MouseDragElementBehavior, "ConstrainToParentBounds",
                     new DescriptionAttribute(Resources.Description_MouseDragElementBehavior_ConstrainToParentBounds),
                     new CategoryAttribute(Resources.Category_Common_Properties));
+
                 #endregion MouseDragElementBehavior
 
                 #region DataStateBehavior
+
                 PropertyOrder order = PropertyOrder.Default;
                 AddAttributes(Targets.DataStateBehavior,
                     new DescriptionAttribute(Resources.Description_DataStateBehavior),
                     new DefaultBindingPropertyAttribute("Binding"));
-                
+
                 AddAttributes(Targets.DataStateBehavior, "Binding",
                     new PropertyOrderAttribute(order = PropertyOrder.CreateAfter(order)),
                     new DescriptionAttribute(Resources.Description_DataStateBehavior_Binding),
                     new CategoryAttribute(Resources.Category_Common_Properties),
-                    PropertyValueEditor.CreateEditorAttribute(typeof(Editors.PropertyBindingPickerPropertyValueEditor)));
+                    PropertyValueEditor.CreateEditorAttribute(
+                        typeof(Editors.PropertyBindingPickerPropertyValueEditor)));
 
                 AddAttributes(Targets.DataStateBehavior, "Value",
                     new PropertyOrderAttribute(order = PropertyOrder.CreateAfter(order)),
@@ -183,9 +222,11 @@ namespace Microsoft.Xaml.Behaviors.DesignTools
                     new PropertyOrderAttribute(order = PropertyOrder.CreateAfter(order)),
                     new DescriptionAttribute(Resources.Description_DataStateBehavior_FalseState),
                     new CategoryAttribute(Resources.Category_Common_Properties));
+
                 #endregion DataStateBehavior
 
                 #region FluidMoveBehavior
+
                 AddAttributes(Targets.FluidMoveBehavior,
                     new DescriptionAttribute(Resources.Description_FluidMoveBehavior));
 
@@ -204,7 +245,7 @@ namespace Microsoft.Xaml.Behaviors.DesignTools
                 AddAttributes(Targets.FluidMoveBehavior, "FloatAbove",
                     new DescriptionAttribute(Resources.Description_FluidMoveBehavior_FloatAbove),
                     new CategoryAttribute(Resources.Category_Animation_Properties));
-                
+
                 AddAttributes(Targets.FluidMoveBehavior, "EaseX",
                     new DescriptionAttribute(Resources.Description_FluidMoveBehavior_EaseX),
                     new CategoryAttribute(Resources.Category_Animation_Properties));
@@ -212,9 +253,11 @@ namespace Microsoft.Xaml.Behaviors.DesignTools
                 AddAttributes(Targets.FluidMoveBehavior, "EaseY",
                     new DescriptionAttribute(Resources.Description_FluidMoveBehavior_EaseY),
                     new CategoryAttribute(Resources.Category_Animation_Properties));
+
                 #endregion FluidMoveBehavior
 
                 #region FluidMoveBehaviorBase
+
                 AddAttributes(Targets.FluidMoveBehaviorBase, "AppliesTo",
                     new DescriptionAttribute(Resources.Description_FluidMoveBehavior_AppliesTo),
                     new CategoryAttribute(Resources.Category_Common_Properties));
@@ -232,26 +275,32 @@ namespace Microsoft.Xaml.Behaviors.DesignTools
                     new DescriptionAttribute(Resources.Description_FluidMoveSetTagBehavior_TagPath),
                     new EditorBrowsableAttribute(EditorBrowsableState.Advanced),
                     new CategoryAttribute(Resources.Category_Tag_Properties));
+
                 #endregion FluidMoveBehaviorBase
 
                 #region StoryboardAction
+
                 AddAttributes(Targets.StoryboardAction, "Storyboard",
                     new DescriptionAttribute(Resources.Description_ControlStoryboardAction_Storyboard),
                     new CategoryAttribute(Resources.Category_Common_Properties),
                     new TypeConverterAttribute(typeof(TypeConverter)),
                     PropertyValueEditor.CreateEditorAttribute(typeof(Editors.StoryboardPickerPropertyValueEditor)));
+
                 #endregion StoryboardAction
 
                 #region ControlStoryboardAction
-                AddAttributes(Targets.ControlStoryboardAction, 
+
+                AddAttributes(Targets.ControlStoryboardAction,
                     new DescriptionAttribute(Resources.Description_ControlStoryboardAction));
 
                 AddAttributes(Targets.ControlStoryboardAction, "ControlStoryboardOption",
                     new DescriptionAttribute(Resources.Description_ControlStoryboardAction_ControlStoryboardOption),
                     new CategoryAttribute(Resources.Category_Common_Properties));
+
                 #endregion ControlStoryboardAction
-                
+
                 #region GotoStateAction
+
                 AddAttributes(Targets.GoToStateAction,
                     new DescriptionAttribute(Resources.Description_GoToStateAction));
 
@@ -263,9 +312,11 @@ namespace Microsoft.Xaml.Behaviors.DesignTools
                 AddAttributes(Targets.GoToStateAction, "UseTransitions",
                     new DescriptionAttribute(Resources.Description_GoToStateAction_UseTransitions),
                     new CategoryAttribute(Resources.Category_Common_Properties));
+
                 #endregion GotoStateAction
 
                 #region TranslateZoomRotateBehavior
+
                 AddAttributes(Targets.TranslateZoomRotateBehavior,
                     new DescriptionAttribute(Resources.Description_TranslateZoomRotateBehavior));
 
@@ -289,7 +340,7 @@ namespace Microsoft.Xaml.Behaviors.DesignTools
                     new NumberRangesAttribute(0, 0, null, null, false),
                     new CategoryAttribute(Resources.Category_Common_Properties),
                     new PropertyOrderAttribute(order = PropertyOrder.CreateAfter(order)));
-                
+
                 AddAttributes(Targets.TranslateZoomRotateBehavior, "MaximumScale",
                     new DescriptionAttribute(Resources.Description_TranslateZoomRotateBehavior_MaximumScale),
                     new NumberIncrementsAttribute(0.01, 0.1, 1.0),
@@ -306,9 +357,11 @@ namespace Microsoft.Xaml.Behaviors.DesignTools
                     new DescriptionAttribute(Resources.Description_TranslateZoomRotateBehavior_ConstrainToParentBounds),
                     new CategoryAttribute(Resources.Category_Common_Properties),
                     new PropertyOrderAttribute(order = PropertyOrder.CreateAfter(order)));
+
                 #endregion TranslateZoomRotateBehavior
 
                 #region PlaySoundAction
+
                 AddAttributes(Targets.PlaySoundAction,
                     new DescriptionAttribute(Resources.Description_PlaySoundAction));
 
@@ -322,9 +375,11 @@ namespace Microsoft.Xaml.Behaviors.DesignTools
                     new NumberIncrementsAttribute(0.001, 0.01, 0.1),
                     new DescriptionAttribute(Resources.Description_PlaySoundAction_Volume),
                     new CategoryAttribute(Resources.Category_Common_Properties));
+
                 #endregion PlaySoundAction
 
                 #region CallMethodAction
+
                 AddAttributes(Targets.CallMethodAction,
                     new DescriptionAttribute(Resources.Description_CallMethodAction),
                     new DefaultBindingPropertyAttribute("TargetObject"));
@@ -339,9 +394,10 @@ namespace Microsoft.Xaml.Behaviors.DesignTools
                     new PropertyOrderAttribute(order = PropertyOrder.CreateAfter(order)),
                     new DescriptionAttribute(Resources.Description_CallMethodAction_MethodName),
                     new CategoryAttribute(Resources.Category_Common_Properties));
+
                 #endregion CallMethodAction
 
-                return attributeTableBuilder.CreateTable();
+                return this._attributeTableBuilder.CreateTable();
             }
         }
     }

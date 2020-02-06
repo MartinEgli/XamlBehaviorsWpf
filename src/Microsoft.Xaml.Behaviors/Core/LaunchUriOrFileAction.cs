@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft. All rights reserved. 
 // Licensed under the MIT license. See LICENSE file in the project root for full license information. 
-namespace Microsoft.Xaml.Behaviors.Core
+namespace Anori.WPF.Behaviors.Core
 {
     using System.Diagnostics;
     using System.Windows;
-    using Microsoft.Xaml.Behaviors;
+    using Anori.WPF.Behaviors;
 
     /// <summary>
     /// An action that will launch a process to open a file or Uri. For files, this action will launch the default program 

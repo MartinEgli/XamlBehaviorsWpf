@@ -1,17 +1,15 @@
-﻿namespace Behaviors.Extensions
+﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Reflection;
+using System.Windows;
+using Anori.WPF.Behaviors;
+using TriggerBase = Anori.WPF.Behaviors.TriggerBase;
+
+namespace Behaviors.Extensions
 {
-    using System;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Globalization;
-    using System.Reflection;
-    using System.Windows;
-
-    using Microsoft.Xaml.Behaviors;
-
-    using TriggerBase = Microsoft.Xaml.Behaviors.TriggerBase;
-
     /// <summary>
     ///     Represents a trigger that can listen to an object other than its AssociatedObject.
     /// </summary>
@@ -257,8 +255,7 @@
             {
                 newHost = ((IAttachedObject)newBehavior).AssociatedObject;
                 newBehavior.AssociatedObjectChanged += this.OnBehaviorHostChanged;
-            }
-            else if (this.SourceObject != null || newHostElement == null)
+            } else if (this.SourceObject != null || newHostElement == null)
             {
                 try
                 {
@@ -270,8 +267,7 @@
                     // been attached to something that doesn't meet the target type constraint, accessing Source
                     // will throw.
                 }
-            }
-            else
+            } else
             {
                 this.SourceNameResolver.NameScopeReferenceElement = newHostElement;
             }

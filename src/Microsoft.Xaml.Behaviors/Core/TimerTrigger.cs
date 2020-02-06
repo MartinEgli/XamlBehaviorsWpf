@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft. All rights reserved. 
 // Licensed under the MIT license. See LICENSE file in the project root for full license information. 
-namespace Microsoft.Xaml.Behaviors.Core
+namespace Anori.WPF.Behaviors.Core
 {
     using System;
     using System.Windows;
@@ -9,7 +9,7 @@ namespace Microsoft.Xaml.Behaviors.Core
     /// <summary>
     /// A trigger that is triggered by a specified event occurring on its source and fires after a delay when that event is fired.
     /// </summary>
-    public class TimerTrigger : Microsoft.Xaml.Behaviors.EventTrigger
+    public class TimerTrigger : Anori.WPF.Behaviors.EventTrigger
     {
         public static readonly DependencyProperty MillisecondsPerTickProperty = DependencyProperty.Register("MillisecondsPerTick",
                                                                                                     typeof(double),

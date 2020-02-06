@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved. 
 // Licensed under the MIT license. See LICENSE file in the project root for full license information. 
-namespace Microsoft.Xaml.Behaviors.Layout
+namespace Anori.WPF.Behaviors.Layout
 {
     using System;
     using System.Diagnostics;
@@ -8,8 +8,8 @@ namespace Microsoft.Xaml.Behaviors.Layout
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Media;
-    using Microsoft.Xaml.Behaviors.Core;
-    using Microsoft.Xaml.Behaviors;
+    using Anori.WPF.Behaviors.Core;
+    using Anori.WPF.Behaviors;
 
     /// <summary>
     /// Repositions the attached element in response to mouse drag gestures on the element.

@@ -1,6 +1,6 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
-namespace Microsoft.Xaml.Behaviors.Core
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+namespace Anori.WPF.Behaviors.Core
 {
     using System;
     using System.Collections.Generic;
@@ -8,7 +8,7 @@ namespace Microsoft.Xaml.Behaviors.Core
     using System.Linq;
     using System.Reflection;
     using System.Windows;
-    using Microsoft.Xaml.Behaviors;
+    using Anori.WPF.Behaviors;
 
     /// <summary>
     /// Calls a method on a specified object when invoked.
@@ -69,18 +69,15 @@ namespace Microsoft.Xaml.Behaviors.Core
                     if (parameters.Length == 0)
                     {
                         methodDescriptor.MethodInfo.Invoke(this.Target, null);
-                    }
-                    else if (parameters.Length == 2 && this.AssociatedObject != null && parameter != null)
+                    } else if (parameters.Length == 2 && this.AssociatedObject != null && parameter != null)
                     {
                         if (parameters[0].ParameterType.IsAssignableFrom(this.AssociatedObject.GetType())
                             && parameters[1].ParameterType.IsAssignableFrom(parameter.GetType()))
                         {
-
                             methodDescriptor.MethodInfo.Invoke(this.Target, new object[] { this.AssociatedObject, parameter });
                         }
                     }
-                }
-                else if (this.TargetObject != null)
+                } else if (this.TargetObject != null)
                 {
                     throw new ArgumentException(string.Format(CultureInfo.CurrentCulture,
                         ExceptionStringTable.CallMethodActionValidMethodNotFoundExceptionMessage,
@@ -197,8 +194,7 @@ namespace Microsoft.Xaml.Behaviors.Core
                 {
                     return false;
                 }
-            }
-            else if (methodParams.Length != 0)
+            } else if (methodParams.Length != 0)
             {
                 return false;
             }

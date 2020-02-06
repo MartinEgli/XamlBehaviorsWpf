@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved. 
 // Licensed under the MIT license. See LICENSE file in the project root for full license information. 
-namespace Microsoft.Xaml.Behaviors.Core
+namespace Anori.WPF.Behaviors.Core
 {
     using System;
     using System.ComponentModel;
@@ -11,7 +11,7 @@ namespace Microsoft.Xaml.Behaviors.Core
     using System.Windows;
     using System.Windows.Media;
     using System.Windows.Media.Animation;
-    using Microsoft.Xaml.Behaviors;
+    using Anori.WPF.Behaviors;
 
     /// <summary>
     /// An action that will change a specified property to a specified value when invoked.

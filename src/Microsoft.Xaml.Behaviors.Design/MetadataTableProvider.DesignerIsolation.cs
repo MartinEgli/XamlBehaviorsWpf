@@ -1,13 +1,13 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
-using Microsoft.Xaml.Behaviors.Core;
-using Microsoft.Xaml.Behaviors.Input;
-using Microsoft.Xaml.Behaviors.Layout;
-using Microsoft.Xaml.Behaviors.Media;
+using Anori.WPF.Behaviors.Core;
+using Anori.WPF.Behaviors.Input;
+using Anori.WPF.Behaviors.Layout;
+using Anori.WPF.Behaviors.Media;
 
-namespace Microsoft.Xaml.Behaviors.DesignTools
+namespace Anori.WPF.Behaviors.DesignTools
 {
     partial class MetadataTableProvider
     {
@@ -38,10 +38,12 @@ namespace Microsoft.Xaml.Behaviors.DesignTools
         }
 
         /// <summary>
-        /// This class contains the types used by the older Extensibility APIs.
+        ///     This class contains the types used by the older Extensibility APIs.
         /// </summary>
         private static class Targets
         {
+            //  internal static readonly Type NameOfElementExtension = typeof(NameOfElementExtension);
+
             internal static readonly Type EventTrigger = typeof(EventTrigger);
             internal static readonly Type EventTriggerBase = typeof(EventTriggerBase);
             internal static readonly Type TriggerBase = typeof(TriggerBase);

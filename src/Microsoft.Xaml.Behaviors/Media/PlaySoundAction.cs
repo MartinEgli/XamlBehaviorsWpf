@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft. All rights reserved. 
 // Licensed under the MIT license. See LICENSE file in the project root for full license information. 
-namespace Microsoft.Xaml.Behaviors.Media
+namespace Anori.WPF.Behaviors.Media
 {
     using System;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
-    using Microsoft.Xaml.Behaviors;
+    using Anori.WPF.Behaviors;
 
     /// <summary>
     /// An action that will play a sound to completion.
