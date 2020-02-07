@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFrameworks>net451</TargetFrameworks>
+    <UseWPF>true</UseWPF>
+    <AssemblyOriginatorKeyFile>Behaviors.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Source\Anori.WPF.Behaviors.Extensions\Anori.WPF.Behaviors.Extensions.csproj" />
+    <ProjectReference Include="..\..\Source\Anori.WPF.Behaviors\Anori.WPF.Behaviors.csproj" />
+  </ItemGroup>
+</Project>

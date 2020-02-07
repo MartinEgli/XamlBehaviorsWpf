@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.Behaviors", "Microsoft.Xaml.Behaviors\Anori.WPF.Behaviors.csproj", "{8620C598-B704-429E-BCA5-7E5DDE506923}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.Behaviors", "Anori.WPF.Behaviors\Anori.WPF.Behaviors.csproj", "{8620C598-B704-429E-BCA5-7E5DDE506923}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "..\Test\UnitTests\UnitTests.csproj", "{76E3CE29-A9BC-4417-8224-CE18C6FE51B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "..\Tests\UnitTests\UnitTests.csproj", "{76E3CE29-A9BC-4417-8224-CE18C6FE51B4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DFFF3108-79F3-4D4C-BB7E-991E7B1B26A6}"
 	ProjectSection(SolutionItems) = preProject
@@ -18,13 +18,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\version.json = ..\version.json
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.Behaviors.Extensions", "Behaviors.Extensions\Anori.WPF.Behaviors.Extensions.csproj", "{BE3F8D60-56EF-4DDE-8931-CD5F84992F93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.Behaviors.Extensions", "Anori.WPF.Behaviors.Extensions\Anori.WPF.Behaviors.Extensions.csproj", "{BE3F8D60-56EF-4DDE-8931-CD5F84992F93}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.Behaviors.Extensions.GuiTests", "..\Test\Behaviors.Extensions.GuiTests\Anori.WPF.Behaviors.Extensions.GuiTests.csproj", "{54AC852E-903D-469E-98FF-84A45697B6A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.Behaviors.Extensions.GuiTests", "..\Tests\Anori.WPF.Behaviors.Extensions.GuiTests\Anori.WPF.Behaviors.Extensions.GuiTests.csproj", "{54AC852E-903D-469E-98FF-84A45697B6A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.Behaviors.Design", "Microsoft.Xaml.Behaviors.Design\Anori.WPF.Behaviors.Design.csproj", "{6FBA03AC-D43F-447F-A087-404B9DB14952}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.Behaviors.Design", "Anori.WPF.Behaviors.Design\Anori.WPF.Behaviors.Design.csproj", "{6FBA03AC-D43F-447F-A087-404B9DB14952}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.Behaviors.DesignTools", "Microsoft.Xaml.Behaviors.DesignTools\Anori.WPF.Behaviors.DesignTools.csproj", "{6C3F3432-D090-450B-822B-95B7C3CEF663}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.Behaviors.DesignTools", "Anori.WPF.Behaviors.DesignTools\Anori.WPF.Behaviors.DesignTools.csproj", "{6C3F3432-D090-450B-822B-95B7C3CEF663}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "WpfApp1\WpfApp1.csproj", "{EE32B697-30A7-42EF-A44F-6391425355EA}"
 EndProject

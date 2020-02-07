@@ -1,13 +1,13 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
     using System;
     using System.Windows.Controls;
     using System.Windows.Shapes;
+    using Anori.WPF.Behaviors;
+    using Anori.WPF.Behaviors.Core;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Microsoft.Xaml.Behaviors;
-    using Microsoft.Xaml.Behaviors.Core;
     using SysWindows = System.Windows;
 
     [TestClass]
@@ -63,8 +63,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             {
                 behaviors2.Add(behavior);
                 Assert.Fail("InvalidOperationexception should be thrown if same behavior is attached to two elements");
-            }
-            catch (InvalidOperationException)
+            } catch (InvalidOperationException)
             {
             }
         }
@@ -91,8 +90,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             {
                 buttonBehaviors.Add(rectangleBehavior);
                 Assert.Fail("Expected InvalidOperationException to be thrown thrown.");
-            }
-            catch (InvalidOperationException)
+            } catch (InvalidOperationException)
             {
             }
         }
@@ -136,6 +134,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
         }
 
         #region ActionCommand test cross-function state
+
         private bool actionTestSucceeded;
         private Button actionTestButton = new Button();
 
@@ -154,6 +153,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
         {
             Assert.Fail("ActionCommand.CanExecuteChanged should never be called.");
         }
-        #endregion
+
+        #endregion ActionCommand test cross-function state
     }
 }

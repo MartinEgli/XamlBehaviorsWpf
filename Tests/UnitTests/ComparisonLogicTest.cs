@@ -1,11 +1,11 @@
-// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
     using System;
+    using Anori.WPF.Behaviors;
+    using Anori.WPF.Behaviors.Core;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Microsoft.Xaml.Behaviors;
-    using Microsoft.Xaml.Behaviors.Core;
 
     [TestClass]
     public sealed class ComparisonLogicTest
@@ -20,7 +20,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             return new StubComparableClass();
         }
 
-        #endregion
+        #endregion Factory methods
 
         #region Test methods
 
@@ -229,7 +229,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             Assert.IsTrue(result, "Double should not be equal to 'Foo'");
         }
 
-        #endregion
+        #endregion Test methods
 
         #region Helper classes
 
@@ -338,6 +338,6 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             }
         }
 
-        #endregion
+        #endregion Helper classes
     }
 }

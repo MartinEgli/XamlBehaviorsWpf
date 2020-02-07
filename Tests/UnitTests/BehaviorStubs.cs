@@ -1,12 +1,12 @@
-// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
+    using Anori.WPF.Behaviors;
+    using Anori.WPF.Behaviors.Core;
     using System;
     using System.Windows.Input;
     using System.Windows.Shapes;
-    using Microsoft.Xaml.Behaviors;
-    using Microsoft.Xaml.Behaviors.Core;
     using SysWindows = System.Windows;
 
     public sealed class SingleConstructorArgumentTrigger : TriggerBase<System.Windows.Controls.Button>
@@ -31,7 +31,9 @@ namespace Microsoft.Xaml.Interactions.UnitTests
         public delegate void IntEventHandler(int i);
 
         public event EventHandler StubEvent;
+
         public event EventHandler StubEvent2;
+
         public event IntEventHandler IntEvent;
 
         public void FireStubEvent()
@@ -135,8 +137,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             if (this.firstHost == null)
             {
                 this.firstHost = (T)this.AssociatedObject;
-            }
-            else if (!this.AssociatedObject.Equals(this.firstHost))
+            } else if (!this.AssociatedObject.Equals(this.firstHost))
             {
                 this.ChangedHost = true;
             }
@@ -159,6 +160,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
         public static readonly SysWindows.DependencyProperty BindingObjectProperty = SysWindows.DependencyProperty.Register("BindingObject",
                                                                                                                                 typeof(object),
                                                                                                                                 typeof(BindingAction));
+
         public object BindingObject
         {
             get
@@ -173,7 +175,6 @@ namespace Microsoft.Xaml.Interactions.UnitTests
 
         protected override void Invoke(object parameter)
         {
-
         }
 
         protected override System.Windows.Freezable CreateInstanceCore()
@@ -187,6 +188,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
         private static int invokeToken = 0;
 
         private int order;
+
         public int Order
         {
             get { return this.order; }
@@ -206,6 +208,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
     public class StubAction : TriggerAction<System.Windows.DependencyObject>
     {
         private int invokeCount;
+
         public int InvokeCount
         {
             get { return this.invokeCount; }
@@ -301,7 +304,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             this.delegateCommand();
         }
 
-        #endregion
+        #endregion ICommand Members
     }
 
     public class StubBehavior : Behavior<SysWindows.DependencyObject>
@@ -325,6 +328,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
         }
 
         private object lastParameter;
+
         public object LastParameter
         {
             get { return this.lastParameter; }

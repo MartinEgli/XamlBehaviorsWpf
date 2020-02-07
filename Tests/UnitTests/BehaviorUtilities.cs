@@ -10,6 +10,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
     using SysWindows = System.Windows;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.Xaml.Behaviors;
+    using Anori.WPF.Behaviors;
 
     sealed class UniqueClass : SysWindows.DependencyObject
     {
@@ -22,6 +23,12 @@ namespace Microsoft.Xaml.Interactions.UnitTests
         public const int IntegerOperand4 = 4;
         public const int IntegerOperand5 = 5;
         public const int IntegerOperand6 = 6;
+
+        internal static void TestIAttachedObject<T>(IAttachedObject stubAction)
+        {
+            throw new NotImplementedException();
+        }
+
         public const float FloatOperand = 3.1415f;
 
         public static void TestConstraintOnAssociatedObject<T>(IAttachedObject attachedObject) where T : SysWindows.DependencyObject, new()

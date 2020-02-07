@@ -1,12 +1,12 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
     using System;
     using System.Diagnostics;
     using System.Windows.Controls;
+    using Anori.WPF.Behaviors;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Microsoft.Xaml.Behaviors;
     using SysWindows = System.Windows;
 
     [TestClass]
@@ -97,8 +97,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             {
                 trigger2.Actions.Add(action);
                 Debug.Fail("Expected InvalidOperationException to be thrown after adding an action to a second trigger.");
-            }
-            catch (InvalidOperationException)
+            } catch (InvalidOperationException)
             {
             }
 

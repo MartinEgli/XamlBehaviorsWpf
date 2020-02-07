@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Microsoft.Xaml.Behaviors\bin\Debug\net45\Design\</OutputPath>
+    <OutputPath>..\Anori.WPF.Behaviors\bin\Debug\net45\Design\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -26,13 +26,16 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Microsoft.Xaml.Behaviors\bin\Release\net45\Design\</OutputPath>
+    <OutputPath>..\Anori.WPF.Behaviors\bin\Release\net45\Design\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);DesignerIsolation</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Behaviors.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Windows.Design.Extensibility, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -51,10 +54,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Microsoft.Xaml.Behaviors.DesignTools\MetadataTableProvider.cs">
+    <Compile Include="..\Anori.WPF.Behaviors.DesignTools\MetadataTableProvider.cs">
       <Link>MetadataTableProvider.cs</Link>
     </Compile>
-    <Compile Include="..\Microsoft.Xaml.Behaviors.DesignTools\Properties\Resources1.Designer.cs">
+    <Compile Include="..\Anori.WPF.Behaviors.DesignTools\Properties\Resources1.Designer.cs">
       <Link>Properties\Resources1.Designer.cs</Link>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -68,23 +71,26 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\Microsoft.Xaml.Behaviors.DesignTools\Properties\Resources.resx">
+    <EmbeddedResource Include="..\Anori.WPF.Behaviors.DesignTools\Properties\Resources.resx">
       <Link>Properties\Resources.resx</Link>
       <Generator>ResXFileCodeGenerator</Generator>
-      <CustomToolNamespace>Microsoft.Xaml.Behaviors.DesignTools</CustomToolNamespace>
+      <CustomToolNamespace>Anori.WPF.Behaviors.DesignTools</CustomToolNamespace>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Xaml.Behaviors.DesignTools\Anori.WPF.Behaviors.DesignTools.csproj">
+    <ProjectReference Include="..\Anori.WPF.Behaviors.DesignTools\Anori.WPF.Behaviors.DesignTools.csproj">
       <Project>{6c3f3432-d090-450b-822b-95b7c3cef663}</Project>
       <Name>Anori.WPF.Behaviors.DesignTools</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Microsoft.Xaml.Behaviors\Anori.WPF.Behaviors.csproj">
+    <ProjectReference Include="..\Anori.WPF.Behaviors\Anori.WPF.Behaviors.csproj">
       <Project>{8620c598-b704-429e-bca5-7e5dde506923}</Project>
       <Name>Anori.WPF.Behaviors</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Behaviors.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
