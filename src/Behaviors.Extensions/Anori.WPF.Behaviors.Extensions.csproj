@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <TargetFrameworks>net451</TargetFrameworks>
+    <UseWPF>true</UseWPF>
+    <OutputType>Library</OutputType>
+    <PackageId>Behaviors.Extensions</PackageId>
+    <Title>Behaviors.Extensions</Title>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Xaml.Behaviors\Anori.WPF.Behaviors.csproj" />
+  </ItemGroup>
+</Project>

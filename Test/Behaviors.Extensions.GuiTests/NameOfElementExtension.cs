@@ -6,6 +6,8 @@
 
 namespace Behaviors.Extensions.GuiTests
 {
+    using JetBrains.Annotations;
+
     #region
 
     using System;
@@ -14,10 +16,6 @@ namespace Behaviors.Extensions.GuiTests
     using System.Windows.Data;
     using System.Windows.Markup;
     using System.Xaml;
-
-    using Behaviors.Extensions.GuiTests.Properties;
-
-    using JetBrains.Annotations;
 
     #endregion
 
@@ -134,7 +132,7 @@ namespace Behaviors.Extensions.GuiTests
             {
                 var elementName = Binding.ElementName;
 
-                Element = elementName ?? throw new NameOfExtensionException(Resources.BindingHasNoElementName);
+                Element = elementName ?? throw new NameOfExtensionException("BindingHasNoElementName");
             }
 
             if (this.Type == null)

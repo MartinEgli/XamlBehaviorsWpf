@@ -2,11 +2,11 @@
     x:Class="Behaviors.Extensions.GuiTests.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:extensions="clr-namespace:Behaviors.Extensions;assembly=Behaviors.Extensions"
     xmlns:local="clr-namespace:Behaviors.Extensions.GuiTests"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Behaviors="http://schemas.anori.com/xaml/behaviors"
     x:Name="Window"
     Title="MainWindow"
     Width="800"
@@ -16,9 +16,24 @@
 
         <Button>
             <Behaviors:Interaction.Triggers>
-                <Behaviors:EventTrigger EventName="{local:NameOf Click1, Button, ThrowRuntimeException=True}">
-                    <extensions:ToggleEnabledTargetedTriggerAction TargetName="{local:NameOfElement Button2, Type={x:Type local:MainWindow}}" />
-                    <extensions:ToggleEnabledTargetedTriggerAction TargetName="{local:NameOfElement Button3, Type={x:Type local:MainWindow}}" />
+                <Behaviors:EventTrigger EventName="{local:NameOf Click, Button, ThrowRuntimeException=False}">
+                    <extensions:ToggleEnabledTargetedTriggerAction
+                        TargetName="{local:NameOfElement Button2, Type={x:Type local:MainWindow}}" />
+                    <extensions:ToggleEnabledTargetedTriggerAction
+                        TargetName="{local:NameOfElement Button3, Type={x:Type local:MainWindow}}" />
+                </Behaviors:EventTrigger>
+            </Behaviors:Interaction.Triggers>
+            <Button.Content>Button 1</Button.Content>
+        </Button>
+
+        <Button>
+            <Behaviors:Interaction.StyleBehaviors>
+            </Behaviors:Interaction.StyleBehaviors>
+            <Behaviors:Interaction.Triggers>
+                <Behaviors:EventTrigger>
+                    <Behaviors:EventTrigger.EventName>
+                        <local:NameOfElement Element="" Type="{x:Type local:MainWindow}" />
+                    </Behaviors:EventTrigger.EventName>
                 </Behaviors:EventTrigger>
             </Behaviors:Interaction.Triggers>
             <Button.Content>Button 1</Button.Content>
@@ -31,7 +46,13 @@
 
                 <extensions:DependencyPropertyChangedEventTrigger EventName="{local:NameOf IsEnabledChanged, Button}">
                     <!--<extensions:SetTimeTargetedTriggerAction TargetName="{local:NameOf Member=Box1, Type={x:Type local:MainWindow}}" />-->
-                    <extensions:SetTimeTargetedTriggerAction TargetName="{local:NameOfElement Binding={Binding ElementName=Box1}, Type={x:Type local:MainWindow}, ElementType={x:Type Control}}" />
+                    <extensions:SetTimeTargetedTriggerAction>
+                        <extensions:SetTimeTargetedTriggerAction.TargetName>
+                            <!--<Behaviors:NameOfElement Element="" Binding="{Binding ElementName=Box1}" Type="{x:Type local:MainWindow}"
+                                                 ElementType="{x:Type Control}" />-->
+                            <local:NameOfElement Element="" />
+                        </extensions:SetTimeTargetedTriggerAction.TargetName>
+                    </extensions:SetTimeTargetedTriggerAction>
                 </extensions:DependencyPropertyChangedEventTrigger>
             </Behaviors:Interaction.Triggers>
             <Button.Content>Button 2</Button.Content>

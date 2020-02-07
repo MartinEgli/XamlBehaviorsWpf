@@ -1,0 +1,125 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <TargetFrameworks>net451</TargetFrameworks>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeProjectToProjectAssets</TargetsForTfmSpecificBuildOutput>
+    <OutputType>Library</OutputType>
+    <PackageId>Anori.WPF.Behaviors.Wpf</PackageId>
+    <Title>Anori.WPF.Behaviors.Wpf</Title>
+    <Authors>Microsoft</Authors>
+    <Description>Easily add interactivity to your apps using XAML Behaviors for WPF. Behaviors encapsulate reusable functionalities for elements that can be easily added to your XAML without the need for more imperative code.</Description>
+    <Company>Microsoft Corporation</Company>
+    <Product>Anori.WPF.Behaviors</Product>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://go.microsoft.com/fwlink/?linkid=2026353</PackageProjectUrl>
+    <PackageIconUrl>http://go.microsoft.com/fwlink/?LinkID=708511</PackageIconUrl>
+    <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
+    <PackageTags>Behavior Action Behaviors Actions Blend Managed C# Interaction Interactivity Interactions</PackageTags>
+    <PackageProjectUrl>https://github.com/Microsoft/XamlBehaviorsWpf</PackageProjectUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DefineConstants>WPF;$(DefineConstants)</DefineConstants>
+    <UseWPF>true</UseWPF>
+    <AssemblyOriginatorKeyFile>$(ProjectDir)Behaviors.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <GenerateNuspecDependsOn>$(GenerateNuspecDependsOn);TimestampNugetPackage</GenerateNuspecDependsOn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>FinalPublicKey.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>true</DelaySign>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(SignType)' == 'real'">
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>true</DelaySign>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='net45'">
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.XML" />
+    <Reference Include="WindowsBase">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="ExceptionStringTable.Designer.cs">
+      <SubType>Code</SubType>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ExceptionStringTable.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Update="ExceptionStringTable.resx">
+      <Public>True</Public>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ExceptionStringTable.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="10.2.1" />
+    <PackageReference Include="MicroBuild.Core" Version="0.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudioEng.MicroBuild.Core" Version="0.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Nerdbank.GitVersioning" Version="2.3.38" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="FinalPublicKey.snk" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <FilesToSign Include="$(OutputPath)$(AssemblyName).dll">
+      <Authenticode>Microsoft400</Authenticode>
+      <StrongName>StrongName</StrongName>
+    </FilesToSign>
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Install.ps1 is for .NET Framework projects (not .NET Core).
+    The script removes the reference to the .Design.dll in the referencing project.
+    It is placed in the root of the project so that it is correctly picked up
+    and placed in the tools/ directory of the NuGet package. -->
+    <Content Include="Install.ps1">
+      <PackagePath>tools\</PackagePath>
+    </Content>
+  </ItemGroup>
+
+  <Target Name="IncludeProjectToProjectAssets">
+    <ItemGroup>
+      <BuildOutputInPackage
+        Include="$(ProjectDir)bin\$(Configuration)\net45\Design\Anori.WPF.Behaviors.DesignTools.dll"
+        Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
+        <TargetPath>Design</TargetPath>
+      </BuildOutputInPackage>
+      <BuildOutputInPackage
+        Include="$(ProjectDir)bin\$(Configuration)\net45\Design\Anori.WPF.Behaviors.Design.dll"
+        Condition="'$(TargetFramework)' == 'net45'">
+        <TargetPath>Design</TargetPath>
+      </BuildOutputInPackage>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="TimestampNugetPackage">
+    <PropertyGroup>
+      <CurrentDate>$([System.DateTime]::Now.ToString(yyyyMMdd-HHmm))</CurrentDate>
+      <PackageVersion Condition="'$(TimestampPackage)' == 'true'">$(PackageVersion)-CI-$(CurrentDate)</PackageVersion>
+      <NuspecProperties>version=$(PackageVersion)</NuspecProperties>
+    </PropertyGroup>
+  </Target>
+</Project>

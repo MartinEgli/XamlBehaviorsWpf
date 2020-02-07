@@ -34,7 +34,7 @@ steps:
 - task: MSBuild@1
   displayName: Pack Behaviors
   inputs:
-    solution: src/**/Microsoft.Xaml.Behaviors.csproj
+    solution: src/**/Anori.WPF.Behaviors.csproj
     msbuildArguments: /t:Pack /p:PackageOutputPath=$(Build.ArtifactStagingDirectory)
     configuration: $(buildConfiguration)
     maximumCpuCount: false
