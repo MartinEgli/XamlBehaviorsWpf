@@ -28,9 +28,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.Behaviors.DesignT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfApp1", "WpfApp1\WpfApp1.csproj", "{EE32B697-30A7-42EF-A44F-6391425355EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.Behaviors.Observables", "Anori.WPF.Behaviors.Observables\Anori.WPF.Behaviors.Observables.csproj", "{972A3507-AC7C-4BA3-BA41-CD1D079BCDDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.Behaviors.Observables", "Anori.WPF.Behaviors.Observables\Anori.WPF.Behaviors.Observables.csproj", "{972A3507-AC7C-4BA3-BA41-CD1D079BCDDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.NameChecks", "Anori.WPF.NameChecks\Anori.WPF.NameChecks.csproj", "{1044828A-BB51-4AE0-9E06-DABA26573821}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.NameChecks", "Anori.WPF.NameChecks\Anori.WPF.NameChecks.csproj", "{1044828A-BB51-4AE0-9E06-DABA26573821}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.Behaviors.Observables.GuiTests", "..\Tests\Anori.WPF.Behaviors.Observables.GuiTests\Anori.WPF.Behaviors.Observables.GuiTests.csproj", "{B0311CF5-2839-4CCF-8A4D-FF0D84E8BDF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -112,6 +114,14 @@ Global
 		{1044828A-BB51-4AE0-9E06-DABA26573821}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1044828A-BB51-4AE0-9E06-DABA26573821}.Release|x86.ActiveCfg = Release|Any CPU
 		{1044828A-BB51-4AE0-9E06-DABA26573821}.Release|x86.Build.0 = Release|Any CPU
+		{B0311CF5-2839-4CCF-8A4D-FF0D84E8BDF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0311CF5-2839-4CCF-8A4D-FF0D84E8BDF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0311CF5-2839-4CCF-8A4D-FF0D84E8BDF2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B0311CF5-2839-4CCF-8A4D-FF0D84E8BDF2}.Debug|x86.Build.0 = Debug|Any CPU
+		{B0311CF5-2839-4CCF-8A4D-FF0D84E8BDF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0311CF5-2839-4CCF-8A4D-FF0D84E8BDF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0311CF5-2839-4CCF-8A4D-FF0D84E8BDF2}.Release|x86.ActiveCfg = Release|Any CPU
+		{B0311CF5-2839-4CCF-8A4D-FF0D84E8BDF2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
