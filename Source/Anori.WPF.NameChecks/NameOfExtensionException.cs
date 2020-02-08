@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Behaviors.Extensions.GuiTests
+namespace Anori.WPF.NameChecks
 {
     using System;
 
@@ -19,6 +19,6 @@ namespace Behaviors.Extensions.GuiTests
         /// Initializes a new instance of the <see cref="NameOfExtensionException"/> class.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
-        public NameOfExtensionException(string message): base(message) { }
+        public NameOfExtensionException(string message) : base(message) { }
     }
 }

@@ -1,5 +1,5 @@
-// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
     using System;
@@ -8,9 +8,11 @@ namespace Microsoft.Xaml.Interactions.UnitTests
     using System.Windows.Data;
     using System.Windows.Input;
     using System.Windows.Shapes;
+
+    using Anori.WPF.Behaviors;
+    using Anori.WPF.Behaviors.Core;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Microsoft.Xaml.Behaviors;
-    using Microsoft.Xaml.Behaviors.Core;
 
     using SysWindows = System.Windows;
 
@@ -31,7 +33,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             Interaction.ShouldRunInDesignMode = false;
         }
 
-        #endregion
+        #endregion Setup and teardown methods
 
         #region Factory methods
 
@@ -88,7 +90,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             return new CommandHelper();
         }
 
-        #endregion
+        #endregion Factory methods
 
         #region Helper methods
 
@@ -154,7 +156,9 @@ namespace Microsoft.Xaml.Interactions.UnitTests
 
             public string Name { get; set; } = "default";
 
-            public EventArgsMock() { }
+            public EventArgsMock()
+            {
+            }
 
             public EventArgsMock(string name)
             {
@@ -185,9 +189,10 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             }
         }
 
-        #endregion
+        #endregion Helper methods
 
         #region Test methods
+
         [TestMethod]
         public void Invoke_LegalCommandName_InvokesCommand()
         {
@@ -340,7 +345,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             InvokeCommandAction invokeCommandAction = CreateInvokeCommandAction();
             invokeCommandAction.Command = stubBehavior.StubCommandWithParameter;
             invokeCommandAction.PassEventArgsToCommand = true;
-            
+
             StubTrigger trigger = AttachActionToObject(invokeCommandAction, stubBehavior);
 
             var args = new EventArgsMock();
@@ -350,6 +355,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             Assert.IsNotNull(stubBehavior.LastParameter);
             Assert.IsInstanceOfType(stubBehavior.LastParameter, typeof(EventArgsMock));
         }
-        #endregion
+
+        #endregion Test methods
     }
 }

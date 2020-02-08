@@ -1,19 +1,22 @@
-// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
     using System;
     using System.Windows.Controls;
     using System.Windows.Media;
     using System.Windows.Shapes;
+
+    using Anori.WPF.Behaviors;
+    using Anori.WPF.Behaviors.Core;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Microsoft.Xaml.Behaviors;
-    using Microsoft.Xaml.Behaviors.Core;
 
     [TestClass]
     public class ChangePropertyActionTests
     {
         #region Setup and Teardown
+
         [TestInitialize]
         public void Setup()
         {
@@ -25,7 +28,8 @@ namespace Microsoft.Xaml.Interactions.UnitTests
         {
             Interaction.ShouldRunInDesignMode = false;
         }
-        #endregion
+
+        #endregion Setup and Teardown
 
         #region Factory methods
 
@@ -79,7 +83,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             return new ChangePropertyActionTargetStub();
         }
 
-        #endregion
+        #endregion Factory methods
 
         #region Helper methods and classes
 
@@ -181,9 +185,10 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             }
         }
 
-        #endregion
+        #endregion Helper methods and classes
 
         #region Test methods
+
         [TestMethod]
         public void Invoke_NoPropertyName_IsNoOp()
         {
@@ -709,6 +714,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
 
             Assert.AreEqual(target.StringProperty, "True", "StringProperty should have been assigned True as a string");
         }
-#endregion
+
+        #endregion Test methods
     }
 }

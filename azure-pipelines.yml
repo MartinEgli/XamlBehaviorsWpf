@@ -26,7 +26,7 @@ steps:
 - task: MSBuild@1
   displayName: Build Solution
   inputs:
-    solution: src/*.sln
+    solution: Source/*.sln
     msbuildArguments: /restore
     configuration: $(buildConfiguration)
     maximumCpuCount: false
@@ -34,7 +34,7 @@ steps:
 - task: MSBuild@1
   displayName: Pack Behaviors
   inputs:
-    solution: src/**/Anori.WPF.Behaviors.csproj
+    solution: source/**/Anori.WPF.Behaviors.csproj
     msbuildArguments: /t:Pack /p:PackageOutputPath=$(Build.ArtifactStagingDirectory)
     configuration: $(buildConfiguration)
     maximumCpuCount: false

@@ -1,12 +1,14 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
     using System;
     using System.Windows.Controls;
+
+    using Anori.WPF.Behaviors;
+    using Anori.WPF.Behaviors.Core;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Microsoft.Xaml.Behaviors;
-    using Microsoft.Xaml.Behaviors.Core;
 
     using SysWindows = System.Windows;
 
@@ -25,7 +27,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             return new Grid();
         }
 
-        #endregion
+        #endregion Factory methods
 
         #region Helper methods
 
@@ -52,7 +54,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             panel.RegisterName(childElement.Name, childElement);
         }
 
-        #endregion
+        #endregion Helper methods
 
         #region Test methods
 
@@ -137,7 +139,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             Assert.AreEqual(gridVSM.LastStateName, VisualStateHelper.ArbitraryThirdStateName, "test");
         }
 
-        #endregion
+        #endregion Test methods
 
         #region Helper classes
 
@@ -161,8 +163,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
                     if (parent == null || parent is SysWindows::Window)
                     {
                         break;
-                    }
-                    else
+                    } else
                     {
                         content = parent;
                     }
@@ -190,6 +191,6 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             }
         }
 
-        #endregion
+        #endregion Helper classes
     }
 }

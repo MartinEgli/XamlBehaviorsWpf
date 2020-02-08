@@ -1,11 +1,13 @@
-// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
     using System.Windows.Shapes;
+
+    using Anori.WPF.Behaviors;
+    using Anori.WPF.Behaviors.Core;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Microsoft.Xaml.Behaviors;
-    using Microsoft.Xaml.Behaviors.Core;
     using SysWindows = System.Windows;
 
     [TestClass]
@@ -25,7 +27,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             Interaction.ShouldRunInDesignMode = false;
         }
 
-        #endregion
+        #endregion Setup/teardown
 
         #region Factory methods
 
@@ -57,7 +59,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             return stubAction;
         }
 
-        #endregion
+        #endregion Factory methods
 
         #region Test methods
 
@@ -105,6 +107,6 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             Assert.AreEqual(stubAction.InvokeCount, 0, "The trigger should not have been invoked.");
         }
 
-        #endregion
+        #endregion Test methods
     }
 }

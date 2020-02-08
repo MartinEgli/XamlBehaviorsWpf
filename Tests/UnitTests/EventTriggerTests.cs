@@ -1,12 +1,14 @@
-// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
     using System;
     using System.Windows.Controls;
     using System.Windows.Shapes;
+
+    using Anori.WPF.Behaviors;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Microsoft.Xaml.Behaviors;
     using SysWindows = System.Windows;
 
     [TestClass]
@@ -16,9 +18,9 @@ namespace Microsoft.Xaml.Interactions.UnitTests
 
         [TestInitialize]
         public void Setup()
-            {
-                Interaction.ShouldRunInDesignMode = true;
-            }
+        {
+            Interaction.ShouldRunInDesignMode = true;
+        }
 
         [TestCleanup]
         public void Teardown()
@@ -26,7 +28,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             Interaction.ShouldRunInDesignMode = false;
         }
 
-        #endregion
+        #endregion Setup/teardown
 
         #region Factory methods
 
@@ -68,7 +70,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             return new ClrEventClassStub();
         }
 
-        #endregion
+        #endregion Factory methods
 
         #region Helper methods and classes
 
@@ -98,6 +100,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
         private class ClrEventClassStub
         {
             public event EventHandler Event;
+
             public static readonly string EventName = "Event";
 
             public void Fire()
@@ -109,7 +112,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             }
         }
 
-        #endregion
+        #endregion Helper methods and classes
 
         #region Test methods
 
@@ -398,6 +401,6 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             Assert.IsNull(((IAttachedObject)eventTrigger1).AssociatedObject, "Trigger was detached");
         }
 
-        #endregion
+        #endregion Test methods
     }
 }

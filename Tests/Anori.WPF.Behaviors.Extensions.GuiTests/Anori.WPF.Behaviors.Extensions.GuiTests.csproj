@@ -8,5 +8,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Source\Anori.WPF.Behaviors.Extensions\Anori.WPF.Behaviors.Extensions.csproj" />
     <ProjectReference Include="..\..\Source\Anori.WPF.Behaviors\Anori.WPF.Behaviors.csproj" />
+    <ProjectReference Include="..\..\Source\Anori.WPF.NameChecks\Anori.WPF.NameChecks.csproj" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,9 @@
-// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// -----------------------------------------------------------------------
+// <copyright file="VisualStateUtilitiesTest.cs" company="Anori Soft">
+// Copyright (c) Anori Soft. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
     using System.Collections;
@@ -7,8 +11,10 @@ namespace Microsoft.Xaml.Interactions.UnitTests
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
+
+    using Anori.WPF.Behaviors;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Microsoft.Xaml.Behaviors;
 
     [TestClass]
     public sealed class VisualStateUtilitiesTest
@@ -17,10 +23,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
 
         private static UserControl CreateUserControlWithContent(object content)
         {
-            return new UserControl()
-            {
-                Content = content,
-            };
+            return new UserControl { Content = content };
         }
 
         private static Button CreateButton()
@@ -35,8 +38,10 @@ namespace Microsoft.Xaml.Interactions.UnitTests
 
         private static Button CreateButtonWithCustomState(string stateName)
         {
-            return CreateButtonWithCustomTemplate(string.Format(CultureInfo.InvariantCulture,
-                                @"<ControlTemplate 
+            return CreateButtonWithCustomTemplate(
+                string.Format(
+                    CultureInfo.InvariantCulture,
+                    @"<ControlTemplate
                                     TargetType='{{x:Type Button}}'
                                     xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'
                                     xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'>
@@ -47,7 +52,8 @@ namespace Microsoft.Xaml.Interactions.UnitTests
                                             </VisualStateGroup>
                                         </VisualStateManager.VisualStateGroups>
                                     </Grid>
-                                  </ControlTemplate>", stateName));
+                                  </ControlTemplate>",
+                    stateName));
         }
 
         private static Button CreateButtonWithCustomTemplate(string templateString)
@@ -55,7 +61,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             Button button = CreateButton();
             ControlTemplate controlTemplate = new ControlTemplate();
 
-            XamlFragmentParser.TryParseXaml<ControlTemplate>(templateString, out controlTemplate);
+            XamlFragmentParser.TryParseXaml(templateString, out controlTemplate);
 
             button.Template = controlTemplate;
             button.ApplyTemplate();
@@ -69,7 +75,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             return grid;
         }
 
-        #endregion
+        #endregion Factory methods
 
         #region Test methods
 
@@ -83,7 +89,10 @@ namespace Microsoft.Xaml.Interactions.UnitTests
 
             FrameworkElement nearestControl;
             VisualStateUtilities.TryFindNearestStatefulControl(button, out nearestControl);
-            Assert.AreEqual(nearestControl, userControl, "Using child Grid of UserControl as context, closest stateful control should be UserControl.");
+            Assert.AreEqual(
+                nearestControl,
+                userControl,
+                "Using child Grid of UserControl as context, closest stateful control should be UserControl.");
         }
 
         [TestMethod]
@@ -94,7 +103,10 @@ namespace Microsoft.Xaml.Interactions.UnitTests
 
             FrameworkElement nearestControl;
             VisualStateUtilities.TryFindNearestStatefulControl(child, out nearestControl);
-            Assert.AreEqual(nearestControl, templatedButton, "Using child Grid of Button's ControlTemplate as context, closest stateful control should be Button.");
+            Assert.AreEqual(
+                nearestControl,
+                templatedButton,
+                "Using child Grid of Button's ControlTemplate as context, closest stateful control should be Button.");
         }
 
         [TestMethod]
@@ -115,7 +127,9 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             Button statefulButton = CreateButtonWithCustomState(testStateName);
 
             bool success = VisualStateUtilities.GoToState(statefulButton, testStateName, true);
-            Assert.IsTrue(success, "GoToState on a valid state in a ControlTemplate should navigate to the state correctly.");
+            Assert.IsTrue(
+                success,
+                "GoToState on a valid state in a ControlTemplate should navigate to the state correctly.");
         }
 
         [TestMethod]
@@ -131,6 +145,6 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             }
         }
 
-        #endregion
+        #endregion Test methods
     }
 }

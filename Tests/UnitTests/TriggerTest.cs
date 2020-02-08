@@ -1,13 +1,15 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
     using System;
     using System.Diagnostics;
     using System.Windows.Controls;
     using System.Windows.Shapes;
+
+    using Anori.WPF.Behaviors;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Microsoft.Xaml.Behaviors;
     using WindowsBase = System.Windows;
 
     [TestClass]
@@ -72,7 +74,6 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             Assert.IsFalse(trigger.RemovedHost, "Trigger has not been unparented.");
         }
 
-
         [TestMethod]
         public void TestCreateInstanceCore()
         {
@@ -133,8 +134,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             {
                 collection2.Add(trigger);
                 Debug.Fail("Attaching the same trigger twice should throw a InvalidOperationException");
-            }
-            catch (InvalidOperationException)
+            } catch (InvalidOperationException)
             {
             }
         }

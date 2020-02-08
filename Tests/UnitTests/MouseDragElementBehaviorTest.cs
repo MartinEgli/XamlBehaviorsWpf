@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
     using System;
@@ -8,9 +8,11 @@ namespace Microsoft.Xaml.Interactions.UnitTests
     using System.Windows.Media;
     using System.Windows.Shapes;
     using System.Windows.Threading;
+
+    using Anori.WPF.Behaviors;
+    using Anori.WPF.Behaviors.Layout;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Microsoft.Xaml.Behaviors;
-    using Microsoft.Xaml.Behaviors.Layout;
 
     [TestClass]
     public class MouseDragElementBehaviorTest
@@ -94,11 +96,12 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             return mouseDragElementBehavior;
         }
 
-        #endregion
+        #endregion Factory methods
 
         #region Test methods
 
         #region TransformIsCloned
+
         [TestMethod]
         public void OnPositionUpdated_DefaultTransform_TransformIsCloned()
         {
@@ -178,7 +181,8 @@ namespace Microsoft.Xaml.Interactions.UnitTests
 
             return rectangle.RenderTransform;
         }
-        #endregion
+
+        #endregion TransformIsCloned
 
         #region TransformIsCorrect
 
@@ -227,7 +231,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             this.VerifyOffset(draggedTransform, 1.0, 1.0);
         }
 
-        #endregion
+        #endregion TransformIsCorrect
 
         #region IsInCanonicalForm
 
@@ -241,7 +245,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             Assert.IsTrue(isCanonical, "Canonical form should be preserved on drag.");
         }
 
-        #endregion
+        #endregion IsInCanonicalForm
 
         [TestMethod]
         public void IsConstrainedFalse_DragOutsideParentBounds_LeavesParentBounds()
@@ -337,7 +341,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             this.VerifyOffset(rect.RenderTransform, 45.0d, 45.0d);
         }
 
-        #endregion
+        #endregion Test methods
 
         #region Helper functions
 
@@ -422,11 +426,11 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             frameworkElement.RenderTransform = transform;
         }
 
-        #endregion
+        #endregion Helper functions
 
         #region Helper classes
 
-        class TestMouseDragElementBehavior : MouseDragElementBehavior
+        private class TestMouseDragElementBehavior : MouseDragElementBehavior
         {
             public void SimulateDragByDelta(double x, double y)
             {
@@ -434,6 +438,6 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             }
         }
 
-        #endregion
+        #endregion Helper classes
     }
 }

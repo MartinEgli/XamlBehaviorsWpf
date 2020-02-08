@@ -1,18 +1,22 @@
-// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
     using System.ComponentModel;
     using System.Windows;
     using System.Windows.Data;
+
+    using Anori.WPF.Behaviors;
+    using Anori.WPF.Behaviors.Core;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Microsoft.Xaml.Behaviors;
-    using Microsoft.Xaml.Behaviors.Core;
 
     internal class StubDataStore : INotifyPropertyChanged
     {
         private string foo;
+
         #region INotifyPropertyChanged Members
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(string propertyName)
@@ -22,7 +26,8 @@ namespace Microsoft.Xaml.Interactions.UnitTests
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-        #endregion
+
+        #endregion INotifyPropertyChanged Members
 
         public string Foo
         {
@@ -58,7 +63,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             Interaction.ShouldRunInDesignMode = false;
         }
 
-        #endregion
+        #endregion Setup/teardown
 
         #region Factory methods
 
@@ -87,7 +92,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
         {
             using (StubWindow window = new StubWindow(null))
             {
-                // Change the value on the data store. 
+                // Change the value on the data store.
                 dataStore.Foo = "foo";
                 // Force the Data binding phase
                 DispatcherHelper.ForceDataBinding();
@@ -99,7 +104,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
         {
             using (StubWindow window = new StubWindow(null))
             {
-                // Change the value on the data store. 
+                // Change the value on the data store.
                 dataStore.Foo = "foo";
                 // Force the Data binding phase
                 DispatcherHelper.ForceDataBinding();
@@ -115,7 +120,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
         {
             using (StubWindow window = new StubWindow(null))
             {
-                // Change the value on the data store. 
+                // Change the value on the data store.
                 dataStore.Foo = "foo";
                 // Force the Data binding phase
                 DispatcherHelper.ForceDataBinding();
@@ -126,7 +131,8 @@ namespace Microsoft.Xaml.Interactions.UnitTests
                 Assert.AreEqual(stubAction.InvokeCount, 2, "The trigger should have been invoked twice.");
             }
         }
-        #endregion
+
+        #endregion Factory methods
 
         #region Test methods
 
@@ -195,6 +201,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
 
             this.Test_SetBindingValue_ValueChangedTwice(trigger, stubAction, dataStore);
         }
-        #endregion
+
+        #endregion Test methods
     }
 }

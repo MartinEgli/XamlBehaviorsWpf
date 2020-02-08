@@ -1,10 +1,11 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
+    using Anori.WPF.Behaviors;
+    using Anori.WPF.Behaviors.Core;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Microsoft.Xaml.Behaviors;
-    using Microsoft.Xaml.Behaviors.Core;
 
     [TestClass]
     public class ConditionBehaviorTest
@@ -97,7 +98,6 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             conditionalExpression.Conditions[1].RightOperand = BehaviorTestUtilities.IntegerOperand6;
             conditionalExpression.Conditions[1].Operator = ComparisonConditionType.LessThan;
 
-
             // Firing the trigger, with one of the condition not met
             trigger.FireStubTrigger();
             Assert.AreEqual(action.InvokeCount, 0, "action.InvokeCount == 0, one conditon not met");
@@ -126,7 +126,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             conditionalExpression.Conditions[1].RightOperand = BehaviorTestUtilities.IntegerOperand6;
             conditionalExpression.Conditions[1].Operator = ComparisonConditionType.LessThan;
 
-            // Firing the trigger, forward chaining changed to OR. 
+            // Firing the trigger, forward chaining changed to OR.
             conditionalExpression.ForwardChaining = ForwardChaining.Or;
             trigger.FireStubTrigger();
             Assert.AreEqual(action.InvokeCount, 1, "action.InvokeCount == 1, one conditon is met, forward chaining was Or");
@@ -155,7 +155,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             conditionalExpression.Conditions[1].RightOperand = BehaviorTestUtilities.IntegerOperand6;
             conditionalExpression.Conditions[1].Operator = ComparisonConditionType.GreaterThan;
 
-            // Firing the trigger, forward chaining changed to OR. 
+            // Firing the trigger, forward chaining changed to OR.
             conditionalExpression.ForwardChaining = ForwardChaining.Or;
             trigger.FireStubTrigger();
             Assert.AreEqual(action.InvokeCount, 0, "action.InvokeCount == 0, both conditons are not met, forward chaining was Or");

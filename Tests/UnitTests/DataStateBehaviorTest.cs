@@ -1,14 +1,20 @@
-// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// -----------------------------------------------------------------------
+// <copyright file="DataStateBehaviorTest.cs" company="Anori Soft">
+// Copyright (c) Anori Soft. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
     using System;
     using System.Collections.ObjectModel;
     using System.Windows;
     using System.Windows.Controls;
+
+    using Anori.WPF.Behaviors;
+    using Anori.WPF.Behaviors.Core;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Microsoft.Xaml.Behaviors;
-    using Microsoft.Xaml.Behaviors.Core;
 
     public class VisualStateManagerStub : VisualStateManager
     {
@@ -24,7 +30,13 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             private set;
         }
 
-        protected override bool GoToStateCore(FrameworkElement control, FrameworkElement stateGroupsRoot, string stateName, VisualStateGroup group, VisualState state, bool useTransitions)
+        protected override bool GoToStateCore(
+            FrameworkElement control,
+            FrameworkElement stateGroupsRoot,
+            string stateName,
+            VisualStateGroup group,
+            VisualState state,
+            bool useTransitions)
         {
             this.LastStateName = stateName;
             this.LastUseTransitions = useTransitions;
@@ -35,13 +47,17 @@ namespace Microsoft.Xaml.Interactions.UnitTests
     public static class VisualStateHelper
     {
         public const string DefaultTrueStateName = "TrueState";
+
         public const string DefaultFalseStateName = "FalseState";
+
         public const string ArbitraryThirdStateName = "ThirdState";
 
-        public static T CreateObjectWithStates<T>() where T : DependencyObject, new()
+        public static T CreateObjectWithStates<T>()
+            where T : DependencyObject, new()
         {
             T obj = new T();
-            ObservableCollection<VisualStateGroup> visualStateGroups = (ObservableCollection<VisualStateGroup>)obj.GetValue(VisualStateManager.VisualStateGroupsProperty);
+            ObservableCollection<VisualStateGroup> visualStateGroups =
+                (ObservableCollection<VisualStateGroup>)obj.GetValue(VisualStateManager.VisualStateGroupsProperty);
             VisualState trueState = CreateVisualState(DefaultTrueStateName);
             VisualState falseState = CreateVisualState(DefaultFalseStateName);
             VisualState thirdState = CreateVisualState(ArbitraryThirdStateName);
@@ -53,10 +69,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
 
         public static VisualState CreateVisualState(string stateName)
         {
-            return new VisualState()
-            {
-                Name = stateName,
-            };
+            return new VisualState { Name = stateName };
         }
 
         public static VisualStateManagerStub CreateVSMStub()
@@ -71,6 +84,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             {
                 group.States.Add(state);
             }
+
             return group;
         }
 
@@ -85,6 +99,16 @@ namespace Microsoft.Xaml.Interactions.UnitTests
     [TestClass]
     public sealed class DataStateBehaviorTest
     {
+        #region Helper methods
+
+        private static void AttachBehavior(Behavior behavior, DependencyObject dependencyObject)
+        {
+            BehaviorCollection behaviors = Interaction.GetBehaviors(dependencyObject);
+            behaviors.Add(behavior);
+        }
+
+        #endregion Helper methods
+
         #region Setup/teardown
 
         [TestInitialize]
@@ -99,17 +123,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             Interaction.ShouldRunInDesignMode = false;
         }
 
-        #endregion
-
-        #region Helper methods
-
-        private static void AttachBehavior(Behavior behavior, DependencyObject dependencyObject)
-        {
-            BehaviorCollection behaviors = Interaction.GetBehaviors(dependencyObject);
-            behaviors.Add(behavior);
-        }
-
-        #endregion
+        #endregion Setup/teardown
 
         #region Factory methods
 
@@ -122,10 +136,10 @@ namespace Microsoft.Xaml.Interactions.UnitTests
 
         private DataStateBehavior CreateDefaultDataStateBehavior()
         {
-            DataStateBehavior dataStateBehavior = new DataStateBehavior()
+            DataStateBehavior dataStateBehavior = new DataStateBehavior
             {
                 TrueState = VisualStateHelper.DefaultTrueStateName,
-                FalseState = VisualStateHelper.DefaultFalseStateName,
+                FalseState = VisualStateHelper.DefaultFalseStateName
             };
             return dataStateBehavior;
         }
@@ -151,7 +165,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             return new object();
         }
 
-        #endregion
+        #endregion Factory methods
 
         #region Test methods
 
@@ -221,7 +235,10 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             AttachBehavior(dataStateBehavior, stateGrid);
 
             dataStateBehavior.TrueState = VisualStateHelper.ArbitraryThirdStateName;
-            Assert.AreEqual(vsmStub.LastStateName, VisualStateHelper.ArbitraryThirdStateName, "Change in TrueState should have caused a transition to the new state, as Binding matches Value.");
+            Assert.AreEqual(
+                vsmStub.LastStateName,
+                VisualStateHelper.ArbitraryThirdStateName,
+                "Change in TrueState should have caused a transition to the new state, as Binding matches Value.");
         }
 
         [TestMethod]
@@ -233,7 +250,10 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             AttachBehavior(dataStateBehavior, stateGrid);
 
             dataStateBehavior.FalseState = VisualStateHelper.ArbitraryThirdStateName;
-            Assert.AreEqual(vsmStub.LastStateName, VisualStateHelper.ArbitraryThirdStateName, "Change in FalseState should have caused a transition to the new state, as Binding does not match Value.");
+            Assert.AreEqual(
+                vsmStub.LastStateName,
+                VisualStateHelper.ArbitraryThirdStateName,
+                "Change in FalseState should have caused a transition to the new state, as Binding does not match Value.");
         }
 
         [TestMethod]
@@ -245,7 +265,10 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             AttachBehavior(dataStateBehavior, stateGrid);
 
             dataStateBehavior.Value = dataStateBehavior.Binding;
-            Assert.AreEqual(vsmStub.LastStateName, VisualStateHelper.DefaultTrueStateName, "Value change to match Binding should have caused a transition to the TrueState");
+            Assert.AreEqual(
+                vsmStub.LastStateName,
+                VisualStateHelper.DefaultTrueStateName,
+                "Value change to match Binding should have caused a transition to the TrueState");
         }
 
         [TestMethod]
@@ -257,7 +280,10 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             AttachBehavior(dataStateBehavior, stateGrid);
 
             dataStateBehavior.Value = CreateObject();
-            Assert.AreEqual(vsmStub.LastStateName, VisualStateHelper.DefaultFalseStateName, "Value change to no longer match Binding should have caused a transition to the FalseState");
+            Assert.AreEqual(
+                vsmStub.LastStateName,
+                VisualStateHelper.DefaultFalseStateName,
+                "Value change to no longer match Binding should have caused a transition to the FalseState");
         }
 
         [TestMethod]
@@ -269,7 +295,10 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             AttachBehavior(dataStateBehavior, stateGrid);
 
             dataStateBehavior.Binding = dataStateBehavior.Value;
-            Assert.AreEqual(vsmStub.LastStateName, VisualStateHelper.DefaultTrueStateName, "Binding change to match Value should have caused a transition to the TrueState");
+            Assert.AreEqual(
+                vsmStub.LastStateName,
+                VisualStateHelper.DefaultTrueStateName,
+                "Binding change to match Value should have caused a transition to the TrueState");
         }
 
         [TestMethod]
@@ -281,8 +310,12 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             AttachBehavior(dataStateBehavior, stateGrid);
 
             dataStateBehavior.Binding = CreateObject();
-            Assert.AreEqual(vsmStub.LastStateName, VisualStateHelper.DefaultFalseStateName, "Binding change to no longer match Value should have caused a transition to the FalseState");
+            Assert.AreEqual(
+                vsmStub.LastStateName,
+                VisualStateHelper.DefaultFalseStateName,
+                "Binding change to no longer match Value should have caused a transition to the FalseState");
         }
-        #endregion
+
+        #endregion Test methods
     }
 }

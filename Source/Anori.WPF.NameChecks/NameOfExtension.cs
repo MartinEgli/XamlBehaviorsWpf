@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Behaviors.Extensions.GuiTests
+namespace Anori.WPF.NameChecks
 {
     #region
 
@@ -112,34 +112,35 @@ namespace Behaviors.Extensions.GuiTests
                 throw new ArgumentNullException(nameof(serviceProvider));
             }
 
-            if (!ThrowRuntimeException)
+            if (!this.ThrowRuntimeException)
             {
-                var target = (IProvideValueTarget)serviceProvider.GetService(typeof(IProvideValueTarget));
+                IProvideValueTarget target =
+                    (IProvideValueTarget)serviceProvider.GetService(typeof(IProvideValueTarget));
                 if (!(target.TargetObject is DependencyObject dependencyObject
                       && System.ComponentModel.DesignerProperties.GetIsInDesignMode(dependencyObject)))
                 {
-                    return Member;
+                    return this.Member;
                 }
             }
 
-            if (Binding != null)
+            if (this.Binding != null)
             {
-                var path = Binding.Path;
+                PropertyPath path = this.Binding.Path;
                 if (path == null)
                 {
                     throw new ArgumentException("No property path");
                 }
 
-                var indexOfLastVariableName = path.Path.LastIndexOf('.');
+                int indexOfLastVariableName = path.Path.LastIndexOf('.');
                 return path.Path.Substring(indexOfLastVariableName + 1);
             }
 
-            if (Type == null)
+            if (this.Type == null)
             {
                 throw new ArgumentException("Syntax for x:NameOf is Type={x:Type [className]}");
             }
 
-            if (string.IsNullOrEmpty(Member))
+            if (string.IsNullOrEmpty(this.Member))
             {
                 throw new ArgumentException("Syntax for x:NameOf is Type={x:Type [className]} Member=[propertyName]");
             }

@@ -4,10 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Behaviors.Extensions.GuiTests
+namespace Anori.WPF.NameChecks
 {
-    using JetBrains.Annotations;
-
     #region
 
     using System;
@@ -16,6 +14,8 @@ namespace Behaviors.Extensions.GuiTests
     using System.Windows.Data;
     using System.Windows.Markup;
     using System.Xaml;
+
+    using JetBrains.Annotations;
 
     #endregion
 
@@ -86,7 +86,7 @@ namespace Behaviors.Extensions.GuiTests
         /// </summary>
         /// <value>The type.</value>
         [ConstructorArgument("type")]
-        public Type Type { get; set; }
+        public object Type { get; set; }
 
         /// <summary>
         ///     Gets or sets the type of the element.
@@ -128,11 +128,11 @@ namespace Behaviors.Extensions.GuiTests
                 throw new ArgumentNullException(nameof(serviceProvider));
             }
 
-            if (Binding != null)
+            if (this.Binding != null)
             {
-                var elementName = Binding.ElementName;
+                string elementName = this.Binding.ElementName;
 
-                Element = elementName ?? throw new NameOfExtensionException("BindingHasNoElementName");
+                this.Element = elementName ?? throw new NameOfExtensionException("BindingHasNoElementName");
             }
 
             if (this.Type == null)
@@ -145,7 +145,12 @@ namespace Behaviors.Extensions.GuiTests
                 this.Type = rootProvider.RootObject.GetType();
             }
 
-            if (string.IsNullOrEmpty(Element))
+            if (!(this.Type is Type type))
+            {
+                throw new ArgumentException($"Type is not a Type {this.Type.GetType()}");
+            }
+
+            if (string.IsNullOrEmpty(this.Element))
             {
                 throw new ArgumentException("Syntax for x:NameOfElement is Type={x:Type [className]} Element=[Name]");
             }
@@ -155,7 +160,7 @@ namespace Behaviors.Extensions.GuiTests
                 throw new ArgumentException("Syntax for x:NameOfElement is Type={x:Type [className]} Element=[Name]");
             }
 
-            if (this.Type.GetRuntimeFields().All(i => i.Name != this.Element))
+            if (type.GetRuntimeFields().All(i => i.Name != this.Element))
             {
                 throw new ArgumentException($"No element found for {this.Element} in {this.Type}");
             }
@@ -165,14 +170,13 @@ namespace Behaviors.Extensions.GuiTests
                 return this.Element;
             }
 
-            if (this.ElementType.IsAssignableFrom(
-                this.Type.GetRuntimeFields().First(i => i.Name == this.Element).FieldType))
+            if (this.ElementType.IsAssignableFrom(type.GetRuntimeFields().First(i => i.Name == this.Element).FieldType))
             {
                 return this.Element;
             }
 
             throw new Exception(
-                "Element Type is " + this.Type.GetRuntimeFields().First(i => i.Name == this.Element).FieldType.Name);
+                "Element Type is " + type.GetRuntimeFields().First(i => i.Name == this.Element).FieldType.Name);
         }
     }
 }

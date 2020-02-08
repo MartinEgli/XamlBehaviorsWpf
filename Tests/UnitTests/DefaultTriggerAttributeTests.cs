@@ -1,13 +1,15 @@
-// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
     using System;
     using System.Collections;
     using System.Diagnostics;
     using System.Windows.Controls;
+
+    using Anori.WPF.Behaviors;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Microsoft.Xaml.Behaviors;
 
     [TestClass]
     public class DefaultTriggerAttributeTests
@@ -49,8 +51,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             {
                 DefaultTriggerAttribute illegalAttribute = new DefaultTriggerAttribute(typeof(Button), typeof(Button), new object[0]);
                 Debug.Fail("ArgumentException should be thrown.");
-            }
-            catch (ArgumentException)
+            } catch (ArgumentException)
             {
             }
         }
@@ -68,8 +69,7 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             {
                 TriggerBase triggerBase = illegalAttribute.Instantiate();
                 Assert.IsNull(triggerBase, "Illegal call to instantiate results in null result, no exception thrown.");
-            }
-            catch
+            } catch
             {
                 Debug.Fail("Unexpected exception thrown.");
             }

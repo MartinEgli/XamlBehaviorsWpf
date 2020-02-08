@@ -1,7 +1,7 @@
-﻿using System.Windows;
-
-namespace Behaviors.Extensions.GuiTests
+﻿namespace Anori.WPF.Behaviors.Extensions.GuiTests
 {
+    using System.Windows;
+
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
     /// </summary>

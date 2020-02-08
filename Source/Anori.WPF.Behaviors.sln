@@ -26,7 +26,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.Behaviors.Design"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.Behaviors.DesignTools", "Anori.WPF.Behaviors.DesignTools\Anori.WPF.Behaviors.DesignTools.csproj", "{6C3F3432-D090-450B-822B-95B7C3CEF663}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "WpfApp1\WpfApp1.csproj", "{EE32B697-30A7-42EF-A44F-6391425355EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfApp1", "WpfApp1\WpfApp1.csproj", "{EE32B697-30A7-42EF-A44F-6391425355EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.Behaviors.Observables", "Anori.WPF.Behaviors.Observables\Anori.WPF.Behaviors.Observables.csproj", "{972A3507-AC7C-4BA3-BA41-CD1D079BCDDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.NameChecks", "Anori.WPF.NameChecks\Anori.WPF.NameChecks.csproj", "{1044828A-BB51-4AE0-9E06-DABA26573821}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -92,6 +96,22 @@ Global
 		{EE32B697-30A7-42EF-A44F-6391425355EA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EE32B697-30A7-42EF-A44F-6391425355EA}.Release|x86.ActiveCfg = Release|Any CPU
 		{EE32B697-30A7-42EF-A44F-6391425355EA}.Release|x86.Build.0 = Release|Any CPU
+		{972A3507-AC7C-4BA3-BA41-CD1D079BCDDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{972A3507-AC7C-4BA3-BA41-CD1D079BCDDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{972A3507-AC7C-4BA3-BA41-CD1D079BCDDC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{972A3507-AC7C-4BA3-BA41-CD1D079BCDDC}.Debug|x86.Build.0 = Debug|Any CPU
+		{972A3507-AC7C-4BA3-BA41-CD1D079BCDDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{972A3507-AC7C-4BA3-BA41-CD1D079BCDDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{972A3507-AC7C-4BA3-BA41-CD1D079BCDDC}.Release|x86.ActiveCfg = Release|Any CPU
+		{972A3507-AC7C-4BA3-BA41-CD1D079BCDDC}.Release|x86.Build.0 = Release|Any CPU
+		{1044828A-BB51-4AE0-9E06-DABA26573821}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1044828A-BB51-4AE0-9E06-DABA26573821}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1044828A-BB51-4AE0-9E06-DABA26573821}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1044828A-BB51-4AE0-9E06-DABA26573821}.Debug|x86.Build.0 = Debug|Any CPU
+		{1044828A-BB51-4AE0-9E06-DABA26573821}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1044828A-BB51-4AE0-9E06-DABA26573821}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1044828A-BB51-4AE0-9E06-DABA26573821}.Release|x86.ActiveCfg = Release|Any CPU
+		{1044828A-BB51-4AE0-9E06-DABA26573821}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

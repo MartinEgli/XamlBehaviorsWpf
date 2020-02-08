@@ -2,7 +2,6 @@
 <Project>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)\src\Behaviors.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)\Source\Behaviors.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-
 </Project>

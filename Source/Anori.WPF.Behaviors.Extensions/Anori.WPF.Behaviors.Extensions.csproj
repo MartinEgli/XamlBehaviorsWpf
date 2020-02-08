@@ -10,4 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Anori.WPF.Behaviors\Anori.WPF.Behaviors.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Triggers\" />
+  </ItemGroup>
 </Project>
