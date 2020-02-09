@@ -18,13 +18,4 @@ namespace Anori.WPF.Behaviors
         /// <returns></returns>
         Behavior Create();
     }
-
-    public interface IBindingCreator
-    {
-        /// <summary>
-        ///     Creates this instance.
-        /// </summary>
-        /// <returns></returns>
-        Binding Create();
-    }
 }

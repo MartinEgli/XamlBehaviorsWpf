@@ -306,7 +306,7 @@ namespace Anori.WPF.Behaviors.Observables
         /// <returns>
         ///     <c>true</c> if [is valid observable] [the specified property information]; otherwise, <c>false</c>.
         /// </returns>
-        private static bool IsValidObservable<TPayload>(PropertyInfo propertyInfo)
+        private static bool IsValidObservable<TPyload>(PropertyInfo propertyInfo)
         {
             Type observableType = propertyInfo.PropertyType;
             if (!typeof(IObservable<TPayload>).IsAssignableFrom(observableType))

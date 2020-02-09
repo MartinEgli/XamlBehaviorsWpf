@@ -6,6 +6,8 @@
         xmlns:Behaviors="http://schemas.anori.com/xaml/behaviors"
         xmlns:nameChecks="clr-namespace:Anori.WPF.NameChecks;assembly=Anori.WPF.NameChecks"
         xmlns:extensions="clr-namespace:Behaviors.Extensions;assembly=Anori.WPF.Behaviors.Extensions"
+        xmlns:guiTests="clr-namespace:Anori.WPF.Behaviors.Observables.GuiTests"
+        xmlns:extensions1="clr-namespace:Anori.WPF.Behaviors.Extensions;assembly=Anori.WPF.Behaviors.Extensions"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <StackPanel>
@@ -27,7 +29,12 @@
                             <Behaviors:StyleTriggerCollection>
                                 <Behaviors:EventTriggerCreator
                                     EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
-                                    <extensions:ToggleEnabledTargetedTriggerAction TargetName="Button2" />
+                                    <Behaviors:EventTriggerCreator.ActionCreators>
+                                        <Behaviors:TriggerActionCreatorCollection>
+                                            <extensions1:ToggleEnabledTargetedTriggerActionCreator
+                                                TargetName="Button4" />
+                                        </Behaviors:TriggerActionCreatorCollection>
+                                    </Behaviors:EventTriggerCreator.ActionCreators>
                                 </Behaviors:EventTriggerCreator>
                             </Behaviors:StyleTriggerCollection>
                         </Setter.Value>

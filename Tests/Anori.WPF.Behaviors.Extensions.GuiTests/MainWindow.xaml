@@ -14,11 +14,13 @@
     Height="450"
     mc:Ignorable="d">
     <StackPanel>
-        <Button Height="{Behaviors:Unset​Value}">
+        <Button>
             <Behaviors:Interaction.Triggers>
                 <Behaviors:EventTrigger EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
-                    <extensions:ToggleEnabledTargetedTriggerAction TargetName="{nameChecks:NameOfElement Button2, Type={x:Type guiTests:MainWindow}}" />
-                    <extensions:ToggleEnabledTargetedTriggerAction TargetName="{nameChecks:NameOfElement Button3, Type={x:Type guiTests:MainWindow}}" />
+                    <extensions:ToggleEnabledTargetedTriggerAction
+                        TargetName="{nameChecks:NameOfElement Button2, Type={x:Type guiTests:MainWindow}}" />
+                    <extensions:ToggleEnabledTargetedTriggerAction
+                        TargetName="{nameChecks:NameOfElement Button3, Type={x:Type guiTests:MainWindow}}" />
                 </Behaviors:EventTrigger>
             </Behaviors:Interaction.Triggers>
             <Button.Content>Button 1</Button.Content>
@@ -41,7 +43,8 @@
                 <!--<Behaviors:EventTrigger EventName="{local:NameOf IsEnabledChanged, Button}">
                 </Behaviors:EventTrigger>-->
 
-                <extensions:DependencyPropertyChangedEventTrigger EventName="{nameChecks:NameOf IsEnabledChanged, Button}">
+                <extensions:DependencyPropertyChangedEventTrigger
+                    EventName="{nameChecks:NameOf IsEnabledChanged, Button}">
                     <!--<extensions:SetTimeTargetedTriggerAction TargetName="{local:NameOf Member=Box1, Type={x:Type local:MainWindow}}" />-->
                     <!--<extensions:SetTimeTargetedTriggerAction>
                         <extensions:SetTimeTargetedTriggerAction.TargetName>

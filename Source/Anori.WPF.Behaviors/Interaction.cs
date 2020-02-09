@@ -4,11 +4,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
+using System.Windows;
+
 namespace Anori.WPF.Behaviors
 {
-    using System;
-    using System.Windows;
-
     /// <summary>
     ///     Static class that owns the Triggers and Behaviors attached properties. Handles propagation of AssociatedObject
     ///     change notifications.
@@ -80,8 +80,10 @@ namespace Anori.WPF.Behaviors
         /// </summary>
         /// <param name="element">The element.</param>
         /// <param name="value">The value.</param>
-        public static void SetStyleBehaviors(DependencyObject element, StyleBehaviorCollection value) =>
+        public static void SetStyleBehaviors(DependencyObject element, StyleBehaviorCollection value)
+        {
             element.SetValue(StyleBehaviorsProperty, value);
+        }
 
         /// <summary>
         ///     Gets the style behaviors.
@@ -107,8 +109,10 @@ namespace Anori.WPF.Behaviors
         /// </summary>
         /// <param name="element">The element.</param>
         /// <param name="value">The value.</param>
-        public static void SetStyleTriggers(DependencyObject element, StyleTriggerCollection value) =>
+        public static void SetStyleTriggers(DependencyObject element, StyleTriggerCollection value)
+        {
             element.SetValue(StyleTriggersProperty, value);
+        }
 
         /// <summary>
         ///     Gets the style behaviors.

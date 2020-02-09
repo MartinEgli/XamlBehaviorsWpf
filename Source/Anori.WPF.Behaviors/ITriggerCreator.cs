@@ -16,4 +16,13 @@ namespace Anori.WPF.Behaviors
         /// <returns></returns>
         TriggerBase Create();
     }
+
+    public interface ITriggerActionCreator
+    {
+        /// <summary>
+        ///     Creates this instance.
+        /// </summary>
+        /// <returns></returns>
+        TriggerAction Create();
+    }
 }
