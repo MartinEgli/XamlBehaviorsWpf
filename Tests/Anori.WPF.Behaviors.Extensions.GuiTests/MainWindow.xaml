@@ -14,7 +14,7 @@
     Height="450"
     mc:Ignorable="d">
     <StackPanel>
-        <Button>
+        <Button Height="{Behaviors:Unset​Value}">
             <Behaviors:Interaction.Triggers>
                 <Behaviors:EventTrigger EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
                     <extensions:ToggleEnabledTargetedTriggerAction TargetName="{nameChecks:NameOfElement Button2, Type={x:Type guiTests:MainWindow}}" />

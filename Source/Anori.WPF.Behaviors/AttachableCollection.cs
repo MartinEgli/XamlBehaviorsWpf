@@ -1,5 +1,9 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// -----------------------------------------------------------------------
+// <copyright file="AttachableCollection.cs" company="Anori Soft">
+// Copyright (c) Anori Soft. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
 namespace Anori.WPF.Behaviors
 {
     using System;
@@ -9,20 +13,34 @@ namespace Anori.WPF.Behaviors
     using System.Windows;
     using System.ComponentModel;
     using System.Globalization;
+
     using Anori.WPF.Behaviors;
 
     /// <summary>
-    /// Represents a collection of IAttachedObject with a shared AssociatedObject and provides change notifications to its contents when that AssociatedObject changes.
+    ///     Represents a collection of IAttachedObject with a shared AssociatedObject and provides change notifications to its
+    ///     contents when that AssociatedObject changes.
     /// </summary>
-    public abstract class AttachableCollection<T> :
-        FreezableCollection<T>,
-        IAttachedObject where T : DependencyObject, IAttachedObject
+    public abstract class AttachableCollection<T> : FreezableCollection<T>, IAttachedObject
+        where T : DependencyObject, IAttachedObject
     {
-        private Collection<T> snapshot;
         private DependencyObject associatedObject;
 
+        private Collection<T> snapshot;
+
         /// <summary>
-        /// The object on which the collection is hosted.
+        ///     Initializes a new instance of the <see cref="AttachableCollection&lt;T&gt;" /> class.
+        /// </summary>
+        /// <remarks>Internal, because this should not be inherited outside this assembly.</remarks>
+        internal AttachableCollection()
+        {
+            INotifyCollectionChanged notifyCollectionChanged = this;
+            notifyCollectionChanged.CollectionChanged += this.OnCollectionChanged;
+
+            this.snapshot = new Collection<T>();
+        }
+
+        /// <summary>
+        ///     The object on which the collection is hosted.
         /// </summary>
         protected DependencyObject AssociatedObject
         {
@@ -34,35 +52,23 @@ namespace Anori.WPF.Behaviors
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttachableCollection&lt;T&gt;"/> class.
-        /// </summary>
-        /// <remarks>Internal, because this should not be inherited outside this assembly.</remarks>
-        internal AttachableCollection()
-        {
-            INotifyCollectionChanged notifyCollectionChanged = (INotifyCollectionChanged)this;
-            notifyCollectionChanged.CollectionChanged += new NotifyCollectionChangedEventHandler(OnCollectionChanged);
-
-            this.snapshot = new Collection<T>();
-        }
-
-        /// <summary>
-        /// Called immediately after the collection is attached to an AssociatedObject.
+        ///     Called immediately after the collection is attached to an AssociatedObject.
         /// </summary>
         protected abstract void OnAttached();
 
         /// <summary>
-        /// Called when the collection is being detached from its AssociatedObject, but before it has actually occurred.
+        ///     Called when the collection is being detached from its AssociatedObject, but before it has actually occurred.
         /// </summary>
         protected abstract void OnDetaching();
 
         /// <summary>
-        /// Called when a new item is added to the collection.
+        ///     Called when a new item is added to the collection.
         /// </summary>
         /// <param name="item">The new item.</param>
         internal abstract void ItemAdded(T item);
 
         /// <summary>
-        /// Called when an item is removed from the collection.
+        ///     Called when an item is removed from the collection.
         /// </summary>
         /// <param name="item">The removed item.</param>
         internal abstract void ItemRemoved(T item);
@@ -82,6 +88,7 @@ namespace Anori.WPF.Behaviors
                     }
                 }
             }
+
             Debug.Assert(isValid, "ReferentialCollection integrity has been compromised.");
         }
 
@@ -90,7 +97,12 @@ namespace Anori.WPF.Behaviors
         {
             if (this.snapshot.Contains(item))
             {
-                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, ExceptionStringTable.DuplicateItemInCollectionExceptionMessage, typeof(T).Name, this.GetType().Name));
+                throw new InvalidOperationException(
+                    string.Format(
+                        CultureInfo.CurrentCulture,
+                        ExceptionStringTable.DuplicateItemInCollectionExceptionMessage,
+                        typeof(T).Name,
+                        this.GetType().Name));
             }
         }
 
@@ -111,6 +123,7 @@ namespace Anori.WPF.Behaviors
                             this.snapshot.Insert(this.IndexOf(item), item);
                         }
                     }
+
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
@@ -119,6 +132,7 @@ namespace Anori.WPF.Behaviors
                         this.ItemRemoved(item);
                         this.snapshot.Remove(item);
                     }
+
                     foreach (T item in e.NewItems)
                     {
                         try
@@ -130,6 +144,7 @@ namespace Anori.WPF.Behaviors
                             this.snapshot.Insert(this.IndexOf(item), item);
                         }
                     }
+
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
@@ -138,6 +153,7 @@ namespace Anori.WPF.Behaviors
                         this.ItemRemoved(item);
                         this.snapshot.Remove(item);
                     }
+
                     break;
 
                 case NotifyCollectionChangedAction.Reset:
@@ -145,12 +161,14 @@ namespace Anori.WPF.Behaviors
                     {
                         this.ItemRemoved(item);
                     }
+
                     this.snapshot = new Collection<T>();
                     foreach (T item in this)
                     {
                         this.VerifyAdd(item);
                         this.ItemAdded(item);
                     }
+
                     break;
 
                 case NotifyCollectionChangedAction.Move:
@@ -166,7 +184,7 @@ namespace Anori.WPF.Behaviors
         #region IAttachedObject Members
 
         /// <summary>
-        /// Gets the associated object.
+        ///     Gets the associated object.
         /// </summary>
         /// <value>The associated object.</value>
         DependencyObject IAttachedObject.AssociatedObject
@@ -178,7 +196,7 @@ namespace Anori.WPF.Behaviors
         }
 
         /// <summary>
-        /// Attaches to the specified object.
+        ///     Attaches to the specified object.
         /// </summary>
         /// <param name="dependencyObject">The object to attach to.</param>
         /// <exception cref="InvalidOperationException">The IAttachedObject is already attached to a different object.</exception>
@@ -191,18 +209,20 @@ namespace Anori.WPF.Behaviors
                     throw new InvalidOperationException();
                 }
 
-                if (Interaction.ShouldRunInDesignMode || !(bool)this.GetValue(DesignerProperties.IsInDesignModeProperty))
+                if (Interaction.ShouldRunInDesignMode
+                    || !(bool)this.GetValue(DesignerProperties.IsInDesignModeProperty))
                 {
                     this.WritePreamble();
                     this.associatedObject = dependencyObject;
                     this.WritePostscript();
                 }
+
                 this.OnAttached();
             }
         }
 
         /// <summary>
-        /// Detaches this instance from its associated object.
+        ///     Detaches this instance from its associated object.
         /// </summary>
         public void Detach()
         {
