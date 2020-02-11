@@ -48,11 +48,11 @@ namespace Anori.WPF.Behaviors
                     }
                 case MultiBinding multiBinding:
                     {
-                        return CloneMultiBindingImplementation(multiBinding, source);
+                        return CloneMultiBindingWithSourceImplementation(multiBinding, source);
                     }
                 case PriorityBinding priorityBinding:
                     {
-                        return ClonePriorityBindingImplementation(priorityBinding, source);
+                        return ClonePriorityBindingWithSourceImplementation(priorityBinding, source);
                     }
                 default:
                     throw new NotSupportedException("Failed to clone binding");
@@ -70,7 +70,7 @@ namespace Anori.WPF.Behaviors
             {
                 case Binding binding:
                     {
-                        return CloneBindingWithSourceImplementation(binding);
+                        return CloneBindingImplementation(binding);
                     }
                 case MultiBinding multiBinding:
                     {
@@ -200,7 +200,8 @@ namespace Anori.WPF.Behaviors
         /// <param name="priorityBinding">The priority binding.</param>
         /// <param name="source">The source.</param>
         /// <returns></returns>
-        private static BindingBase ClonePriorityBindingImplementation(PriorityBinding priorityBinding, object source)
+        private static BindingBase ClonePriorityBindingWithSourceImplementation(PriorityBinding priorityBinding,
+            object source)
         {
             PriorityBinding result = new PriorityBinding
             {
@@ -218,13 +219,31 @@ namespace Anori.WPF.Behaviors
             return result;
         }
 
+        private static BindingBase ClonePriorityBindingImplementation(PriorityBinding priorityBinding)
+        {
+            PriorityBinding result = new PriorityBinding
+            {
+                BindingGroupName = priorityBinding.BindingGroupName,
+                FallbackValue = priorityBinding.FallbackValue,
+                StringFormat = priorityBinding.StringFormat,
+                TargetNullValue = priorityBinding.TargetNullValue
+            };
+
+            foreach (BindingBase childBinding in priorityBinding.Bindings)
+            {
+                result.Bindings.Add(CloneBindingBase(childBinding));
+            }
+
+            return result;
+        }
+
         /// <summary>
         ///     Clones the multi binding.
         /// </summary>
         /// <param name="multiBinding">The multi binding.</param>
         /// <param name="source">The source.</param>
         /// <returns></returns>
-        private static BindingBase CloneMultiBindingImplementation(MultiBinding multiBinding, object source)
+        private static BindingBase CloneMultiBindingWithSourceImplementation(MultiBinding multiBinding, object source)
         {
             MultiBinding result = CloneMultiBindingSkeleton(multiBinding);
 
@@ -236,6 +255,23 @@ namespace Anori.WPF.Behaviors
             foreach (BindingBase childBinding in multiBinding.Bindings)
             {
                 result.Bindings.Add(CloneBindingBase(childBinding, source));
+            }
+
+            return result;
+        }
+
+        private static BindingBase CloneMultiBindingImplementation(MultiBinding multiBinding)
+        {
+            MultiBinding result = CloneMultiBindingSkeleton(multiBinding);
+
+            foreach (ValidationRule validationRule in multiBinding.ValidationRules)
+            {
+                result.ValidationRules.Add(validationRule);
+            }
+
+            foreach (BindingBase childBinding in multiBinding.Bindings)
+            {
+                result.Bindings.Add(CloneBindingBase(childBinding, multiBinding));
             }
 
             return result;

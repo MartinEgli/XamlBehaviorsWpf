@@ -8,21 +8,36 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
         public TriggerAction Create()
         {
             var action = new InvokeCommandAction();
-            if (Commnd != null)
+            if (Command != null)
             {
-                action.Command = this.Commnd;
+                action.Command = this.Command;
             }
 
             if (CommandBinding != null)
             {
-                BindingOperations.SetBinding(action, InvokeCommandAction.CommandProperty, CommandBinding.CloneBindingBase())
+                BindingOperations.SetBinding(action, InvokeCommandAction.CommandProperty,
+                    CommandBinding.CloneBindingBase());
+            }
+            if (CommandParameter != null)
+            {
+                action.CommandParameter = this.CommandParameter;
+            }
+
+            if (CommandParameterBinding != null)
+            {
+                BindingOperations.SetBinding(action, InvokeCommandAction.CommandParameterProperty,
+                    CommandParameterBinding.CloneBindingBase());
             }
 
             return action;
         }
 
+        public BindingBase CommandParameterBinding { get; set; }
+
+        public object CommandParameter { get; set; }
+
         public BindingBase CommandBinding { get; set; }
 
-        public ICommand Commnd { get; set; }
+        public ICommand Command { get; set; }
     }
 }
