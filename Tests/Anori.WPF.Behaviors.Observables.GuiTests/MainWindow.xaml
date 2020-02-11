@@ -32,7 +32,8 @@
                                     <Behaviors:EventTriggerCreator.ActionCreators>
                                         <Behaviors:TriggerActionCreatorCollection>
                                             <extensions1:ToggleEnabledTargetedTriggerActionCreator
-                                                TargetName="Button4" />
+                                                XTargetName="Button4" />
+                                            <guiTests:InvokeCommandActionCreator></guiTests:InvokeCommandActionCreator>
                                         </Behaviors:TriggerActionCreatorCollection>
                                     </Behaviors:EventTriggerCreator.ActionCreators>
                                 </Behaviors:EventTriggerCreator>

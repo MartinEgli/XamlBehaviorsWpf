@@ -4,15 +4,14 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using JetBrains.Annotations;
+
 namespace Anori.WPF.Behaviors
 {
-    using JetBrains.Annotations;
-
-    using System;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Data;
-
     /// <summary>
     /// </summary>
     public static class BindingExtensions
@@ -54,6 +53,32 @@ namespace Anori.WPF.Behaviors
                 case PriorityBinding priorityBinding:
                     {
                         return ClonePriorityBindingImplementation(priorityBinding, source);
+                    }
+                default:
+                    throw new NotSupportedException("Failed to clone binding");
+            }
+        }
+
+        public static BindingBase CloneBindingBase([NotNull] this BindingBase bindingBase)
+        {
+            if (bindingBase == null)
+            {
+                throw new ArgumentNullException(nameof(bindingBase));
+            }
+
+            switch (bindingBase)
+            {
+                case Binding binding:
+                    {
+                        return CloneBindingWithSourceImplementation(binding);
+                    }
+                case MultiBinding multiBinding:
+                    {
+                        return CloneMultiBindingImplementation(multiBinding);
+                    }
+                case PriorityBinding priorityBinding:
+                    {
+                        return ClonePriorityBindingImplementation(priorityBinding);
                     }
                 default:
                     throw new NotSupportedException("Failed to clone binding");
@@ -221,8 +246,9 @@ namespace Anori.WPF.Behaviors
         /// </summary>
         /// <param name="multiBinding">The multi binding.</param>
         /// <returns></returns>
-        private static MultiBinding CloneMultiBindingSkeleton(MultiBinding multiBinding) =>
-            new MultiBinding
+        private static MultiBinding CloneMultiBindingSkeleton(MultiBinding multiBinding)
+        {
+            return new MultiBinding
             {
                 BindingGroupName = multiBinding.BindingGroupName,
                 Converter = multiBinding.Converter,
@@ -240,6 +266,7 @@ namespace Anori.WPF.Behaviors
                 ValidatesOnDataErrors = multiBinding.ValidatesOnDataErrors,
                 ValidatesOnExceptions = multiBinding.ValidatesOnDataErrors
             };
+        }
 
         /// <summary>
         ///     Clones the binding.
@@ -305,8 +332,9 @@ namespace Anori.WPF.Behaviors
         /// </summary>
         /// <param name="binding">The binding.</param>
         /// <returns></returns>
-        private static Binding CloneBindingSkeleton(Binding binding) =>
-            new Binding
+        private static Binding CloneBindingSkeleton(Binding binding)
+        {
+            return new Binding
             {
                 //Source = source,
                 AsyncState = binding.AsyncState,
@@ -332,6 +360,7 @@ namespace Anori.WPF.Behaviors
                 ValidatesOnExceptions = binding.ValidatesOnExceptions,
                 XPath = binding.XPath
             };
+        }
 
         /// <summary>
         ///     Clones the binding.
