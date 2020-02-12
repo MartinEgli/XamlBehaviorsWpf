@@ -9,7 +9,7 @@
         xmlns:guiTests="clr-namespace:Anori.WPF.Behaviors.Observables.GuiTests"
         xmlns:extensions1="clr-namespace:Anori.WPF.Behaviors.Extensions;assembly=Anori.WPF.Behaviors.Extensions"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" d:DataContext="{d:DesignInstance guiTests:ViewModel}">
     <StackPanel>
         <Button Content="Button">
             <Behaviors:Interaction.Triggers>
@@ -33,7 +33,7 @@
                                         <Behaviors:TriggerActionCreatorCollection>
                                             <extensions1:ToggleEnabledTargetedTriggerActionCreator
                                                 XTargetName="Button4" />
-                                            <guiTests:InvokeCommandActionCreator></guiTests:InvokeCommandActionCreator>
+                                            <guiTests:InvokeCommandActionCreator CommandBinding="{Binding MyCommand}"></guiTests:InvokeCommandActionCreator>
                                         </Behaviors:TriggerActionCreatorCollection>
                                     </Behaviors:EventTriggerCreator.ActionCreators>
                                 </Behaviors:EventTriggerCreator>

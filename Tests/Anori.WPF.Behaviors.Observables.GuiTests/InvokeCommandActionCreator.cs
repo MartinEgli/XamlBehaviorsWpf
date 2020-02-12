@@ -5,9 +5,17 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
 {
     public class InvokeCommandActionCreator : ITriggerActionCreator
     {
+        public BindingBase CommandParameterBinding { get; set; }
+
+        public object CommandParameter { get; set; }
+
+        public BindingBase CommandBinding { get; set; }
+
+        public ICommand Command { get; set; }
+
         public TriggerAction Create()
         {
-            var action = new InvokeCommandAction();
+            InvokeCommandAction action = new InvokeCommandAction();
             if (Command != null)
             {
                 action.Command = this.Command;
@@ -15,9 +23,11 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
 
             if (CommandBinding != null)
             {
-                BindingOperations.SetBinding(action, InvokeCommandAction.CommandProperty,
-                    CommandBinding.CloneBindingBase());
+                BindingBase binding = CommandBinding.CloneBindingBase();
+                BindingOperations.SetBinding(action, InvokeCommandAction.CommandProperty, binding);
+                BindingOperations.SetBinding(action, InvokeCommandAction.CommandProperty, CommandBinding);
             }
+
             if (CommandParameter != null)
             {
                 action.CommandParameter = this.CommandParameter;
@@ -31,13 +41,5 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
 
             return action;
         }
-
-        public BindingBase CommandParameterBinding { get; set; }
-
-        public object CommandParameter { get; set; }
-
-        public BindingBase CommandBinding { get; set; }
-
-        public ICommand Command { get; set; }
     }
 }
