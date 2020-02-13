@@ -3,7 +3,7 @@
 namespace Anori.WPF.Behaviors
 {
     [ContentProperty("ActionCreators")]
-    public class EventTriggerCreator : ITriggerCreator
+    public class EventTriggerCreator : EventTrigger, ITriggerCreator
     {
         private TriggerActionCreatorCollection actionCreators;
 
@@ -33,14 +33,22 @@ namespace Anori.WPF.Behaviors
 
         public TriggerBase Create()
         {
-            EventTrigger eventTrigger =
-                new EventTrigger(EventName) { SourceName = SourceName, SourceObject = SourceObject };
             foreach (ITriggerActionCreator actionCreator in ActionCreators)
             {
-                eventTrigger.Actions.Add(actionCreator.Create());
+                this.Actions.Add(actionCreator.Create());
             }
 
-            return eventTrigger;
+            return this;
+        }
+
+        protected override void OnAttached()
+        {
+            base.OnAttached();
+        }
+
+        protected override void OnDetaching()
+        {
+            base.OnDetaching();
         }
     }
 }

@@ -24,10 +24,11 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
             if (CommandBinding != null)
             {
                 BindingBase binding = CommandBinding.CloneBindingBase();
-             //   BindingOperations.SetBinding(action, InvokeCommandAction.CommandProperty, binding);
-                var b = BindingOperations.GetBinding(action, InvokeCommandAction.CommandProperty);
-                BindingOperations.SetBinding(action, InvokeCommandAction.CommandProperty, CommandBinding);
-                var b2 = BindingOperations.GetBinding(action, InvokeCommandAction.CommandProperty);
+                //   BindingOperations.SetBinding(action, InvokeCommandAction.CommandProperty, binding);
+                Binding b = BindingOperations.GetBinding(action, InvokeCommandAction.CommandProperty);
+                BindingExpressionBase be =
+                    BindingOperations.SetBinding(action, InvokeCommandAction.CommandProperty, CommandBinding);
+                Binding b2 = BindingOperations.GetBinding(action, InvokeCommandAction.CommandProperty);
             }
 
             if (CommandParameter != null)
