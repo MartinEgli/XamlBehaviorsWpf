@@ -24,8 +24,10 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
             if (CommandBinding != null)
             {
                 BindingBase binding = CommandBinding.CloneBindingBase();
-                BindingOperations.SetBinding(action, InvokeCommandAction.CommandProperty, binding);
+             //   BindingOperations.SetBinding(action, InvokeCommandAction.CommandProperty, binding);
+                var b = BindingOperations.GetBinding(action, InvokeCommandAction.CommandProperty);
                 BindingOperations.SetBinding(action, InvokeCommandAction.CommandProperty, CommandBinding);
+                var b2 = BindingOperations.GetBinding(action, InvokeCommandAction.CommandProperty);
             }
 
             if (CommandParameter != null)

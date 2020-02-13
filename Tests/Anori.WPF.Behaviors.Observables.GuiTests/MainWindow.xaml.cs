@@ -14,9 +14,9 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
     {
         public MainWindow()
         {
-            DataContext = new ViewModel();
             InitializeComponent();
-        }
+             DataContext = new ViewModel();
+       }
     }
 
     public class ViewModel : INotifyPropertyChanged

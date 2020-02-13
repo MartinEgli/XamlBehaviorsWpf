@@ -1,30 +1,47 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using System;
+using System.Diagnostics;
+using System.Globalization;
+using System.Reflection;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+
 namespace Anori.WPF.Behaviors
 {
-    using System;
-    using System.Diagnostics;
-    using System.Reflection;
-    using System.Windows;
-    using System.Windows.Input;
-    using System.Globalization;
-    using System.Windows.Data;
-
     /// <summary>
-    /// Executes a specified ICommand when invoked.
+    ///     Executes a specified ICommand when invoked.
     /// </summary>
     public sealed class InvokeCommandAction : TriggerAction<DependencyObject>
     {
+        public static readonly DependencyProperty CommandProperty =
+            DependencyProperty.Register("Command", typeof(ICommand), typeof(InvokeCommandAction), new FrameworkPropertyMetadata(null, PropertyChangedCallback));
+
+        private static void PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+        }
+
+        public static readonly DependencyProperty CommandParameterProperty =
+            DependencyProperty.Register("CommandParameter", typeof(object), typeof(InvokeCommandAction), null);
+
+        public static readonly DependencyProperty EventArgsConverterProperty =
+            DependencyProperty.Register("EventArgsConverter", typeof(IValueConverter), typeof(InvokeCommandAction),
+                new PropertyMetadata(null));
+
+        public static readonly DependencyProperty EventArgsConverterParameterProperty =
+            DependencyProperty.Register("EventArgsConverterParameter", typeof(object), typeof(InvokeCommandAction),
+                new PropertyMetadata(null));
+
+        public static readonly DependencyProperty EventArgsParameterPathProperty =
+            DependencyProperty.Register("EventArgsParameterPath", typeof(string), typeof(InvokeCommandAction),
+                new PropertyMetadata(null));
+
         private string commandName;
 
-        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("Command", typeof(ICommand), typeof(InvokeCommandAction), null);
-        public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register("CommandParameter", typeof(object), typeof(InvokeCommandAction), null);
-        public static readonly DependencyProperty EventArgsConverterProperty = DependencyProperty.Register("EventArgsConverter", typeof(IValueConverter), typeof(InvokeCommandAction), new PropertyMetadata(null));
-        public static readonly DependencyProperty EventArgsConverterParameterProperty = DependencyProperty.Register("EventArgsConverterParameter", typeof(object), typeof(InvokeCommandAction), new PropertyMetadata(null));
-        public static readonly DependencyProperty EventArgsParameterPathProperty = DependencyProperty.Register("EventArgsParameterPath", typeof(string), typeof(InvokeCommandAction), new PropertyMetadata(null));
-
         /// <summary>
-        /// Gets or sets the name of the command this action should invoke.
+        ///     Gets or sets the name of the command this action should invoke.
         /// </summary>
         /// <value>The name of the command this action should invoke.</value>
         /// <remarks>This property will be superseded by the Command property if both are set.</remarks>
@@ -47,7 +64,7 @@ namespace Anori.WPF.Behaviors
         }
 
         /// <summary>
-        /// Gets or sets the command this action should invoke. This is a dependency property.
+        ///     Gets or sets the command this action should invoke. This is a dependency property.
         /// </summary>
         /// <value>The command to execute.</value>
         /// <remarks>This property will take precedence over the CommandName property if both are set.</remarks>
@@ -58,20 +75,23 @@ namespace Anori.WPF.Behaviors
         }
 
         /// <summary>
-        /// Gets or sets the command parameter. This is a dependency property.
+        ///     Gets or sets the command parameter. This is a dependency property.
         /// </summary>
         /// <value>The command parameter.</value>
         /// <remarks>This is the value passed to ICommand.CanExecute and ICommand.Execute.</remarks>
         public object CommandParameter
         {
-            get { return this.GetValue(InvokeCommandAction.CommandParameterProperty); }
-            set { this.SetValue(InvokeCommandAction.CommandParameterProperty, value); }
+            get { return this.GetValue(CommandParameterProperty); }
+            set { this.SetValue(CommandParameterProperty, value); }
         }
 
         /// <summary>
-        /// Gets or sets the IValueConverter that is used to convert the EventArgs passed to the Command as a parameter.
+        ///     Gets or sets the IValueConverter that is used to convert the EventArgs passed to the Command as a parameter.
         /// </summary>
-        /// <remarks>If the <see cref="Command"/> or <see cref="EventArgsParameterPath"/> properties are set, this property is ignored.</remarks>
+        /// <remarks>
+        ///     If the <see cref="Command" /> or <see cref="EventArgsParameterPath" /> properties are set, this property is
+        ///     ignored.
+        /// </remarks>
         public IValueConverter EventArgsConverter
         {
             get { return (IValueConverter)GetValue(EventArgsConverterProperty); }
@@ -79,18 +99,19 @@ namespace Anori.WPF.Behaviors
         }
 
         /// <summary>
-        /// Gets or sets the parameter that is passed to the EventArgsConverter.
+        ///     Gets or sets the parameter that is passed to the EventArgsConverter.
         /// </summary>
         public object EventArgsConverterParameter
         {
-            get { return (object)GetValue(EventArgsConverterParameterProperty); }
+            get { return this.GetValue(EventArgsConverterParameterProperty); }
             set { SetValue(EventArgsConverterParameterProperty, value); }
         }
 
         /// <summary>
-        /// Gets or sets the parameter path used to extract a value from an <see cref= "EventArgs" /> property to pass to the Command as a parameter.
+        ///     Gets or sets the parameter path used to extract a value from an <see cref="EventArgs" /> property to pass to the
+        ///     Command as a parameter.
         /// </summary>
-        /// <remarks>If the <see cref="Command"/> propert is set, this property is ignored.</remarks>
+        /// <remarks>If the <see cref="Command" /> propert is set, this property is ignored.</remarks>
         public string EventArgsParameterPath
         {
             get { return (string)GetValue(EventArgsParameterPathProperty); }
@@ -98,15 +119,22 @@ namespace Anori.WPF.Behaviors
         }
 
         /// <summary>
-        /// Specifies whether the EventArgs of the event that triggered this action should be passed to the Command as a parameter.
+        ///     Specifies whether the EventArgs of the event that triggered this action should be passed to the Command as a
+        ///     parameter.
         /// </summary>
-        /// <remarks>If the <see cref="Command"/>, <see cref="EventArgsParameterPath"/>, or <see cref="EventArgsConverter"/> properties are set, this property is ignored.</remarks>
+        /// <remarks>
+        ///     If the <see cref="Command" />, <see cref="EventArgsParameterPath" />, or <see cref="EventArgsConverter" />
+        ///     properties are set, this property is ignored.
+        /// </remarks>
         public bool PassEventArgsToCommand { get; set; }
 
         /// <summary>
-        /// Invokes the action.
+        ///     Invokes the action.
         /// </summary>
-        /// <param name="parameter">The parameter to the action. If the action does not require a parameter, the parameter may be set to a null reference.</param>
+        /// <param name="parameter">
+        ///     The parameter to the action. If the action does not require a parameter, the parameter may be
+        ///     set to a null reference.
+        /// </param>
         protected override void Invoke(object parameter)
         {
             if (this.AssociatedObject != null)
@@ -126,7 +154,8 @@ namespace Anori.WPF.Behaviors
                     //next let's see if an event args converter has been supplied
                     if (commandParameter == null && this.EventArgsConverter != null)
                     {
-                        commandParameter = this.EventArgsConverter.Convert(parameter, typeof(object), EventArgsConverterParameter, CultureInfo.CurrentCulture);
+                        commandParameter = this.EventArgsConverter.Convert(parameter, typeof(object),
+                            EventArgsConverterParameter, CultureInfo.CurrentCulture);
                     }
 
                     //last resort, let see if they want to force the event args to be passed as a parameter
@@ -141,7 +170,8 @@ namespace Anori.WPF.Behaviors
                     }
                 } else
                 {
-                    Debug.WriteLine(ExceptionStringTable.CommandDoesNotExistOnBehaviorWarningMessage, this.CommandName, this.AssociatedObject.GetType().Name);
+                    Debug.WriteLine(ExceptionStringTable.CommandDoesNotExistOnBehaviorWarningMessage, this.CommandName,
+                        this.AssociatedObject.GetType().Name);
                 }
             }
         }
@@ -172,7 +202,8 @@ namespace Anori.WPF.Behaviors
             {
                 // todo jekelly 06/09/08: we could potentially cache some or all of this information if needed, updating when AssociatedObject changes
                 Type associatedObjectType = this.AssociatedObject.GetType();
-                PropertyInfo[] typeProperties = associatedObjectType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                PropertyInfo[] typeProperties =
+                    associatedObjectType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
                 foreach (PropertyInfo propertyInfo in typeProperties)
                 {

@@ -1,5 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using System.Threading;
+
 namespace Anori.WPF.Behaviors
 {
     using System;
@@ -60,7 +63,19 @@ namespace Anori.WPF.Behaviors
         private bool isHosted;
         private DependencyObject associatedObject;
         private Type associatedObjectTypeConstraint;
+        private static int IdSource;
 
+        /// <summary>
+        /// Gets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public int Id { get; private set; } = Interlocked.Increment(ref IdSource);
+
+        /// <summary>
+        /// The is enabled property
+        /// </summary>
         public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.Register("IsEnabled",
                                                                                                     typeof(bool),
                                                                                                     typeof(TriggerAction),
