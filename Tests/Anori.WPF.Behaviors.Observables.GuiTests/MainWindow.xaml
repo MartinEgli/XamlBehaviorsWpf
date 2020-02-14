@@ -9,44 +9,16 @@
     xmlns:guiTests="clr-namespace:Anori.WPF.Behaviors.Observables.GuiTests"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:nameChecks="clr-namespace:Anori.WPF.NameChecks;assembly=Anori.WPF.NameChecks"
-    xmlns:styleBehaviors="clr-namespace:Anori.WPF.StyleBehaviors;assembly=Anori.WPF.StyleBehaviors"
     Title="MainWindow"
     Width="800"
     Height="450"
     d:DataContext="{d:DesignInstance guiTests:ViewModel}"
     mc:Ignorable="d">
-    <Window.Resources>
-        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
-            <Setter Property="styleBehaviors:StyleInteraction.StyleTriggers">
-                <Setter.Value>
-                    <styleBehaviors:StyleTriggerCollection>
-                        <styleBehaviors:EventTriggerCreator EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
-                            <!--<Behaviors:EventTriggerCreator.ActionCreators>
-                                        <Behaviors:TriggerActionCreatorCollection>-->
-                            <styleBehaviors:ToggleEnabledTargetedTriggerActionCreator TargetElementName="Button4" />
-                            <styleBehaviors:InvokeCommandActionCreator CommandBinding="{Binding MyCommand}" />
-                            <!--</Behaviors:TriggerActionCreatorCollection>
-                                    </Behaviors:EventTriggerCreator.ActionCreators>-->
-                        </styleBehaviors:EventTriggerCreator>
-                    </styleBehaviors:StyleTriggerCollection>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
     <StackPanel>
-        <Button Content="New DataContext">
-            <Behaviors:Interaction.Triggers>
-                <Behaviors:EventTrigger EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
-                    <extensions1:ToggleEnabledTargetedTriggerAction TargetName="Button2" />
-                    <Behaviors:InvokeCommandAction Command="{Binding NewDataContextCommand}" />
-                </Behaviors:EventTrigger>
-            </Behaviors:Interaction.Triggers>
-        </Button>
-
         <Button Content="Button">
             <Behaviors:Interaction.Triggers>
                 <Behaviors:EventTrigger EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
-                    <extensions1:ToggleEnabledTargetedTriggerAction TargetName="Button2" />
+                    <extensions:ToggleEnabledTargetedTriggerAction TargetName="Button2" />
                     <Behaviors:InvokeCommandAction Command="{Binding MyCommand}" />
                 </Behaviors:EventTrigger>
             </Behaviors:Interaction.Triggers>
@@ -54,14 +26,22 @@
         <Button x:Name="Button2">
             Button 2
         </Button>
-        <Button
-            x:Name="B1"
-            Content="Button A"
-            Style="{StaticResource ButtonStyle}" />
-        <Button
-            x:Name="B2"
-            Content="Button B"
-            Style="{StaticResource ButtonStyle}" />
+        <Button Content="Button">
+            <Button.Style>
+                <Style>
+                    <Setter Property="Behaviors:Interaction.StyleTriggers">
+                        <Setter.Value>
+                            <Behaviors:StyleTriggerCollection>
+                                <Behaviors:EventTriggerCreator EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
+                                    <extensions1:ToggleEnabledTargetedTriggerActionCreator XTargetName="Button4" />
+                                    <guiTests:InvokeCommandActionCreator CommandBinding="{Binding MyCommand}" />
+                                </Behaviors:EventTriggerCreator>
+                            </Behaviors:StyleTriggerCollection>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
         <Button x:Name="Button4">
             Button 4
         </Button>

@@ -4,12 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Anori.WPF.StyleBehaviors
+using System.Windows;
+
+namespace Anori.WPF.Behaviors
 {
-    using System.Windows;
-
-    using TriggerBase = Anori.WPF.Behaviors.TriggerBase;
-
     /// <summary>
     /// </summary>
     public interface ITriggerCreator
@@ -17,8 +15,19 @@ namespace Anori.WPF.StyleBehaviors
         /// <summary>
         ///     Creates this instance.
         /// </summary>
-        /// <param name="dependencyObject"></param>
         /// <returns></returns>
-        TriggerBase Create(DependencyObject dependencyObject);
+        TriggerBase Create();
+    }
+
+    public interface ITriggerActionCreator
+    {
+        /// <summary>
+        ///     Creates this instance.
+        /// </summary>
+        /// <returns></returns>
+        TriggerAction Create();
+
+        void Attach(DependencyObject obj);
+        void Detach(DependencyObject obj);
     }
 }
