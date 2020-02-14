@@ -20,7 +20,6 @@
                 <Behaviors:EventTrigger EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
                     <extensions:ToggleEnabledTargetedTriggerAction TargetName="Button2" />
                     <Behaviors:InvokeCommandAction Command="{Binding MyCommand}" />
-
                 </Behaviors:EventTrigger>
             </Behaviors:Interaction.Triggers>
         </Button>
