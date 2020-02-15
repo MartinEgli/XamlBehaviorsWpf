@@ -1,54 +1,17 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
-
-using System.Threading;
+﻿// -----------------------------------------------------------------------
+// <copyright file="TriggerAction.cs" company="Anori Soft">
+// Copyright (c) Anori Soft. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace Anori.WPF.Behaviors
 {
     using System;
     using System.Globalization;
+    using System.Threading;
     using System.Windows;
     using System.Windows.Controls.Primitives;
     using System.Windows.Media.Animation;
-
-    /// <summary>
-    /// Represents an attachable object that encapsulates a unit of functionality.
-    /// </summary>
-    /// <typeparam name="T">The type to which this action can be attached.</typeparam>
-    public abstract class TriggerAction<T> : TriggerAction where T : DependencyObject
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TriggerAction&lt;T&gt;"/> class.
-        /// </summary>
-        protected TriggerAction()
-            : base(typeof(T))
-        {
-        }
-
-        /// <summary>
-        /// Gets the object to which this <see cref="Anori.WPF.Behaviors.TriggerAction&lt;T&gt;"/> is attached.
-        /// </summary>
-        /// <value>The associated object.</value>
-        protected new T AssociatedObject
-        {
-            get
-            {
-                return (T)base.AssociatedObject;
-            }
-        }
-
-        /// <summary>
-        /// Gets the associated object type constraint.
-        /// </summary>
-        /// <value>The associated object type constraint.</value>
-        protected sealed override Type AssociatedObjectTypeConstraint
-        {
-            get
-            {
-                return base.AssociatedObjectTypeConstraint;
-            }
-        }
-    }
 
     /// <summary>
     /// Represents an attachable object that encapsulates a unit of functionality.
@@ -60,10 +23,25 @@ namespace Anori.WPF.Behaviors
         Animatable,
         IAttachedObject
     {
+        /// <summary>
+        /// The is hosted
+        /// </summary>
         private bool isHosted;
+
+        /// <summary>
+        /// The associated object
+        /// </summary>
         private DependencyObject associatedObject;
+
+        /// <summary>
+        /// The associated object type constraint
+        /// </summary>
         private Type associatedObjectTypeConstraint;
-        private static int IdSource;
+
+        /// <summary>
+        /// The identifier source
+        /// </summary>
+        private static int idSource;
 
         /// <summary>
         /// Gets the identifier.
@@ -71,15 +49,15 @@ namespace Anori.WPF.Behaviors
         /// <value>
         /// The identifier.
         /// </value>
-        public int Id { get; private set; } = Interlocked.Increment(ref IdSource);
+        public int Id { get; } = Interlocked.Increment(ref idSource);
 
         /// <summary>
         /// The is enabled property
         /// </summary>
         public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.Register("IsEnabled",
-                                                                                                    typeof(bool),
-                                                                                                    typeof(TriggerAction),
-                                                                                                    new FrameworkPropertyMetadata(true));
+            typeof(bool),
+            typeof(TriggerAction),
+            new FrameworkPropertyMetadata(true));
 
         /// <summary>
         /// Gets or sets a value indicating whether this action will run when invoked. This is a dependency property.
@@ -221,10 +199,10 @@ namespace Anori.WPF.Behaviors
                 if (dependencyObject != null && !this.AssociatedObjectTypeConstraint.IsAssignableFrom(dependencyObject.GetType()))
                 {
                     throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture,
-                                                                        ExceptionStringTable.TypeConstraintViolatedExceptionMessage,
-                                                                        this.GetType().Name,
-                                                                        dependencyObject.GetType().Name,
-                                                                        this.AssociatedObjectTypeConstraint.Name));
+                        ExceptionStringTable.TypeConstraintViolatedExceptionMessage,
+                        this.GetType().Name,
+                        dependencyObject.GetType().Name,
+                        this.AssociatedObjectTypeConstraint.Name));
                 }
 
                 this.WritePreamble();

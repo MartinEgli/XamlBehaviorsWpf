@@ -15,6 +15,15 @@
     d:DataContext="{d:DesignInstance guiTests:ViewModel}"
     mc:Ignorable="d">
     <StackPanel>
+        <Button Content="New DataContext">
+            <Behaviors:Interaction.Triggers>
+                <Behaviors:EventTrigger EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
+                    <extensions:ToggleEnabledTargetedTriggerAction TargetName="Button2" />
+                    <Behaviors:InvokeCommandAction Command="{Binding NewDataContextCommand}" />
+                </Behaviors:EventTrigger>
+            </Behaviors:Interaction.Triggers>
+        </Button>
+
         <Button Content="Button">
             <Behaviors:Interaction.Triggers>
                 <Behaviors:EventTrigger EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
@@ -33,12 +42,12 @@
                         <Setter.Value>
                             <Behaviors:StyleTriggerCollection>
                                 <Behaviors:EventTriggerCreator EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
-                                    <Behaviors:EventTriggerCreator.ActionCreators>
-                                        <Behaviors:TriggerActionCreatorCollection>
-                                            <extensions1:ToggleEnabledTargetedTriggerActionCreator XTargetName="Button4" />
-                                            <guiTests:InvokeCommandActionCreator CommandBinding="{Binding MyCommand}" />
-                                        </Behaviors:TriggerActionCreatorCollection>
-                                    </Behaviors:EventTriggerCreator.ActionCreators>
+                                    <!--<Behaviors:EventTriggerCreator.ActionCreators>
+                                        <Behaviors:TriggerActionCreatorCollection>-->
+                                    <extensions1:ToggleEnabledTargetedTriggerActionCreator XTargetName="Button4" />
+                                    <guiTests:InvokeCommandActionCreator CommandBinding="{Binding MyCommand}" />
+                                    <!--</Behaviors:TriggerActionCreatorCollection>
+                                    </Behaviors:EventTriggerCreator.ActionCreators>-->
                                 </Behaviors:EventTriggerCreator>
                             </Behaviors:StyleTriggerCollection>
                         </Setter.Value>

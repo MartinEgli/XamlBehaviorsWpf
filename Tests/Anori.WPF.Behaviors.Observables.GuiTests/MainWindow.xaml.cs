@@ -1,9 +1,13 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿// -----------------------------------------------------------------------
+// <copyright file="MainWindow.xaml.cs" company="Anori Soft">
+// Copyright (c) Anori Soft. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
 using System.Windows;
 using System.Windows.Input;
+
 using Anori.WPF.Behaviors.Core;
-using JetBrains.Annotations;
 
 namespace Anori.WPF.Behaviors.Observables.GuiTests
 {
@@ -15,32 +19,9 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
         public MainWindow()
         {
             InitializeComponent();
-             DataContext = new ViewModel();
-       }
-    }
-
-    public class ViewModel : INotifyPropertyChanged
-    {
-        public ViewModel()
-        {
-            MyCommand = new ActionCommand(this.MyAction);
-        }
-
-        public ICommand MyCommand
-        {
-            get;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void MyAction()
-        {
-        }
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            ICommand newDataContextCommand = null;
+            newDataContextCommand = new ActionCommand(() => DataContext = new ViewModel(newDataContextCommand));
+            DataContext = new ViewModel(newDataContextCommand);
         }
     }
 }

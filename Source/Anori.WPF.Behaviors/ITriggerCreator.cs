@@ -4,8 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Windows;
-
 namespace Anori.WPF.Behaviors
 {
     /// <summary>
@@ -17,18 +15,5 @@ namespace Anori.WPF.Behaviors
         /// </summary>
         /// <returns></returns>
         TriggerBase Create();
-    }
-
-    public interface ITriggerActionCreator
-    {
-        /// <summary>
-        ///     Creates this instance.
-        /// </summary>
-        /// <returns></returns>
-        TriggerAction Create();
-
-        void Attach(DependencyObject associatedObject);
-
-        void Detach(DependencyObject associatedObject);
     }
 }
