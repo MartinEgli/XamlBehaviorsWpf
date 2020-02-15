@@ -1,25 +1,27 @@
-﻿using System.Windows.Markup;
+﻿using System.Windows;
+using System.Windows.Markup;
 
 namespace Anori.WPF.Behaviors
 {
     /// <summary>
-    ///
     /// </summary>
     /// <seealso cref="Anori.WPF.Behaviors.EventTrigger" />
     /// <seealso cref="Anori.WPF.Behaviors.ITriggerCreator" />
     [ContentProperty("ActionCreators")]
-    public class EventTriggerCreator : EventTrigger, ITriggerCreator
+    public class EventTriggerCreator : ITriggerCreator
     {
         /// <summary>
-        /// The action creators
+        ///     The action creators
         /// </summary>
         private TriggerActionCreatorCollection actionCreators;
 
+        private EventTrigger eventTrigger;
+
         /// <summary>
-        /// Gets or sets the action creators.
+        ///     Gets or sets the action creators.
         /// </summary>
         /// <value>
-        /// The action creators.
+        ///     The action creators.
         /// </value>
         public TriggerActionCreatorCollection ActionCreators
         {
@@ -41,54 +43,54 @@ namespace Anori.WPF.Behaviors
             }
         }
 
-        //public object SourceObject { get; set; }
+        public object SourceObject { get; set; }
 
-        //public string SourceName { get; set; }
+        public string SourceName { get; set; }
 
-        //public string EventName
+        public string EventName
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        ///     Creates this instance.
+        /// </summary>
+        /// <param name="dependencyObject"></param>
+        /// <returns></returns>
+        public TriggerBase Create(DependencyObject dependencyObject)
+        {
+            eventTrigger = new EventTrigger();
+            this.eventTrigger.EventName = EventName;
+            foreach (ITriggerActionCreator actionCreator in ActionCreators)
+            {
+                TriggerAction triggerAction = actionCreator.Create(dependencyObject);
+                eventTrigger.Actions.Add(triggerAction);
+            }
+
+            return eventTrigger;
+        }
+
+        /// <summary>
+        ///     Called after the trigger is attached to an AssociatedObject.
+        /// </summary>
+        //public void Attach(DependencyObject associatedObject)
         //{
-        //    get;
-        //    set;
+        //    foreach (ITriggerActionCreator actionCreator in ActionCreators)
+        //    {
+        //        actionCreator.Attach(associatedObject);
+        //    }
         //}
 
-        /// <summary>
-        /// Creates this instance.
-        /// </summary>
-        /// <returns></returns>
-        public TriggerBase Create()
-        {
-            foreach (ITriggerActionCreator actionCreator in ActionCreators)
-            {
-                var triggerAction = actionCreator.Create();
-                this.Actions.Add(triggerAction);
-            }
-
-            return this;
-        }
-
-        /// <summary>
-        /// Called after the trigger is attached to an AssociatedObject.
-        /// </summary>
-        protected override void OnAttached()
-        {
-            base.OnAttached();
-            foreach (ITriggerActionCreator actionCreator in ActionCreators)
-            {
-                actionCreator.Attach(AssociatedObject);
-            }
-        }
-
-        /// <summary>
-        /// Called when the trigger is being detached from its AssociatedObject, but before it has actually occurred.
-        /// </summary>
-        protected override void OnDetaching()
-        {
-            foreach (ITriggerActionCreator actionCreator in ActionCreators)
-            {
-                actionCreator.Detach(AssociatedObject);
-            }
-
-            base.OnDetaching();
-        }
+        ///// <summary>
+        /////     Called when the trigger is being detached from its AssociatedObject, but before it has actually occurred.
+        ///// </summary>
+        //public void Detach(DependencyObject associatedObject)
+        //{
+        //    foreach (ITriggerActionCreator actionCreator in ActionCreators)
+        //    {
+        //        actionCreator.Detach(associatedObject);
+        //    }
+        //}
     }
 }

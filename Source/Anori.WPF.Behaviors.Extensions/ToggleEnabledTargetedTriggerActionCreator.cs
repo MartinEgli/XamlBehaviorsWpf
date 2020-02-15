@@ -9,12 +9,11 @@ namespace Anori.WPF.Behaviors.Extensions
 
         public string XTargetName { get; set; }
 
-        public TriggerAction Create()
+        public TriggerAction Create(DependencyObject dependencyObject)
         {
             return new ToggleEnabledTargetedTriggerAction
             {
-                TargetName = this.XTargetName,
-                TargetObject = this.TargetObject
+                TargetName = this.XTargetName, TargetObject = this.TargetObject
             };
         }
 

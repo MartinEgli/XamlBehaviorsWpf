@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Windows;
+
 namespace Anori.WPF.Behaviors
 {
     /// <summary>
@@ -13,7 +15,8 @@ namespace Anori.WPF.Behaviors
         /// <summary>
         ///     Creates this instance.
         /// </summary>
+        /// <param name="dependencyObject"></param>
         /// <returns></returns>
-        TriggerBase Create();
+        TriggerBase Create(DependencyObject dependencyObject);
     }
 }

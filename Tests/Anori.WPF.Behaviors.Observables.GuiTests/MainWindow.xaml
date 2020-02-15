@@ -14,6 +14,25 @@
     Height="450"
     d:DataContext="{d:DesignInstance guiTests:ViewModel}"
     mc:Ignorable="d">
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}" x:Key="ButtonStyle">
+            <Setter Property="Behaviors:Interaction.StyleTriggers">
+                <Setter.Value>
+                    <Behaviors:StyleTriggerCollection>
+                        <Behaviors:EventTriggerCreator
+                            EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
+                            <!--<Behaviors:EventTriggerCreator.ActionCreators>
+                                        <Behaviors:TriggerActionCreatorCollection>-->
+                            <extensions1:ToggleEnabledTargetedTriggerActionCreator XTargetName="Button4" />
+                            <guiTests:InvokeCommandActionCreator CommandBinding="{Binding MyCommand}" />
+                            <!--</Behaviors:TriggerActionCreatorCollection>
+                                    </Behaviors:EventTriggerCreator.ActionCreators>-->
+                        </Behaviors:EventTriggerCreator>
+                    </Behaviors:StyleTriggerCollection>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <StackPanel>
         <Button Content="New DataContext">
             <Behaviors:Interaction.Triggers>
@@ -35,26 +54,8 @@
         <Button x:Name="Button2">
             Button 2
         </Button>
-        <Button Content="Button">
-            <Button.Style>
-                <Style>
-                    <Setter Property="Behaviors:Interaction.StyleTriggers">
-                        <Setter.Value>
-                            <Behaviors:StyleTriggerCollection>
-                                <Behaviors:EventTriggerCreator EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
-                                    <!--<Behaviors:EventTriggerCreator.ActionCreators>
-                                        <Behaviors:TriggerActionCreatorCollection>-->
-                                    <extensions1:ToggleEnabledTargetedTriggerActionCreator XTargetName="Button4" />
-                                    <guiTests:InvokeCommandActionCreator CommandBinding="{Binding MyCommand}" />
-                                    <!--</Behaviors:TriggerActionCreatorCollection>
-                                    </Behaviors:EventTriggerCreator.ActionCreators>-->
-                                </Behaviors:EventTriggerCreator>
-                            </Behaviors:StyleTriggerCollection>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Button.Style>
-        </Button>
+        <Button Content="Button A" x:Name="B1" Style="{StaticResource ButtonStyle}" />
+        <Button Content="Button B" x:Name="B2" Style="{StaticResource ButtonStyle}" />
         <Button x:Name="Button4">
             Button 4
         </Button>

@@ -4,34 +4,38 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Windows;
+using JetBrains.Annotations;
+
 namespace Anori.WPF.Behaviors.Observables.GuiTests
 {
-    using JetBrains.Annotations;
-
-    using System;
-    using System.ComponentModel;
-    using System.Diagnostics.Tracing;
-    using System.Threading;
-    using System.Windows;
-
-    using TriggerAction = Anori.WPF.Behaviors.TriggerAction;
-
     /// <summary>
     /// </summary>
     /// <seealso cref="Anori.WPF.Behaviors.ITriggerActionCreator" />
-    public abstract class TriggerActionCreator : ITriggerActionCreator
+    public abstract class TriggerActionCreator<TTriggerAction> : ITriggerActionCreator
+        where TTriggerAction : TriggerAction
     {
         /// <summary>
         ///     The unregister action
         /// </summary>
-        private Action unregisterAction;
+        //private List<Action> unregisterActions;
+
+        public TriggerAction Create(DependencyObject dependencyObject)
+        {
+            TTriggerAction action = CreateTriggerAction();
+            this.Register(action, dependencyObject);
+            return action;
+        }
 
         /// <summary>
         ///     Attaches the specified associated object.
         /// </summary>
+        /// <param name="action"></param>
         /// <param name="associatedObject">The associated object.</param>
         /// <exception cref="ArgumentNullException">associatedObject</exception>
-        public void Attach([NotNull] DependencyObject associatedObject)
+        public void Register(TTriggerAction action, [NotNull] DependencyObject associatedObject)
         {
             if (associatedObject == null)
             {
@@ -40,35 +44,52 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
 
             if (associatedObject is FrameworkElement frameworkElement)
             {
-                void Action() => frameworkElement.DataContextChanged -= this.OnDataContextChanged;
-                Interlocked.Exchange(ref this.unregisterAction, Action)?.Invoke();
-                frameworkElement.DataContextChanged += this.OnDataContextChanged;
+                DependencyPropertyChangedEventHandler OnDataContextChanged =
+                    (sender, args) => DataContextChanged(action, args.NewValue);
+
+                //void Action()
+                //{
+                //    frameworkElement.DataContextChanged -= OnDataContextChanged;
+                //}
+
+                //this.unregisterActions.Add(Action); //?.Invoke();
+                frameworkElement.DataContextChanged += OnDataContextChanged;
             }
         }
+
+        ///// <summary>
+        /////     Detaches the specified associated object.
+        ///// </summary>
+        ///// <param name="associatedObject">The associated object.</param>
+        ///// <exception cref="NotImplementedException"></exception>
+        //public void Detach([NotNull] DependencyObject associatedObject)
+        //{
+        //    this.Unregister();
+        //}
 
         /// <summary>
         ///     Creates this instance.
         /// </summary>
+        /// <param name="dependencyObject"></param>
         /// <returns></returns>
-        abstract public TriggerAction Create();
-
-        /// <summary>
-        ///     Detaches the specified associated object.
-        /// </summary>
-        /// <param name="associatedObject">The associated object.</param>
-        /// <exception cref="NotImplementedException"></exception>
-        public void Detach([NotNull] DependencyObject associatedObject) => this.Unregister();
+        abstract public TTriggerAction CreateTriggerAction();
 
         /// <summary>
         ///     Called when [data context changed].
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
-        abstract protected void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e);
+        abstract protected void DataContextChanged(TTriggerAction action, object dataContext);
 
-        /// <summary>
-        ///     Unregisters this instance.
-        /// </summary>
-        private void Unregister() => Interlocked.Exchange(ref this.unregisterAction, null)?.Invoke();
+        ///// <summary>
+        /////     Unregisters this instance.
+        ///// </summary>
+        //public void UnregisterAll()
+        //{
+        //    foreach (Action unregisterAction in this.unregisterActions)
+        //    {
+        //        unregisterAction();
+        //    }
+        //}
     }
 }

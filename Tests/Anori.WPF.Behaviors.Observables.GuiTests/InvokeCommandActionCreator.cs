@@ -4,7 +4,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
@@ -13,13 +12,8 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
     /// <summary>
     /// </summary>
     /// <seealso cref="Anori.WPF.Behaviors.ITriggerActionCreator" />
-    public class InvokeCommandActionCreator : TriggerActionCreator
+    public class InvokeCommandActionCreator : TriggerActionCreator<InvokeCommandAction>
     {
-        /// <summary>
-        ///     The action
-        /// </summary>
-        private InvokeCommandAction action;
-
         /// <summary>
         ///     Gets or sets the command parameter binding.
         /// </summary>
@@ -55,19 +49,17 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
         /// <summary>
         ///     Creates this instance.
         /// </summary>
+        /// <param name="dependencyObject"></param>
         /// <returns></returns>
-        public override TriggerAction Create() => action = new InvokeCommandAction();
+        public override InvokeCommandAction CreateTriggerAction()
+        {
+            return new InvokeCommandAction();
+        }
 
-        /// <summary>
-        ///     Called when [data context changed].
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
-        protected override void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        protected override void DataContextChanged(InvokeCommandAction action, object dataContext)
         {
             BindingOperations.ClearBinding(action, InvokeCommandAction.CommandProperty);
 
-            object dataContext = e.NewValue;
             if (Command != null)
             {
                 action.Command = this.Command;

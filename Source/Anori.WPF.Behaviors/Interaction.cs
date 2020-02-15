@@ -223,7 +223,7 @@ namespace Anori.WPF.Behaviors
 
             foreach (ITriggerCreator triggerCreator in styleTriggerCollection)
             {
-                triggerCollection.Add(triggerCreator.Create());
+                triggerCollection.Add(triggerCreator.Create(obj));
             }
 
             triggerCollection.Attach(obj);

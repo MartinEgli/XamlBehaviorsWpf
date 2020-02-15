@@ -4,31 +4,19 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Windows;
+
 namespace Anori.WPF.Behaviors
 {
-    using System.Windows;
-
     /// <summary>
-    /// 
     /// </summary>
     public interface ITriggerActionCreator
     {
         /// <summary>
         ///     Creates this instance.
         /// </summary>
+        /// <param name="dependencyObject"></param>
         /// <returns></returns>
-        TriggerAction Create();
-
-        /// <summary>
-        /// Attaches the specified associated object.
-        /// </summary>
-        /// <param name="associatedObject">The associated object.</param>
-        void Attach(DependencyObject associatedObject);
-
-        /// <summary>
-        /// Detaches the specified associated object.
-        /// </summary>
-        /// <param name="associatedObject">The associated object.</param>
-        void Detach(DependencyObject associatedObject);
+        TriggerAction Create(DependencyObject dependencyObject);
     }
 }
