@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.Windows.Data;
 using System.Windows.Input;
 
@@ -56,32 +57,37 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
             return new InvokeCommandAction();
         }
 
-        protected override void DataContextChanged(InvokeCommandAction action, object dataContext)
+        protected override void DataContextChanged(InvokeCommandAction triggerAction, object dataContext)
         {
-            BindingOperations.ClearBinding(action, InvokeCommandAction.CommandProperty);
+            BindingOperations.ClearBinding(triggerAction, InvokeCommandAction.CommandProperty);
 
             if (Command != null)
             {
-                action.Command = this.Command;
+                if (CommandBinding != null)
+                {
+                    throw new Exception("Command and CommandBinding");
+                }
+
+                triggerAction.Command = this.Command;
             }
 
             if (CommandBinding != null)
             {
                 BindingBase binding = CommandBinding.CloneBindingBase(dataContext);
-                BindingOperations.SetBinding(action, InvokeCommandAction.CommandProperty, binding);
+                BindingOperations.SetBinding(triggerAction, InvokeCommandAction.CommandProperty, binding);
             }
 
-            BindingOperations.ClearBinding(action, InvokeCommandAction.CommandParameterProperty);
+            BindingOperations.ClearBinding(triggerAction, InvokeCommandAction.CommandParameterProperty);
 
             if (CommandParameter != null)
             {
-                action.CommandParameter = this.CommandParameter;
+                triggerAction.CommandParameter = this.CommandParameter;
             }
 
             if (CommandParameterBinding != null)
             {
                 BindingOperations.SetBinding(
-                    action,
+                    triggerAction,
                     InvokeCommandAction.CommandParameterProperty,
                     CommandParameterBinding.CloneBindingBase(dataContext));
             }

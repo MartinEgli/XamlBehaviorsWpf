@@ -24,7 +24,7 @@
                             <!--<Behaviors:EventTriggerCreator.ActionCreators>
                                         <Behaviors:TriggerActionCreatorCollection>-->
                             <extensions1:ToggleEnabledTargetedTriggerActionCreator XTargetName="Button4" />
-                            <guiTests:InvokeCommandActionCreator CommandBinding="{Binding MyCommand}" />
+                            <guiTests:InvokeCommandActionCreator CommandBinding="{Binding MyCommand}" Command="AlignCenter" />
                             <!--</Behaviors:TriggerActionCreatorCollection>
                                     </Behaviors:EventTriggerCreator.ActionCreators>-->
                         </Behaviors:EventTriggerCreator>

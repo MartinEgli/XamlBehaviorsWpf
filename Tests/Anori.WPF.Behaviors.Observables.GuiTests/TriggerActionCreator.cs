@@ -18,7 +18,7 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
         where TTriggerAction : TriggerAction
     {
         /// <summary>
-        ///     The unregister action
+        ///     The unregister triggerAction
         /// </summary>
         //private List<Action> unregisterActions;
 
@@ -79,7 +79,7 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
-        abstract protected void DataContextChanged(TTriggerAction action, object dataContext);
+        abstract protected void DataContextChanged(TTriggerAction triggerAction, object dataContext);
 
         ///// <summary>
         /////     Unregisters this instance.
