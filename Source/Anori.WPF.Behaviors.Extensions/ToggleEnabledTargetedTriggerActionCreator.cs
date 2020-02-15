@@ -1,4 +1,5 @@
-﻿using Behaviors.Extensions;
+﻿using System.Windows;
+using Behaviors.Extensions;
 
 namespace Anori.WPF.Behaviors.Extensions
 {
@@ -15,6 +16,14 @@ namespace Anori.WPF.Behaviors.Extensions
                 TargetName = this.XTargetName,
                 TargetObject = this.TargetObject
             };
+        }
+
+        public void Attach(DependencyObject associatedObject)
+        {
+        }
+
+        public void Detach(DependencyObject associatedObject)
+        {
         }
     }
 }

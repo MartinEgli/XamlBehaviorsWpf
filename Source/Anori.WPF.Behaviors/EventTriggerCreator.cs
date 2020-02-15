@@ -12,7 +12,13 @@ namespace Anori.WPF.Behaviors
             get
             {
                 TriggerActionCreatorCollection triggerActionCreatorCollection =
-                    this.actionCreators ?? new TriggerActionCreatorCollection();
+                    this.actionCreators;
+                if (triggerActionCreatorCollection == null)
+                {
+                    triggerActionCreatorCollection = new TriggerActionCreatorCollection();
+                }
+
+                actionCreators = triggerActionCreatorCollection;
                 return triggerActionCreatorCollection;
             }
             set
@@ -44,10 +50,19 @@ namespace Anori.WPF.Behaviors
         protected override void OnAttached()
         {
             base.OnAttached();
+            foreach (ITriggerActionCreator actionCreator in ActionCreators)
+            {
+                actionCreator.Attach(AssociatedObject);
+            }
         }
 
         protected override void OnDetaching()
         {
+            foreach (ITriggerActionCreator actionCreator in ActionCreators)
+            {
+                actionCreator.Detach(AssociatedObject);
+            }
+
             base.OnDetaching();
         }
     }
