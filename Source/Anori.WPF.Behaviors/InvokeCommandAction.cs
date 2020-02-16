@@ -1,5 +1,8 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// -----------------------------------------------------------------------
+// <copyright file="InvokeCommandAction.cs" company="Anori Soft">
+// Copyright (c) Anori Soft. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
 
 using System;
 using System.Diagnostics;
@@ -16,27 +19,35 @@ namespace Anori.WPF.Behaviors
     /// </summary>
     public sealed class InvokeCommandAction : TriggerAction<DependencyObject>
     {
-        public static readonly DependencyProperty CommandProperty =
-            DependencyProperty.Register("Command", typeof(ICommand), typeof(InvokeCommandAction), new FrameworkPropertyMetadata(null, PropertyChangedCallback));
+        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
+            "Command",
+            typeof(ICommand),
+            typeof(InvokeCommandAction),
+            new FrameworkPropertyMetadata(null, PropertyChangedCallback));
 
-        private static void PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-        }
+        public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register(
+            "CommandParameter",
+            typeof(object),
+            typeof(InvokeCommandAction),
+            null);
 
-        public static readonly DependencyProperty CommandParameterProperty =
-            DependencyProperty.Register("CommandParameter", typeof(object), typeof(InvokeCommandAction), null);
+        public static readonly DependencyProperty EventArgsConverterProperty = DependencyProperty.Register(
+            "EventArgsConverter",
+            typeof(IValueConverter),
+            typeof(InvokeCommandAction),
+            new PropertyMetadata(null));
 
-        public static readonly DependencyProperty EventArgsConverterProperty =
-            DependencyProperty.Register("EventArgsConverter", typeof(IValueConverter), typeof(InvokeCommandAction),
-                new PropertyMetadata(null));
+        public static readonly DependencyProperty EventArgsConverterParameterProperty = DependencyProperty.Register(
+            "EventArgsConverterParameter",
+            typeof(object),
+            typeof(InvokeCommandAction),
+            new PropertyMetadata(null));
 
-        public static readonly DependencyProperty EventArgsConverterParameterProperty =
-            DependencyProperty.Register("EventArgsConverterParameter", typeof(object), typeof(InvokeCommandAction),
-                new PropertyMetadata(null));
-
-        public static readonly DependencyProperty EventArgsParameterPathProperty =
-            DependencyProperty.Register("EventArgsParameterPath", typeof(string), typeof(InvokeCommandAction),
-                new PropertyMetadata(null));
+        public static readonly DependencyProperty EventArgsParameterPathProperty = DependencyProperty.Register(
+            "EventArgsParameterPath",
+            typeof(string),
+            typeof(InvokeCommandAction),
+            new PropertyMetadata(null));
 
         private string commandName;
 
@@ -128,6 +139,10 @@ namespace Anori.WPF.Behaviors
         /// </remarks>
         public bool PassEventArgsToCommand { get; set; }
 
+        private static void PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+        }
+
         /// <summary>
         ///     Invokes the action.
         /// </summary>
@@ -154,8 +169,11 @@ namespace Anori.WPF.Behaviors
                     //next let's see if an event args converter has been supplied
                     if (commandParameter == null && this.EventArgsConverter != null)
                     {
-                        commandParameter = this.EventArgsConverter.Convert(parameter, typeof(object),
-                            EventArgsConverterParameter, CultureInfo.CurrentCulture);
+                        commandParameter = this.EventArgsConverter.Convert(
+                            parameter,
+                            typeof(object),
+                            EventArgsConverterParameter,
+                            CultureInfo.CurrentCulture);
                     }
 
                     //last resort, let see if they want to force the event args to be passed as a parameter
@@ -170,27 +188,40 @@ namespace Anori.WPF.Behaviors
                     }
                 } else
                 {
-                    Debug.WriteLine(ExceptionStringTable.CommandDoesNotExistOnBehaviorWarningMessage, this.CommandName,
+                    Debug.WriteLine(
+                        ExceptionStringTable.CommandDoesNotExistOnBehaviorWarningMessage,
+                        this.CommandName,
                         this.AssociatedObject.GetType().Name);
                 }
             }
         }
 
+        /// <summary>
+        ///     Gets the event arguments property path value.
+        /// </summary>
+        /// <param name="parameter">The parameter.</param>
+        /// <returns></returns>
         private object GetEventArgsPropertyPathValue(object parameter)
         {
-            object commandParameter;
             object propertyValue = parameter;
             string[] propertyPathParts = EventArgsParameterPath.Split('.');
             foreach (string propertyPathPart in propertyPathParts)
             {
                 PropertyInfo propInfo = propertyValue.GetType().GetProperty(propertyPathPart);
-                propertyValue = propInfo.GetValue(propertyValue, null);
+                if (propInfo != null)
+                {
+                    propertyValue = propInfo.GetValue(propertyValue, null);
+                }
             }
 
-            commandParameter = propertyValue;
+            object commandParameter = propertyValue;
             return commandParameter;
         }
 
+        /// <summary>
+        ///     Resolves the command.
+        /// </summary>
+        /// <returns></returns>
         private ICommand ResolveCommand()
         {
             ICommand command = null;

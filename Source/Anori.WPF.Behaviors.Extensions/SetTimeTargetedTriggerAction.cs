@@ -1,4 +1,4 @@
-﻿namespace Behaviors.Extensions
+﻿namespace Anori.WPF.Behaviors.Extensions
 {
     using System;
     using System.Windows.Controls;

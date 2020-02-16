@@ -5,6 +5,7 @@
     xmlns:b="http://schemas.anori.com/xaml/behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:extensions="clr-namespace:Behaviors.Extensions;assembly=Anori.WPF.Behaviors.Extensions"
+    xmlns:extensions1="clr-namespace:Anori.WPF.Behaviors.Extensions;assembly=Anori.WPF.Behaviors.Extensions"
     xmlns:guiTests="clr-namespace:Anori.WPF.Behaviors.Extensions.GuiTests"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:nameChecks="clr-namespace:Anori.WPF.NameChecks;assembly=Anori.WPF.NameChecks"
@@ -17,8 +18,8 @@
         <Button>
             <b:Interaction.Triggers>
                 <b:EventTrigger EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
-                    <extensions:ToggleEnabledTargetedTriggerAction TargetName="{nameChecks:NameOfElement Button2, Type={x:Type guiTests:MainWindow}}" />
-                    <extensions:ToggleEnabledTargetedTriggerAction TargetName="{nameChecks:NameOfElement Button3, Type={x:Type guiTests:MainWindow}}" />
+                    <extensions1:ToggleEnabledTargetedTriggerAction TargetName="{nameChecks:NameOfElement Button2, Type={x:Type guiTests:MainWindow}}" />
+                    <extensions1:ToggleEnabledTargetedTriggerAction TargetName="{nameChecks:NameOfElement Button3, Type={x:Type guiTests:MainWindow}}" />
                 </b:EventTrigger>
             </b:Interaction.Triggers>
             <Button.Content>Button 1</Button.Content>
@@ -40,7 +41,7 @@
                 <!--<Behaviors:EventTrigger EventName="{local:NameOf IsEnabledChanged, Button}">
                 </Behaviors:EventTrigger>-->
 
-                <extensions:DependencyPropertyChangedEventTrigger EventName="{nameChecks:NameOf IsEnabledChanged, Button}">
+                <extensions1:DependencyPropertyChangedEventTrigger EventName="{nameChecks:NameOf IsEnabledChanged, Button}">
                     <!--<extensions:SetTimeTargetedTriggerAction TargetName="{local:NameOf Member=Box1, Type={x:Type local:MainWindow}}" />-->
                     <!--<extensions:SetTimeTargetedTriggerAction>
                         <extensions:SetTimeTargetedTriggerAction.TargetName>
@@ -49,7 +50,7 @@
                             <local:NameOfElement Element="" />
                         </extensions:SetTimeTargetedTriggerAction.TargetName>
                     </extensions:SetTimeTargetedTriggerAction>-->
-                </extensions:DependencyPropertyChangedEventTrigger>
+                </extensions1:DependencyPropertyChangedEventTrigger>
             </b:Interaction.Triggers>
             <Button.Content>Button 2</Button.Content>
         </Button>
@@ -57,10 +58,10 @@
         <Button x:Name="Button3">
             <b:Interaction.Triggers>
                 <b:PropertyChangedTrigger Binding="{Binding IsEnabled, ElementName=Button3}">
-                    <extensions:SetTimeTargetedTriggerAction TargetName="Box2" />
+                    <extensions1:SetTimeTargetedTriggerAction TargetName="Box2" />
                 </b:PropertyChangedTrigger>
                 <b:PropertyChangedTrigger Binding="{Binding IsEnabled, ElementName=Button3}">
-                    <extensions:SetTimeTargetedTriggerAction TargetName="Box2" />
+                    <extensions1:SetTimeTargetedTriggerAction TargetName="Box2" />
                 </b:PropertyChangedTrigger>
             </b:Interaction.Triggers>
             <Button.Content>Button 3</Button.Content>

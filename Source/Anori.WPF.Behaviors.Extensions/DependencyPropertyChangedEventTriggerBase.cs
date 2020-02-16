@@ -1,15 +1,25 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Reflection;
-using System.Windows;
-using Anori.WPF.Behaviors;
-using TriggerBase = Anori.WPF.Behaviors.TriggerBase;
+﻿// -----------------------------------------------------------------------
+// <copyright file="DependencyPropertyChangedEventTriggerBase.cs" company="Anori Soft">
+// Copyright (c) Anori Soft. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
 
-namespace Behaviors.Extensions
+namespace Anori.WPF.Behaviors.Extensions
 {
+    using System;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
+    using System.Reflection;
+    using System.Windows;
+
+    using Anori.WPF.Behaviors;
+
+    using global::Behaviors.Extensions;
+
+    using TriggerBase = Anori.WPF.Behaviors.TriggerBase;
+
     /// <summary>
     ///     Represents a trigger that can listen to an object other than its AssociatedObject.
     /// </summary>

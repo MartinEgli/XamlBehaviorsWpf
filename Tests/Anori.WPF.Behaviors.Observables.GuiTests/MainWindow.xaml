@@ -5,6 +5,7 @@
     xmlns:Behaviors="http://schemas.anori.com/xaml/behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:extensions="clr-namespace:Behaviors.Extensions;assembly=Anori.WPF.Behaviors.Extensions"
+    xmlns:extensions1="clr-namespace:Anori.WPF.Behaviors.Extensions;assembly=Anori.WPF.Behaviors.Extensions"
     xmlns:guiTests="clr-namespace:Anori.WPF.Behaviors.Observables.GuiTests"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:nameChecks="clr-namespace:Anori.WPF.NameChecks;assembly=Anori.WPF.NameChecks"
@@ -36,7 +37,7 @@
         <Button Content="New DataContext">
             <Behaviors:Interaction.Triggers>
                 <Behaviors:EventTrigger EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
-                    <extensions:ToggleEnabledTargetedTriggerAction TargetName="Button2" />
+                    <extensions1:ToggleEnabledTargetedTriggerAction TargetName="Button2" />
                     <Behaviors:InvokeCommandAction Command="{Binding NewDataContextCommand}" />
                 </Behaviors:EventTrigger>
             </Behaviors:Interaction.Triggers>
@@ -45,7 +46,7 @@
         <Button Content="Button">
             <Behaviors:Interaction.Triggers>
                 <Behaviors:EventTrigger EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
-                    <extensions:ToggleEnabledTargetedTriggerAction TargetName="Button2" />
+                    <extensions1:ToggleEnabledTargetedTriggerAction TargetName="Button2" />
                     <Behaviors:InvokeCommandAction Command="{Binding MyCommand}" />
                 </Behaviors:EventTrigger>
             </Behaviors:Interaction.Triggers>

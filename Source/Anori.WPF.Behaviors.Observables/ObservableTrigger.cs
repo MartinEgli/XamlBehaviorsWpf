@@ -4,12 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Behaviors.Extensions
+namespace Anori.WPF.Behaviors.Observables
 {
     using System.Diagnostics.CodeAnalysis;
     using System.Windows;
-
-    using Anori.WPF.Behaviors.Observables;
 
     /// <summary>
     ///     A trigger that listens for a specified event on its source and fires when that event is fired.

@@ -8,9 +8,12 @@
     <AssemblyOriginatorKeyFile>Behaviors.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Anori.WPF.Behaviors\Anori.WPF.Behaviors.csproj" />
+    <Compile Remove="Triggers\**" />
+    <EmbeddedResource Remove="Triggers\**" />
+    <None Remove="Triggers\**" />
+    <Page Remove="Triggers\**" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Triggers\" />
+    <ProjectReference Include="..\Anori.WPF.Behaviors\Anori.WPF.Behaviors.csproj" />
   </ItemGroup>
 </Project>
