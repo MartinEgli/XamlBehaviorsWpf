@@ -12,7 +12,7 @@ using Anori.WPF.Behaviors.Core;
 namespace Anori.WPF.Behaviors.Observables.GuiTests
 {
     /// <summary>
-    ///     Interaction logic for MainWindow.xaml
+    ///     StyleInteraction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {

@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFramework>net451</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Anori.WPF.Behaviors.Extensions\Anori.WPF.Behaviors.Extensions.csproj" />
+    <ProjectReference Include="..\Anori.WPF.Behaviors\Anori.WPF.Behaviors.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="ExceptionStringTable.Designer.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ExceptionStringTable.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="ExceptionStringTable.resx">
+      <Public>True</Public>
+      <LastGenOutput>ExceptionStringTable.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

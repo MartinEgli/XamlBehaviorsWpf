@@ -4,10 +4,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Windows;
-
-namespace Anori.WPF.Behaviors
+namespace Anori.WPF.StyleBehaviors
 {
+    using System.Windows;
+
+    using TriggerBase = Anori.WPF.Behaviors.TriggerBase;
+
     /// <summary>
     /// </summary>
     public interface ITriggerCreator

@@ -1,19 +1,23 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="Interaction.cs" company="Anori Soft">
+// <copyright file="StyleInteraction.cs" company="Anori Soft">
 // Copyright (c) Anori Soft. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Windows;
-
-namespace Anori.WPF.Behaviors
+namespace Anori.WPF.StyleBehaviors
 {
+    using System;
+    using System.Windows;
+
+    using Anori.WPF.Behaviors;
+
+    using TriggerCollection = Anori.WPF.Behaviors.TriggerCollection;
+
     /// <summary>
     ///     Static class that owns the Triggers and Behaviors attached properties. Handles propagation of AssociatedObject
     ///     change notifications.
     /// </summary>
-    public static class Interaction
+    public static class StyleInteraction
     {
         /// <summary>
         ///     This property is used as the internal backing store for the public Triggers attached property.
@@ -26,7 +30,7 @@ namespace Anori.WPF.Behaviors
         private static readonly DependencyProperty TriggersProperty = DependencyProperty.RegisterAttached(
             "ShadowTriggers",
             typeof(TriggerCollection),
-            typeof(Interaction),
+            typeof(StyleInteraction),
             new FrameworkPropertyMetadata(OnTriggersChanged));
 
         // Note that the parts of the xml document comments must be together in the source, even in the presense of #ifs
@@ -41,8 +45,26 @@ namespace Anori.WPF.Behaviors
         private static readonly DependencyProperty BehaviorsProperty = DependencyProperty.RegisterAttached(
             "ShadowBehaviors",
             typeof(BehaviorCollection),
-            typeof(Interaction),
+            typeof(StyleInteraction),
             new FrameworkPropertyMetadata(OnBehaviorsChanged));
+
+        /// <summary>
+        ///     The style behaviors property
+        /// </summary>
+        public static readonly DependencyProperty StyleBehaviorsProperty = DependencyProperty.RegisterAttached(
+            "StyleBehaviors",
+            typeof(StyleBehaviorCollection),
+            typeof(StyleInteraction),
+            new FrameworkPropertyMetadata(OnStyleBehaviorsChanged));
+
+        /// <summary>
+        ///     The style behaviors property
+        /// </summary>
+        public static readonly DependencyProperty StyleTriggersProperty = DependencyProperty.RegisterAttached(
+            "StyleTriggers",
+            typeof(StyleTriggerCollection),
+            typeof(StyleInteraction),
+            new FrameworkPropertyMetadata(OnStyleTriggersChanged));
 
         /// <summary>
         ///     Gets or sets a value indicating whether to run as if in design mode.
@@ -55,6 +77,160 @@ namespace Anori.WPF.Behaviors
         {
             get;
             set;
+        }
+
+        /// <summary>
+        ///     Sets the style behaviors.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <param name="value">The value.</param>
+        public static void SetStyleBehaviors(DependencyObject element, StyleBehaviorCollection value)
+        {
+            element.SetValue(StyleBehaviorsProperty, value);
+        }
+
+        /// <summary>
+        ///     Gets the style behaviors.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <returns></returns>
+        public static StyleBehaviorCollection GetStyleBehaviors(DependencyObject element)
+        {
+            StyleBehaviorCollection styleBehaviors = (StyleBehaviorCollection)element.GetValue(StyleBehaviorsProperty);
+            if (styleBehaviors != null)
+            {
+                return styleBehaviors;
+            }
+
+            styleBehaviors = new StyleBehaviorCollection();
+            element.SetValue(StyleBehaviorsProperty, styleBehaviors);
+
+            return styleBehaviors;
+        }
+
+        /// <summary>
+        ///     Sets the style behaviors.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <param name="value">The value.</param>
+        public static void SetStyleTriggers(DependencyObject element, StyleTriggerCollection value)
+        {
+            element.SetValue(StyleTriggersProperty, value);
+        }
+
+        /// <summary>
+        ///     Gets the style behaviors.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <returns></returns>
+        public static StyleTriggerCollection GetStyleTriggers(DependencyObject element)
+        {
+            StyleTriggerCollection styleTriggers = (StyleTriggerCollection)element.GetValue(StyleTriggersProperty);
+            if (styleTriggers != null)
+            {
+                return styleTriggers;
+            }
+
+            styleTriggers = new StyleTriggerCollection();
+            element.SetValue(StyleTriggersProperty, styleTriggers);
+
+            return styleTriggers;
+        }
+
+        /// <summary>
+        ///     Called when [style behaviors changed].
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <param name="args">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
+        private static void OnStyleBehaviorsChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            StyleBehaviorCollection oldCollection = (StyleBehaviorCollection)args.OldValue;
+            StyleBehaviorCollection newCollection = (StyleBehaviorCollection)args.NewValue;
+
+            if (oldCollection == newCollection)
+            {
+                return;
+            }
+
+            BehaviorCollection behaviorCollection = GetBehaviors(obj);
+
+            if (!(newCollection is StyleBehaviorCollection newBehaviorCollection))
+            {
+                if (behaviorCollection == null)
+                {
+                    return;
+                }
+
+                behaviorCollection.Detach();
+                behaviorCollection.Clear();
+                return;
+            }
+
+            if (behaviorCollection == null)
+            {
+                behaviorCollection = new BehaviorCollection();
+                obj.SetValue(BehaviorsProperty, behaviorCollection);
+            } else
+            {
+                behaviorCollection.Detach();
+                behaviorCollection.Clear();
+                behaviorCollection = new BehaviorCollection();
+            }
+
+            foreach (IBehaviorCreator behavior in newBehaviorCollection)
+            {
+                behaviorCollection.Add(behavior.Create());
+            }
+
+            behaviorCollection.Attach(obj);
+        }
+
+        /// <summary>
+        ///     Called when [style triggers changed].
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <param name="args">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
+        private static void OnStyleTriggersChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            StyleTriggerCollection oldCollection = (StyleTriggerCollection)args.OldValue;
+            StyleTriggerCollection newCollection = (StyleTriggerCollection)args.NewValue;
+
+            if (oldCollection == newCollection)
+            {
+                return;
+            }
+
+            TriggerCollection triggerCollection = GetTriggers(obj);
+
+            if (!(newCollection is StyleTriggerCollection styleTriggerCollection))
+            {
+                if (triggerCollection == null)
+                {
+                    return;
+                }
+
+                triggerCollection.Detach();
+                triggerCollection.Clear();
+                return;
+            }
+
+            if (triggerCollection == null)
+            {
+                triggerCollection = new TriggerCollection();
+                obj.SetValue(BehaviorsProperty, triggerCollection);
+            } else
+            {
+                triggerCollection.Detach();
+                triggerCollection.Clear();
+                triggerCollection = new TriggerCollection();
+            }
+
+            foreach (ITriggerCreator triggerCreator in styleTriggerCollection)
+            {
+                triggerCollection.Add(triggerCreator.Create(obj));
+            }
+
+            triggerCollection.Attach(obj);
         }
 
         /// <summary>

@@ -1,5 +1,5 @@
-// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors
 {
     using System;
@@ -17,9 +17,10 @@ namespace Anori.WPF.Behaviors
     [SuppressMessage("Microsoft.Design", "CA1019:DefineAccessorsForAttributeArguments", Justification = "FxCop is complaining about our single parameter override")]
     public sealed class DefaultTriggerAttribute : Attribute
     {
-        private Type targetType;
-        private Type triggerType;
-        private object[] parameters;
+        /// <summary>
+        /// The parameters
+        /// </summary>
+        private readonly object[] parameters;
 
         /// <summary>
         /// Gets the type that this DefaultTriggerAttribute applies to.
@@ -27,26 +28,25 @@ namespace Anori.WPF.Behaviors
         /// <value>The type this DefaultTriggerAttribute applies to.</value>
         public Type TargetType
         {
-            get { return this.targetType; }
+            get;
         }
 
         /// <summary>
-        /// Gets the type of the <see cref="TriggerBase"/> to instantiate.
+        /// Gets the type of the <see cref="TriggerBase" /> to instantiate.
         /// </summary>
-        /// <value>The type of the <see cref="TriggerBase"/> to instantiate.</value>
+        /// <value>
+        /// The type of the <see cref="TriggerBase" /> to instantiate.
+        /// </value>
         public Type TriggerType
         {
-            get { return this.triggerType; }
+            get;
         }
 
         /// <summary>
         /// Gets the parameters to pass to the <see cref="TriggerBase"/> constructor.
         /// </summary>
         /// <value>The parameters to pass to the <see cref="TriggerBase"/> constructor.</value>
-        public IEnumerable Parameters
-        {
-            get { return this.parameters; }
-        }
+        public IEnumerable Parameters => this.parameters;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultTriggerAttribute"/> class.
@@ -54,7 +54,7 @@ namespace Anori.WPF.Behaviors
         /// <param name="targetType">The type this attribute applies to.</param>
         /// <param name="triggerType">The type of <see cref="TriggerBase"/> to instantiate.</param>
         /// <param name="parameter">A single argument for the specified <see cref="TriggerBase"/>.</param>
-        /// <exception cref="ArgumentException"><c cref="triggerType"/> is not derived from TriggerBase.</exception>
+        /// <exception cref="ArgumentException"><c cref="TriggerType"/> is not derived from TriggerBase.</exception>
         /// <remarks>This constructor is useful if the specifed <see cref="TriggerBase"/> has a single argument. The
         /// resulting code will be CLS compliant.</remarks>
         public DefaultTriggerAttribute(Type targetType, Type triggerType, object parameter) :
@@ -68,7 +68,7 @@ namespace Anori.WPF.Behaviors
         /// <param name="targetType">The type this attribute applies to.</param>
         /// <param name="triggerType">The type of <see cref="TriggerBase"/> to instantiate.</param>
         /// <param name="parameters">The constructor arguments for the specified <see cref="TriggerBase"/>.</param>
-        /// <exception cref="ArgumentException"><c cref="triggerType"/> is not derived from TriggerBase.</exception>
+        /// <exception cref="ArgumentException"><c cref="TriggerType"/> is not derived from TriggerBase.</exception>
         public DefaultTriggerAttribute(Type targetType, Type triggerType, params object[] parameters)
         {
             if (!typeof(TriggerBase).IsAssignableFrom(triggerType))
@@ -80,8 +80,8 @@ namespace Anori.WPF.Behaviors
 
             // todo jekelly: validate that targetType is a valid target for the trigger specified by triggerType
 
-            this.targetType = targetType;
-            this.triggerType = triggerType;
+            this.TargetType = targetType;
+            this.TriggerType = triggerType;
             this.parameters = parameters;
         }
 
@@ -96,9 +96,9 @@ namespace Anori.WPF.Behaviors
             try
             {
                 trigger = Activator.CreateInstance(this.TriggerType, this.parameters);
-            }
-            catch
+            } catch
             {
+                //Ignore Exceptions
             }
             return (TriggerBase)trigger;
         }

@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors
 {
     using System;
@@ -13,23 +13,37 @@ namespace Anori.WPF.Behaviors
     /// </summary>
     public sealed class NameResolvedEventArgs : EventArgs
     {
-        private object oldObject;
-        private object newObject;
-
+        /// <summary>
+        /// Gets the old object.
+        /// </summary>
+        /// <value>
+        /// The old object.
+        /// </value>
         public object OldObject
         {
-            get { return oldObject; }
+            get;
         }
 
+        /// <summary>
+        /// Creates new object.
+        /// </summary>
+        /// <value>
+        /// The new object.
+        /// </value>
         public object NewObject
         {
-            get { return newObject; }
+            get;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NameResolvedEventArgs"/> class.
+        /// </summary>
+        /// <param name="oldObject">The old object.</param>
+        /// <param name="newObject">The new object.</param>
         public NameResolvedEventArgs(object oldObject, object newObject)
         {
-            this.oldObject = oldObject;
-            this.newObject = newObject;
+            this.OldObject = oldObject;
+            this.NewObject = newObject;
         }
     }
 
@@ -129,12 +143,22 @@ namespace Anori.WPF.Behaviors
             set;
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance has attemped resolve.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance has attemped resolve; otherwise, <c>false</c>.
+        /// </value>
         private bool HasAttempedResolve
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Called when [name scope reference element changed].
+        /// </summary>
+        /// <param name="oldNameScopeReference">The old name scope reference.</param>
         private void OnNameScopeReferenceElementChanged(FrameworkElement oldNameScopeReference)
         {
             if (this.PendingReferenceElementLoad)
@@ -198,6 +222,11 @@ namespace Anori.WPF.Behaviors
             }
         }
 
+        /// <summary>
+        /// Called when [object changed].
+        /// </summary>
+        /// <param name="oldTarget">The old target.</param>
+        /// <param name="newTarget">The new target.</param>
         private void OnObjectChanged(DependencyObject oldTarget, DependencyObject newTarget)
         {
             if (this.ResolvedElementChanged != null)
@@ -206,6 +235,11 @@ namespace Anori.WPF.Behaviors
             }
         }
 
+        /// <summary>
+        /// Gets the actual name scope reference.
+        /// </summary>
+        /// <param name="initialReferenceElement">The initial reference element.</param>
+        /// <returns></returns>
         private FrameworkElement GetActualNameScopeReference(FrameworkElement initialReferenceElement)
         {
             Debug.Assert(Interaction.IsElementLoaded(initialReferenceElement));
@@ -218,6 +252,13 @@ namespace Anori.WPF.Behaviors
             return nameScopeReference;
         }
 
+        /// <summary>
+        /// Determines whether [is name scope] [the specified framework element].
+        /// </summary>
+        /// <param name="frameworkElement">The framework element.</param>
+        /// <returns>
+        ///   <c>true</c> if [is name scope] [the specified framework element]; otherwise, <c>false</c>.
+        /// </returns>
         private bool IsNameScope(FrameworkElement frameworkElement)
         {
             FrameworkElement parentElement = frameworkElement.Parent as FrameworkElement;
@@ -231,7 +272,7 @@ namespace Anori.WPF.Behaviors
                 //			yes				|			yes				 |			yes*
                 // * Note that if the resolved element is the same, it doesn't matter if we use the parent or child,
                 //   so we choose the parent. If they are different, we've found a name collision across namescopes,
-                //	 and our rule is to use the parent as the namescope in that case and discourage people from 
+                //	 and our rule is to use the parent as the namescope in that case and discourage people from
                 //	 getting into this state by disallowing creation of targeted types on Control XAML root elements.
                 // Hence, we only need to check if Name resolves in the parent scope to know if we need to use the parent.
                 object resolvedInParentScope = parentElement.FindName(this.Name);
@@ -240,6 +281,11 @@ namespace Anori.WPF.Behaviors
             return false;
         }
 
+        /// <summary>
+        /// Called when [name scope reference loaded].
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void OnNameScopeReferenceLoaded(object sender, RoutedEventArgs e)
         {
             this.PendingReferenceElementLoad = false;

@@ -1,21 +1,38 @@
-// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// -----------------------------------------------------------------------
+// <copyright file="EventObserver.cs" company="Anori Soft">
+// Copyright (c) Anori Soft. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
 namespace Anori.WPF.Behaviors
 {
     using System;
     using System.Reflection;
 
     /// <summary>
-    /// EventObserver is designed to help manage event handlers by detatching when disposed. Creating this object will also attach in the constructor.
+    ///     EventObserver is designed to help manage event handlers by detatching when disposed. Creating this object will also
+    ///     attach in the constructor.
     /// </summary>
     public sealed class EventObserver : IDisposable
     {
-        private EventInfo eventInfo;
-        private object target;
-        private Delegate handler;
+        /// <summary>
+        ///     The event information
+        /// </summary>
+        private readonly EventInfo eventInfo;
 
         /// <summary>
-        /// Creates an instance of EventObserver and attaches to the supplied event on the supplied target. Call dispose to detach.
+        ///     The handler
+        /// </summary>
+        private readonly Delegate handler;
+
+        /// <summary>
+        ///     The target
+        /// </summary>
+        private readonly object target;
+
+        /// <summary>
+        ///     Creates an instance of EventObserver and attaches to the supplied event on the supplied target. Call dispose to
+        ///     detach.
         /// </summary>
         /// <param name="eventInfo">The event to attach and detach from.</param>
         /// <param name="target">The target object the event is defined on. Null if the method is static.</param>
@@ -24,22 +41,17 @@ namespace Anori.WPF.Behaviors
         {
             if (eventInfo == null)
             {
-                throw new ArgumentNullException("eventInfo");
-            }
-
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
+                throw new ArgumentNullException(nameof(eventInfo));
             }
 
             this.eventInfo = eventInfo;
             this.target = target;
-            this.handler = handler;
+            this.handler = handler ?? throw new ArgumentNullException(nameof(handler));
             this.eventInfo.AddEventHandler(this.target, handler);
         }
 
         /// <summary>
-        /// Detaches the handler from the event.
+        ///     Detaches the handler from the event.
         /// </summary>
         public void Dispose()
         {

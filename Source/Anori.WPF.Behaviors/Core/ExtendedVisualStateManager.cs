@@ -1,8 +1,13 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// -----------------------------------------------------------------------
+// <copyright file="ExtendedVisualStateManager.cs" company="Anori Soft">
+// Copyright (c) Anori Soft. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
 namespace Anori.WPF.Behaviors.Core
 {
     using Anori.WPF.Behaviors.Media;
+
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
@@ -16,232 +21,33 @@ namespace Anori.WPF.Behaviors.Core
     using System.Windows.Media.Imaging;
 
     /// <summary>
-    /// ExtendedVisualStateManager is a custom VisualStateManager that can smooth out the animation of layout properties.
-    /// With this custom VisualStateManager, states can include changes to properties like Grid.Column, can change element heights to or from Auto, and so on.
-    /// These changes will be smoothed out over time using the GeneratedDuration and GeneratedEasingFunction of the appropriate transition.
-    /// See the "VisualStateManager overrides" region below for a general description of the algorithm.
+    ///     ExtendedVisualStateManager is a custom VisualStateManager that can smooth out the animation of layout properties.
+    ///     With this custom VisualStateManager, states can include changes to properties like Grid.Column, can change element
+    ///     heights to or from Auto, and so on.
+    ///     These changes will be smoothed out over time using the GeneratedDuration and GeneratedEasingFunction of the
+    ///     appropriate transition.
+    ///     See the "VisualStateManager overrides" region below for a general description of the algorithm.
     /// </summary>
     public class ExtendedVisualStateManager : VisualStateManager
     {
-
-        internal class WrapperCanvas : Canvas
-        {
-            public Rect OldRect { get; set; }
-            public Rect NewRect { get; set; }
-            public Dictionary<DependencyProperty, object> LocalValueCache { get; set; }
-            public Visibility DestinationVisibilityCache { get; set; }
-
-            public double SimulationProgress
-            {
-                get { return (double)GetValue(SimulationProgressProperty); }
-                set { SetValue(SimulationProgressProperty, value); }
-            }
-
-            internal static readonly DependencyProperty SimulationProgressProperty = DependencyProperty.Register("SimulationProgress", typeof(double), typeof(WrapperCanvas), new PropertyMetadata(0d, SimulationProgressChanged));
-
-            private static void SimulationProgressChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-            {
-                WrapperCanvas wrapper = d as WrapperCanvas;
-                double progress = (double)e.NewValue;
-
-                if (wrapper != null && wrapper.Children.Count > 0)
-                {
-                    FrameworkElement child = wrapper.Children[0] as FrameworkElement;
-
-                    child.Width = Math.Max(0, wrapper.OldRect.Width * progress + wrapper.NewRect.Width * (1 - progress));
-                    child.Height = Math.Max(0, wrapper.OldRect.Height * progress + wrapper.NewRect.Height * (1 - progress));
-                    Canvas.SetLeft(child, progress * (wrapper.OldRect.Left - wrapper.NewRect.Left));
-                    Canvas.SetTop(child, progress * (wrapper.OldRect.Top - wrapper.NewRect.Top));
-                }
-            }
-        }
+        private bool changingState;
 
         public static bool IsRunningFluidLayoutTransition { get { return LayoutTransitionStoryboard != null; } }
 
-        #region Data attached to VSM
-        /// <summary>
-        /// OriginalValueRecord remembers the original value of a property that was changed in a state.
-        /// </summary>
-        internal class OriginalLayoutValueRecord
-        {
-            public FrameworkElement Element { get; set; }
-            public DependencyProperty Property { get; set; }
-            public object Value { get; set; }
-        }
-
-        /// <summary>
-        /// A VisualStateGroup that can use FluidLayout or not.
-        /// </summary>
-        public static readonly DependencyProperty UseFluidLayoutProperty = DependencyProperty.RegisterAttached("UseFluidLayout", typeof(bool), typeof(ExtendedVisualStateManager), new PropertyMetadata(false));
-        public static bool GetUseFluidLayout(DependencyObject obj) { return (bool)obj.GetValue(UseFluidLayoutProperty); }
-        public static void SetUseFluidLayout(DependencyObject obj, bool value) { obj.SetValue(UseFluidLayoutProperty, value); }
-
-        /// <summary>
-        /// Visibility is shadowed by a custom attached property at runtime.
-        /// </summary>
-        public static readonly DependencyProperty RuntimeVisibilityPropertyProperty = DependencyProperty.RegisterAttached("RuntimeVisibilityProperty", typeof(DependencyProperty), typeof(ExtendedVisualStateManager), new PropertyMetadata(null));
-        public static DependencyProperty GetRuntimeVisibilityProperty(DependencyObject obj) { return (DependencyProperty)obj.GetValue(RuntimeVisibilityPropertyProperty); }
-        public static void SetRuntimeVisibilityProperty(DependencyObject obj, DependencyProperty value) { obj.SetValue(RuntimeVisibilityPropertyProperty, value); }
-
-        /// <summary>
-        /// A VisualStateGroup keeps a list of these original values in an attached property.
-        /// </summary>
-        internal static readonly DependencyProperty OriginalLayoutValuesProperty = DependencyProperty.RegisterAttached("OriginalLayoutValues", typeof(List<OriginalLayoutValueRecord>), typeof(ExtendedVisualStateManager), new PropertyMetadata(null));
-        internal static List<OriginalLayoutValueRecord> GetOriginalLayoutValues(DependencyObject obj) { return (List<OriginalLayoutValueRecord>)obj.GetValue(OriginalLayoutValuesProperty); }
-        internal static void SetOriginalLayoutValues(DependencyObject obj, List<OriginalLayoutValueRecord> value) { obj.SetValue(OriginalLayoutValuesProperty, value); }
-
-        /// <summary>
-        /// For every state, the layout-specific properties get extracted and then are attached to the state. These properties are removed from the state itself.
-        /// </summary>
-        internal static readonly DependencyProperty LayoutStoryboardProperty = DependencyProperty.RegisterAttached("LayoutStoryboard", typeof(Storyboard), typeof(ExtendedVisualStateManager), new PropertyMetadata(null));
-        internal static Storyboard GetLayoutStoryboard(DependencyObject obj) { return (Storyboard)obj.GetValue(LayoutStoryboardProperty); }
-        internal static void SetLayoutStoryboard(DependencyObject obj, Storyboard value) { obj.SetValue(LayoutStoryboardProperty, value); }
-
-        /// <summary>
-        /// Remember the current state.
-        /// </summary>
-        internal static readonly DependencyProperty CurrentStateProperty = DependencyProperty.RegisterAttached("CurrentState", typeof(VisualState), typeof(ExtendedVisualStateManager), new PropertyMetadata(null));
-        internal static VisualState GetCurrentState(DependencyObject obj) { return (VisualState)obj.GetValue(CurrentStateProperty); }
-        internal static void SetCurrentState(DependencyObject obj, VisualState value) { obj.SetValue(CurrentStateProperty, value); }
-
-        /// <summary>
-        /// The TransitionEffect to use when the state changes.
-        /// </summary>
-        public static readonly DependencyProperty TransitionEffectProperty = DependencyProperty.RegisterAttached("TransitionEffect", typeof(TransitionEffect), typeof(ExtendedVisualStateManager), new PropertyMetadata(null));
-        public static TransitionEffect GetTransitionEffect(DependencyObject obj) { return (TransitionEffect)obj.GetValue(TransitionEffectProperty); }
-        public static void SetTransitionEffect(DependencyObject obj, TransitionEffect value) { obj.SetValue(TransitionEffectProperty, value); }
-
-        /// <summary>
-        /// The TransitionEffectStoryboard in use during the state change.
-        /// </summary>
-        internal static readonly DependencyProperty TransitionEffectStoryboardProperty = DependencyProperty.RegisterAttached("TransitionEffectStoryboard", typeof(Storyboard), typeof(ExtendedVisualStateManager), new PropertyMetadata(null));
-        internal static Storyboard GetTransitionEffectStoryboard(DependencyObject obj) { return (Storyboard)obj.GetValue(TransitionEffectStoryboardProperty); }
-        internal static void SetTransitionEffectStoryboard(DependencyObject obj, Storyboard value) { obj.SetValue(TransitionEffectStoryboardProperty, value); }
-
-        /// <summary>
-        /// The cached background in use during the state change.
-        /// </summary>
-        internal static readonly DependencyProperty DidCacheBackgroundProperty = DependencyProperty.RegisterAttached("DidCacheBackground", typeof(bool), typeof(ExtendedVisualStateManager), new PropertyMetadata(false));
-        internal static bool GetDidCacheBackground(DependencyObject obj) { return (bool)obj.GetValue(DidCacheBackgroundProperty); }
-        internal static void SetDidCacheBackground(DependencyObject obj, bool value) { obj.SetValue(DidCacheBackgroundProperty, value); }
-
-        /// <summary>
-        /// The cached background in use during the state change.
-        /// </summary>
-        internal static readonly DependencyProperty CachedBackgroundProperty = DependencyProperty.RegisterAttached("CachedBackground", typeof(object), typeof(ExtendedVisualStateManager), new PropertyMetadata(null));
-        internal static object GetCachedBackground(DependencyObject obj) { return obj.GetValue(CachedBackgroundProperty); }
-        internal static void SetCachedBackground(DependencyObject obj, object value) { obj.SetValue(CachedBackgroundProperty, value); }
-
-        /// <summary>
-        /// The cached background in use during the state change.
-        /// </summary>
-        internal static readonly DependencyProperty CachedEffectProperty = DependencyProperty.RegisterAttached("CachedEffect", typeof(Effect), typeof(ExtendedVisualStateManager), new PropertyMetadata(null));
-        internal static Effect GetCachedEffect(DependencyObject obj) { return (Effect)obj.GetValue(CachedEffectProperty); }
-        internal static void SetCachedEffect(DependencyObject obj, Effect value) { obj.SetValue(CachedEffectProperty, value); }
-        #endregion
-
-        #region Static data pertaining to the active layout transition
-        /// <summary>
-        /// This is the set of elements that are currently in motion.
-        /// </summary>
-        private static List<FrameworkElement> MovingElements;
-
-        /// <summary>
-        /// This is the storyboard that is animating the transition.
-        /// </summary>
-        private static Storyboard LayoutTransitionStoryboard;
-        #endregion
-
-        #region Definition of layout properties
-        /// <summary>
-        /// This list contains all the known layout properties.
-        /// </summary>
-        private static List<DependencyProperty> LayoutProperties = new List<DependencyProperty>()
-        {
-            Grid.ColumnProperty,
-            Grid.ColumnSpanProperty,
-            Grid.RowProperty,
-            Grid.RowSpanProperty,
-            Canvas.LeftProperty,
-            Canvas.TopProperty,
-            FrameworkElement.WidthProperty,
-            FrameworkElement.HeightProperty,
-            FrameworkElement.MinWidthProperty,
-            FrameworkElement.MinHeightProperty,
-            FrameworkElement.MaxWidthProperty,
-            FrameworkElement.MaxHeightProperty,
-            FrameworkElement.MarginProperty,
-            FrameworkElement.HorizontalAlignmentProperty,
-            FrameworkElement.VerticalAlignmentProperty,
-            UIElement.VisibilityProperty,
-            StackPanel.OrientationProperty,
-        };
-
-        private static List<DependencyProperty> ChildAffectingLayoutProperties = new List<DependencyProperty>()
-        {
-            StackPanel.OrientationProperty,
-        };
-
-        private static bool IsVisibilityProperty(DependencyProperty property)
-        {
-            // no need to check owner type - We've already filtered in LayoutPropertyFromTimeline
-            return property == UIElement.VisibilityProperty || property.Name == "RuntimeVisibility";
-        }
-
-        [SuppressMessage("Microsoft.Globalization", "CA1309", Justification = "Strings are postfixes of class names and not localizable")]
-        private static DependencyProperty LayoutPropertyFromTimeline(Timeline timeline, bool forceRuntimeProperty)
-        {
-            PropertyPath path = Storyboard.GetTargetProperty(timeline);
-
-            if (path == null || path.PathParameters == null || path.PathParameters.Count == 0)
-            {
-                return null;
-            }
-
-            DependencyProperty property = path.PathParameters[0] as DependencyProperty;
-
-            if (property != null)
-            {
-                if (property.Name == "RuntimeVisibility" && property.OwnerType.Name.EndsWith("DesignTimeProperties", StringComparison.Ordinal))
-                {
-                    if (!LayoutProperties.Contains(property))
-                    {
-                        LayoutProperties.Add(property);
-                    }
-                    return forceRuntimeProperty ? property : UIElement.VisibilityProperty;
-                }
-                else if (property.Name == "RuntimeWidth" && property.OwnerType.Name.EndsWith("DesignTimeProperties", StringComparison.Ordinal))
-                {
-                    if (!LayoutProperties.Contains(property))
-                    {
-                        LayoutProperties.Add(property);
-                    }
-                    return forceRuntimeProperty ? property : FrameworkElement.WidthProperty;
-                }
-                else if (property.Name == "RuntimeHeight" && property.OwnerType.Name.EndsWith("DesignTimeProperties", StringComparison.Ordinal))
-                {
-                    if (!LayoutProperties.Contains(property))
-                    {
-                        LayoutProperties.Add(property);
-                    }
-                    return forceRuntimeProperty ? property : FrameworkElement.HeightProperty;
-                }
-                else if (LayoutProperties.Contains(property))
-                {
-                    return property;
-                }
-            }
-
-            return null;
-        }
-        #endregion
-
-        private bool changingState = false;
-
         #region VisualStateManager overrides
 
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "1#", Justification = "Better to share the implementation here than to match the parameter name.")]
-        protected override bool GoToStateCore(FrameworkElement control, FrameworkElement stateGroupsRoot, string stateName, VisualStateGroup group, VisualState state, bool useTransitions)
+        [SuppressMessage(
+            "Microsoft.Naming",
+            "CA1725:ParameterNamesShouldMatchBaseDeclaration",
+            MessageId = "1#",
+            Justification = "Better to share the implementation here than to match the parameter name.")]
+        protected override bool GoToStateCore(
+            FrameworkElement control,
+            FrameworkElement stateGroupsRoot,
+            string stateName,
+            VisualStateGroup group,
+            VisualState state,
+            bool useTransitions)
         {
             //
             // Reminder that a layout transition may already be running; several of these functions keep track of the current value of MovingElements
@@ -277,14 +83,24 @@ namespace Anori.WPF.Behaviors.Core
             //
             VisualTransition transition = FindTransition(group, previousState, state);
 
-            bool animateWithTransitionEffect = PrepareTransitionEffectImage(stateGroupsRoot, useTransitions, transition);
+            bool animateWithTransitionEffect =
+                PrepareTransitionEffectImage(stateGroupsRoot, useTransitions, transition);
 
             //
             // If this group is not using Fluid Layout, then get out
             //
             if (!GetUseFluidLayout(group))
             {
-                return this.TransitionEffectAwareGoToStateCore(control, stateGroupsRoot, stateName, group, state, useTransitions, transition, animateWithTransitionEffect, previousState);
+                return this.TransitionEffectAwareGoToStateCore(
+                    control,
+                    stateGroupsRoot,
+                    stateName,
+                    group,
+                    state,
+                    useTransitions,
+                    transition,
+                    animateWithTransitionEffect,
+                    previousState);
             }
 
             //
@@ -311,7 +127,17 @@ namespace Anori.WPF.Behaviors.Core
                 {
                     StopAnimations();
                 }
-                bool returnValue = this.TransitionEffectAwareGoToStateCore(control, stateGroupsRoot, stateName, group, state, useTransitions, transition, animateWithTransitionEffect, previousState);
+
+                bool returnValue = this.TransitionEffectAwareGoToStateCore(
+                    control,
+                    stateGroupsRoot,
+                    stateName,
+                    group,
+                    state,
+                    useTransitions,
+                    transition,
+                    animateWithTransitionEffect,
+                    previousState);
 
                 SetLayoutStoryboardProperties(control, stateGroupsRoot, layoutStoryboard, originalValueRecords);
                 return returnValue;
@@ -319,7 +145,16 @@ namespace Anori.WPF.Behaviors.Core
 
             if (layoutStoryboard.Children.Count == 0 && originalValueRecords.Count == 0)
             {
-                return this.TransitionEffectAwareGoToStateCore(control, stateGroupsRoot, stateName, group, state, useTransitions, transition, animateWithTransitionEffect, previousState);
+                return this.TransitionEffectAwareGoToStateCore(
+                    control,
+                    stateGroupsRoot,
+                    stateName,
+                    group,
+                    state,
+                    useTransitions,
+                    transition,
+                    animateWithTransitionEffect,
+                    previousState);
             }
 
             try
@@ -339,21 +174,31 @@ namespace Anori.WPF.Behaviors.Core
                 //   - etc.
                 //   - no need to travel *down* the tree, if a parent changes size then the children will move
                 //
-                List<FrameworkElement> targetElements = FindTargetElements(control, stateGroupsRoot, layoutStoryboard, originalValueRecords, MovingElements);
+                List<FrameworkElement> targetElements = FindTargetElements(
+                    control,
+                    stateGroupsRoot,
+                    layoutStoryboard,
+                    originalValueRecords,
+                    MovingElements);
 
                 //
                 // Get the parent-relative rect of every element in the list, and the original effective opacity (= opacity * visibility, more or less)
                 //  - Assume that every Visibility change is an intended animation, unlike the work we do to filter the set of elements that actually moved
                 //
                 Dictionary<FrameworkElement, Rect> oldRects = GetRectsOfTargets(targetElements, MovingElements);
-                Dictionary<FrameworkElement, double> oldOpacities = GetOldOpacities(control, stateGroupsRoot, layoutStoryboard, originalValueRecords, MovingElements);
+                Dictionary<FrameworkElement, double> oldOpacities = GetOldOpacities(
+                    control,
+                    stateGroupsRoot,
+                    layoutStoryboard,
+                    originalValueRecords,
+                    MovingElements);
 
                 //
                 // Now that we've captured the current situation, stop the previous transition before going to the new state
                 //
                 if (LayoutTransitionStoryboard != null)
                 {
-                    stateGroupsRoot.LayoutUpdated -= new EventHandler(control_LayoutUpdated);
+                    stateGroupsRoot.LayoutUpdated -= control_LayoutUpdated;
                     StopAnimations();
                     stateGroupsRoot.UpdateLayout();
                 }
@@ -361,7 +206,16 @@ namespace Anori.WPF.Behaviors.Core
                 //
                 // Go to the new state; jump immediately to the layout changes
                 //
-                this.TransitionEffectAwareGoToStateCore(control, stateGroupsRoot, stateName, group, state, useTransitions, transition, animateWithTransitionEffect, previousState);
+                this.TransitionEffectAwareGoToStateCore(
+                    control,
+                    stateGroupsRoot,
+                    stateName,
+                    group,
+                    state,
+                    useTransitions,
+                    transition,
+                    animateWithTransitionEffect,
+                    previousState);
                 SetLayoutStoryboardProperties(control, stateGroupsRoot, layoutStoryboard, originalValueRecords);
 
                 //
@@ -405,7 +259,7 @@ namespace Anori.WPF.Behaviors.Core
                 //
                 WrapMovingElementsInCanvases(MovingElements, oldRects, newRects);
 
-                stateGroupsRoot.LayoutUpdated += new EventHandler(control_LayoutUpdated);
+                stateGroupsRoot.LayoutUpdated += control_LayoutUpdated;
 
                 //
                 // Animate the size/location of these elements from old rect to new rect
@@ -414,24 +268,395 @@ namespace Anori.WPF.Behaviors.Core
                 //
                 LayoutTransitionStoryboard = CreateLayoutTransitionStoryboard(transition, MovingElements, oldOpacities);
 
-                LayoutTransitionStoryboard.Completed += (EventHandler)delegate (object sender, EventArgs args)
+                LayoutTransitionStoryboard.Completed += (EventHandler)delegate
                 {
-                    stateGroupsRoot.LayoutUpdated -= new EventHandler(control_LayoutUpdated);
+                    stateGroupsRoot.LayoutUpdated -= control_LayoutUpdated;
                     StopAnimations();
                 };
 
                 LayoutTransitionStoryboard.Begin();
-            }
-            finally
+            } finally
             {
                 this.changingState = false;
             }
 
             return true;
         }
-        #endregion
+
+        #endregion VisualStateManager overrides
+
+        /// <summary>
+        /// </summary>
+        /// <seealso cref="System.Windows.Controls.Canvas" />
+        internal class WrapperCanvas : Canvas
+        {
+            internal static readonly DependencyProperty SimulationProgressProperty = DependencyProperty.Register(
+                "SimulationProgress",
+                typeof(double),
+                typeof(WrapperCanvas),
+                new PropertyMetadata(0d, SimulationProgressChanged));
+
+            public Rect OldRect { get; set; }
+
+            public Rect NewRect { get; set; }
+
+            public Dictionary<DependencyProperty, object> LocalValueCache { get; set; }
+
+            public Visibility DestinationVisibilityCache { get; set; }
+
+            public double SimulationProgress
+            {
+                get { return (double)GetValue(SimulationProgressProperty); }
+                set { SetValue(SimulationProgressProperty, value); }
+            }
+
+            private static void SimulationProgressChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            {
+                WrapperCanvas wrapper = d as WrapperCanvas;
+                double progress = (double)e.NewValue;
+
+                if (wrapper != null && wrapper.Children.Count > 0)
+                {
+                    FrameworkElement child = wrapper.Children[0] as FrameworkElement;
+
+                    child.Width = Math.Max(
+                        0,
+                        wrapper.OldRect.Width * progress + wrapper.NewRect.Width * (1 - progress));
+                    child.Height = Math.Max(
+                        0,
+                        wrapper.OldRect.Height * progress + wrapper.NewRect.Height * (1 - progress));
+                    SetLeft(child, progress * (wrapper.OldRect.Left - wrapper.NewRect.Left));
+                    SetTop(child, progress * (wrapper.OldRect.Top - wrapper.NewRect.Top));
+                }
+            }
+        }
+
+        #region Data attached to VSM
+
+        /// <summary>
+        ///     OriginalValueRecord remembers the original value of a property that was changed in a state.
+        /// </summary>
+        internal class OriginalLayoutValueRecord
+        {
+            public FrameworkElement Element { get; set; }
+
+            public DependencyProperty Property { get; set; }
+
+            public object Value { get; set; }
+        }
+
+        /// <summary>
+        ///     A VisualStateGroup that can use FluidLayout or not.
+        /// </summary>
+        public static readonly DependencyProperty UseFluidLayoutProperty = DependencyProperty.RegisterAttached(
+            "UseFluidLayout",
+            typeof(bool),
+            typeof(ExtendedVisualStateManager),
+            new PropertyMetadata(false));
+
+        public static bool GetUseFluidLayout(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(UseFluidLayoutProperty);
+        }
+
+        public static void SetUseFluidLayout(DependencyObject obj, bool value)
+        {
+            obj.SetValue(UseFluidLayoutProperty, value);
+        }
+
+        /// <summary>
+        ///     Visibility is shadowed by a custom attached property at runtime.
+        /// </summary>
+        public static readonly DependencyProperty RuntimeVisibilityPropertyProperty =
+            DependencyProperty.RegisterAttached(
+                "RuntimeVisibilityProperty",
+                typeof(DependencyProperty),
+                typeof(ExtendedVisualStateManager),
+                new PropertyMetadata(null));
+
+        public static DependencyProperty GetRuntimeVisibilityProperty(DependencyObject obj)
+        {
+            return (DependencyProperty)obj.GetValue(RuntimeVisibilityPropertyProperty);
+        }
+
+        public static void SetRuntimeVisibilityProperty(DependencyObject obj, DependencyProperty value)
+        {
+            obj.SetValue(RuntimeVisibilityPropertyProperty, value);
+        }
+
+        /// <summary>
+        ///     A VisualStateGroup keeps a list of these original values in an attached property.
+        /// </summary>
+        internal static readonly DependencyProperty OriginalLayoutValuesProperty = DependencyProperty.RegisterAttached(
+            "OriginalLayoutValues",
+            typeof(List<OriginalLayoutValueRecord>),
+            typeof(ExtendedVisualStateManager),
+            new PropertyMetadata(null));
+
+        internal static List<OriginalLayoutValueRecord> GetOriginalLayoutValues(DependencyObject obj)
+        {
+            return (List<OriginalLayoutValueRecord>)obj.GetValue(OriginalLayoutValuesProperty);
+        }
+
+        internal static void SetOriginalLayoutValues(DependencyObject obj, List<OriginalLayoutValueRecord> value)
+        {
+            obj.SetValue(OriginalLayoutValuesProperty, value);
+        }
+
+        /// <summary>
+        ///     For every state, the layout-specific properties get extracted and then are attached to the state. These properties
+        ///     are removed from the state itself.
+        /// </summary>
+        internal static readonly DependencyProperty LayoutStoryboardProperty = DependencyProperty.RegisterAttached(
+            "LayoutStoryboard",
+            typeof(Storyboard),
+            typeof(ExtendedVisualStateManager),
+            new PropertyMetadata(null));
+
+        internal static Storyboard GetLayoutStoryboard(DependencyObject obj)
+        {
+            return (Storyboard)obj.GetValue(LayoutStoryboardProperty);
+        }
+
+        internal static void SetLayoutStoryboard(DependencyObject obj, Storyboard value)
+        {
+            obj.SetValue(LayoutStoryboardProperty, value);
+        }
+
+        /// <summary>
+        ///     Remember the current state.
+        /// </summary>
+        internal static readonly DependencyProperty CurrentStateProperty = DependencyProperty.RegisterAttached(
+            "CurrentState",
+            typeof(VisualState),
+            typeof(ExtendedVisualStateManager),
+            new PropertyMetadata(null));
+
+        internal static VisualState GetCurrentState(DependencyObject obj)
+        {
+            return (VisualState)obj.GetValue(CurrentStateProperty);
+        }
+
+        internal static void SetCurrentState(DependencyObject obj, VisualState value)
+        {
+            obj.SetValue(CurrentStateProperty, value);
+        }
+
+        /// <summary>
+        ///     The TransitionEffect to use when the state changes.
+        /// </summary>
+        public static readonly DependencyProperty TransitionEffectProperty = DependencyProperty.RegisterAttached(
+            "TransitionEffect",
+            typeof(TransitionEffect),
+            typeof(ExtendedVisualStateManager),
+            new PropertyMetadata(null));
+
+        public static TransitionEffect GetTransitionEffect(DependencyObject obj)
+        {
+            return (TransitionEffect)obj.GetValue(TransitionEffectProperty);
+        }
+
+        public static void SetTransitionEffect(DependencyObject obj, TransitionEffect value)
+        {
+            obj.SetValue(TransitionEffectProperty, value);
+        }
+
+        /// <summary>
+        ///     The TransitionEffectStoryboard in use during the state change.
+        /// </summary>
+        internal static readonly DependencyProperty TransitionEffectStoryboardProperty =
+            DependencyProperty.RegisterAttached(
+                "TransitionEffectStoryboard",
+                typeof(Storyboard),
+                typeof(ExtendedVisualStateManager),
+                new PropertyMetadata(null));
+
+        internal static Storyboard GetTransitionEffectStoryboard(DependencyObject obj)
+        {
+            return (Storyboard)obj.GetValue(TransitionEffectStoryboardProperty);
+        }
+
+        internal static void SetTransitionEffectStoryboard(DependencyObject obj, Storyboard value)
+        {
+            obj.SetValue(TransitionEffectStoryboardProperty, value);
+        }
+
+        /// <summary>
+        ///     The cached background in use during the state change.
+        /// </summary>
+        internal static readonly DependencyProperty DidCacheBackgroundProperty = DependencyProperty.RegisterAttached(
+            "DidCacheBackground",
+            typeof(bool),
+            typeof(ExtendedVisualStateManager),
+            new PropertyMetadata(false));
+
+        internal static bool GetDidCacheBackground(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(DidCacheBackgroundProperty);
+        }
+
+        internal static void SetDidCacheBackground(DependencyObject obj, bool value)
+        {
+            obj.SetValue(DidCacheBackgroundProperty, value);
+        }
+
+        /// <summary>
+        ///     The cached background in use during the state change.
+        /// </summary>
+        internal static readonly DependencyProperty CachedBackgroundProperty = DependencyProperty.RegisterAttached(
+            "CachedBackground",
+            typeof(object),
+            typeof(ExtendedVisualStateManager),
+            new PropertyMetadata(null));
+
+        internal static object GetCachedBackground(DependencyObject obj)
+        {
+            return obj.GetValue(CachedBackgroundProperty);
+        }
+
+        internal static void SetCachedBackground(DependencyObject obj, object value)
+        {
+            obj.SetValue(CachedBackgroundProperty, value);
+        }
+
+        /// <summary>
+        ///     The cached background in use during the state change.
+        /// </summary>
+        internal static readonly DependencyProperty CachedEffectProperty = DependencyProperty.RegisterAttached(
+            "CachedEffect",
+            typeof(Effect),
+            typeof(ExtendedVisualStateManager),
+            new PropertyMetadata(null));
+
+        internal static Effect GetCachedEffect(DependencyObject obj)
+        {
+            return (Effect)obj.GetValue(CachedEffectProperty);
+        }
+
+        internal static void SetCachedEffect(DependencyObject obj, Effect value)
+        {
+            obj.SetValue(CachedEffectProperty, value);
+        }
+
+        #endregion Data attached to VSM
+
+        #region Static data pertaining to the active layout transition
+
+        /// <summary>
+        ///     This is the set of elements that are currently in motion.
+        /// </summary>
+        private static List<FrameworkElement> MovingElements;
+
+        /// <summary>
+        ///     This is the storyboard that is animating the transition.
+        /// </summary>
+        private static Storyboard LayoutTransitionStoryboard;
+
+        #endregion Static data pertaining to the active layout transition
+
+        #region Definition of layout properties
+
+        /// <summary>
+        ///     This list contains all the known layout properties.
+        /// </summary>
+        private static readonly List<DependencyProperty> LayoutProperties = new List<DependencyProperty>
+                                                                            {
+                                                                                Grid.ColumnProperty,
+                                                                                Grid.ColumnSpanProperty,
+                                                                                Grid.RowProperty,
+                                                                                Grid.RowSpanProperty,
+                                                                                Canvas.LeftProperty,
+                                                                                Canvas.TopProperty,
+                                                                                FrameworkElement.WidthProperty,
+                                                                                FrameworkElement.HeightProperty,
+                                                                                FrameworkElement.MinWidthProperty,
+                                                                                FrameworkElement.MinHeightProperty,
+                                                                                FrameworkElement.MaxWidthProperty,
+                                                                                FrameworkElement.MaxHeightProperty,
+                                                                                FrameworkElement.MarginProperty,
+                                                                                FrameworkElement
+                                                                                    .HorizontalAlignmentProperty,
+                                                                                FrameworkElement
+                                                                                    .VerticalAlignmentProperty,
+                                                                                UIElement.VisibilityProperty,
+                                                                                StackPanel.OrientationProperty
+                                                                            };
+
+        private static readonly List<DependencyProperty> ChildAffectingLayoutProperties =
+            new List<DependencyProperty> { StackPanel.OrientationProperty };
+
+        private static bool IsVisibilityProperty(DependencyProperty property)
+        {
+            // no need to check owner type - We've already filtered in LayoutPropertyFromTimeline
+            return property == UIElement.VisibilityProperty || property.Name == "RuntimeVisibility";
+        }
+
+        [SuppressMessage(
+            "Microsoft.Globalization",
+            "CA1309",
+            Justification = "Strings are postfixes of class names and not localizable")]
+        private static DependencyProperty LayoutPropertyFromTimeline(Timeline timeline, bool forceRuntimeProperty)
+        {
+            PropertyPath path = Storyboard.GetTargetProperty(timeline);
+
+            if (path == null || path.PathParameters == null || path.PathParameters.Count == 0)
+            {
+                return null;
+            }
+
+            DependencyProperty property = path.PathParameters[0] as DependencyProperty;
+
+            if (property != null)
+            {
+                if (property.Name == "RuntimeVisibility" && property.OwnerType.Name.EndsWith(
+                        "DesignTimeProperties",
+                        StringComparison.Ordinal))
+                {
+                    if (!LayoutProperties.Contains(property))
+                    {
+                        LayoutProperties.Add(property);
+                    }
+
+                    return forceRuntimeProperty ? property : UIElement.VisibilityProperty;
+                }
+
+                if (property.Name == "RuntimeWidth" && property.OwnerType.Name.EndsWith(
+                        "DesignTimeProperties",
+                        StringComparison.Ordinal))
+                {
+                    if (!LayoutProperties.Contains(property))
+                    {
+                        LayoutProperties.Add(property);
+                    }
+
+                    return forceRuntimeProperty ? property : FrameworkElement.WidthProperty;
+                }
+
+                if (property.Name == "RuntimeHeight" && property.OwnerType.Name.EndsWith(
+                        "DesignTimeProperties",
+                        StringComparison.Ordinal))
+                {
+                    if (!LayoutProperties.Contains(property))
+                    {
+                        LayoutProperties.Add(property);
+                    }
+
+                    return forceRuntimeProperty ? property : FrameworkElement.HeightProperty;
+                }
+
+                if (LayoutProperties.Contains(property))
+                {
+                    return property;
+                }
+            }
+
+            return null;
+        }
+
+        #endregion Definition of layout properties
 
         #region Private static helpers
+
         private static void control_LayoutUpdated(object sender, EventArgs e)
         {
             if (LayoutTransitionStoryboard != null)
@@ -467,7 +692,7 @@ namespace Anori.WPF.Behaviors.Core
         }
 
         /// <summary>
-        /// Stop the animation and replace the layout changes that were made to support that animation.
+        ///     Stop the animation and replace the layout changes that were made to support that animation.
         /// </summary>
         private static void StopAnimations()
         {
@@ -486,21 +711,21 @@ namespace Anori.WPF.Behaviors.Core
 
         private class DummyEasingFunction : EasingFunctionBase
         {
+            public static readonly DependencyProperty DummyValueProperty = DependencyProperty.Register(
+                "DummyValue",
+                typeof(double),
+                typeof(DummyEasingFunction),
+                new PropertyMetadata(0.0));
+
             public double DummyValue
             {
                 get { return (double)GetValue(DummyValueProperty); }
                 set { SetValue(DummyValueProperty, value); }
             }
 
-            public static readonly DependencyProperty DummyValueProperty = DependencyProperty.Register("DummyValue", typeof(double), typeof(DummyEasingFunction), new PropertyMetadata(0.0));
-
             protected override Freezable CreateInstanceCore()
             {
                 return new DummyEasingFunction();
-            }
-
-            public DummyEasingFunction()
-            {
             }
 
             protected override double EaseInCore(double normalizedTime)
@@ -509,15 +734,18 @@ namespace Anori.WPF.Behaviors.Core
             }
         }
 
-        private static bool PrepareTransitionEffectImage(FrameworkElement stateGroupsRoot, bool useTransitions, VisualTransition transition)
+        private static bool PrepareTransitionEffectImage(
+            FrameworkElement stateGroupsRoot,
+            bool useTransitions,
+            VisualTransition transition)
         {
-            TransitionEffect effect = transition == null ? null : ExtendedVisualStateManager.GetTransitionEffect(transition);
+            TransitionEffect effect = transition == null ? null : GetTransitionEffect(transition);
             bool animateWithTransitionEffect = false;
 
             // Are we using TransitionEffects?
             if (effect != null)
             {
-                effect = (TransitionEffect)effect.CloneCurrentValue();
+                effect = effect.CloneCurrentValue();
 
                 // If we're going to be animating, take a snapshot
                 if (useTransitions)
@@ -527,7 +755,12 @@ namespace Anori.WPF.Behaviors.Core
                     int bitmapWidth = (int)Math.Max(1, stateGroupsRoot.ActualWidth);
                     int bitmapHeight = (int)Math.Max(1, stateGroupsRoot.ActualHeight);
 
-                    RenderTargetBitmap current = new RenderTargetBitmap(bitmapWidth, bitmapHeight, 96, 96, PixelFormats.Pbgra32);
+                    RenderTargetBitmap current = new RenderTargetBitmap(
+                        bitmapWidth,
+                        bitmapHeight,
+                        96,
+                        96,
+                        PixelFormats.Pbgra32);
                     current.Render(stateGroupsRoot);
 
                     ImageBrush oldImageBrush = new ImageBrush();
@@ -545,14 +778,24 @@ namespace Anori.WPF.Behaviors.Core
 
                 if (useTransitions)
                 {
-                    TransferLocalValue(stateGroupsRoot, FrameworkElement.EffectProperty, CachedEffectProperty);
+                    TransferLocalValue(stateGroupsRoot, UIElement.EffectProperty, CachedEffectProperty);
                     stateGroupsRoot.Effect = effect;
                 }
             }
+
             return animateWithTransitionEffect;
         }
 
-        private bool TransitionEffectAwareGoToStateCore(FrameworkElement control, FrameworkElement stateGroupsRoot, string stateName, VisualStateGroup group, VisualState state, bool useTransitions, VisualTransition transition, bool animateWithTransitionEffect, VisualState previousState)
+        private bool TransitionEffectAwareGoToStateCore(
+            FrameworkElement control,
+            FrameworkElement stateGroupsRoot,
+            string stateName,
+            VisualStateGroup group,
+            VisualState state,
+            bool useTransitions,
+            VisualTransition transition,
+            bool animateWithTransitionEffect,
+            VisualState previousState)
         {
             IEasingFunction oldGeneratedEasingFunction = null;
 
@@ -564,7 +807,16 @@ namespace Anori.WPF.Behaviors.Core
                 // However, if animating to opacity 0, then we have to stop just before the end, because if the opacity
                 // reaches zero then there will be no surface on which to draw.
                 oldGeneratedEasingFunction = transition.GeneratedEasingFunction;
-                transition.GeneratedEasingFunction = new DummyEasingFunction() { DummyValue = (FinishesWithZeroOpacity(control, stateGroupsRoot, state, previousState) ? 0.01 : 0) };
+                transition.GeneratedEasingFunction = new DummyEasingFunction
+                {
+                    DummyValue = (FinishesWithZeroOpacity(
+                                                                           control,
+                                                                           stateGroupsRoot,
+                                                                           state,
+                                                                           previousState)
+                                                                           ? 0.01
+                                                                           : 0)
+                };
             }
 
             bool returnValue = base.GoToStateCore(control, stateGroupsRoot, stateName, group, state, useTransitions);
@@ -585,7 +837,11 @@ namespace Anori.WPF.Behaviors.Core
             return returnValue;
         }
 
-        private static bool FinishesWithZeroOpacity(FrameworkElement control, FrameworkElement stateGroupsRoot, VisualState state, VisualState previousState)
+        private static bool FinishesWithZeroOpacity(
+            FrameworkElement control,
+            FrameworkElement stateGroupsRoot,
+            VisualState state,
+            VisualState previousState)
         {
             // first, check the new state
             if (state.Storyboard != null)
@@ -611,7 +867,6 @@ namespace Anori.WPF.Behaviors.Core
                 {
                     if (!TimelineIsAnimatingRootOpacity(timeline, control, stateGroupsRoot))
                     {
-                        continue;
                     }
                 }
 
@@ -623,7 +878,10 @@ namespace Anori.WPF.Behaviors.Core
             return (stateGroupsRoot.Opacity == 0);
         }
 
-        private static bool TimelineIsAnimatingRootOpacity(Timeline timeline, FrameworkElement control, FrameworkElement stateGroupsRoot)
+        private static bool TimelineIsAnimatingRootOpacity(
+            Timeline timeline,
+            FrameworkElement control,
+            FrameworkElement stateGroupsRoot)
         {
             if (GetTimelineTarget(control, stateGroupsRoot, timeline) != stateGroupsRoot)
             {
@@ -632,7 +890,8 @@ namespace Anori.WPF.Behaviors.Core
 
             PropertyPath path = Storyboard.GetTargetProperty(timeline);
 
-            return path != null && path.PathParameters != null && path.PathParameters.Count != 0 && path.PathParameters[0] == UIElement.OpacityProperty;
+            return path != null && path.PathParameters != null && path.PathParameters.Count != 0
+                   && path.PathParameters[0] == UIElement.OpacityProperty;
         }
 
         private static void AnimateTransitionEffect(FrameworkElement stateGroupsRoot, VisualTransition transition)
@@ -651,7 +910,9 @@ namespace Anori.WPF.Behaviors.Core
 
             // On WPF, can't seem to address the Effect directly.
             Storyboard.SetTarget(da, stateGroupsRoot);
-            Storyboard.SetTargetProperty(da, new PropertyPath("(0).(1)", new DependencyProperty[] { FrameworkElement.EffectProperty, TransitionEffect.ProgressProperty }));
+            Storyboard.SetTargetProperty(
+                da,
+                new PropertyPath("(0).(1)", UIElement.EffectProperty, TransitionEffect.ProgressProperty));
 
             // If the background is null, make it transparent so that the effect will be drawn in the correct area.
             Panel rootPanel = stateGroupsRoot as Panel;
@@ -666,7 +927,7 @@ namespace Anori.WPF.Behaviors.Core
                 }
             }
 
-            sb.Completed += delegate (object sender, EventArgs e)
+            sb.Completed += delegate
             {
                 Storyboard currentTransitionEffectStoryboard = GetTransitionEffectStoryboard(stateGroupsRoot);
                 if (currentTransitionEffectStoryboard == sb)
@@ -682,7 +943,7 @@ namespace Anori.WPF.Behaviors.Core
         {
             SetTransitionEffectStoryboard(stateGroupsRoot, null);
 
-            TransferLocalValue(stateGroupsRoot, CachedEffectProperty, FrameworkElement.EffectProperty);
+            TransferLocalValue(stateGroupsRoot, CachedEffectProperty, UIElement.EffectProperty);
 
             if (GetDidCacheBackground(stateGroupsRoot))
             {
@@ -692,13 +953,17 @@ namespace Anori.WPF.Behaviors.Core
         }
 
         /// <summary>
-        /// Locate the transition that VisualStateManager will use to animate the change, so that the layout animation can match the duration and easing.
+        ///     Locate the transition that VisualStateManager will use to animate the change, so that the layout animation can
+        ///     match the duration and easing.
         /// </summary>
         /// <param name="group">The group in which the transition is taking place.</param>
         /// <param name="previousState">The state that you are coming from.</param>
         /// <param name="state">The state you are going to.</param>
         /// <returns>The transition</returns>
-        private static VisualTransition FindTransition(VisualStateGroup group, VisualState previousState, VisualState state)
+        private static VisualTransition FindTransition(
+            VisualStateGroup group,
+            VisualState previousState,
+            VisualState state)
         {
             string previousStateName = (previousState != null ? previousState.Name : string.Empty);
             string stateName = (state != null ? state.Name : string.Empty);
@@ -714,19 +979,19 @@ namespace Anori.WPF.Behaviors.Core
                     if (transition.From == previousStateName)
                     {
                         matchScore++;
-                    }
-                    else if (!string.IsNullOrEmpty(transition.From))
+                    } else if (!string.IsNullOrEmpty(transition.From))
                     {
                         continue;
                     }
+
                     if (transition.To == stateName)
                     {
                         matchScore += 2;
-                    }
-                    else if (!string.IsNullOrEmpty(transition.To))
+                    } else if (!string.IsNullOrEmpty(transition.To))
                     {
                         continue;
                     }
+
                     if (matchScore > bestMatchScore)
                     {
                         bestMatchScore = matchScore;
@@ -734,11 +999,12 @@ namespace Anori.WPF.Behaviors.Core
                     }
                 }
             }
+
             return bestTransition;
         }
 
         /// <summary>
-        /// Remove all layout-affecting properties from the Storyboard for the state and cache them in an attached property.
+        ///     Remove all layout-affecting properties from the Storyboard for the state and cache them in an attached property.
         /// </summary>
         /// <param name="state">The state you are moving to.</param>
         /// <returns>A Storyboard containing the layout properties in that state.</returns>
@@ -767,24 +1033,33 @@ namespace Anori.WPF.Behaviors.Core
                     SetLayoutStoryboard(state.Storyboard, layoutStoryboard);
                 }
             }
+
             return layoutStoryboard != null ? layoutStoryboard : new Storyboard();
         }
 
         /// <summary>
-        /// The set of target elements is the set of all elements that might have moved in a layout transition. This set is the closure of:
-        ///  - Elements with layout properties animated in the state.
-        ///  - Siblings of elements in the set.
-        ///  - Parents of elements in the set.
-        ///  
-        /// Subsequent code will check these rectangles both before and after the layout change.
+        ///     The set of target elements is the set of all elements that might have moved in a layout transition. This set is the
+        ///     closure of:
+        ///     - Elements with layout properties animated in the state.
+        ///     - Siblings of elements in the set.
+        ///     - Parents of elements in the set.
+        ///     Subsequent code will check these rectangles both before and after the layout change.
         /// </summary>
         /// <param name="control">The control whose layout is changing state.</param>
         /// <param name="layoutStoryboard">The storyboard containing the layout changes.</param>
         /// <param name="originalValueRecords">Any previous values from previous state navigations that might be reverted.</param>
         /// <param name="movingElements">The set of elements currently in motion, if there is a state change transition ongoing.</param>
         /// <returns>The full set of elements whose layout may have changed.</returns>
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "This is done in a single pass for performance reasons.")]
-        private static List<FrameworkElement> FindTargetElements(FrameworkElement control, FrameworkElement templateRoot, Storyboard layoutStoryboard, List<OriginalLayoutValueRecord> originalValueRecords, List<FrameworkElement> movingElements)
+        [SuppressMessage(
+            "Microsoft.Maintainability",
+            "CA1502:AvoidExcessiveComplexity",
+            Justification = "This is done in a single pass for performance reasons.")]
+        private static List<FrameworkElement> FindTargetElements(
+            FrameworkElement control,
+            FrameworkElement templateRoot,
+            Storyboard layoutStoryboard,
+            List<OriginalLayoutValueRecord> originalValueRecords,
+            List<FrameworkElement> movingElements)
         {
             List<FrameworkElement> targets = new List<FrameworkElement>();
 
@@ -883,30 +1158,34 @@ namespace Anori.WPF.Behaviors.Core
             return targets;
         }
 
-        private static object GetTimelineTarget(FrameworkElement control, FrameworkElement templateRoot, Timeline timeline)
+        private static object GetTimelineTarget(
+            FrameworkElement control,
+            FrameworkElement templateRoot,
+            Timeline timeline)
         {
             string targetName = Storyboard.GetTargetName(timeline);
             if (string.IsNullOrEmpty(targetName))
             {
                 return null;
             }
+
             if (control is UserControl)
             {
                 return control.FindName(targetName);
             }
-            else
-            {
-                return templateRoot.FindName(targetName);
-            }
+
+            return templateRoot.FindName(targetName);
         }
 
         /// <summary>
-        /// Gets a set of rectangles for all the elements in the target list.
+        ///     Gets a set of rectangles for all the elements in the target list.
         /// </summary>
         /// <param name="targets">The set of elements to consider.</param>
         /// <param name="movingElements">The set of elements currently in motion.</param>
         /// <returns>A Dictionary mapping elements to their Rects.</returns>
-        private static Dictionary<FrameworkElement, Rect> GetRectsOfTargets(List<FrameworkElement> targets, List<FrameworkElement> movingElements)
+        private static Dictionary<FrameworkElement, Rect> GetRectsOfTargets(
+            List<FrameworkElement> targets,
+            List<FrameworkElement> movingElements)
         {
             Dictionary<FrameworkElement, Rect> rects = new Dictionary<FrameworkElement, Rect>();
 
@@ -923,12 +1202,16 @@ namespace Anori.WPF.Behaviors.Core
                     TranslateTransform renderTransform = parentCanvas.RenderTransform as TranslateTransform;
                     double left = Canvas.GetLeft(target);
                     double top = Canvas.GetTop(target);
-                    rect = new Rect(rect.Left + (double.IsNaN(left) ? 0 : left) + (renderTransform == null ? 0 : renderTransform.X), rect.Top + (double.IsNaN(top) ? 0 : top) + (renderTransform == null ? 0 : renderTransform.Y), target.ActualWidth, target.ActualHeight);
-                }
-                else
+                    rect = new Rect(
+                        rect.Left + (double.IsNaN(left) ? 0 : left) + (renderTransform == null ? 0 : renderTransform.X),
+                        rect.Top + (double.IsNaN(top) ? 0 : top) + (renderTransform == null ? 0 : renderTransform.Y),
+                        target.ActualWidth,
+                        target.ActualHeight);
+                } else
                 {
                     rect = GetLayoutRect(target);
                 }
+
                 rects.Add(target, rect);
             }
 
@@ -936,7 +1219,8 @@ namespace Anori.WPF.Behaviors.Core
         }
 
         /// <summary>
-        /// Get the layout rectangle of an element, by getting the layout slot and then computing which portion of the slot is being used.
+        ///     Get the layout rectangle of an element, by getting the layout slot and then computing which portion of the slot is
+        ///     being used.
         /// </summary>
         /// <param name="element">The element whose layout Rect will be retrieved.</param>
         /// <returns>The layout Rect of that element.</returns>
@@ -952,8 +1236,7 @@ namespace Anori.WPF.Behaviors.Core
                 {
                     actualWidth = double.IsNaN(element.Width) ? actualWidth : element.Width;
                     actualHeight = double.IsNaN(element.Height) ? actualHeight : element.Height;
-                }
-                else
+                } else
                 {
                     actualWidth = element.RenderSize.Width;
                     actualHeight = element.RenderSize.Height;
@@ -976,7 +1259,8 @@ namespace Anori.WPF.Behaviors.Core
                     break;
 
                 case HorizontalAlignment.Center:
-                    left = ((((slotRect.Left + margin.Left) + slotRect.Right) - margin.Right) / 2.0) - (actualWidth / 2.0);
+                    left = ((((slotRect.Left + margin.Left) + slotRect.Right) - margin.Right) / 2.0)
+                           - (actualWidth / 2.0);
                     break;
 
                 case HorizontalAlignment.Right:
@@ -984,7 +1268,10 @@ namespace Anori.WPF.Behaviors.Core
                     break;
 
                 case HorizontalAlignment.Stretch:
-                    left = Math.Max((double)(slotRect.Left + margin.Left), (double)(((((slotRect.Left + margin.Left) + slotRect.Right) - margin.Right) / 2.0) - (actualWidth / 2.0)));
+                    left = Math.Max(
+                        slotRect.Left + margin.Left,
+                        ((((slotRect.Left + margin.Left) + slotRect.Right) - margin.Right) / 2.0)
+                        - (actualWidth / 2.0));
                     break;
             }
 
@@ -995,7 +1282,8 @@ namespace Anori.WPF.Behaviors.Core
                     break;
 
                 case VerticalAlignment.Center:
-                    top = ((((slotRect.Top + margin.Top) + slotRect.Bottom) - margin.Bottom) / 2.0) - (actualHeight / 2.0);
+                    top = ((((slotRect.Top + margin.Top) + slotRect.Bottom) - margin.Bottom) / 2.0)
+                          - (actualHeight / 2.0);
                     break;
 
                 case VerticalAlignment.Bottom:
@@ -1003,7 +1291,10 @@ namespace Anori.WPF.Behaviors.Core
                     break;
 
                 case VerticalAlignment.Stretch:
-                    top = Math.Max((double)(slotRect.Top + margin.Top), (double)(((((slotRect.Top + margin.Top) + slotRect.Bottom) - margin.Bottom) / 2.0) - (actualHeight / 2.0)));
+                    top = Math.Max(
+                        slotRect.Top + margin.Top,
+                        ((((slotRect.Top + margin.Top) + slotRect.Bottom) - margin.Bottom) / 2.0)
+                        - (actualHeight / 2.0));
                     break;
             }
 
@@ -1011,13 +1302,19 @@ namespace Anori.WPF.Behaviors.Core
         }
 
         /// <summary>
-        /// Get the opacities of elements at the time of the state change, instead of visibilities, because the state change may be in process and the current value is the most important.
+        ///     Get the opacities of elements at the time of the state change, instead of visibilities, because the state change
+        ///     may be in process and the current value is the most important.
         /// </summary>
         /// <param name="control">The control whose state is changing.</param>
         /// <param name="layoutStoryboard">The storyboard with the layout properties.</param>
         /// <param name="originalValueRecords">The set of original values.</param>
         /// <returns></returns>
-        private static Dictionary<FrameworkElement, double> GetOldOpacities(FrameworkElement control, FrameworkElement templateRoot, Storyboard layoutStoryboard, List<OriginalLayoutValueRecord> originalValueRecords, List<FrameworkElement> movingElements)
+        private static Dictionary<FrameworkElement, double> GetOldOpacities(
+            FrameworkElement control,
+            FrameworkElement templateRoot,
+            Storyboard layoutStoryboard,
+            List<OriginalLayoutValueRecord> originalValueRecords,
+            List<FrameworkElement> movingElements)
         {
             Dictionary<FrameworkElement, double> oldOpacities = new Dictionary<FrameworkElement, double>();
 
@@ -1045,7 +1342,10 @@ namespace Anori.WPF.Behaviors.Core
 
                     if (!oldOpacities.TryGetValue(originalValueRecord.Element, out oldOpacity))
                     {
-                        oldOpacity = ((Visibility)(originalValueRecord.Element.GetValue(originalValueRecord.Property)) == Visibility.Visible ? 1.0 : 0.0);
+                        oldOpacity = ((Visibility)(originalValueRecord.Element.GetValue(originalValueRecord.Property))
+                                      == Visibility.Visible
+                                          ? 1.0
+                                          : 0.0);
                         oldOpacities.Add(originalValueRecord.Element, oldOpacity);
                     }
                 }
@@ -1073,22 +1373,38 @@ namespace Anori.WPF.Behaviors.Core
         }
 
         /// <summary>
-        /// Go through the layout Storyboard and set all the properties by using SetValue to enable calling UpdateLayout without
-        /// ticking the timeline, which would cause a render.
-        /// All values that are overwritten will be stored in the collection of OriginalValueRecords so that they can be replaced later.
+        ///     Go through the layout Storyboard and set all the properties by using SetValue to enable calling UpdateLayout
+        ///     without
+        ///     ticking the timeline, which would cause a render.
+        ///     All values that are overwritten will be stored in the collection of OriginalValueRecords so that they can be
+        ///     replaced later.
         /// </summary>
         /// <param name="control">The control whose state is changing.</param>
         /// <param name="layoutStoryboard">The Storyboard holding the layout properties.</param>
         /// <param name="originalValueRecords">The store of original values.</param>
-        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This is done in a single pass for performance reasons.")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "This is done in a single pass for performance reasons.")]
-        private static void SetLayoutStoryboardProperties(FrameworkElement control, FrameworkElement templateRoot, Storyboard layoutStoryboard, List<OriginalLayoutValueRecord> originalValueRecords)
+        [SuppressMessage(
+            "Microsoft.Maintainability",
+            "CA1506:AvoidExcessiveClassCoupling",
+            Justification = "This is done in a single pass for performance reasons.")]
+        [SuppressMessage(
+            "Microsoft.Maintainability",
+            "CA1502:AvoidExcessiveComplexity",
+            Justification = "This is done in a single pass for performance reasons.")]
+        private static void SetLayoutStoryboardProperties(
+            FrameworkElement control,
+            FrameworkElement templateRoot,
+            Storyboard layoutStoryboard,
+            List<OriginalLayoutValueRecord> originalValueRecords)
         {
             // Restore all the values first - not strictly necessary, but likely just as fast as computing which records don't appear in the current state.
             foreach (OriginalLayoutValueRecord originalValueRecord in originalValueRecords)
             {
-                ReplaceCachedLocalValueHelper(originalValueRecord.Element, originalValueRecord.Property, originalValueRecord.Value);
+                ReplaceCachedLocalValueHelper(
+                    originalValueRecord.Element,
+                    originalValueRecord.Property,
+                    originalValueRecord.Value);
             }
+
             originalValueRecords.Clear();
 
             // Now, set all the values
@@ -1107,7 +1423,13 @@ namespace Anori.WPF.Behaviors.Core
                     // If we found a useful value, store the original value and set the new one
                     if (gotValue)
                     {
-                        originalValueRecords.Add(new OriginalLayoutValueRecord { Element = target, Property = property, Value = CacheLocalValueHelper(target, property) });
+                        originalValueRecords.Add(
+                            new OriginalLayoutValueRecord
+                            {
+                                Element = target,
+                                Property = property,
+                                Value = CacheLocalValueHelper(target, property)
+                            });
                         target.SetValue(property, value);
                     }
                 }
@@ -1122,59 +1444,48 @@ namespace Anori.WPF.Behaviors.Core
                 gotValue = true;
                 return objectAnimationUsingKeyFrames.KeyFrames[0].Value;
             }
-            else
+
+            DoubleAnimationUsingKeyFrames doubleAnimationUsingKeyFrames = timeline as DoubleAnimationUsingKeyFrames;
+            if (doubleAnimationUsingKeyFrames != null)
             {
-                DoubleAnimationUsingKeyFrames doubleAnimationUsingKeyFrames = timeline as DoubleAnimationUsingKeyFrames;
-                if (doubleAnimationUsingKeyFrames != null)
-                {
-                    gotValue = true;
-                    return doubleAnimationUsingKeyFrames.KeyFrames[0].Value;
-                }
-                else
-                {
-                    DoubleAnimation doubleAnimation = timeline as DoubleAnimation;
-                    if (doubleAnimation != null)
-                    {
-                        gotValue = true;
-                        return doubleAnimation.To;
-                    }
-                    else
-                    {
-                        ThicknessAnimationUsingKeyFrames thicknessAnimationUsingKeyFrames = timeline as ThicknessAnimationUsingKeyFrames;
-                        if (thicknessAnimationUsingKeyFrames != null)
-                        {
-                            gotValue = true;
-                            return thicknessAnimationUsingKeyFrames.KeyFrames[0].Value;
-                        }
-                        else
-                        {
-                            ThicknessAnimation thicknessAnimation = timeline as ThicknessAnimation;
-                            if (thicknessAnimation != null)
-                            {
-                                gotValue = true;
-                                return thicknessAnimation.To;
-                            }
-                            else
-                            {
-                                Int32AnimationUsingKeyFrames int32AnimationUsingKeyFrames = timeline as Int32AnimationUsingKeyFrames;
-                                if (int32AnimationUsingKeyFrames != null)
-                                {
-                                    gotValue = true;
-                                    return int32AnimationUsingKeyFrames.KeyFrames[0].Value;
-                                }
-                                else
-                                {
-                                    Int32Animation int32Animation = timeline as Int32Animation;
-                                    if (int32Animation != null)
-                                    {
-                                        gotValue = true;
-                                        return int32Animation.To;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                gotValue = true;
+                return doubleAnimationUsingKeyFrames.KeyFrames[0].Value;
+            }
+
+            DoubleAnimation doubleAnimation = timeline as DoubleAnimation;
+            if (doubleAnimation != null)
+            {
+                gotValue = true;
+                return doubleAnimation.To;
+            }
+
+            ThicknessAnimationUsingKeyFrames thicknessAnimationUsingKeyFrames =
+                timeline as ThicknessAnimationUsingKeyFrames;
+            if (thicknessAnimationUsingKeyFrames != null)
+            {
+                gotValue = true;
+                return thicknessAnimationUsingKeyFrames.KeyFrames[0].Value;
+            }
+
+            ThicknessAnimation thicknessAnimation = timeline as ThicknessAnimation;
+            if (thicknessAnimation != null)
+            {
+                gotValue = true;
+                return thicknessAnimation.To;
+            }
+
+            Int32AnimationUsingKeyFrames int32AnimationUsingKeyFrames = timeline as Int32AnimationUsingKeyFrames;
+            if (int32AnimationUsingKeyFrames != null)
+            {
+                gotValue = true;
+                return int32AnimationUsingKeyFrames.KeyFrames[0].Value;
+            }
+
+            Int32Animation int32Animation = timeline as Int32Animation;
+            if (int32Animation != null)
+            {
+                gotValue = true;
+                return int32Animation.To;
             }
 
             gotValue = false;
@@ -1182,11 +1493,15 @@ namespace Anori.WPF.Behaviors.Core
         }
 
         /// <summary>
-        /// Take all the elements that will be moving as a result of the layout animation, and wrap them in Canvas panels so that
-        /// they do not affect their sibling elements.
+        ///     Take all the elements that will be moving as a result of the layout animation, and wrap them in Canvas panels so
+        ///     that
+        ///     they do not affect their sibling elements.
         /// </summary>
         /// <param name="movingElements">The set of elements that will be moving.</param>
-        private static void WrapMovingElementsInCanvases(List<FrameworkElement> movingElements, Dictionary<FrameworkElement, Rect> oldRects, Dictionary<FrameworkElement, Rect> newRects)
+        private static void WrapMovingElementsInCanvases(
+            List<FrameworkElement> movingElements,
+            Dictionary<FrameworkElement, Rect> oldRects,
+            Dictionary<FrameworkElement, Rect> newRects)
         {
             foreach (FrameworkElement movedElement in movingElements)
             {
@@ -1209,15 +1524,13 @@ namespace Anori.WPF.Behaviors.Core
                     int index = panel.Children.IndexOf(movedElement);
                     panel.Children.RemoveAt(index);
                     panel.Children.Insert(index, parentCanvas);
-                }
-                else
+                } else
                 {
                     Decorator decorator = parent as Decorator;
                     if (decorator != null)
                     {
                         decorator.Child = parentCanvas;
-                    }
-                    else
+                    } else
                     {
                         addedCanvas = false;
                     }
@@ -1236,7 +1549,8 @@ namespace Anori.WPF.Behaviors.Core
         }
 
         /// <summary>
-        /// Take all the elements that have been moving as a result of the layout animation, and unwrap them from their Canvas panels.
+        ///     Take all the elements that have been moving as a result of the layout animation, and unwrap them from their Canvas
+        ///     panels.
         /// </summary>
         /// <param name="movingElements">The set of elements that have been moving.</param>
         private static void UnwrapMovingElementsFromCanvases(List<FrameworkElement> movingElements)
@@ -1264,8 +1578,7 @@ namespace Anori.WPF.Behaviors.Core
                     int index = panel.Children.IndexOf(parentCanvas);
                     panel.Children.RemoveAt(index);
                     panel.Children.Insert(index, movedElement);
-                }
-                else
+                } else
                 {
                     Decorator decorator = parent as Decorator;
                     if (decorator != null)
@@ -1282,7 +1595,7 @@ namespace Anori.WPF.Behaviors.Core
         }
 
         /// <summary>
-        /// Copy the layout properties from the source element to the target element, clearing them from the source.
+        ///     Copy the layout properties from the source element to the target element, clearing them from the source.
         /// </summary>
         /// <param name="source">The source of the layout properties.</param>
         /// <param name="target">The destination of the layout properties.</param>
@@ -1303,8 +1616,7 @@ namespace Anori.WPF.Behaviors.Core
                     {
                         // restore is easy - replace local values from the cache we built earlier
                         ReplaceCachedLocalValueHelper(target, property, parentCanvas.LocalValueCache[property]);
-                    }
-                    else
+                    } else
                     {
                         // store is harder, because we want to cache both the local value (which may be a binding)
                         // and the computed value (because we need the object to behave as an appropriate stand-in for the original object).
@@ -1323,8 +1635,7 @@ namespace Anori.WPF.Behaviors.Core
                         if (IsVisibilityProperty(property))
                         {
                             parentCanvas.DestinationVisibilityCache = (Visibility)source.GetValue(property);
-                        }
-                        else
+                        } else
                         {
                             target.SetValue(property, source.GetValue(property));
                         }
@@ -1337,14 +1648,17 @@ namespace Anori.WPF.Behaviors.Core
         }
 
         /// <summary>
-        /// Create the actual Storyboard that will be used to animate the transition. Use all previously calculated results.
+        ///     Create the actual Storyboard that will be used to animate the transition. Use all previously calculated results.
         /// </summary>
         /// <param name="duration">The duration of the animation.</param>
         /// <param name="ease">The easing function to be used in the animation.</param>
         /// <param name="movingElements">The set of elements that will be moving.</param>
         /// <param name="oldOpacities">The old opacities of the elements whose visibility properties are changing.</param>
         /// <returns>The Storyboard.</returns>
-        private static Storyboard CreateLayoutTransitionStoryboard(VisualTransition transition, List<FrameworkElement> movingElements, Dictionary<FrameworkElement, double> oldOpacities)
+        private static Storyboard CreateLayoutTransitionStoryboard(
+            VisualTransition transition,
+            List<FrameworkElement> movingElements,
+            Dictionary<FrameworkElement, double> oldOpacities)
         {
             Duration duration = transition != null ? transition.GeneratedDuration : new Duration(TimeSpan.Zero);
             IEasingFunction ease = transition != null ? transition.GeneratedEasingFunction : null;
@@ -1363,7 +1677,7 @@ namespace Anori.WPF.Behaviors.Core
                 }
 
                 {
-                    DoubleAnimation animation = new DoubleAnimation() { From = 1, To = 0, Duration = duration };
+                    DoubleAnimation animation = new DoubleAnimation { From = 1, To = 0, Duration = duration };
                     animation.EasingFunction = ease;
                     Storyboard.SetTarget(animation, parentCanvas);
                     Storyboard.SetTargetProperty(animation, new PropertyPath(WrapperCanvas.SimulationProgressProperty));
@@ -1379,7 +1693,8 @@ namespace Anori.WPF.Behaviors.Core
                 // Needed in some cases because the width/height may be Auto and the Canvas would shrink to zero size
                 if (!IsClose(parentCanvas.Width, newRect.Width))
                 {
-                    DoubleAnimation animation = new DoubleAnimation() { From = newRect.Width, To = newRect.Width, Duration = duration };
+                    DoubleAnimation animation =
+                        new DoubleAnimation { From = newRect.Width, To = newRect.Width, Duration = duration };
                     Storyboard.SetTarget(animation, parentCanvas);
                     Storyboard.SetTargetProperty(animation, new PropertyPath(FrameworkElement.WidthProperty));
                     layoutTransitionStoryboard.Children.Add(animation);
@@ -1387,7 +1702,12 @@ namespace Anori.WPF.Behaviors.Core
 
                 if (!IsClose(parentCanvas.Height, newRect.Height))
                 {
-                    DoubleAnimation animation = new DoubleAnimation() { From = newRect.Height, To = newRect.Height, Duration = duration };
+                    DoubleAnimation animation = new DoubleAnimation
+                    {
+                        From = newRect.Height,
+                        To = newRect.Height,
+                        Duration = duration
+                    };
                     Storyboard.SetTarget(animation, parentCanvas);
                     Storyboard.SetTargetProperty(animation, new PropertyPath(FrameworkElement.HeightProperty));
                     layoutTransitionStoryboard.Children.Add(animation);
@@ -1397,10 +1717,13 @@ namespace Anori.WPF.Behaviors.Core
                 {
                     Thickness margin = parentCanvas.Margin;
 
-                    if (!IsClose(margin.Left, 0) || !IsClose(margin.Top, 0) || !IsClose(margin.Right, 0) || !IsClose(margin.Bottom, 0))
+                    if (!IsClose(margin.Left, 0) || !IsClose(margin.Top, 0) || !IsClose(margin.Right, 0)
+                        || !IsClose(margin.Bottom, 0))
                     {
-                        ObjectAnimationUsingKeyFrames animation = new ObjectAnimationUsingKeyFrames() { Duration = duration };
-                        DiscreteObjectKeyFrame keyFrame = new DiscreteObjectKeyFrame() { KeyTime = TimeSpan.Zero, Value = new Thickness() };
+                        ObjectAnimationUsingKeyFrames animation =
+                            new ObjectAnimationUsingKeyFrames { Duration = duration };
+                        DiscreteObjectKeyFrame keyFrame =
+                            new DiscreteObjectKeyFrame { KeyTime = TimeSpan.Zero, Value = new Thickness() };
                         animation.KeyFrames.Add(keyFrame);
                         Storyboard.SetTarget(animation, parentCanvas);
                         Storyboard.SetTargetProperty(animation, new PropertyPath(FrameworkElement.MarginProperty));
@@ -1409,7 +1732,7 @@ namespace Anori.WPF.Behaviors.Core
 
                     if (!IsClose(parentCanvas.MinWidth, 0))
                     {
-                        DoubleAnimation animation = new DoubleAnimation() { From = 0, To = 0, Duration = duration };
+                        DoubleAnimation animation = new DoubleAnimation { From = 0, To = 0, Duration = duration };
                         Storyboard.SetTarget(animation, parentCanvas);
                         Storyboard.SetTargetProperty(animation, new PropertyPath(FrameworkElement.MinWidthProperty));
                         layoutTransitionStoryboard.Children.Add(animation);
@@ -1417,7 +1740,7 @@ namespace Anori.WPF.Behaviors.Core
 
                     if (!IsClose(parentCanvas.MinHeight, 0))
                     {
-                        DoubleAnimation animation = new DoubleAnimation() { From = 0, To = 0, Duration = duration };
+                        DoubleAnimation animation = new DoubleAnimation { From = 0, To = 0, Duration = duration };
                         Storyboard.SetTarget(animation, parentCanvas);
                         Storyboard.SetTargetProperty(animation, new PropertyPath(FrameworkElement.MinHeightProperty));
                         layoutTransitionStoryboard.Children.Add(animation);
@@ -1441,10 +1764,11 @@ namespace Anori.WPF.Behaviors.Core
                 // Animate the opacity to smooth out the visibility change
                 if (!IsClose(oldOpacity, 1) || !IsClose(newOpacity, 1))
                 {
-                    DoubleAnimation animation = new DoubleAnimation() { From = oldOpacity, To = newOpacity, Duration = duration };
+                    DoubleAnimation animation =
+                        new DoubleAnimation { From = oldOpacity, To = newOpacity, Duration = duration };
                     animation.EasingFunction = ease;
                     Storyboard.SetTarget(animation, parentCanvas);
-                    Storyboard.SetTargetProperty(animation, new PropertyPath(FrameworkElement.OpacityProperty));
+                    Storyboard.SetTargetProperty(animation, new PropertyPath(UIElement.OpacityProperty));
                     layoutTransitionStoryboard.Children.Add(animation);
                 }
             }
@@ -1452,7 +1776,10 @@ namespace Anori.WPF.Behaviors.Core
             return layoutTransitionStoryboard;
         }
 
-        private static void TransferLocalValue(FrameworkElement element, DependencyProperty sourceProperty, DependencyProperty destProperty)
+        private static void TransferLocalValue(
+            FrameworkElement element,
+            DependencyProperty sourceProperty,
+            DependencyProperty destProperty)
         {
             object localValue = CacheLocalValueHelper(element, sourceProperty);
             ReplaceCachedLocalValueHelper(element, destProperty, localValue);
@@ -1463,7 +1790,10 @@ namespace Anori.WPF.Behaviors.Core
             return dependencyObject.ReadLocalValue(property);
         }
 
-        private static void ReplaceCachedLocalValueHelper(FrameworkElement element, DependencyProperty property, object value)
+        private static void ReplaceCachedLocalValueHelper(
+            FrameworkElement element,
+            DependencyProperty property,
+            object value)
         {
             if (value == DependencyProperty.UnsetValue)
             {
@@ -1475,8 +1805,7 @@ namespace Anori.WPF.Behaviors.Core
             if (bindingExpressionBase != null)
             {
                 element.SetBinding(property, bindingExpressionBase.ParentBindingBase);
-            }
-            else
+            } else
             {
                 element.SetValue(property, value);
             }
@@ -1484,8 +1813,9 @@ namespace Anori.WPF.Behaviors.Core
 
         private static bool IsClose(double a, double b)
         {
-            return (Math.Abs((double)(a - b)) < 1E-07);
+            return (Math.Abs(a - b) < 1E-07);
         }
-        #endregion
+
+        #endregion Private static helpers
     }
 }

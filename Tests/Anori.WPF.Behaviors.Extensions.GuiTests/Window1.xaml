@@ -17,7 +17,7 @@
         <Button>
             <b:Interaction.Triggers>
                 <b:EventTrigger EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
-                    <extensions:ToggleEnabledTargetedTriggerAction TargetName="{nameChecks:NameOfElement Button2, Type={x:Type Window1}}" />
+                    <extensions:ToggleEnabledTargetedTriggerAction TargetName="{nameChecks:NameOfElement Button2, Type={x:Type local:Window1}}" />
                     <extensions:ToggleEnabledTargetedTriggerAction TargetName="{nameChecks:NameOfElement Button3, Type={x:Type VisualTreeHelper}}" />
                 </b:EventTrigger>
             </b:Interaction.Triggers>
@@ -25,7 +25,6 @@
         </Button>
 
         <Button>
-            <b:Interaction.StyleBehaviors />
             <b:Interaction.Triggers>
                 <b:EventTrigger>
                     <!--     <Behaviors:EventTrigger.EventName>

@@ -9,7 +9,7 @@ using System.Windows;
 namespace Anori.WPF.Behaviors.Observables.GuiTests
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    /// StyleInteraction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {

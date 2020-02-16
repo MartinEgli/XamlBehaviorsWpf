@@ -32,7 +32,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.Behaviors.Observa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.NameChecks", "Anori.WPF.NameChecks\Anori.WPF.NameChecks.csproj", "{1044828A-BB51-4AE0-9E06-DABA26573821}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.Behaviors.Observables.GuiTests", "..\Tests\Anori.WPF.Behaviors.Observables.GuiTests\Anori.WPF.Behaviors.Observables.GuiTests.csproj", "{B0311CF5-2839-4CCF-8A4D-FF0D84E8BDF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.Behaviors.Observables.GuiTests", "..\Tests\Anori.WPF.Behaviors.Observables.GuiTests\Anori.WPF.Behaviors.Observables.GuiTests.csproj", "{B0311CF5-2839-4CCF-8A4D-FF0D84E8BDF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.StyleBehaviors", "Anori.WPF.SytleBehaviors\Anori.WPF.StyleBehaviors.csproj", "{3C34973D-6494-4B7C-8F88-0D1A55FCB3CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -122,6 +124,14 @@ Global
 		{B0311CF5-2839-4CCF-8A4D-FF0D84E8BDF2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B0311CF5-2839-4CCF-8A4D-FF0D84E8BDF2}.Release|x86.ActiveCfg = Release|Any CPU
 		{B0311CF5-2839-4CCF-8A4D-FF0D84E8BDF2}.Release|x86.Build.0 = Release|Any CPU
+		{3C34973D-6494-4B7C-8F88-0D1A55FCB3CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C34973D-6494-4B7C-8F88-0D1A55FCB3CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C34973D-6494-4B7C-8F88-0D1A55FCB3CC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3C34973D-6494-4B7C-8F88-0D1A55FCB3CC}.Debug|x86.Build.0 = Debug|Any CPU
+		{3C34973D-6494-4B7C-8F88-0D1A55FCB3CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C34973D-6494-4B7C-8F88-0D1A55FCB3CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C34973D-6494-4B7C-8F88-0D1A55FCB3CC}.Release|x86.ActiveCfg = Release|Any CPU
+		{3C34973D-6494-4B7C-8F88-0D1A55FCB3CC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

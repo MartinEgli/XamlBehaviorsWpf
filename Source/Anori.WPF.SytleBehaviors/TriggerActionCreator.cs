@@ -4,16 +4,18 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Windows;
-using JetBrains.Annotations;
-
-namespace Anori.WPF.Behaviors.Observables.GuiTests
+namespace Anori.WPF.StyleBehaviors
 {
+    using System;
+    using System.Windows;
+
+    using JetBrains.Annotations;
+
+    using TriggerAction = Anori.WPF.Behaviors.TriggerAction;
+
     /// <summary>
     /// </summary>
-    /// <seealso cref="Anori.WPF.Behaviors.ITriggerActionCreator" />
+    /// <seealso cref="ITriggerActionCreator" />
     public abstract class TriggerActionCreator<TTriggerAction> : ITriggerActionCreator
         where TTriggerAction : TriggerAction
     {
@@ -21,10 +23,14 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
         ///     The unregister triggerAction
         /// </summary>
         //private List<Action> unregisterActions;
-
-        public TriggerAction Create(DependencyObject dependencyObject)
+        public TriggerAction Create([NotNull] DependencyObject dependencyObject)
         {
-            TTriggerAction action = CreateTriggerAction();
+            if (dependencyObject == null)
+            {
+                throw new ArgumentNullException(nameof(dependencyObject));
+            }
+
+            TTriggerAction action = this.CreateTriggerAction();
             this.Register(action, dependencyObject);
             return action;
         }
@@ -35,8 +41,13 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
         /// <param name="action"></param>
         /// <param name="associatedObject">The associated object.</param>
         /// <exception cref="ArgumentNullException">associatedObject</exception>
-        public void Register(TTriggerAction action, [NotNull] DependencyObject associatedObject)
+        public void Register([NotNull] TTriggerAction action, [NotNull] DependencyObject associatedObject)
         {
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
             if (associatedObject == null)
             {
                 throw new ArgumentNullException(nameof(associatedObject));
@@ -45,7 +56,7 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
             if (associatedObject is FrameworkElement frameworkElement)
             {
                 DependencyPropertyChangedEventHandler OnDataContextChanged =
-                    (sender, args) => DataContextChanged(action, args.NewValue);
+                    (sender, args) => this.DataContextChanged(action, args.NewValue);
 
                 //void Action()
                 //{
@@ -68,18 +79,18 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
         //}
 
         /// <summary>
-        ///     Creates this instance.
+        /// Creates this instance.
         /// </summary>
-        /// <param name="dependencyObject"></param>
         /// <returns></returns>
+        [NotNull]
         abstract public TTriggerAction CreateTriggerAction();
 
         /// <summary>
         ///     Called when [data context changed].
         /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
-        abstract protected void DataContextChanged(TTriggerAction triggerAction, object dataContext);
+        /// <param name="triggerAction">The trigger action.</param>
+        /// <param name="dataContext">The data context.</param>
+        abstract protected void DataContextChanged([NotNull] TTriggerAction triggerAction, [NotNull] object dataContext);
 
         ///// <summary>
         /////     Unregisters this instance.

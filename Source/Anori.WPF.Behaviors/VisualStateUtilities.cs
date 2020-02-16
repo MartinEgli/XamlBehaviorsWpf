@@ -1,11 +1,9 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
@@ -28,18 +26,18 @@ namespace Anori.WPF.Behaviors
         public static bool GoToState(FrameworkElement element, string stateName, bool useTransitions)
         {
             bool success = false;
-            if (!string.IsNullOrEmpty(stateName))
+            if (string.IsNullOrEmpty(stateName))
             {
-                Control targetControl = element as Control;
-                if (targetControl != null)
-                {
-                    targetControl.ApplyTemplate();
-                    success = VisualStateManager.GoToState(targetControl, stateName, useTransitions);
-                }
-                else
-                {
-                    success = ExtendedVisualStateManager.GoToElementState(element, stateName, useTransitions);
-                }
+                return false;
+            }
+
+            if (element is Control targetControl)
+            {
+                targetControl.ApplyTemplate();
+                success = VisualStateManager.GoToState(targetControl, stateName, useTransitions);
+            } else
+            {
+                success = ExtendedVisualStateManager.GoToElementState(element, stateName, useTransitions);
             }
 
             return success;
@@ -54,34 +52,38 @@ namespace Anori.WPF.Behaviors
         {
             IList visualStateGroups = new List<VisualStateGroup>();
 
-            if (targetObject != null)
+            if (targetObject == null)
             {
-                visualStateGroups = VisualStateManager.GetVisualStateGroups(targetObject);
+                return visualStateGroups;
+            }
 
-                if (visualStateGroups.Count == 0)
-                {
-                    int childrenCount = VisualTreeHelper.GetChildrenCount(targetObject);
-                    if (childrenCount > 0)
-                    {
-                        FrameworkElement childElement = VisualTreeHelper.GetChild(targetObject, 0) as FrameworkElement;
-                        visualStateGroups = VisualStateManager.GetVisualStateGroups(childElement);
-                    }
-                }
+            visualStateGroups = VisualStateManager.GetVisualStateGroups(targetObject);
 
-                // WPF puts UserControl content in a template, so it won't be the direct visual child. However,
-                // the Content element is where the VSGs are expected to be located, so check there.
-                if (visualStateGroups.Count == 0)
+            if (visualStateGroups != null && visualStateGroups.Count == 0)
+            {
+                int childrenCount = VisualTreeHelper.GetChildrenCount(targetObject);
+                if (childrenCount > 0)
                 {
-                    UserControl userControl = targetObject as UserControl;
-                    if (userControl != null)
-                    {
-                        FrameworkElement contentElement = userControl.Content as FrameworkElement;
-                        if (contentElement != null)
-                        {
-                            visualStateGroups = VisualStateManager.GetVisualStateGroups(contentElement);
-                        }
-                    }
+                    FrameworkElement childElement = VisualTreeHelper.GetChild(targetObject, 0) as FrameworkElement;
+                    visualStateGroups = VisualStateManager.GetVisualStateGroups(childElement);
                 }
+            }
+
+            // WPF puts UserControl content in a template, so it won't be the direct visual child. However,
+            // the Content element is where the VSGs are expected to be located, so check there.
+            if (visualStateGroups == null || visualStateGroups.Count != 0)
+            {
+                return visualStateGroups;
+            }
+
+            if (!(targetObject is UserControl userControl))
+            {
+                return visualStateGroups;
+            }
+
+            if (userControl.Content is FrameworkElement contentElement)
+            {
+                visualStateGroups = VisualStateManager.GetVisualStateGroups(contentElement);
             }
 
             return visualStateGroups;
@@ -92,7 +94,9 @@ namespace Anori.WPF.Behaviors
         /// </summary>
         /// <param name="contextElement">The element from which to find the nearest stateful control.</param>
         /// <param name="resolvedControl">The nearest stateful control if True; else null.</param>
-        /// <returns>True if a parent contains visual states; else False.</returns>
+        /// <returns>
+        /// True if a parent contains visual states; else False.
+        /// </returns>
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Stateful")]
         public static bool TryFindNearestStatefulControl(FrameworkElement contextElement, out FrameworkElement resolvedControl)
@@ -119,19 +123,17 @@ namespace Anori.WPF.Behaviors
 
             if (HasVisualStateGroupsDefined(frameworkElement))
             {
-                if ((frameworkElement.TemplatedParent != null) && (frameworkElement.TemplatedParent is Control))
+                if (frameworkElement?.TemplatedParent is Control control)
                 {
-                    // We didn't need to walk the tree to get this because TemplatedParent is set for all elements in the 
+                    // We didn't need to walk the tree to get this because TemplatedParent is set for all elements in the
                     // template.  However, it maintains consistency in our error checking to do it this way.
-                    frameworkElement = frameworkElement.TemplatedParent as FrameworkElement;
-                }
-                else if (parent != null && parent is UserControl)
+                    frameworkElement = control;
+                } else if (parent is UserControl)
                 {
                     // if our parent is a UserControl, then use that
                     frameworkElement = parent;
                 }
-            }
-            else
+            } else
             {
                 succesfullyResolved = false;
             }
@@ -140,31 +142,45 @@ namespace Anori.WPF.Behaviors
             return succesfullyResolved;
         }
 
+        /// <summary>
+        /// Determines whether [has visual state groups defined] [the specified framework element].
+        /// </summary>
+        /// <param name="frameworkElement">The framework element.</param>
+        /// <returns>
+        ///   <c>true</c> if [has visual state groups defined] [the specified framework element]; otherwise, <c>false</c>.
+        /// </returns>
         private static bool HasVisualStateGroupsDefined(FrameworkElement frameworkElement)
         {
             return frameworkElement != null && VisualStateManager.GetVisualStateGroups(frameworkElement).Count != 0;
         }
 
+        /// <summary>
+        /// Finds the nearest stateful control.
+        /// </summary>
+        /// <param name="contextElement">The context element.</param>
+        /// <returns></returns>
         internal static FrameworkElement FindNearestStatefulControl(FrameworkElement contextElement)
         {
-            FrameworkElement resolvedControl = null;
-            TryFindNearestStatefulControl(contextElement, out resolvedControl);
+            TryFindNearestStatefulControl(contextElement, out FrameworkElement resolvedControl);
             return resolvedControl;
         }
 
+        /// <summary>
+        /// Shoulds the continue tree walk.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <returns></returns>
         private static bool ShouldContinueTreeWalk(FrameworkElement element)
         {
             if (element == null)
             {
                 // stop if we can't go any further
                 return false;
-            }
-            else if (element is UserControl)
+            } else if (element is UserControl)
             {
                 // stop if parent is a UserControl
                 return false;
-            }
-            else if (element.Parent == null)
+            } else if (element.Parent == null)
             {
                 // stop if parent's parent is null AND parent isn't the template root of a ControlTemplate or DataTemplate
                 FrameworkElement templatedParent = FindTemplatedParent(element);
@@ -176,6 +192,11 @@ namespace Anori.WPF.Behaviors
             return true;
         }
 
+        /// <summary>
+        /// Finds the templated parent.
+        /// </summary>
+        /// <param name="parent">The parent.</param>
+        /// <returns></returns>
         private static FrameworkElement FindTemplatedParent(FrameworkElement parent)
         {
             return parent.TemplatedParent as FrameworkElement;
