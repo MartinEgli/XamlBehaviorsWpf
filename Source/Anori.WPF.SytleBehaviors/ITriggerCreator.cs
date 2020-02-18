@@ -16,18 +16,7 @@ namespace Anori.WPF.Behaviors
         ///     Creates this instance.
         /// </summary>
         /// <returns></returns>
-        TriggerBase Create();
-    }
+        TriggerBase Create(DependencyObject dependencyObject);
+            }
 
-    public interface ITriggerActionCreator
-    {
-        /// <summary>
-        ///     Creates this instance.
-        /// </summary>
-        /// <returns></returns>
-        TriggerAction Create();
-
-        void Attach(DependencyObject obj);
-        void Detach(DependencyObject obj);
-    }
 }
