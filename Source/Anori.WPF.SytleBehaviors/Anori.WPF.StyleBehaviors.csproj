@@ -8,6 +8,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Anori.WPF.Behaviors.Extensions\Anori.WPF.Behaviors.Extensions.csproj" />
     <ProjectReference Include="..\Anori.WPF.Behaviors\Anori.WPF.Behaviors.csproj" />
+    <ProjectReference Include="..\Anori.WPF.WeakEventManagers\Anori.WPF.WeakEventManagers.csproj" />
   </ItemGroup>
 
   <ItemGroup>

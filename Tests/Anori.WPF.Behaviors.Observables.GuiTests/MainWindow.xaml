@@ -9,6 +9,7 @@
     xmlns:guiTests="clr-namespace:Anori.WPF.Behaviors.Observables.GuiTests"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:nameChecks="clr-namespace:Anori.WPF.NameChecks;assembly=Anori.WPF.NameChecks"
+    xmlns:styleBehaviors="clr-namespace:Anori.WPF.StyleBehaviors;assembly=Anori.WPF.StyleBehaviors"
     Title="MainWindow"
     Width="800"
     Height="450"
@@ -18,7 +19,7 @@
         <Button Content="Button">
             <Behaviors:Interaction.Triggers>
                 <Behaviors:EventTrigger EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
-                    <extensions:ToggleEnabledTargetedTriggerAction TargetName="Button2" />
+                    <extensions1:ToggleEnabledTargetedTriggerAction TargetName="Button2" />
                     <Behaviors:InvokeCommandAction Command="{Binding MyCommand}" />
                 </Behaviors:EventTrigger>
             </Behaviors:Interaction.Triggers>
@@ -29,14 +30,14 @@
         <Button Content="Button">
             <Button.Style>
                 <Style>
-                    <Setter Property="Behaviors:Interaction.StyleTriggers">
+                    <Setter Property="styleBehaviors:StyleInteraction.StyleTriggers">
                         <Setter.Value>
-                            <Behaviors:StyleTriggerCollection>
-                                <Behaviors:EventTriggerCreator EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
-                                    <extensions1:ToggleEnabledTargetedTriggerActionCreator XTargetName="Button4" />
-                                    <guiTests:InvokeCommandActionCreator CommandBinding="{Binding MyCommand}" />
-                                </Behaviors:EventTriggerCreator>
-                            </Behaviors:StyleTriggerCollection>
+                            <styleBehaviors:StyleTriggerCollection>
+                                <styleBehaviors:EventTriggerCreator EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
+                                    <styleBehaviors:ToggleEnabledTargetedTriggerActionCreator TargetElementName="Button4" />
+                                    <styleBehaviors:InvokeCommandActionCreator CommandBinding="{Binding MyCommand}" />
+                                </styleBehaviors:EventTriggerCreator>
+                            </styleBehaviors:StyleTriggerCollection>
                         </Setter.Value>
                     </Setter>
                 </Style>

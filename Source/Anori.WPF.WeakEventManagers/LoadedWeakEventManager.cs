@@ -25,6 +25,60 @@
         }
 
         /// <summary>
+        /// Adds the handler.
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="handler">The handler.</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// source
+        /// or
+        /// handler
+        /// </exception>
+        public static void AddHandler(
+            DependencyObject source,
+            EventHandler<RoutedEventArgs> handler)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            if (handler == null)
+            {
+                throw new ArgumentNullException(nameof(handler));
+            }
+
+            GetCurrentManager().ProtectedAddHandler(source, handler);
+        }
+
+        /// <summary>
+        ///     Removes the handler.
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="handler">The handler.</param>
+        /// <exception cref="System.ArgumentNullException">
+        ///     source
+        ///     or
+        ///     handler
+        /// </exception>
+        public static void RemoveHandler(
+            DependencyObject source,
+            EventHandler<RoutedEventArgs> handler)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            if (handler == null)
+            {
+                throw new ArgumentNullException(nameof(handler));
+            }
+
+            GetCurrentManager().ProtectedRemoveHandler(source, handler);
+        }
+
+        /// <summary>
         /// Gets the current manager.
         /// </summary>
         /// <returns></returns>
@@ -48,11 +102,14 @@
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="listener">The listener.</param>
-        /// <exception cref="ArgumentNullException">
+        /// <exception cref="System.ArgumentNullException">
         /// source
         /// or
         /// listener
         /// </exception>
+        /// <exception cref="ArgumentNullException">source
+        /// or
+        /// listener</exception>
         public static void AddListener([NotNull] FrameworkElement source, [NotNull] IWeakEventListener listener)
         {
             if (source == null)
@@ -73,11 +130,14 @@
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="listener">The listener.</param>
-        /// <exception cref="ArgumentNullException">
+        /// <exception cref="System.ArgumentNullException">
         /// source
         /// or
         /// listener
         /// </exception>
+        /// <exception cref="ArgumentNullException">source
+        /// or
+        /// listener</exception>
         public static void RemoveListener([NotNull] FrameworkElement source, [NotNull] IWeakEventListener listener)
         {
             if (source == null)
@@ -97,11 +157,8 @@
         /// Called when [loaded].
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="args">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            this.DeliverEvent(sender, args);
-        }
+        /// <param name="args">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
+        private void OnLoaded(object sender, RoutedEventArgs args) => this.DeliverEvent(sender, args);
 
         /// <inheritdoc />
         /// <summary>

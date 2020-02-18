@@ -9,6 +9,8 @@ namespace Anori.WPF.StyleBehaviors
     using System;
     using System.Windows;
 
+    using Anori.WPF.WeakEventManagers;
+
     using JetBrains.Annotations;
 
     using TriggerAction = Anori.WPF.Behaviors.TriggerAction;
@@ -58,13 +60,12 @@ namespace Anori.WPF.StyleBehaviors
                 DependencyPropertyChangedEventHandler OnDataContextChanged =
                     (sender, args) => this.DataContextChanged(action, args.NewValue);
 
-                //void Action()
-                //{
-                //    frameworkElement.DataContextChanged -= OnDataContextChanged;
-                //}
+                EventHandler<DataContextChangedEventArgs> OnDataContextChanged2 =
+                    (sender, args) => this.DataContextChanged(action, args.NewValue);
 
-                //this.unregisterActions.Add(Action); //?.Invoke();
-                frameworkElement.DataContextChanged += OnDataContextChanged;
+                //frameworkElement.DataContextChanged += OnDataContextChanged;
+
+                DataContextChangedEventManager.AddHandler(frameworkElement, OnDataContextChanged2);
             }
         }
 
@@ -79,7 +80,7 @@ namespace Anori.WPF.StyleBehaviors
         //}
 
         /// <summary>
-        /// Creates this instance.
+        ///     Creates this instance.
         /// </summary>
         /// <returns></returns>
         [NotNull]
@@ -90,7 +91,9 @@ namespace Anori.WPF.StyleBehaviors
         /// </summary>
         /// <param name="triggerAction">The trigger action.</param>
         /// <param name="dataContext">The data context.</param>
-        abstract protected void DataContextChanged([NotNull] TTriggerAction triggerAction, [NotNull] object dataContext);
+        abstract protected void DataContextChanged(
+            [NotNull] TTriggerAction triggerAction,
+            [NotNull] object dataContext);
 
         ///// <summary>
         /////     Unregisters this instance.

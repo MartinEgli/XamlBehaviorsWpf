@@ -34,7 +34,7 @@ namespace Anori.WPF.WeakEventManagers
     ///     Loaded WeakEventManager Class
     /// </summary>
     /// <seealso cref="T:System.Windows.WeakEventManager" />
-    public static class DataContextChangedEventManager
+    public static class DataContextChangedWEventManager
     {
         public static IDisposable Subscribe(FrameworkElement frameworkElement,
             EventHandler<DependencyPropertyChangedEventArgs> handler)
