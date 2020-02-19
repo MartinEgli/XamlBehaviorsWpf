@@ -1,22 +1,21 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="MainWindow.xaml.cs" company="Anori Soft">
+// <copyright file="TwoToggleEnabledTargetedTriggerActionWindow.xaml.cs" company="Anori Soft">
 // Copyright (c) Anori Soft. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Anori.WPF.Behaviors.Observables.GuiTests
+namespace Anori.WPF.Behaviors.Extensions.GuiTests
 {
     using System.Windows;
 
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class TwoToggleEnabledTargetedTriggerActionWindow : Window
     {
-        public MainWindow()
+        public TwoToggleEnabledTargetedTriggerActionWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainViewModel();
         }
     }
 }

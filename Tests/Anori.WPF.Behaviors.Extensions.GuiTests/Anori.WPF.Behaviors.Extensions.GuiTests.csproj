@@ -9,5 +9,11 @@
     <ProjectReference Include="..\..\Source\Anori.WPF.Behaviors.Extensions\Anori.WPF.Behaviors.Extensions.csproj" />
     <ProjectReference Include="..\..\Source\Anori.WPF.Behaviors\Anori.WPF.Behaviors.csproj" />
     <ProjectReference Include="..\..\Source\Anori.WPF.NameChecks\Anori.WPF.NameChecks.csproj" />
+    <ProjectReference Include="..\..\Source\Anori.WPF.SytleBehaviors\Anori.WPF.StyleBehaviors.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="ToggleEnabledTargetedTriggerActionWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 </Project>

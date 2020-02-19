@@ -60,12 +60,7 @@ namespace Anori.WPF.StyleBehaviors
                 DependencyPropertyChangedEventHandler OnDataContextChanged =
                     (sender, args) => this.DataContextChanged(action, args.NewValue);
 
-                EventHandler<DataContextChangedEventArgs> OnDataContextChanged2 =
-                    (sender, args) => this.DataContextChanged(action, args.NewValue);
-
-                //frameworkElement.DataContextChanged += OnDataContextChanged;
-
-                DataContextChangedEventManager.AddHandler(frameworkElement, OnDataContextChanged2);
+                frameworkElement.DataContextChanged += OnDataContextChanged;
             }
         }
 

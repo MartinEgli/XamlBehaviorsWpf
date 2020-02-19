@@ -1,0 +1,27 @@
+﻿<Window
+    x:Class="Anori.WPF.Behaviors.Observables.GuiTests.ObservableTest1Window"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.anori.com/xaml/behaviors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Anori.WPF.Behaviors.Observables.GuiTests"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:observables="clr-namespace:Anori.WPF.Behaviors.Observables;assembly=Anori.WPF.Behaviors.Observables"
+    Title="ObservableTest1Window"
+    Width="800"
+    Height="450"
+    d:DataContext="{d:DesignInstance local:ObservableTest1ViewModel}"
+    mc:Ignorable="d">
+    <StackPanel>
+        <Button Command="{Binding NextCommand}">Next</Button>
+        <Button Command="{Binding CompletedCommand}">Completed</Button>
+        <Button Command="{Binding ExceptionCommand}">Error</Button>
+        <TextBlock>
+            <b:Interaction.Triggers>
+                <observables:ObservableTrigger ObservableName="Subject">
+                    <b:InvokeCommandAction Command="{Binding OnNextCommand}" />
+                </observables:ObservableTrigger>
+            </b:Interaction.Triggers>
+        </TextBlock>
+    </StackPanel>
+</Window>

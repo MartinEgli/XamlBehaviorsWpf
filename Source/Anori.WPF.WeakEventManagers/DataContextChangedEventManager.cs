@@ -29,6 +29,61 @@ namespace Anori.WPF.WeakEventManagers
         ///     Adds the listener.
         /// </summary>
         /// <param name="source">The source.</param>
+        /// <param name="listener">The listener.</param>
+        /// <exception cref="System.ArgumentNullException">
+        ///     source
+        ///     or
+        ///     listener
+        /// </exception>
+        public static void AddListener([NotNull] FrameworkElement source, [NotNull] IWeakEventListener listener)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            if (listener == null)
+            {
+                throw new ArgumentNullException(nameof(listener));
+            }
+
+            GetCurrentManager().ProtectedAddListener(source, listener);
+        }
+
+        /// <summary>
+        ///     Removes the listener.
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="listener">The listener.</param>
+        /// <exception cref="System.ArgumentNullException">
+        ///     source
+        ///     or
+        ///     listener
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        ///     source
+        ///     or
+        ///     listener
+        /// </exception>
+        public static void RemoveListener([NotNull] FrameworkElement source, [NotNull] IWeakEventListener listener)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            if (listener == null)
+            {
+                throw new ArgumentNullException(nameof(listener));
+            }
+
+            GetCurrentManager().ProtectedRemoveListener(source, listener);
+        }
+
+        /// <summary>
+        ///     Adds the listener.
+        /// </summary>
+        /// <param name="source">The source.</param>
         /// <param name="handler">The handler.</param>
         /// <exception cref="System.ArgumentNullException">
         ///     source
@@ -139,8 +194,8 @@ namespace Anori.WPF.WeakEventManagers
         /// <param name="args">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs args)
         {
-            DataContextChangedEventArgs dataContextChangedEventArgs =
-                new DataContextChangedEventArgs(args.OldValue, args.NewValue);
+            EventArgs dataContextChangedEventArgs = new DataContextChangedEventArgs(args.OldValue, args.NewValue);
+
             this.DeliverEvent(sender, dataContextChangedEventArgs);
         }
     }

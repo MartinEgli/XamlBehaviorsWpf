@@ -1,0 +1,59 @@
+﻿<Window
+    x:Class="Anori.WPF.Behaviors.Extensions.GuiTests.StyleTriggerTestWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.anori.com/xaml/behaviors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extensions="clr-namespace:Anori.WPF.Behaviors.Extensions;assembly=Anori.WPF.Behaviors.Extensions"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:nameChecks="clr-namespace:Anori.WPF.NameChecks;assembly=Anori.WPF.NameChecks"
+    xmlns:styleBehaviors="clr-namespace:Anori.WPF.StyleBehaviors;assembly=Anori.WPF.StyleBehaviors"
+    Title="StyleTriggerTestWindow"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="styleBehaviors:StyleInteraction.StyleTriggers">
+                <Setter.Value>
+                    <styleBehaviors:StyleTriggerCollection>
+                        <styleBehaviors:EventTriggerCreator EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
+                            <!--<Behaviors:EventTriggerCreator.ActionCreators>
+                                        <Behaviors:TriggerActionCreatorCollection>-->
+                            <styleBehaviors:ToggleEnabledTargetedTriggerActionCreator TargetElementName="Button4" />
+                            <styleBehaviors:InvokeCommandActionCreator CommandBinding="{Binding MyCommand}" />
+                            <!--</Behaviors:TriggerActionCreatorCollection>
+                                    </Behaviors:EventTriggerCreator.ActionCreators>-->
+                        </styleBehaviors:EventTriggerCreator>
+                    </styleBehaviors:StyleTriggerCollection>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <StackPanel>
+        <Button Command="{Binding NewDataContextCommand}">New DataContext</Button>
+        <Button Command="{Binding RunGarbageCollectorCommand}">Run Garbage Collector</Button>
+        <Button Content="Button">
+            <styleBehaviors:StyleInteraction.Triggers>
+                <b:EventTrigger EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
+                    <extensions:ToggleEnabledTargetedTriggerAction TargetName="Button2" />
+                    <b:InvokeCommandAction Command="{Binding MyCommand}" />
+                </b:EventTrigger>
+            </styleBehaviors:StyleInteraction.Triggers>
+        </Button>
+        <Button x:Name="Button2">
+            Button 2
+        </Button>
+        <Button
+            x:Name="B1"
+            Content="Button A"
+            Style="{StaticResource ButtonStyle}" />
+        <Button
+            x:Name="B2"
+            Content="Button B"
+            Style="{StaticResource ButtonStyle}" />
+        <Button x:Name="Button4">
+            Button 4
+        </Button>
+    </StackPanel>
+</Window>

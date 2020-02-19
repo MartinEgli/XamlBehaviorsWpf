@@ -9,12 +9,10 @@ namespace Anori.WPF.Behaviors.Extensions
     using System.Windows;
     using System.Windows.Controls;
 
-    using Anori.WPF.Behaviors;
-
     /// <summary>
     ///     ToggleEnabledTargetedTriggerAction class
     /// </summary>
-    /// <seealso cref="Anori.WPF.Behaviors.TargetedTriggerAction{System.Windows.Controls.Button}" />
+    /// <seealso cref="TargetedTriggerAction{Button}" />
     public class ToggleEnabledTargetedTriggerAction : TargetedTriggerAction<Button>
     {
         /// <summary>
@@ -26,7 +24,7 @@ namespace Anori.WPF.Behaviors.Extensions
         /// </param>
         protected override void Invoke(object parameter)
         {
-            if (this.Target != null && this.Target is UIElement c)
+            if (this.Target is UIElement c)
             {
                 c.IsEnabled = !c.IsEnabled;
             }

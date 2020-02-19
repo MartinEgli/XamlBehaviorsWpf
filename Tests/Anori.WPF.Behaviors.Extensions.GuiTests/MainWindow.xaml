@@ -2,70 +2,21 @@
     x:Class="Anori.WPF.Behaviors.Extensions.GuiTests.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Behaviors="http://schemas.anori.com/xaml/behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:extensions="clr-namespace:Behaviors.Extensions;assembly=Anori.WPF.Behaviors.Extensions"
-    xmlns:extensions1="clr-namespace:Anori.WPF.Behaviors.Extensions;assembly=Anori.WPF.Behaviors.Extensions"
     xmlns:guiTests="clr-namespace:Anori.WPF.Behaviors.Extensions.GuiTests"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:nameChecks="clr-namespace:Anori.WPF.NameChecks;assembly=Anori.WPF.NameChecks"
     x:Name="Window"
     Title="MainWindow"
     Width="800"
     Height="450"
+    d:DataContext="{d:DesignInstance guiTests:MainViewModel}"
     mc:Ignorable="d">
     <StackPanel>
-        <Button>
-            <Behaviors:Interaction.Triggers>
-                <Behaviors:EventTrigger EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
-                    <extensions1:ToggleEnabledTargetedTriggerAction TargetName="{nameChecks:NameOfElement Button2, Type={x:Type guiTests:MainWindow}}" />
-                    <extensions1:ToggleEnabledTargetedTriggerAction TargetName="{nameChecks:NameOfElement Button3, Type={x:Type guiTests:MainWindow}}" />
-                </Behaviors:EventTrigger>
-            </Behaviors:Interaction.Triggers>
-            <Button.Content>Button 1</Button.Content>
-        </Button>
+        <Button Command="{Binding OpenToggleEnabledCommand}">Toggle Enabled Targeted Trigger Action Window</Button>
+        <Button Command="{Binding OpenTwoToggleEnabledCommand}">Two Toggle Enabled Targeted Trigger Action Window</Button>
+        <Button Command="{Binding OpenStyleTriggerTestCommand}">StyleTriggerTest Window</Button>
+        <Button Command="{Binding OpenInvokeCommandActionCreatorCommand}">InvokeCommandActionCreator Window</Button>
 
-        <Button>
-            <Behaviors:Interaction.Triggers>
-                <Behaviors:EventTrigger>
-                    <!--     <Behaviors:EventTrigger.EventName>
-                        <local:NameOfElement Element="" Type="{x:Type local:MainWindow}" />
-                    </Behaviors:EventTrigger.EventName>-->
-                </Behaviors:EventTrigger>
-            </Behaviors:Interaction.Triggers>
-            <Button.Content>Button 1</Button.Content>
-        </Button>
-
-        <Button x:Name="Button2">
-            <Behaviors:Interaction.Triggers>
-                <!--<Behaviors:EventTrigger EventName="{local:NameOf IsEnabledChanged, Button}">
-                </Behaviors:EventTrigger>-->
-
-                <extensions1:DependencyPropertyChangedEventTrigger EventName="{nameChecks:NameOf IsEnabledChanged, Button}">
-                    <!--<extensions:SetTimeTargetedTriggerAction TargetName="{local:NameOf Member=Box1, Type={x:Type local:MainWindow}}" />-->
-                    <!--<extensions:SetTimeTargetedTriggerAction>
-                        <extensions:SetTimeTargetedTriggerAction.TargetName>
-                            <Behaviors:NameOfElement Element="" Binding="{Binding ElementName=Box1}" Type="{x:Type local:MainWindow}"
-                                                 ElementType="{x:Type Control}" />
-                            <local:NameOfElement Element="" />
-                        </extensions:SetTimeTargetedTriggerAction.TargetName>
-                    </extensions:SetTimeTargetedTriggerAction>-->
-                </extensions1:DependencyPropertyChangedEventTrigger>
-            </Behaviors:Interaction.Triggers>
-            <Button.Content>Button 2</Button.Content>
-        </Button>
-        <TextBox x:Name="Box1" />
-        <Button x:Name="Button3">
-            <Behaviors:Interaction.Triggers>
-                <Behaviors:PropertyChangedTrigger Binding="{Binding IsEnabled, ElementName=Button3}">
-                    <extensions1:SetTimeTargetedTriggerAction TargetName="Box2" />
-                </Behaviors:PropertyChangedTrigger>
-                <Behaviors:PropertyChangedTrigger Binding="{Binding IsEnabled, ElementName=Button3}">
-                    <extensions1:SetTimeTargetedTriggerAction TargetName="Box2" />
-                </Behaviors:PropertyChangedTrigger>
-            </Behaviors:Interaction.Triggers>
-            <Button.Content>Button 3</Button.Content>
-        </Button>
-        <TextBox x:Name="Box2" />
+        <Button Command="{Binding RunGarbageCollectorCommand}">Run Garbage Collector</Button>
     </StackPanel>
 </Window>

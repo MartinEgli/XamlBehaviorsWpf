@@ -1,0 +1,59 @@
+﻿<Window
+    x:Class="Anori.WPF.Behaviors.Extensions.GuiTests.TwoToggleEnabledTargetedTriggerActionWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.anori.com/xaml/behaviors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extensions="clr-namespace:Anori.WPF.Behaviors.Extensions;assembly=Anori.WPF.Behaviors.Extensions"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:nameChecks="clr-namespace:Anori.WPF.NameChecks;assembly=Anori.WPF.NameChecks"
+    xmlns:styleBehaviors="clr-namespace:Anori.WPF.StyleBehaviors;assembly=Anori.WPF.StyleBehaviors"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="styleBehaviors:StyleInteraction.StyleTriggers">
+                <Setter.Value>
+                    <styleBehaviors:StyleTriggerCollection>
+                        <styleBehaviors:EventTriggerCreator EventName="{nameChecks:NameOf Click, Button, ThrowRuntimeException=False}">
+                            <styleBehaviors:ToggleEnabledTargetedTriggerActionCreator TargetElementName="TargetButton1" />
+                            <styleBehaviors:ToggleEnabledTargetedTriggerActionCreator TargetElementName="TargetButton2" />
+                        </styleBehaviors:EventTriggerCreator>
+                    </styleBehaviors:StyleTriggerCollection>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <StackPanel>
+        <Button Style="{StaticResource ButtonStyle}">
+            <Button.Content>Toggle Enabled Button</Button.Content>
+        </Button>
+
+        <Button Style="{StaticResource ButtonStyle}">
+            <Button.Content>Toggle Enabled Button</Button.Content>
+        </Button>
+
+        <Button x:Name="TargetButton1">
+            <Button.Content>Target Button 1</Button.Content>
+            <b:Interaction.Triggers>
+                <b:PropertyChangedTrigger Binding="{Binding IsEnabled, ElementName=TargetButton1}">
+                    <extensions:SetTimeTargetedTriggerAction TargetName="TimeBox1" />
+                </b:PropertyChangedTrigger>
+            </b:Interaction.Triggers>
+        </Button>
+        <Label>TimeBox1</Label>
+        <TextBox x:Name="TimeBox1" />
+
+        <Button x:Name="TargetButton2">
+            <Button.Content>Target Button 2</Button.Content>
+            <b:Interaction.Triggers>
+                <b:PropertyChangedTrigger Binding="{Binding IsEnabled, ElementName=TargetButton2}">
+                    <extensions:SetTimeTargetedTriggerAction TargetName="TimeBox2" />
+                </b:PropertyChangedTrigger>
+            </b:Interaction.Triggers>
+        </Button>
+        <Label>TimeBox2</Label>
+        <TextBox x:Name="TimeBox2" />
+    </StackPanel>
+</Window>
