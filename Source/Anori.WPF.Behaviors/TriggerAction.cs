@@ -14,68 +14,75 @@ namespace Anori.WPF.Behaviors
     using System.Windows.Media.Animation;
 
     /// <summary>
-    /// Represents an attachable object that encapsulates a unit of functionality.
+    ///     Represents an attachable object that encapsulates a unit of functionality.
     /// </summary>
-    /// <remarks>This is an infrastructure class. Action authors should derive from TriggerAction&lt;T&gt; instead of this class.</remarks>
-    [DefaultTrigger(typeof(UIElement), typeof(Anori.WPF.Behaviors.EventTrigger), "MouseLeftButtonDown")]
-    [DefaultTrigger(typeof(ButtonBase), typeof(Anori.WPF.Behaviors.EventTrigger), "Click")]
-    public abstract class TriggerAction :
-        Animatable,
-        IAttachedObject
+    /// <remarks>
+    ///     This is an infrastructure class. Action authors should derive from TriggerAction&lt;T&gt; instead of this
+    ///     class.
+    /// </remarks>
+    [DefaultTrigger(typeof(UIElement), typeof(EventTrigger), "MouseLeftButtonDown")]
+    [DefaultTrigger(typeof(ButtonBase), typeof(EventTrigger), "Click")]
+    public abstract class TriggerAction : Animatable, IAttachedObject
     {
         /// <summary>
-        /// The is hosted
-        /// </summary>
-        private bool isHosted;
-
-        /// <summary>
-        /// The associated object
-        /// </summary>
-        private DependencyObject associatedObject;
-
-        /// <summary>
-        /// The associated object type constraint
-        /// </summary>
-        private Type associatedObjectTypeConstraint;
-
-        /// <summary>
-        /// The identifier source
+        ///     The identifier source
         /// </summary>
         private static int idSource;
 
         /// <summary>
-        /// Gets the identifier.
+        ///     The is enabled property
         /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public int Id { get; } = Interlocked.Increment(ref idSource);
-
-        /// <summary>
-        /// The is enabled property
-        /// </summary>
-        public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.Register("IsEnabled",
+        public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.Register(
+            "IsEnabled",
             typeof(bool),
             typeof(TriggerAction),
             new FrameworkPropertyMetadata(true));
 
         /// <summary>
-        /// Gets or sets a value indicating whether this action will run when invoked. This is a dependency property.
+        ///     The associated object
+        /// </summary>
+        private DependencyObject associatedObject;
+
+        /// <summary>
+        ///     The associated object type constraint
+        /// </summary>
+        private readonly Type associatedObjectTypeConstraint;
+
+        /// <summary>
+        ///     The is hosted
+        /// </summary>
+        private bool isHosted;
+
+        internal TriggerAction(Type associatedObjectTypeConstraint)
+        {
+            this.associatedObjectTypeConstraint = associatedObjectTypeConstraint;
+        }
+
+        /// <summary>
+        ///     Gets the identifier.
         /// </summary>
         /// <value>
-        /// 	<c>True</c> if this action will be run when invoked; otherwise, <c>False</c>.
+        ///     The identifier.
+        /// </value>
+        public int Id { get; } = Interlocked.Increment(ref idSource);
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether this action will run when invoked. This is a dependency property.
+        /// </summary>
+        /// <value>
+        ///     <c>True</c> if this action will be run when invoked; otherwise, <c>False</c>.
         /// </value>
         public bool IsEnabled
         {
-            get { return (bool)this.GetValue(TriggerAction.IsEnabledProperty); }
+            get { return (bool)this.GetValue(IsEnabledProperty); }
             set
             {
-                this.SetValue(TriggerAction.IsEnabledProperty, value);
+                this.SetValue(IsEnabledProperty, value);
             }
         }
 
         /// <summary>
-        /// Gets the object to which this action is attached.
+        ///     Gets the object to which this action is attached.
         /// </summary>
         /// <value>The associated object.</value>
         protected DependencyObject AssociatedObject
@@ -88,7 +95,7 @@ namespace Anori.WPF.Behaviors
         }
 
         /// <summary>
-        /// Gets the associated object type constraint.
+        ///     Gets the associated object type constraint.
         /// </summary>
         /// <value>The associated object type constraint.</value>
         protected virtual Type AssociatedObjectTypeConstraint
@@ -101,7 +108,7 @@ namespace Anori.WPF.Behaviors
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is attached.
+        ///     Gets or sets a value indicating whether this instance is attached.
         /// </summary>
         /// <value><c>True</c> if this instance is attached; otherwise, <c>False</c>.</value>
         internal bool IsHosted
@@ -119,16 +126,14 @@ namespace Anori.WPF.Behaviors
             }
         }
 
-        internal TriggerAction(Type associatedObjectTypeConstraint)
-        {
-            this.associatedObjectTypeConstraint = associatedObjectTypeConstraint;
-        }
-
         /// <summary>
-        /// Attempts to invoke the action.
+        ///     Attempts to invoke the action.
         /// </summary>
-        /// <param name="parameter">The parameter to the action. If the action does not require a parameter, the parameter may be set to a null reference.</param>
-        internal void CallInvoke(object parameter)
+        /// <param name="parameter">
+        ///     The parameter to the action. If the action does not require a parameter, the parameter may be
+        ///     set to a null reference.
+        /// </param>
+        public void CallInvoke(object parameter)
         {
             if (this.IsEnabled)
             {
@@ -137,27 +142,31 @@ namespace Anori.WPF.Behaviors
         }
 
         /// <summary>
-        /// Invokes the action.
+        ///     Invokes the action.
         /// </summary>
-        /// <param name="parameter">The parameter to the action. If the action does not require a parameter, the parameter may be set to a null reference.</param>
+        /// <param name="parameter">
+        ///     The parameter to the action. If the action does not require a parameter, the parameter may be
+        ///     set to a null reference.
+        /// </param>
         protected abstract void Invoke(object parameter);
 
         /// <summary>
-        /// Called after the action is attached to an AssociatedObject.
+        ///     Called after the action is attached to an AssociatedObject.
         /// </summary>
         protected virtual void OnAttached()
         {
         }
 
         /// <summary>
-        /// Called when the action is being detached from its AssociatedObject, but before it has actually occurred.
+        ///     Called when the action is being detached from its AssociatedObject, but before it has actually occurred.
         /// </summary>
         protected virtual void OnDetaching()
         {
         }
 
         /// <summary>
-        /// When implemented in a derived class, creates a new instance of the <see cref="T:System.Windows.Freezable"/> derived class.
+        ///     When implemented in a derived class, creates a new instance of the <see cref="T:System.Windows.Freezable" />
+        ///     derived class.
         /// </summary>
         /// <returns>The new instance.</returns>
         protected override Freezable CreateInstanceCore()
@@ -169,7 +178,7 @@ namespace Anori.WPF.Behaviors
         #region IAttachedObject Members
 
         /// <summary>
-        /// Gets the associated object.
+        ///     Gets the associated object.
         /// </summary>
         /// <value>The associated object.</value>
         DependencyObject IAttachedObject.AssociatedObject
@@ -181,7 +190,7 @@ namespace Anori.WPF.Behaviors
         }
 
         /// <summary>
-        /// Attaches to the specified object.
+        ///     Attaches to the specified object.
         /// </summary>
         /// <param name="dependencyObject">The object to attach to.</param>
         /// <exception cref="InvalidOperationException">Cannot host the same TriggerAction on more than one object at a time.</exception>
@@ -192,17 +201,21 @@ namespace Anori.WPF.Behaviors
             {
                 if (this.AssociatedObject != null)
                 {
-                    throw new InvalidOperationException(ExceptionStringTable.CannotHostTriggerActionMultipleTimesExceptionMessage);
+                    throw new InvalidOperationException(
+                        ExceptionStringTable.CannotHostTriggerActionMultipleTimesExceptionMessage);
                 }
 
                 // Ensure the type constraint is met
-                if (dependencyObject != null && !this.AssociatedObjectTypeConstraint.IsAssignableFrom(dependencyObject.GetType()))
+                if (dependencyObject != null
+                    && !this.AssociatedObjectTypeConstraint.IsAssignableFrom(dependencyObject.GetType()))
                 {
-                    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture,
-                        ExceptionStringTable.TypeConstraintViolatedExceptionMessage,
-                        this.GetType().Name,
-                        dependencyObject.GetType().Name,
-                        this.AssociatedObjectTypeConstraint.Name));
+                    throw new InvalidOperationException(
+                        string.Format(
+                            CultureInfo.CurrentCulture,
+                            ExceptionStringTable.TypeConstraintViolatedExceptionMessage,
+                            this.GetType().Name,
+                            dependencyObject.GetType().Name,
+                            this.AssociatedObjectTypeConstraint.Name));
                 }
 
                 this.WritePreamble();
@@ -214,7 +227,7 @@ namespace Anori.WPF.Behaviors
         }
 
         /// <summary>
-        /// Detaches this instance from its associated object.
+        ///     Detaches this instance from its associated object.
         /// </summary>
         public void Detach()
         {

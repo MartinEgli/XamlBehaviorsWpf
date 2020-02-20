@@ -34,7 +34,10 @@ namespace Anori.WPF.Behaviors.Observables
         ///     Initializes a new instance of the <see cref="ObservableTrigger" /> class.
         /// </summary>
         /// <param name="observableName">Name of the observable.</param>
-        public ObservableTrigger(string observableName) => this.ObservableName = observableName;
+        public ObservableTrigger(string observableName)
+        {
+            this.ObservableName = observableName;
+        }
 
         /// <summary>
         ///     Gets or sets the name of the event to listen for. This is a dependency property.

@@ -13,15 +13,21 @@
     d:DataContext="{d:DesignInstance local:ObservableTest1ViewModel}"
     mc:Ignorable="d">
     <StackPanel>
-        <Button Command="{Binding NextCommand}">Next</Button>
-        <Button Command="{Binding CompletedCommand}">Completed</Button>
-        <Button Command="{Binding ExceptionCommand}">Error</Button>
-        <TextBlock>
-            <b:Interaction.Triggers>
-                <observables:ObservableTrigger ObservableName="Subject">
-                    <b:InvokeCommandAction Command="{Binding OnNextCommand}" />
-                </observables:ObservableTrigger>
-            </b:Interaction.Triggers>
-        </TextBlock>
+        <b:Interaction.Triggers>
+            <observables:ObservableTrigger ObservableName="Subject" SourceObject="{Binding}">
+                <!--<observables:ObservableTrigger.ErrorActions>
+                    <b:InvokeCommandAction Command="{Binding OnErrorCommand}" />
+                </observables:ObservableTrigger.ErrorActions>
+                <observables:ObservableTrigger.CompletedActions>
+                    <b:InvokeCommandAction Command="{Binding OnCompletedCommand}" />
+                </observables:ObservableTrigger.CompletedActions>-->
+                <b:InvokeCommandAction Command="{Binding OnNextCommand}" />
+            </observables:ObservableTrigger>
+        </b:Interaction.Triggers>
+
+        <Button Command="{Binding SetNextCommand}">Next</Button>
+        <Button Command="{Binding SetCompletedCommand}">Completed</Button>
+        <Button Command="{Binding SetErrorCommand}">Error</Button>
+        <TextBlock Text="{Binding Text}" />
     </StackPanel>
 </Window>

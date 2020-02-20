@@ -42,6 +42,15 @@ namespace Anori.WPF.Behaviors
             }
         }
 
+        /// <summary>
+        ///     Called when the source changes.
+        /// </summary>
+        /// <param name="oldSource">The old source.</param>
+        /// <param name="newSource">The new source.</param>
+        /// <remarks>
+        ///     This function should be overridden in derived classes to hook functionality to and unhook functionality from
+        ///     the changing source objects.
+        /// </remarks>
         internal sealed override void OnSourceChangedImpl(object oldSource, object newSource)
         {
             base.OnSourceChangedImpl(oldSource, newSource);

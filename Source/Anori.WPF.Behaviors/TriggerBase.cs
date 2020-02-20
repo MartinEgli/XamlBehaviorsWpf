@@ -1,5 +1,9 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// -----------------------------------------------------------------------
+// <copyright file="TriggerBase.cs" company="Anori Soft">
+// Copyright (c) Anori Soft. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
 namespace Anori.WPF.Behaviors
 {
     using System;
@@ -9,20 +13,21 @@ namespace Anori.WPF.Behaviors
     using System.Windows.Media.Animation;
 
     /// <summary>
-    /// Represents an object that can invoke actions conditionally.
+    ///     Represents an object that can invoke actions conditionally.
     /// </summary>
     /// <typeparam name="T">The type to which this trigger can be attached.</typeparam>
     /// <remarks>
-    ///		TriggerBase is the base class for controlling actions. Override OnAttached() and
-    ///		OnDetaching() to hook and unhook handlers on the AssociatedObject. You may
-    ///		constrain the types that a derived TriggerBase may be attached to by specifying
-    ///		the generic parameter. Call InvokeActions() to fire all Actions associated with
-    ///		this TriggerBase.
-    ///	</remarks>
-    public abstract class TriggerBase<T> : TriggerBase where T : DependencyObject
+    ///     TriggerBase is the base class for controlling actions. Override OnAttached() and
+    ///     OnDetaching() to hook and unhook handlers on the AssociatedObject. You may
+    ///     constrain the types that a derived TriggerBase may be attached to by specifying
+    ///     the generic parameter. Call InvokeActions() to fire all Actions associated with
+    ///     this TriggerBase.
+    /// </remarks>
+    public abstract class TriggerBase<T> : TriggerBase
+        where T : DependencyObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TriggerBase&lt;T&gt;"/> class.
+        ///     Initializes a new instance of the <see cref="TriggerBase&lt;T&gt;" /> class.
         /// </summary>
         protected TriggerBase()
             : base(typeof(T))
@@ -30,7 +35,7 @@ namespace Anori.WPF.Behaviors
         }
 
         /// <summary>
-        /// Gets the object to which the trigger is attached.
+        ///     Gets the object to which the trigger is attached.
         /// </summary>
         /// <value>The associated object.</value>
         protected new T AssociatedObject
@@ -42,7 +47,7 @@ namespace Anori.WPF.Behaviors
         }
 
         /// <summary>
-        /// Gets the type constraint of the associated object.
+        ///     Gets the type constraint of the associated object.
         /// </summary>
         /// <value>The associated object type constraint.</value>
         protected sealed override Type AssociatedObjectTypeConstraint
@@ -55,33 +60,52 @@ namespace Anori.WPF.Behaviors
     }
 
     /// <summary>
-    /// Argument passed to PreviewInvoke event. Assigning Cancelling to True will cancel the invoking of the trigger.
+    ///     Argument passed to PreviewInvoke event. Assigning Cancelling to True will cancel the invoking of the trigger.
     /// </summary>
-    /// <remarks>This is an infrastructure class. Behavior attached to a trigger base object can add its behavior as a listener to TriggerBase.PreviewInvoke.</remarks>
+    /// <remarks>
+    ///     This is an infrastructure class. Behavior attached to a trigger base object can add its behavior as a listener
+    ///     to TriggerBase.PreviewInvoke.
+    /// </remarks>
     public class PreviewInvokeEventArgs : EventArgs
     {
         public bool Cancelling { get; set; }
     }
 
     /// <summary>
-    /// Represents an object that can invoke Actions conditionally.
+    ///     Represents an object that can invoke Actions conditionally.
     /// </summary>
     /// <remarks>This is an infrastructure class. Trigger authors should derive from Trigger&lt;T&gt; instead of this class.</remarks>
     [ContentProperty("Actions")]
-    public abstract class TriggerBase :
-        Animatable,
-        IAttachedObject
+    public abstract class TriggerBase : Animatable, IAttachedObject
     {
-        private DependencyObject associatedObject;
-        private Type associatedObjectTypeConstraint;
+        /// <summary>
+        ///     The actions property key
+        /// </summary>
+        private static readonly DependencyPropertyKey ActionsPropertyKey = DependencyProperty.RegisterReadOnly(
+            "Actions",
+            typeof(TriggerActionCollection),
+            typeof(TriggerBase),
+            new FrameworkPropertyMetadata());
 
-        private static readonly DependencyPropertyKey ActionsPropertyKey = DependencyProperty.RegisterReadOnly("Actions",
-                                                                                                            typeof(TriggerActionCollection),
-                                                                                                            typeof(TriggerBase),
-                                                                                                            new FrameworkPropertyMetadata());
-
+        /// <summary>
+        ///     The actions property
+        /// </summary>
         public static readonly DependencyProperty ActionsProperty = ActionsPropertyKey.DependencyProperty;
 
+        /// <summary>
+        ///     The associated object
+        /// </summary>
+        private DependencyObject associatedObject;
+
+        /// <summary>
+        ///     The associated object type constraint
+        /// </summary>
+        private readonly Type associatedObjectTypeConstraint;
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="TriggerBase" /> class.
+        /// </summary>
+        /// <param name="associatedObjectTypeConstraint">The associated object type constraint.</param>
         public TriggerBase(Type associatedObjectTypeConstraint)
         {
             this.associatedObjectTypeConstraint = associatedObjectTypeConstraint;
@@ -90,7 +114,12 @@ namespace Anori.WPF.Behaviors
         }
 
         /// <summary>
-        /// Gets the object to which the trigger is attached.
+        ///     Event handler for registering to PreviewInvoke.
+        /// </summary>
+        public event EventHandler<PreviewInvokeEventArgs> PreviewInvoke;
+
+        /// <summary>
+        ///     Gets the object to which the trigger is attached.
         /// </summary>
         /// <value>The associated object.</value>
         protected DependencyObject AssociatedObject
@@ -103,7 +132,7 @@ namespace Anori.WPF.Behaviors
         }
 
         /// <summary>
-        /// Gets the type constraint of the associated object.
+        ///     Gets the type constraint of the associated object.
         /// </summary>
         /// <value>The associated object type constraint.</value>
         protected virtual Type AssociatedObjectTypeConstraint
@@ -116,7 +145,7 @@ namespace Anori.WPF.Behaviors
         }
 
         /// <summary>
-        /// Gets the actions associated with this trigger.
+        ///     Gets the actions associated with this trigger.
         /// </summary>
         /// <value>The actions associated with this trigger.</value>
         public TriggerActionCollection Actions
@@ -128,27 +157,31 @@ namespace Anori.WPF.Behaviors
         }
 
         /// <summary>
-        /// Event handler for registering to PreviewInvoke.
+        ///     Raises the preview invoke.
         /// </summary>
-        public event EventHandler<PreviewInvokeEventArgs> PreviewInvoke;
+        protected void OnPreviewInvoke()
+        {
+            if (this.PreviewInvoke == null)
+            {
+                return;
+            }
+
+            // Fire the previewInvoke event
+            PreviewInvokeEventArgs previewInvokeEventArg = new PreviewInvokeEventArgs();
+            this.PreviewInvoke(this, previewInvokeEventArg);
+            // If a handler has cancelled the event, abort the invoke
+            if (previewInvokeEventArg.Cancelling)
+            {
+            }
+        }
 
         /// <summary>
-        /// Invoke all actions associated with this trigger.
+        ///     Invoke all actions associated with this trigger.
         /// </summary>
         /// <remarks>Derived classes should call this to fire the trigger.</remarks>
         protected void InvokeActions(object parameter)
         {
-            if (this.PreviewInvoke != null)
-            {
-                // Fire the previewInvoke event
-                PreviewInvokeEventArgs previewInvokeEventArg = new PreviewInvokeEventArgs();
-                this.PreviewInvoke(this, previewInvokeEventArg);
-                // If a handler has cancelled the event, abort the invoke
-                if (previewInvokeEventArg.Cancelling == true)
-                {
-                    return;
-                }
-            }
+            OnPreviewInvoke();
 
             foreach (TriggerAction action in this.Actions)
             {
@@ -157,21 +190,21 @@ namespace Anori.WPF.Behaviors
         }
 
         /// <summary>
-        /// Called after the trigger is attached to an AssociatedObject.
+        ///     Called after the trigger is attached to an AssociatedObject.
         /// </summary>
         protected virtual void OnAttached()
         {
         }
 
         /// <summary>
-        /// Called when the trigger is being detached from its AssociatedObject, but before it has actually occurred.
+        ///     Called when the trigger is being detached from its AssociatedObject, but before it has actually occurred.
         /// </summary>
         protected virtual void OnDetaching()
         {
         }
 
         /// <summary>
-        /// Creates a new instance of the TriggerBase derived class.
+        ///     Creates a new instance of the TriggerBase derived class.
         /// </summary>
         /// <returns>The new instance.</returns>
         protected override Freezable CreateInstanceCore()
@@ -183,7 +216,7 @@ namespace Anori.WPF.Behaviors
         #region IAttachedObject Members
 
         /// <summary>
-        /// Gets the associated object.
+        ///     Gets the associated object.
         /// </summary>
         /// <value>The associated object.</value>
         DependencyObject IAttachedObject.AssociatedObject
@@ -195,7 +228,7 @@ namespace Anori.WPF.Behaviors
         }
 
         /// <summary>
-        /// Attaches to the specified object.
+        ///     Attaches to the specified object.
         /// </summary>
         /// <param name="dependencyObject">The object to attach to.</param>
         /// <exception cref="InvalidOperationException">Cannot host the same trigger on more than one object at a time.</exception>
@@ -206,17 +239,21 @@ namespace Anori.WPF.Behaviors
             {
                 if (this.AssociatedObject != null)
                 {
-                    throw new InvalidOperationException(ExceptionStringTable.CannotHostTriggerMultipleTimesExceptionMessage);
+                    throw new InvalidOperationException(
+                        ExceptionStringTable.CannotHostTriggerMultipleTimesExceptionMessage);
                 }
 
                 // Ensure the type constraint is met
-                if (dependencyObject != null && !this.AssociatedObjectTypeConstraint.IsAssignableFrom(dependencyObject.GetType()))
+                if (dependencyObject != null
+                    && !this.AssociatedObjectTypeConstraint.IsAssignableFrom(dependencyObject.GetType()))
                 {
-                    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture,
-                                                                        ExceptionStringTable.TypeConstraintViolatedExceptionMessage,
-                                                                        this.GetType().Name,
-                                                                        dependencyObject.GetType().Name,
-                                                                        this.AssociatedObjectTypeConstraint.Name));
+                    throw new InvalidOperationException(
+                        string.Format(
+                            CultureInfo.CurrentCulture,
+                            ExceptionStringTable.TypeConstraintViolatedExceptionMessage,
+                            this.GetType().Name,
+                            dependencyObject.GetType().Name,
+                            this.AssociatedObjectTypeConstraint.Name));
                 }
 
                 this.WritePreamble();
@@ -229,7 +266,7 @@ namespace Anori.WPF.Behaviors
         }
 
         /// <summary>
-        /// Detaches this instance from its associated object.
+        ///     Detaches this instance from its associated object.
         /// </summary>
         public void Detach()
         {

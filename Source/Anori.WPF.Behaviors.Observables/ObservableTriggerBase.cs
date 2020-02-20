@@ -8,7 +8,6 @@ namespace Anori.WPF.Behaviors.Observables
 {
     using System;
     using System.ComponentModel;
-    using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Reflection;
@@ -16,6 +15,7 @@ namespace Anori.WPF.Behaviors.Observables
 
     using JetBrains.Annotations;
 
+    using TriggerAction = Anori.WPF.Behaviors.TriggerAction;
     using TriggerBase = Anori.WPF.Behaviors.TriggerBase;
 
     /// <summary>
@@ -45,9 +45,45 @@ namespace Anori.WPF.Behaviors.Observables
             new PropertyMetadata(OnSourceObjectChanged));
 
         /// <summary>
+        ///     The actions property
+        /// </summary>
+        public static readonly DependencyProperty ErrorActionsProperty;
+
+        /// <summary>
+        ///     The completed actions property
+        /// </summary>
+        public static readonly DependencyProperty CompletedActionsProperty;
+
+        /// <summary>
+        ///     The error actions property key
+        /// </summary>
+        private static readonly DependencyPropertyKey ErrorActionsPropertyKey;
+
+        /// <summary>
+        ///     The completed actions property key
+        /// </summary>
+        private static readonly DependencyPropertyKey CompletedActionsPropertyKey;
+
+        /// <summary>
         ///     The observable dispose
         /// </summary>
         private IDisposable observerDispose;
+
+        static ObservableTriggerBase()
+        {
+            ErrorActionsPropertyKey = DependencyProperty.RegisterReadOnly(
+                "ErrorActions",
+                typeof(Behaviors.TriggerActionCollection),
+                typeof(ObservableTriggerBase<TPayload>),
+                new FrameworkPropertyMetadata());
+            CompletedActionsPropertyKey = DependencyProperty.RegisterReadOnly(
+                "CompletedActions",
+                typeof(Behaviors.TriggerActionCollection),
+                typeof(ObservableTriggerBase<TPayload>),
+                new FrameworkPropertyMetadata());
+            ErrorActionsProperty = ErrorActionsPropertyKey.DependencyProperty;
+            CompletedActionsProperty = CompletedActionsPropertyKey.DependencyProperty;
+        }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ObservableTriggerBase{T}" /> class.
@@ -58,6 +94,9 @@ namespace Anori.WPF.Behaviors.Observables
             this.SourceTypeConstraint = typeof(TPayload);
             this.SourceNameResolver = new NameResolver();
             this.RegisterSourceChanged();
+
+            this.SetValue(ErrorActionsPropertyKey, new Behaviors.TriggerActionCollection());
+            this.SetValue(CompletedActionsPropertyKey, new Behaviors.TriggerActionCollection());
         }
 
         /// <summary>
@@ -106,7 +145,6 @@ namespace Anori.WPF.Behaviors.Observables
         public string SourceName
         {
             get => (string)this.GetValue(SourceNameProperty);
-
             set => this.SetValue(SourceNameProperty, value);
         }
 
@@ -186,6 +224,32 @@ namespace Anori.WPF.Behaviors.Observables
         ///     The source name resolver.
         /// </value>
         private NameResolver SourceNameResolver { get; }
+
+        /// <summary>
+        ///     Gets the next actions.
+        /// </summary>
+        /// <value>
+        ///     The next actions.
+        /// </value>
+        public Behaviors.TriggerActionCollection NextActions => Actions;
+
+        /// <summary>
+        ///     Gets the error actions.
+        /// </summary>
+        /// <value>
+        ///     The error actions.
+        /// </value>
+        public Behaviors.TriggerActionCollection ErrorActions =>
+            (Behaviors.TriggerActionCollection)this.GetValue(ErrorActionsProperty);
+
+        /// <summary>
+        ///     Gets the completed actions.
+        /// </summary>
+        /// <value>
+        ///     The completed actions.
+        /// </value>
+        public Behaviors.TriggerActionCollection CompletedActions =>
+            (Behaviors.TriggerActionCollection)this.GetValue(CompletedActionsProperty);
 
         /// <summary>
         ///     Called when [event name changed].
@@ -306,7 +370,7 @@ namespace Anori.WPF.Behaviors.Observables
         /// <returns>
         ///     <c>true</c> if [is valid observable] [the specified property information]; otherwise, <c>false</c>.
         /// </returns>
-        private static bool IsValidObservable<TPyload>(PropertyInfo propertyInfo)
+        private static bool IsValidObservable<TPayload>(PropertyInfo propertyInfo)
         {
             Type observableType = propertyInfo.PropertyType;
             if (!typeof(IObservable<TPayload>).IsAssignableFrom(observableType))
@@ -476,19 +540,57 @@ namespace Anori.WPF.Behaviors.Observables
             this.IsSourceChangedRegistered = false;
         }
 
+        /// <summary>
+        ///     Provides the observer with new data.
+        /// </summary>
+        /// <param name="value">The current notification information.</param>
         public void OnNext(TPayload value)
         {
-            throw new NotImplementedException();
+            this.InvokeActions(value);
         }
 
+        /// <summary>
+        ///     Notifies the observer that the provider has experienced an error condition.
+        /// </summary>
+        /// <param name="error">An object that provides additional information about the error.</param>
         public void OnError(Exception error)
         {
-            throw new NotImplementedException();
+            this.InvokeErrorActions(error);
         }
 
+        /// <summary>
+        ///     Notifies the observer that the provider has finished sending push-based notifications.
+        /// </summary>
         public void OnCompleted()
         {
-            throw new NotImplementedException();
+            this.InvokeCompletedActions();
+        }
+
+        /// <summary>
+        ///     Invokes the error actions.
+        /// </summary>
+        /// <param name="parameter">The parameter.</param>
+        protected void InvokeErrorActions(Exception parameter)
+        {
+            OnPreviewInvoke();
+
+            foreach (TriggerAction action in this.ErrorActions)
+            {
+                action.CallInvoke(parameter);
+            }
+        }
+
+        /// <summary>
+        ///     Invokes the completed actions.
+        /// </summary>
+        protected void InvokeCompletedActions()
+        {
+            OnPreviewInvoke();
+
+            foreach (TriggerAction action in this.CompletedActions)
+            {
+                action.CallInvoke(null);
+            }
         }
     }
 }
