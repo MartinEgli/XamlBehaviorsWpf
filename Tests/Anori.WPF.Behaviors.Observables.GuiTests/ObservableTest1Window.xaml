@@ -15,13 +15,13 @@
     <StackPanel>
         <b:Interaction.Triggers>
             <observables:ObservableTrigger ObservableName="Subject" SourceObject="{Binding}">
-                <!--<observables:ObservableTrigger.ErrorActions>
-                    <b:InvokeCommandAction Command="{Binding OnErrorCommand}" />
+                <observables:ObservableTrigger.ErrorActions>
+                    <b:InvokeCommandAction Command="{Binding OnErrorCommand}" PassEventArgsToCommand="True" />
                 </observables:ObservableTrigger.ErrorActions>
                 <observables:ObservableTrigger.CompletedActions>
-                    <b:InvokeCommandAction Command="{Binding OnCompletedCommand}" />
-                </observables:ObservableTrigger.CompletedActions>-->
-                <b:InvokeCommandAction Command="{Binding OnNextCommand}" />
+                    <b:InvokeCommandAction Command="{Binding OnCompletedCommand}" PassEventArgsToCommand="True" />
+                </observables:ObservableTrigger.CompletedActions>
+                <b:InvokeCommandAction Command="{Binding OnNextCommand}" PassEventArgsToCommand="True" />
             </observables:ObservableTrigger>
         </b:Interaction.Triggers>
 
