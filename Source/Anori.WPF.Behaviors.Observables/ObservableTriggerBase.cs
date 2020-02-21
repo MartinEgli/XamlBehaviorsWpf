@@ -6,14 +6,15 @@
 
 namespace Anori.WPF.Behaviors.Observables
 {
+    using JetBrains.Annotations;
+
     using System;
     using System.ComponentModel;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
+    using System.Reactive.Linq;
     using System.Reflection;
     using System.Windows;
-
-    using JetBrains.Annotations;
 
     using TriggerAction = Anori.WPF.Behaviors.TriggerAction;
     using TriggerBase = Anori.WPF.Behaviors.TriggerBase;
@@ -69,6 +70,9 @@ namespace Anori.WPF.Behaviors.Observables
         /// </summary>
         private IDisposable observerDispose;
 
+        /// <summary>
+        ///     Initializes the <see cref="ObservableTriggerBase{TPayload}" /> class.
+        /// </summary>
         static ObservableTriggerBase()
         {
             ErrorActionsPropertyKey = DependencyProperty.RegisterReadOnly(
@@ -76,12 +80,15 @@ namespace Anori.WPF.Behaviors.Observables
                 typeof(Behaviors.TriggerActionCollection),
                 typeof(ObservableTriggerBase<TPayload>),
                 new FrameworkPropertyMetadata());
+
             CompletedActionsPropertyKey = DependencyProperty.RegisterReadOnly(
                 "CompletedActions",
                 typeof(Behaviors.TriggerActionCollection),
                 typeof(ObservableTriggerBase<TPayload>),
                 new FrameworkPropertyMetadata());
+
             ErrorActionsProperty = ErrorActionsPropertyKey.DependencyProperty;
+
             CompletedActionsProperty = CompletedActionsPropertyKey.DependencyProperty;
         }
 
@@ -373,7 +380,7 @@ namespace Anori.WPF.Behaviors.Observables
         /// <returns>
         ///     <c>true</c> if [is valid observable] [the specified property information]; otherwise, <c>false</c>.
         /// </returns>
-        private static bool IsValidObservable<TPayload>(PropertyInfo propertyInfo)
+        private static bool IsValidObservable(PropertyInfo propertyInfo)
         {
             Type observableType = propertyInfo.PropertyType;
             if (!typeof(IObservable<TPayload>).IsAssignableFrom(observableType))
@@ -423,11 +430,9 @@ namespace Anori.WPF.Behaviors.Observables
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        private void OnBehaviorHostChanged(object sender, EventArgs e)
-        {
+        private void OnBehaviorHostChanged(object sender, EventArgs e) =>
             this.SourceNameResolver.NameScopeReferenceElement =
                 ((IAttachedObject)sender).AssociatedObject as FrameworkElement;
-        }
 
         /// <summary>
         ///     Called when [source changed].
@@ -483,7 +488,7 @@ namespace Anori.WPF.Behaviors.Observables
                 return;
             }
 
-            if (!IsValidObservable<TPayload>(propertyInfo))
+            if (!IsValidObservable(propertyInfo))
             {
                 if (this.SourceObject != null)
                 {
@@ -503,7 +508,7 @@ namespace Anori.WPF.Behaviors.Observables
                 throw new ArgumentException(nameof(observable));
             }
 
-            this.observerDispose = observable.Subscribe(this);
+            this.observerDispose = observable.Do(this).Subscribe();
         }
 
         /// <summary>
@@ -547,39 +552,32 @@ namespace Anori.WPF.Behaviors.Observables
         ///     Provides the observer with new data.
         /// </summary>
         /// <param name="value">The current notification information.</param>
-        public void OnNext(TPayload value)
-        {
-            this.InvokeActions(value);
-        }
+        public void OnNext(TPayload value) => this.InvokeActions(value);
 
         /// <summary>
         ///     Notifies the observer that the provider has experienced an error condition.
         /// </summary>
         /// <param name="error">An object that provides additional information about the error.</param>
-        public void OnError(Exception error)
-        {
-            this.InvokeErrorActions(error);
-        }
+        public void OnError(Exception error) => this.InvokeErrorActions(error);
 
         /// <summary>
         ///     Notifies the observer that the provider has finished sending push-based notifications.
         /// </summary>
-        public void OnCompleted()
-        {
-            this.InvokeCompletedActions();
-        }
+        public void OnCompleted() => this.InvokeCompletedActions();
 
         /// <summary>
         ///     Invokes the error actions.
         /// </summary>
-        /// <param name="parameter">The parameter.</param>
-        protected void InvokeErrorActions(Exception parameter)
+        /// <param name="exception">The exception.</param>
+        protected void InvokeErrorActions(Exception exception)
         {
-            OnPreviewInvoke();
-
+            if (!OnPreviewInvoke())
+            {
+                return;
+            }
             foreach (TriggerAction action in this.ErrorActions)
             {
-                action.CallInvoke(parameter);
+                action.CallInvoke(exception);
             }
         }
 
@@ -588,8 +586,10 @@ namespace Anori.WPF.Behaviors.Observables
         /// </summary>
         protected void InvokeCompletedActions()
         {
-            OnPreviewInvoke();
-
+            if (!OnPreviewInvoke())
+            {
+                return;
+            }
             foreach (TriggerAction action in this.CompletedActions)
             {
                 action.CallInvoke(null);

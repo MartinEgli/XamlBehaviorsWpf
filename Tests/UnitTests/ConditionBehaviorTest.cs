@@ -22,6 +22,12 @@ namespace Microsoft.Xaml.Interactions.UnitTests
             Interaction.ShouldRunInDesignMode = false;
         }
 
+        /// <summary>
+        /// Setups the trigger action condition behavior.
+        /// </summary>
+        /// <param name="conditionalExpression">The conditional expression.</param>
+        /// <param name="trigger">The trigger.</param>
+        /// <param name="action">The action.</param>
         private static void SetupTriggerActionConditionBehavior(out ConditionalExpression conditionalExpression, out StubTrigger trigger, out StubAction action)
         {
             ConditionBehavior conditionBehavior = new ConditionBehavior();

@@ -24,9 +24,9 @@ namespace Anori.WPF.Behaviors.Extensions
         /// </param>
         protected override void Invoke(object parameter)
         {
-            if (this.Target is UIElement c)
+            if (this.Target is UIElement uiElement)
             {
-                c.IsEnabled = !c.IsEnabled;
+                uiElement.IsEnabled = !uiElement.IsEnabled;
             }
         }
     }

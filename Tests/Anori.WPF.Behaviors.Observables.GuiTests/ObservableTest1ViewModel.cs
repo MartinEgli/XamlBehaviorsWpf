@@ -108,14 +108,26 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
 
         private void OnSetError()
         {
-            Subject.OnError(new Exception("Test"));
+            try
+            {
+                Subject.OnError(new Exception("Test"));
+            } catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
+        /// <summary>
+        ///     Called when [set completed].
+        /// </summary>
         private void OnSetCompleted()
         {
             Subject.OnCompleted();
         }
 
+        /// <summary>
+        ///     Called when [set next].
+        /// </summary>
         private void OnSetNext()
         {
             Subject.OnNext(DateTime.Now.ToString());

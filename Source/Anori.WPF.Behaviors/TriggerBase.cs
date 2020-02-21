@@ -93,14 +93,14 @@ namespace Anori.WPF.Behaviors
         public static readonly DependencyProperty ActionsProperty = ActionsPropertyKey.DependencyProperty;
 
         /// <summary>
-        ///     The associated object
-        /// </summary>
-        private DependencyObject associatedObject;
-
-        /// <summary>
         ///     The associated object type constraint
         /// </summary>
         private readonly Type associatedObjectTypeConstraint;
+
+        /// <summary>
+        ///     The associated object
+        /// </summary>
+        private DependencyObject associatedObject;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="TriggerBase" /> class.
@@ -159,20 +159,18 @@ namespace Anori.WPF.Behaviors
         /// <summary>
         ///     Raises the preview invoke.
         /// </summary>
-        protected void OnPreviewInvoke()
+        protected bool OnPreviewInvoke()
         {
             if (this.PreviewInvoke == null)
             {
-                return;
+                return true;
             }
 
             // Fire the previewInvoke event
             PreviewInvokeEventArgs previewInvokeEventArg = new PreviewInvokeEventArgs();
             this.PreviewInvoke(this, previewInvokeEventArg);
             // If a handler has cancelled the event, abort the invoke
-            if (previewInvokeEventArg.Cancelling)
-            {
-            }
+            return !previewInvokeEventArg.Cancelling;
         }
 
         /// <summary>
@@ -181,7 +179,10 @@ namespace Anori.WPF.Behaviors
         /// <remarks>Derived classes should call this to fire the trigger.</remarks>
         protected void InvokeActions(object parameter)
         {
-            OnPreviewInvoke();
+            if (!OnPreviewInvoke())
+            {
+                return;
+            }
 
             foreach (TriggerAction action in this.Actions)
             {

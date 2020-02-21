@@ -11,8 +11,8 @@
     Height="450"
     d:DataContext="{d:DesignInstance guiTests:MainViewModel}"
     mc:Ignorable="d">
-    <StackPanel>
+    <ListView>
         <Button Command="{Binding OpenObservableTestCommand}">OpenObservableTestCommand Window</Button>
         <Button Command="{Binding RunGarbageCollectorCommand}">Run Garbage Collector</Button>
-    </StackPanel>
+    </ListView>
 </Window>

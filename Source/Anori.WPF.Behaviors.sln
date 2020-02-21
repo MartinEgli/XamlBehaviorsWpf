@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.Behaviors", "Anori.WPF.Behaviors\Anori.WPF.Behaviors.csproj", "{8620C598-B704-429E-BCA5-7E5DDE506923}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "..\Tests\UnitTests\UnitTests.csproj", "{76E3CE29-A9BC-4417-8224-CE18C6FE51B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.Behaviors.UnitTests", "..\Tests\UnitTests\Anori.WPF.Behaviors.UnitTests.csproj", "{76E3CE29-A9BC-4417-8224-CE18C6FE51B4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DFFF3108-79F3-4D4C-BB7E-991E7B1B26A6}"
 	ProjectSection(SolutionItems) = preProject
@@ -34,19 +34,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.NameChecks", "Ano
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.Behaviors.Observables.GuiTests", "..\Tests\Anori.WPF.Behaviors.Observables.GuiTests\Anori.WPF.Behaviors.Observables.GuiTests.csproj", "{B0311CF5-2839-4CCF-8A4D-FF0D84E8BDF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.StyleBehaviors", "Anori.WPF.SytleBehaviors\Anori.WPF.StyleBehaviors.csproj", "{3C34973D-6494-4B7C-8F88-0D1A55FCB3CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.StyleBehaviors", "Anori.WPF.SytleBehaviors\Anori.WPF.StyleBehaviors.csproj", "{3C34973D-6494-4B7C-8F88-0D1A55FCB3CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.Conditions", "Anori.WPF.Conditions\Anori.WPF.Conditions.csproj", "{63150C56-5215-486B-94F3-521EA2282769}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.Conditions", "Anori.WPF.Conditions\Anori.WPF.Conditions.csproj", "{63150C56-5215-486B-94F3-521EA2282769}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.Converters", "Anori.WPF.Converters\Anori.WPF.Converters.csproj", "{0FF2E04A-1E50-4035-AFBC-430FC1765DA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.Converters", "Anori.WPF.Converters\Anori.WPF.Converters.csproj", "{0FF2E04A-1E50-4035-AFBC-430FC1765DA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.Behaviors.Triggers", "Anori.WPF.Behaviors.Triggers\Anori.WPF.Behaviors.Triggers.csproj", "{D929E565-F09F-4E26-862B-526C69A8DEBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.Behaviors.Triggers", "Anori.WPF.Behaviors.Triggers\Anori.WPF.Behaviors.Triggers.csproj", "{D929E565-F09F-4E26-862B-526C69A8DEBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.Extensions", "Anori.WPF.Extensions\Anori.WPF.Extensions.csproj", "{4E90C42B-9BA0-4DA1-8718-0F5827B1646F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.Extensions", "Anori.WPF.Extensions\Anori.WPF.Extensions.csproj", "{4E90C42B-9BA0-4DA1-8718-0F5827B1646F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.Strings", "Anori.Strings\Anori.Strings.csproj", "{2EF54A03-E19D-41E5-8BA0-728A3C2E25D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.Strings", "Anori.Strings\Anori.Strings.csproj", "{2EF54A03-E19D-41E5-8BA0-728A3C2E25D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.WeakEventManagers", "Anori.WPF.WeakEventManagers\Anori.WPF.WeakEventManagers.csproj", "{3C687B71-B2BF-4ADD-A5FC-525C67F8604F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.WeakEventManagers", "Anori.WPF.WeakEventManagers\Anori.WPF.WeakEventManagers.csproj", "{3C687B71-B2BF-4ADD-A5FC-525C67F8604F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
