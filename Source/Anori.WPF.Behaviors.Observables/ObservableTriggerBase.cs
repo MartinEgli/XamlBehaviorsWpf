@@ -311,6 +311,8 @@ namespace Anori.WPF.Behaviors.Observables
         {
             base.OnAttached();
             DependencyObject newHost = this.AssociatedObject;
+            this.ErrorActions.Attach(newHost);
+            this.CompletedActions.Attach(newHost);
             Behavior newBehavior = newHost as Behavior;
             FrameworkElement newHostElement = newHost as FrameworkElement;
 
@@ -341,9 +343,10 @@ namespace Anori.WPF.Behaviors.Observables
         /// </summary>
         protected override void OnDetaching()
         {
-            base.OnDetaching();
             Behavior oldBehavior = this.AssociatedObject as Behavior;
-
+            base.OnDetaching();
+            this.ErrorActions.Detach();
+            this.CompletedActions.Detach();
             try
             {
                 this.OnSourceChanged(this.Source, null);
