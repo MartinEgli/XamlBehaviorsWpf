@@ -15,6 +15,19 @@
     <ProjectReference Include="..\..\Source\Anori.WPF.Behaviors.Observables\Anori.WPF.Behaviors.Observables.csproj" />
     <ProjectReference Include="..\..\Source\Anori.WPF.Behaviors\Anori.WPF.Behaviors.csproj" />
     <ProjectReference Include="..\..\Source\Anori.WPF.NameChecks\Anori.WPF.NameChecks.csproj" />
+    <ProjectReference Include="..\..\Source\Anori.WPF.StyleBehaviors.Observables\Anori.WPF.StyleBehaviors.Observables.csproj" />
     <ProjectReference Include="..\..\Source\Anori.WPF.SytleBehaviors\Anori.WPF.StyleBehaviors.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="StyleObservableTest1Window.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="StyleObservableTest1Window.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 </Project>

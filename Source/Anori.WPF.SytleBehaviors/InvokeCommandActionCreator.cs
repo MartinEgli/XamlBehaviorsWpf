@@ -57,6 +57,18 @@ namespace Anori.WPF.StyleBehaviors
         public ICommand Command { get; set; }
 
         /// <summary>
+        ///     Gets or sets a value indicating whether [pass event arguments to command].
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if [pass event arguments to command]; otherwise, <c>false</c>.
+        /// </value>
+        public bool PassEventArgsToCommand
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         ///     Creates this instance.
         /// </summary>
         /// <returns></returns>
@@ -72,6 +84,7 @@ namespace Anori.WPF.StyleBehaviors
         {
             this.SetupCommand(triggerAction, dataContext);
             this.SetupCommandParameter(triggerAction, dataContext);
+            triggerAction.PassEventArgsToCommand = PassEventArgsToCommand;
         }
 
         /// <summary>

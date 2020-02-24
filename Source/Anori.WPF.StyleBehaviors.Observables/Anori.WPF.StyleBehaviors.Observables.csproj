@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Anori.WPF.Behaviors.Observables\Anori.WPF.Behaviors.Observables.csproj" />
+    <ProjectReference Include="..\Anori.WPF.SytleBehaviors\Anori.WPF.StyleBehaviors.csproj" />
+  </ItemGroup>
+</Project>
