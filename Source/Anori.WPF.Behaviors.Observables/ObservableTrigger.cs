@@ -6,8 +6,11 @@
 
 namespace Anori.WPF.Behaviors.Observables
 {
+    using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Windows;
+
+    using JetBrains.Annotations;
 
     /// <summary>
     ///     A trigger that listens for a specified event on its source and fires when that event is fired.
@@ -18,10 +21,10 @@ namespace Anori.WPF.Behaviors.Observables
         ///     The event name property
         /// </summary>
         public static readonly DependencyProperty ObservableNameProperty = DependencyProperty.Register(
-            "ObservableName",
+            nameof(ObservableName),
             typeof(string),
             typeof(ObservableTrigger),
-            new FrameworkPropertyMetadata("Loaded", OnObservableNameChanged));
+            new FrameworkPropertyMetadata(OnObservableNameChanged));
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ObservableTrigger" /> class.
@@ -31,12 +34,13 @@ namespace Anori.WPF.Behaviors.Observables
         }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="ObservableTrigger" /> class.
+        /// Initializes a new instance of the <see cref="ObservableTrigger" /> class.
         /// </summary>
-        /// <param name="observableName">Name of the observable.</param>
-        public ObservableTrigger(string observableName)
+        /// <param name="observableName">Name of the observable property.</param>
+        /// <exception cref="ArgumentNullException">observableName is null.</exception>
+        public ObservableTrigger([NotNull] string observableName)
         {
-            this.ObservableName = observableName;
+            this.ObservableName = observableName ?? throw new ArgumentNullException(nameof(observableName));
         }
 
         /// <summary>
@@ -46,6 +50,7 @@ namespace Anori.WPF.Behaviors.Observables
         ///     The name of the event.
         /// </value>
         [SuppressMessage("Anori.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
+        [CanBeNull]
         public string ObservableName
         {
             get { return (string)this.GetValue(ObservableNameProperty); }

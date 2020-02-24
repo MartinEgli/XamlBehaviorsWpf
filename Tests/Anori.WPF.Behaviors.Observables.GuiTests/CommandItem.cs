@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="MainViewModel.cs" company="Anori Soft">
+// <copyright file="CommandItem.cs" company="Anori Soft">
 // Copyright (c) Anori Soft. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -7,25 +7,25 @@
 namespace Anori.WPF.Behaviors.Observables.GuiTests
 {
     using System;
-    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
+    using System.Windows.Input;
+
+    using Anori.WPF.Behaviors.Core;
 
     using JetBrains.Annotations;
 
-    /// <summary>
-    ///     MainViewModel Class
-    /// </summary>
-    /// <seealso cref="System.ComponentModel.INotifyPropertyChanged" />
-    internal class MainViewModel : INotifyPropertyChanged
+    public class CommandItem : IItem, INotifyPropertyChanged
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="MainViewModel" /> class.
+        ///     Initializes a new instance of the <see cref="CommandItem" /> class.
         /// </summary>
-        public MainViewModel()
+        /// <param name="name">The name.</param>
+        /// <param name="action">The action.</param>
+        public CommandItem(string name, Action action)
         {
-            Items.Add(new CommandWindowItem("Open Observable Test", () => new ObservableTest1Window()));
-            Items.Add(new GarbageCollectorItem());
+            this.Name = name;
+            this.Command = new ActionCommand(action);
         }
 
         /// <summary>
@@ -34,19 +34,29 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        ///     Gets the items.
+        ///     Gets the name.
         /// </summary>
         /// <value>
-        ///     The items.
+        ///     The name.
         /// </value>
-        public ObservableCollection<IItem> Items { get; } = new ObservableCollection<IItem>();
+        public string Name { get; }
+
+        /// <summary>
+        ///     Gets the command.
+        /// </summary>
+        /// <value>
+        ///     The command.
+        /// </value>
+        public ICommand Command { get; }
 
         /// <summary>
         ///     Called when [property changed].
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) =>
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

@@ -1,20 +1,32 @@
-// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// -----------------------------------------------------------------------
+// <copyright file="ActionCommand.cs" company="Anori Soft">
+// Copyright (c) Anori Soft. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
 namespace Anori.WPF.Behaviors.Core
 {
     using System;
     using System.Windows.Input;
 
     /// <summary>
-    /// A basic implementation of ICommand that wraps a method that takes no parameters or a method that takes one parameter.
+    ///     A basic implementation of ICommand that wraps a method that takes no parameters or a method that takes one
+    ///     parameter.
     /// </summary>
     public sealed class ActionCommand : ICommand
     {
-        private Action action;
-        private Action<object> objectAction;
+        /// <summary>
+        ///     The action
+        /// </summary>
+        private readonly Action action;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ActionCommand"/> class.
+        ///     The object action
+        /// </summary>
+        private readonly Action<object> objectAction;
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ActionCommand" /> class.
         /// </summary>
         /// <param name="action">The action.</param>
         /// <remarks>Use this constructor to provide an action that ignores the ICommand parameter.</remarks>
@@ -24,7 +36,7 @@ namespace Anori.WPF.Behaviors.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ActionCommand"/> class.
+        ///     Initializes a new instance of the <see cref="ActionCommand" /> class.
         /// </summary>
         /// <param name="objectAction">An action that takes an object parameter.</param>
         /// <remarks>Use this constructor to provide an action that uses the object parameter passed by the Execute method.</remarks>
@@ -34,12 +46,18 @@ namespace Anori.WPF.Behaviors.Core
         }
 
         #region ICommand Members
+
 #pragma warning disable 67
+
+        /// <summary>
+        ///     Occurs when changes occur that affect whether or not the command should execute.
+        /// </summary>
         private event EventHandler CanExecuteChanged;
+
 #pragma warning restore 67
 
         /// <summary>
-        /// Occurs when changes occur that affect whether the command should execute. Will not be fired by ActionCommand.
+        ///     Occurs when changes occur that affect whether the command should execute. Will not be fired by ActionCommand.
         /// </summary>
         event EventHandler ICommand.CanExecuteChanged
         {
@@ -48,11 +66,14 @@ namespace Anori.WPF.Behaviors.Core
         }
 
         /// <summary>
-        /// Defines the method that determines whether the command can execute in its current state.
+        ///     Defines the method that determines whether the command can execute in its current state.
         /// </summary>
-        /// <param name="parameter">Data used by the command.  If the command does not require data to be passed, then this object can be set to null.</param>
+        /// <param name="parameter">
+        ///     Data used by the command.  If the command does not require data to be passed, then this object
+        ///     can be set to null.
+        /// </param>
         /// <returns>
-        /// Always returns true.
+        ///     Always returns true.
         /// </returns>
         bool ICommand.CanExecute(object parameter)
         {
@@ -60,20 +81,23 @@ namespace Anori.WPF.Behaviors.Core
         }
 
         /// <summary>
-        /// Defines the method to be called when the command is invoked.
+        ///     Defines the method to be called when the command is invoked.
         /// </summary>
-        /// <param name="parameter">Data used by the command.  If the command does not require data to be passed, then this object can be set to null.</param>
+        /// <param name="parameter">
+        ///     Data used by the command.  If the command does not require data to be passed, then this object
+        ///     can be set to null.
+        /// </param>
         public void Execute(object parameter)
         {
             if (this.objectAction != null)
             {
                 this.objectAction(parameter);
-            }
-            else
+            } else
             {
                 this.action();
             }
         }
-        #endregion
+
+        #endregion ICommand Members
     }
 }

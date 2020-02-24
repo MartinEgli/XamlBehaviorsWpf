@@ -11,8 +11,14 @@
     Height="450"
     d:DataContext="{d:DesignInstance guiTests:MainViewModel}"
     mc:Ignorable="d">
-    <ListView>
-        <Button Command="{Binding OpenObservableTestCommand}">OpenObservableTestCommand Window</Button>
-        <Button Command="{Binding RunGarbageCollectorCommand}">Run Garbage Collector</Button>
-    </ListView>
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type guiTests:CommandItem}">
+            <Button Command="{Binding Command}">
+                <Button.Content>
+                    <TextBlock Text="{Binding Name}" />
+                </Button.Content>
+            </Button>
+        </DataTemplate>
+    </Window.Resources>
+    <ItemsControl ItemsSource="{Binding Items}" />
 </Window>

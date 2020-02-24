@@ -24,6 +24,8 @@
                 <b:InvokeCommandAction Command="{Binding OnNextCommand}" PassEventArgsToCommand="True" />
             </observables:ObservableTrigger>
         </b:Interaction.Triggers>
+        <Button Command="{Binding NewDataContextCommand}">New DataContext</Button>
+        <Button Command="{Binding RunGarbageCollectorCommand}">Run Garbage Collector</Button>
 
         <Button Command="{Binding SetNextCommand}">Next</Button>
         <Button Command="{Binding SetCompletedCommand}">Completed</Button>

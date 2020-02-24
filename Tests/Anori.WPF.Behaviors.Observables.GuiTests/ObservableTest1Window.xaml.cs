@@ -20,6 +20,8 @@ using System.Windows.Shapes;
 
 namespace Anori.WPF.Behaviors.Observables.GuiTests
 {
+    using Anori.WPF.Behaviors.Core;
+
     /// <summary>
     ///     Interaction logic for ObservableTest1Window.xaml
     /// </summary>
@@ -28,7 +30,13 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
         public ObservableTest1Window()
         {
             InitializeComponent();
-            DataContext = new ObservableTest1ViewModel();
+            ICommand newDataContextCommand = null;
+            newDataContextCommand = new ActionCommand(
+                () =>
+                {
+                    this.DataContext = new ObservableTest1ViewModel(newDataContextCommand);
+                });
+            DataContext = new ObservableTest1ViewModel(newDataContextCommand);
         }
     }
 }

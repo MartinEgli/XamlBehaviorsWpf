@@ -70,16 +70,31 @@ namespace Anori.WPF.Behaviors.Extensions.GuiTests
 
         public int MyHashCode => this.GetHashCode();
 
+        /// <summary>
+        /// Creates new datacontextcommand.
+        /// </summary>
+        /// <value>
+        /// The new data context command.
+        /// </value>
         public ICommand NewDataContextCommand
         {
             get;
         }
 
+        /// <summary>
+        /// Gets the run garbage collector command.
+        /// </summary>
+        /// <value>
+        /// The run garbage collector command.
+        /// </value>
         public ICommand RunGarbageCollectorCommand
         {
             get;
         }
 
+        /// <summary>
+        ///     Runs the garbage collector.
+        /// </summary>
         private void RunGarbageCollector()
         {
             GC.Collect(GC.MaxGeneration);

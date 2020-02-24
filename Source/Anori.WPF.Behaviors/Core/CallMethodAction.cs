@@ -1,5 +1,9 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// -----------------------------------------------------------------------
+// <copyright file="CallMethodAction.cs" company="Anori Soft">
+// Copyright (c) Anori Soft. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
 namespace Anori.WPF.Behaviors.Core
 {
     using System;
@@ -8,53 +12,75 @@ namespace Anori.WPF.Behaviors.Core
     using System.Linq;
     using System.Reflection;
     using System.Windows;
+
     using Anori.WPF.Behaviors;
 
     /// <summary>
-    /// Calls a method on a specified object when invoked.
+    ///     Calls a method on a specified object when invoked.
     /// </summary>
     public class CallMethodAction : TriggerAction<DependencyObject>
     {
-        private List<MethodDescriptor> methodDescriptors;
-
-        public static readonly DependencyProperty TargetObjectProperty = DependencyProperty.Register("TargetObject", typeof(object), typeof(CallMethodAction), new PropertyMetadata(OnTargetObjectChanged));
-        public static readonly DependencyProperty MethodNameProperty = DependencyProperty.Register("MethodName", typeof(string), typeof(CallMethodAction), new PropertyMetadata(OnMethodNameChanged));
+        /// <summary>
+        ///     The target object property
+        /// </summary>
+        public static readonly DependencyProperty TargetObjectProperty = DependencyProperty.Register(
+            "TargetObject",
+            typeof(object),
+            typeof(CallMethodAction),
+            new PropertyMetadata(OnTargetObjectChanged));
 
         /// <summary>
-        /// The object that exposes the method of interest. This is a dependency property.
+        ///     The method name property
+        /// </summary>
+        public static readonly DependencyProperty MethodNameProperty = DependencyProperty.Register(
+            "MethodName",
+            typeof(string),
+            typeof(CallMethodAction),
+            new PropertyMetadata(OnMethodNameChanged));
+
+        /// <summary>
+        ///     The method descriptors
+        /// </summary>
+        private List<MethodDescriptor> methodDescriptors;
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="CallMethodAction" /> class.
+        /// </summary>
+        public CallMethodAction() => this.methodDescriptors = new List<MethodDescriptor>();
+
+        /// <summary>
+        ///     The object that exposes the method of interest. This is a dependency property.
         /// </summary>
         public object TargetObject
         {
-            get { return (object)this.GetValue(TargetObjectProperty); }
-            set { this.SetValue(TargetObjectProperty, value); }
+            get => this.GetValue(TargetObjectProperty);
+            set => this.SetValue(TargetObjectProperty, value);
         }
 
         /// <summary>
-        /// The name of the method to invoke. This is a dependency property.
+        ///     The name of the method to invoke. This is a dependency property.
         /// </summary>
         public string MethodName
         {
-            get { return (string)this.GetValue(MethodNameProperty); }
-            set { this.SetValue(MethodNameProperty, value); }
-        }
-
-        public CallMethodAction()
-        {
-            this.methodDescriptors = new List<MethodDescriptor>();
-        }
-
-        private object Target
-        {
-            get
-            {
-                return this.TargetObject ?? this.AssociatedObject;
-            }
+            get => (string)this.GetValue(MethodNameProperty);
+            set => this.SetValue(MethodNameProperty, value);
         }
 
         /// <summary>
-        /// Invokes the action.
+        ///     Gets the target.
         /// </summary>
-        /// <param name="parameter">The parameter of the action. If the action does not require a parameter, the parameter may be set to a null reference.</param>
+        /// <value>
+        ///     The target.
+        /// </value>
+        private object Target => this.TargetObject ?? this.AssociatedObject;
+
+        /// <summary>
+        ///     Invokes the action.
+        /// </summary>
+        /// <param name="parameter">
+        ///     The parameter of the action. If the action does not require a parameter, the parameter may be
+        ///     set to a null reference.
+        /// </param>
         ///// <exception cref="ArgumentException">A method with <c cref="MethodName"/> could not be found on the <c cref="TargetObject"/>.</exception>
         protected override void Invoke(object parameter)
         {
@@ -65,30 +91,40 @@ namespace Anori.WPF.Behaviors.Core
                 {
                     ParameterInfo[] parameters = methodDescriptor.Parameters;
 
-                    // todo jekelly: reconcile these restrictions with spec questions (see below)
-                    if (parameters.Length == 0)
+                    switch (parameters.Length)
                     {
-                        methodDescriptor.MethodInfo.Invoke(this.Target, null);
-                    } else if (parameters.Length == 2 && this.AssociatedObject != null && parameter != null)
-                    {
-                        if (parameters[0].ParameterType.IsAssignableFrom(this.AssociatedObject.GetType())
-                            && parameters[1].ParameterType.IsAssignableFrom(parameter.GetType()))
-                        {
-                            methodDescriptor.MethodInfo.Invoke(this.Target, new object[] { this.AssociatedObject, parameter });
-                        }
+                        // todo jekelly: reconcile these restrictions with spec questions (see below)
+                        case 0:
+                            methodDescriptor.MethodInfo.Invoke(this.Target, null);
+                            break;
+
+                        case 2 when this.AssociatedObject != null && parameter != null:
+                            {
+                                if (parameters[0].ParameterType.IsInstanceOfType(this.AssociatedObject)
+                                    && parameters[1].ParameterType.IsInstanceOfType(parameter))
+                                {
+                                    methodDescriptor.MethodInfo.Invoke(
+                                        this.Target,
+                                        new[] { this.AssociatedObject, parameter });
+                                }
+
+                                break;
+                            }
                     }
                 } else if (this.TargetObject != null)
                 {
-                    throw new ArgumentException(string.Format(CultureInfo.CurrentCulture,
-                        ExceptionStringTable.CallMethodActionValidMethodNotFoundExceptionMessage,
-                        this.MethodName,
-                        this.TargetObject.GetType().Name));
+                    throw new ArgumentException(
+                        string.Format(
+                            CultureInfo.CurrentCulture,
+                            ExceptionStringTable.CallMethodActionValidMethodNotFoundExceptionMessage,
+                            this.MethodName,
+                            this.TargetObject.GetType().Name));
                 }
             }
         }
 
         /// <summary>
-        /// Called after the action is attached to an AssociatedObject.
+        ///     Called after the action is attached to an AssociatedObject.
         /// </summary>
         /// <remarks>Override this to hook up functionality to the AssociatedObject.</remarks>
         protected override void OnAttached()
@@ -98,7 +134,7 @@ namespace Anori.WPF.Behaviors.Core
         }
 
         /// <summary>
-        /// Called when the action is getting detached from its AssociatedObject, but before it has actually occurred.
+        ///     Called when the action is getting detached from its AssociatedObject, but before it has actually occurred.
         /// </summary>
         /// <remarks>Override this to unhook functionality from the AssociatedObject.</remarks>
         protected override void OnDetaching()
@@ -109,14 +145,14 @@ namespace Anori.WPF.Behaviors.Core
 
         private MethodDescriptor FindBestMethod(object parameter)
         {
-            Type parameterType = (parameter == null) ? null : parameter.GetType();
+            Type parameterType = parameter?.GetType();
 
-            return this.methodDescriptors.FirstOrDefault((methodDescriptor) =>
+            return this.methodDescriptors.FirstOrDefault(
+                methodDescriptor =>
                 {
                     // todo jekelly: Need spec clarification on if we want to call an (object, EventArgs) overload if there is no parameter or void() sig. Currently, no. (see above)
-                    return !methodDescriptor.HasParameters ||
-                        (parameter != null &&
-                        methodDescriptor.SecondParameterType.IsAssignableFrom(parameter.GetType()));
+                    return !methodDescriptor.HasParameters
+                           || (parameter != null && methodDescriptor.SecondParameterType.IsInstanceOfType(parameter));
                 });
         }
 
@@ -140,7 +176,7 @@ namespace Anori.WPF.Behaviors.Core
 
                     ParameterInfo[] methodParams = method.GetParameters();
 
-                    if (!CallMethodAction.AreMethodParamsValid(methodParams))
+                    if (!AreMethodParamsValid(methodParams))
                     {
                         continue;
                     }
@@ -148,21 +184,24 @@ namespace Anori.WPF.Behaviors.Core
                     this.methodDescriptors.Add(new MethodDescriptor(method, methodParams));
                 }
 
-                this.methodDescriptors = this.methodDescriptors.OrderByDescending((methodDescriptor) =>
-                {
-                    int distanceFromBaseClass = 0;
-
-                    if (methodDescriptor.HasParameters)
-                    {
-                        Type typeWalker = methodDescriptor.SecondParameterType;
-                        while (typeWalker != typeof(EventArgs))
+                this.methodDescriptors = this.methodDescriptors.OrderByDescending(
+                        methodDescriptor =>
                         {
-                            distanceFromBaseClass++;
-                            typeWalker = typeWalker.BaseType;
-                        }
-                    }
-                    return methodDescriptor.ParameterCount + distanceFromBaseClass;
-                }).ToList();
+                            int distanceFromBaseClass = 0;
+
+                            if (methodDescriptor.HasParameters)
+                            {
+                                Type typeWalker = methodDescriptor.SecondParameterType;
+                                while (typeWalker != typeof(EventArgs))
+                                {
+                                    distanceFromBaseClass++;
+                                    typeWalker = typeWalker.BaseType;
+                                }
+                            }
+
+                            return methodDescriptor.ParameterCount + distanceFromBaseClass;
+                        })
+                    .ToList();
             }
         }
 
@@ -216,10 +255,15 @@ namespace Anori.WPF.Behaviors.Core
 
         private class MethodDescriptor
         {
+            public MethodDescriptor(MethodInfo methodInfo, ParameterInfo[] methodParams)
+            {
+                this.MethodInfo = methodInfo;
+                this.Parameters = methodParams;
+            }
+
             public MethodInfo MethodInfo
             {
                 get;
-                private set;
             }
 
             public bool HasParameters
@@ -235,7 +279,6 @@ namespace Anori.WPF.Behaviors.Core
             public ParameterInfo[] Parameters
             {
                 get;
-                private set;
             }
 
             public Type SecondParameterType
@@ -246,14 +289,9 @@ namespace Anori.WPF.Behaviors.Core
                     {
                         return this.Parameters[1].ParameterType;
                     }
+
                     return null;
                 }
-            }
-
-            public MethodDescriptor(MethodInfo methodInfo, ParameterInfo[] methodParams)
-            {
-                this.MethodInfo = methodInfo;
-                this.Parameters = methodParams;
             }
         }
     }
