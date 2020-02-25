@@ -7,6 +7,7 @@
 namespace Anori.WPF.Behaviors.Observables.GuiTests
 {
     using System;
+    using System.Windows;
 
     /// <summary>
     ///     CommandWindowItem Class
@@ -19,7 +20,7 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="window">The window.</param>
-        public CommandWindowItem(string name, Func<ObservableTest1Window> window)
+        public CommandWindowItem(string name, Func<Window> window)
             : base(name, () => window().ShowDialog())
         {
         }

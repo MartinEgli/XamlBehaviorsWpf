@@ -16,7 +16,10 @@
     d:DataContext="{d:DesignInstance local:ObservableTest1ViewModel}"
     mc:Ignorable="d">
     <Window.Resources>
-        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+        <Style
+            x:Key="ButtonStyle"
+            BasedOn="{StaticResource {x:Type TextBlock}}"
+            TargetType="{x:Type TextBlock}">
             <Setter Property="styleBehaviors:StyleInteraction.StyleTriggers">
                 <Setter.Value>
                     <styleBehaviors:StyleTriggerCollection>
@@ -44,23 +47,13 @@
     </Window.Resources>
 
     <StackPanel>
-        <b:Interaction.Triggers>
-            <observables:ObservableTrigger ObservableName="Subject" SourceObject="{Binding}">
-                <observables:ObservableTrigger.ErrorActions>
-                    <b:InvokeCommandAction Command="{Binding OnErrorCommand}" PassEventArgsToCommand="True" />
-                </observables:ObservableTrigger.ErrorActions>
-                <observables:ObservableTrigger.CompletedActions>
-                    <b:InvokeCommandAction Command="{Binding OnCompletedCommand}" PassEventArgsToCommand="True" />
-                </observables:ObservableTrigger.CompletedActions>
-                <b:InvokeCommandAction Command="{Binding OnNextCommand}" PassEventArgsToCommand="True" />
-            </observables:ObservableTrigger>
-        </b:Interaction.Triggers>
+
         <Button Command="{Binding NewDataContextCommand}">New DataContext</Button>
         <Button Command="{Binding RunGarbageCollectorCommand}">Run Garbage Collector</Button>
 
         <Button Command="{Binding SetNextCommand}">Next</Button>
         <Button Command="{Binding SetCompletedCommand}">Completed</Button>
         <Button Command="{Binding SetErrorCommand}">Error</Button>
-        <TextBlock Text="{Binding Text}" />
+        <TextBlock Style="{StaticResource ButtonStyle}" Text="{Binding Text}" />
     </StackPanel>
 </Window>

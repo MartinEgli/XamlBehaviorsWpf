@@ -12,7 +12,7 @@ namespace Anori.WPF.StyleBehaviors.Observables
 
     using Anori.WPF.Behaviors;
     using Anori.WPF.Behaviors.Observables;
-
+    using JetBrains.Annotations;
     using TriggerAction = Anori.WPF.Behaviors.TriggerAction;
     using TriggerBase = Anori.WPF.Behaviors.TriggerBase;
 
@@ -131,7 +131,8 @@ namespace Anori.WPF.StyleBehaviors.Observables
             this.observableTrigger = new ObservableTrigger();
             this.observableTrigger.ObservableName = this.ObservableName;
             this.observableTrigger.SourceName = this.SourceName;
-            this.observableTrigger.SourceObject = this.SourceObject;
+            SetupSourceObject(observableTrigger, dependencyObject);
+
             foreach (ITriggerActionCreator actionCreator in this.ActionCreators)
             {
                 TriggerAction triggerAction = actionCreator.Create(dependencyObject);
@@ -139,6 +140,30 @@ namespace Anori.WPF.StyleBehaviors.Observables
             }
 
             return this.observableTrigger;
+        }
+
+
+        /// <summary>
+        ///     Setups the command parameter.
+        /// </summary>
+        /// <param name="observableAction">The trigger action.</param>
+        /// <param name="dataContext">The data context.</param>
+        private void SetupSourceObject([NotNull] ObservableTrigger observableTrigger, [NotNull] object dataContext)
+        {
+            BindingOperations.ClearBinding(observableTrigger, ObservableTrigger.SourceObjectProperty);
+
+            if (this.SourceObject != null)
+            {
+                observableTrigger.SourceObject = this.SourceObject;
+            }
+
+            if (this.SourceObjectBinding != null)
+            {
+                BindingOperations.SetBinding(
+                    observableTrigger,
+                    ObservableTrigger.SourceObjectProperty,
+                    this.SourceObjectBinding.CloneBindingBase(dataContext));
+            }
         }
 
         /// <summary>

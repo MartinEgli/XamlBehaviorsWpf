@@ -25,6 +25,7 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
         public MainViewModel()
         {
             Items.Add(new CommandWindowItem("Open Observable Test", () => new ObservableTest1Window()));
+            Items.Add(new CommandWindowItem("Open Style Observable Test", () => new StyleObservableTest1Window()));
             Items.Add(new GarbageCollectorItem());
         }
 
