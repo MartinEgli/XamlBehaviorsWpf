@@ -9,8 +9,6 @@ namespace Anori.WPF.StyleBehaviors
     using System;
     using System.Windows;
 
-    using Anori.WPF.WeakEventManagers;
-
     using JetBrains.Annotations;
 
     using TriggerAction = Anori.WPF.Behaviors.TriggerAction;

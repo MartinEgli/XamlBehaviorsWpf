@@ -530,7 +530,9 @@ namespace Anori.WPF.Behaviors.Observables
         /// </summary>
         private void UnregisterObserver()
         {
-            this.observerDispose.Dispose();
+            IDisposable disposable = this.observerDispose;
+            disposable?.Dispose();
+
             this.observerDispose = null;
         }
 
@@ -575,6 +577,7 @@ namespace Anori.WPF.Behaviors.Observables
             {
                 return;
             }
+
             foreach (TriggerAction action in this.ErrorActions)
             {
                 action.CallInvoke(exception);
@@ -590,6 +593,7 @@ namespace Anori.WPF.Behaviors.Observables
             {
                 return;
             }
+
             foreach (TriggerAction action in this.CompletedActions)
             {
                 action.CallInvoke(null);

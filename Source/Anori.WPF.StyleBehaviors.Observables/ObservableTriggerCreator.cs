@@ -1,30 +1,34 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="EventTriggerCreator.cs" company="Anori Soft">
+// <copyright file="ObservableTriggerCreator.cs" company="Anori Soft">
 // Copyright (c) Anori Soft. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 namespace Anori.WPF.StyleBehaviors.Observables
 {
+    using System;
     using System.Windows;
     using System.Windows.Data;
     using System.Windows.Markup;
 
     using Anori.WPF.Behaviors;
     using Anori.WPF.Behaviors.Observables;
+
     using JetBrains.Annotations;
+
     using TriggerAction = Anori.WPF.Behaviors.TriggerAction;
     using TriggerBase = Anori.WPF.Behaviors.TriggerBase;
 
     /// <summary>
     /// </summary>
+    /// <seealso cref="Anori.WPF.Behaviors.ITriggerCreator" />
     /// <seealso cref="Anori.WPF.Behaviors.EventTrigger" />
     /// <seealso cref="ITriggerCreator" />
-    [ContentProperty("ActionCreators")]
+    [ContentProperty("NextActionCreators")]
     public class ObservableTriggerCreator : ITriggerCreator
     {
         /// <summary>
-        ///     The action creators
+        ///     The trigger creators
         /// </summary>
         private TriggerActionCreatorCollection actionCreators;
 
@@ -34,12 +38,12 @@ namespace Anori.WPF.StyleBehaviors.Observables
         private ObservableTrigger observableTrigger;
 
         /// <summary>
-        ///     Gets or sets the action creators.
+        ///     Gets or sets the trigger creators.
         /// </summary>
         /// <value>
-        ///     The action creators.
+        ///     The trigger creators.
         /// </value>
-        public TriggerActionCreatorCollection ActionCreators
+        public TriggerActionCreatorCollection NextActionCreators
         {
             get => this.actionCreators ?? (this.actionCreators = new TriggerActionCreatorCollection());
             set => this.actionCreators = value;
@@ -74,10 +78,10 @@ namespace Anori.WPF.StyleBehaviors.Observables
         }
 
         /// <summary>
-        ///     Gets or sets the error action creators.
+        ///     Gets or sets the error trigger creators.
         /// </summary>
         /// <value>
-        ///     The error action creators.
+        ///     The error trigger creators.
         /// </value>
         public TriggerActionCreatorCollection ErrorActionCreators
         {
@@ -86,24 +90,12 @@ namespace Anori.WPF.StyleBehaviors.Observables
         }
 
         /// <summary>
-        ///     Gets or sets the completed action creators.
+        ///     Gets or sets the completed trigger creators.
         /// </summary>
         /// <value>
-        ///     The completed action creators.
+        ///     The completed trigger creators.
         /// </value>
         public TriggerActionCreatorCollection CompletedActionCreators
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        ///     Gets or sets the next action creators.
-        /// </summary>
-        /// <value>
-        ///     The next action creators.
-        /// </value>
-        public TriggerActionCreatorCollection NextActionCreators
         {
             get;
             set;
@@ -129,38 +121,80 @@ namespace Anori.WPF.StyleBehaviors.Observables
         public TriggerBase Create(DependencyObject dependencyObject)
         {
             this.observableTrigger = new ObservableTrigger();
-            this.observableTrigger.ObservableName = this.ObservableName;
-            this.observableTrigger.SourceName = this.SourceName;
-            SetupSourceObject(observableTrigger, dependencyObject);
+            this.Register(observableTrigger, dependencyObject);
 
-            foreach (ITriggerActionCreator actionCreator in this.ActionCreators)
+            foreach (ITriggerActionCreator nextActionCreator in this.NextActionCreators)
             {
-                TriggerAction triggerAction = actionCreator.Create(dependencyObject);
-                this.observableTrigger.Actions.Add(triggerAction);
+                TriggerAction triggerAction = nextActionCreator.Create(dependencyObject);
+                this.observableTrigger.NextActions.Add(triggerAction);
+            }
+
+            foreach (ITriggerActionCreator completedActionCreator in this.CompletedActionCreators)
+            {
+                TriggerAction triggerAction = completedActionCreator.Create(dependencyObject);
+                this.observableTrigger.CompletedActions.Add(triggerAction);
+            }
+
+            foreach (ITriggerActionCreator errorActionCreator in this.ErrorActionCreators)
+            {
+                TriggerAction triggerAction = errorActionCreator.Create(dependencyObject);
+                this.observableTrigger.ErrorActions.Add(triggerAction);
             }
 
             return this.observableTrigger;
         }
 
+        public void Register([NotNull] ObservableTrigger trigger, [NotNull] DependencyObject associatedObject)
+        {
+            if (trigger == null)
+            {
+                throw new ArgumentNullException(nameof(trigger));
+            }
+
+            if (associatedObject == null)
+            {
+                throw new ArgumentNullException(nameof(associatedObject));
+            }
+
+            if (associatedObject is FrameworkElement frameworkElement)
+            {
+                DependencyPropertyChangedEventHandler OnDataContextChanged =
+                    (sender, args) => this.DataContextChanged(trigger, args.NewValue);
+
+                frameworkElement.DataContextChanged += OnDataContextChanged;
+            }
+        }
+
+        /// <summary>
+        ///     Datas the context changed.
+        /// </summary>
+        /// <param name="trigger">The trigger.</param>
+        /// <param name="dataContext">The data context.</param>
+        protected void DataContextChanged(ObservableTrigger trigger, object dataContext)
+        {
+            this.observableTrigger.ObservableName = this.ObservableName;
+            this.observableTrigger.SourceName = this.SourceName;
+            SetupSourceObject(observableTrigger, dataContext);
+        }
 
         /// <summary>
         ///     Setups the command parameter.
         /// </summary>
-        /// <param name="observableAction">The trigger action.</param>
+        /// <param name="observableAction">The trigger trigger.</param>
         /// <param name="dataContext">The data context.</param>
-        private void SetupSourceObject([NotNull] ObservableTrigger observableTrigger, [NotNull] object dataContext)
+        private void SetupSourceObject([NotNull] ObservableTrigger trigger, [NotNull] object dataContext)
         {
-            BindingOperations.ClearBinding(observableTrigger, ObservableTrigger.SourceObjectProperty);
+            BindingOperations.ClearBinding(trigger, ObservableTrigger.SourceObjectProperty);
 
             if (this.SourceObject != null)
             {
-                observableTrigger.SourceObject = this.SourceObject;
+                trigger.SourceObject = this.SourceObject;
             }
 
             if (this.SourceObjectBinding != null)
             {
                 BindingOperations.SetBinding(
-                    observableTrigger,
+                    trigger,
                     ObservableTrigger.SourceObjectProperty,
                     this.SourceObjectBinding.CloneBindingBase(dataContext));
             }
@@ -171,7 +205,7 @@ namespace Anori.WPF.StyleBehaviors.Observables
         /// </summary>
         //public void Attach(DependencyObject associatedObject)
         //{
-        //    foreach (ITriggerActionCreator actionCreator in ActionCreators)
+        //    foreach (ITriggerActionCreator actionCreator in NextActionCreators)
         //    {
         //        actionCreator.Attach(associatedObject);
         //    }
@@ -182,7 +216,7 @@ namespace Anori.WPF.StyleBehaviors.Observables
         ///// </summary>
         //public void Detach(DependencyObject associatedObject)
         //{
-        //    foreach (ITriggerActionCreator actionCreator in ActionCreators)
+        //    foreach (ITriggerActionCreator actionCreator in NextActionCreators)
         //    {
         //        actionCreator.Detach(associatedObject);
         //    }
