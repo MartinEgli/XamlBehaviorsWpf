@@ -261,9 +261,9 @@ namespace Anori.WPF.Behaviors.Observables
         /// <summary>
         ///     Called when [event name changed].
         /// </summary>
-        /// <param name="oldEventName">Old name of the event.</param>
-        /// <param name="newEventName">New name of the event.</param>
-        internal void OnObservableNameChanged(string oldEventName, string newEventName)
+        /// <param name="oldObservableName">Old name of the event.</param>
+        /// <param name="newObservableName">New name of the event.</param>
+        internal void OnObservableNameChanged(string oldObservableName, string newObservableName)
         {
             if (this.AssociatedObject == null)
             {
@@ -271,7 +271,7 @@ namespace Anori.WPF.Behaviors.Observables
             }
 
             this.UnregisterObserver();
-            this.RegisterObserver(this.Source, newEventName);
+            this.RegisterObserver(this.Source, newObservableName);
         }
 
         /// <summary>

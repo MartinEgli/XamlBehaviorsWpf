@@ -34,13 +34,17 @@ namespace Anori.WPF.Behaviors.Observables
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ObservableTrigger" /> class.
+        ///     Initializes a new instance of the <see cref="ObservableTrigger" /> class.
         /// </summary>
         /// <param name="observableName">Name of the observable property.</param>
         /// <exception cref="ArgumentNullException">observableName is null.</exception>
         public ObservableTrigger([NotNull] string observableName)
         {
             this.ObservableName = observableName ?? throw new ArgumentNullException(nameof(observableName));
+        }
+
+        ~ObservableTrigger()
+        {
         }
 
         /// <summary>
