@@ -23,8 +23,15 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
 
     internal class StyleObservableTest1ViewModel : INotifyPropertyChanged
     {
+        /// <summary>
+        /// The text
+        /// </summary>
         private string text;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StyleObservableTest1ViewModel"/> class.
+        /// </summary>
+        /// <param name="newDataContextCommand">The new data context command.</param>
         public StyleObservableTest1ViewModel(ICommand newDataContextCommand)
         {
             this.NewDataContextCommand = newDataContextCommand;
@@ -42,10 +49,16 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
             this.OnErrorCommand = new ActionCommand(this.OnError);
         }
 
+        /// <summary>
+        /// Finalizes an instance of the <see cref="StyleObservableTest1ViewModel" /> class.
+        /// </summary>
         ~StyleObservableTest1ViewModel()
         {
         }
 
+        /// <summary>
+        /// Occurs when a property value changes.
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>

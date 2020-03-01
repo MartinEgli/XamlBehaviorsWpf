@@ -34,9 +34,9 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
             newDataContextCommand = new ActionCommand(
                 () =>
                 {
-                    this.DataContext = new ObservableTest1ViewModel(newDataContextCommand);
+                    this.DataContext = new StyleObservableTest1ViewModel(newDataContextCommand);
                 });
-            DataContext = new ObservableTest1ViewModel(newDataContextCommand);
+            DataContext = new StyleObservableTest1ViewModel(newDataContextCommand);
         }
     }
 }
