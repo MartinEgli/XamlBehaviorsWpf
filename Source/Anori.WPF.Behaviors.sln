@@ -48,7 +48,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.Strings", "Anori.Stri
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.WeakEventManagers", "Anori.WPF.WeakEventManagers\Anori.WPF.WeakEventManagers.csproj", "{3C687B71-B2BF-4ADD-A5FC-525C67F8604F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.StyleBehaviors.Observables", "Anori.WPF.StyleBehaviors.Observables\Anori.WPF.StyleBehaviors.Observables.csproj", "{B627B8D9-32C4-4019-B6C9-86776BB13061}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.StyleBehaviors.Observables", "Anori.WPF.StyleBehaviors.Observables\Anori.WPF.StyleBehaviors.Observables.csproj", "{B627B8D9-32C4-4019-B6C9-86776BB13061}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.AttachedForks", "Anori.WPF.AttachedForks\Anori.WPF.AttachedForks.csproj", "{16E0CC4C-B407-4A20-88C4-B6F94ABE779B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.AttachedForks.GuiTest", "..\Tests\Anori.WPF.AttachedForks.GuiTest\Anori.WPF.AttachedForks.GuiTest.csproj", "{A83A044F-75C0-40B7-9FB3-908D3FEC8292}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -202,6 +206,22 @@ Global
 		{B627B8D9-32C4-4019-B6C9-86776BB13061}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B627B8D9-32C4-4019-B6C9-86776BB13061}.Release|x86.ActiveCfg = Release|Any CPU
 		{B627B8D9-32C4-4019-B6C9-86776BB13061}.Release|x86.Build.0 = Release|Any CPU
+		{16E0CC4C-B407-4A20-88C4-B6F94ABE779B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16E0CC4C-B407-4A20-88C4-B6F94ABE779B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16E0CC4C-B407-4A20-88C4-B6F94ABE779B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{16E0CC4C-B407-4A20-88C4-B6F94ABE779B}.Debug|x86.Build.0 = Debug|Any CPU
+		{16E0CC4C-B407-4A20-88C4-B6F94ABE779B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16E0CC4C-B407-4A20-88C4-B6F94ABE779B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16E0CC4C-B407-4A20-88C4-B6F94ABE779B}.Release|x86.ActiveCfg = Release|Any CPU
+		{16E0CC4C-B407-4A20-88C4-B6F94ABE779B}.Release|x86.Build.0 = Release|Any CPU
+		{A83A044F-75C0-40B7-9FB3-908D3FEC8292}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A83A044F-75C0-40B7-9FB3-908D3FEC8292}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A83A044F-75C0-40B7-9FB3-908D3FEC8292}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A83A044F-75C0-40B7-9FB3-908D3FEC8292}.Debug|x86.Build.0 = Debug|Any CPU
+		{A83A044F-75C0-40B7-9FB3-908D3FEC8292}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A83A044F-75C0-40B7-9FB3-908D3FEC8292}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A83A044F-75C0-40B7-9FB3-908D3FEC8292}.Release|x86.ActiveCfg = Release|Any CPU
+		{A83A044F-75C0-40B7-9FB3-908D3FEC8292}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

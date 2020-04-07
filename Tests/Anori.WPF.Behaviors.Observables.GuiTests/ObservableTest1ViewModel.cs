@@ -42,6 +42,11 @@ namespace Anori.WPF.Behaviors.Observables.GuiTests
             this.OnErrorCommand = new ActionCommand(this.OnError);
         }
 
+
+        ~ObservableTest1ViewModel()
+        {
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>

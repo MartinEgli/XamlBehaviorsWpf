@@ -7,7 +7,6 @@
 namespace Anori.WPF.Behaviors
 {
     using System.Windows;
-    using System.ComponentModel;
 
     /// <summary>
     ///     Represents a collection of behaviors with a shared AssociatedObject and provides change notifications to its
@@ -25,6 +24,8 @@ namespace Anori.WPF.Behaviors
                 behavior.Attach(this.AssociatedObject);
             }
         }
+        //todo : fsdf
+
 
         /// <summary>
         ///     Called when the collection is being detached from its AssociatedObject, but before it has actually occurred.

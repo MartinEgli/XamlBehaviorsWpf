@@ -14,7 +14,9 @@
     d:DataContext="{d:DesignInstance guiTests1:InvokeCommandActionCreatorViewModel}"
     mc:Ignorable="d">
     <Window.Resources>
+        <!--  ToDo Xaml  -->
         <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <guiTests1:AttachedSetter />
             <Setter Property="styleBehaviors:StyleInteraction.StyleTriggers">
                 <Setter.Value>
                     <styleBehaviors:StyleTriggerCollection>

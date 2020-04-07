@@ -217,7 +217,7 @@ namespace Anori.WPF.StyleBehaviors
             if (triggerCollection == null)
             {
                 triggerCollection = new TriggerCollection();
-                obj.SetValue(BehaviorsProperty, triggerCollection);
+                obj.SetValue(TriggersProperty, triggerCollection);
             } else
             {
                 triggerCollection.Detach();
