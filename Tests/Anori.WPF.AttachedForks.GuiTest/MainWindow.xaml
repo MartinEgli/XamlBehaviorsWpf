@@ -11,6 +11,7 @@
     mc:Ignorable="d">
     <StackPanel>
         <Button Click="Button_Click">SwitchContent</Button>
+        <Button Click="ChangeHost_Click">ChangeHost</Button>
         <Button Click="OneToMultiButton_Click">One To Multi</Button>
         <Button Click="SimpleBindingWindow_Click">Simple Binding</Button>
         <Button Click="ControlBindingWindow_Click">Control Binding</Button>

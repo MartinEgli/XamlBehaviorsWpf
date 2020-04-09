@@ -1,6 +1,10 @@
-﻿namespace Anori.WPF.AttachedForks
+﻿using System.Windows;
+using System.Windows.Controls;
+
+namespace Anori.WPF.AttachedForks
 {
     public sealed class AttachedForkString : AttachedForkString<AttachedForkString>
     {
+      
     }
 }

@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System.Windows;
+using Anori.WPF.AttachedForks.GuiTest;
 
 namespace AttachedPropertyTests
 {
@@ -41,6 +42,13 @@ namespace AttachedPropertyTests
             var dialog = new ControlBindingWindow();
             dialog.ShowDialog();
 
+        }
+
+        private void ChangeHost_Click(object sender, RoutedEventArgs e)
+        {
+
+            var dialog = new ChangeHostWindow();
+            dialog.ShowDialog();
         }
     }
 }

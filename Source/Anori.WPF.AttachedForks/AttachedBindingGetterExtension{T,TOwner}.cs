@@ -228,9 +228,9 @@ namespace Anori.WPF.AttachedForks
                         return;
                     }
 
+                    Debug.WriteLine("Set Value to new {0} old {1} from {2}", value, this.value, ((FrameworkElement)DependencyObject)?.Name);
                     this.value = value;
-                                        Debug.WriteLine("Set Value to {0} from {1}", value, ((FrameworkElement)DependencyObject)?.Name);
-this.OnValueChanged(value);
+                    this.OnValueChanged(value);
                     this.OnPropertyChanged();
 
                 }
@@ -270,13 +270,8 @@ this.OnValueChanged(value);
 
                     this.bindingExpression = expression;
 
-                    frameworkElement.Loaded += (sender, args) =>
-                    {
-                        if (this.UpdateHost())
-                        {
-                            this.UpdateTarget();
-                        }
-                    };
+                    frameworkElement.Loaded += OnLoaded;
+                   
                 } else
                 {
                     this.UpdateHost();
@@ -297,6 +292,23 @@ this.OnValueChanged(value);
             }
 
             /// <summary>
+            /// Called when [loaded].
+            /// </summary>
+            /// <param name="sender">The sender.</param>
+            /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+            private void OnLoaded(object sender, RoutedEventArgs e)
+            {
+                Debug.WriteLine("On Loaded");
+
+                if (!this.UpdateHost())
+                {
+                    return;
+                }
+
+                this.UpdateTarget();
+            }
+
+            /// <summary>
             /// Sets the source.
             /// </summary>
             /// <param name="value">The value.</param>
@@ -307,6 +319,7 @@ this.OnValueChanged(value);
                 {
                     return false;
                 }
+                Debug.WriteLine("Set Source new {0} old {1}", value,this.value);
 
                 this.value = value;
                 this.OnSourceChanged();
@@ -317,14 +330,22 @@ this.OnValueChanged(value);
             /// Called when [host changed].
             /// </summary>
             /// <param name="host">The host.</param>
-            protected virtual void OnHostChanged(DependencyObject host) => this.HostChanged?.Invoke(host);
+            protected virtual void OnHostChanged(DependencyObject host)
+            {
+                Debug.WriteLine("On Host Changed");
+                this.HostChanged?.Invoke(host);
+            }
 
             /// <summary>
             ///     Called when [property changed].
             /// </summary>
             /// <param name="propertyName">Name of the property.</param>
             [NotifyPropertyChangedInvocator]
-            protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+            {
+                Debug.WriteLine("On Property Changed");
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
 
             /// <summary>
             /// Called when [value changed].
@@ -332,7 +353,8 @@ this.OnValueChanged(value);
             /// <param name="value">The value.</param>
             protected virtual void OnValueChanged(T value)
             {
-                AttachedFork<T, TOwner>.SetSetter(this.hostObject, value);
+                Debug.WriteLine("On Value Changed");
+                AttachedFork<T, TOwner>.GetHost(this.hostObject).Value = value;
                 this.ValueChanged?.Invoke(value);
             }
 
@@ -341,7 +363,8 @@ this.OnValueChanged(value);
             /// </summary>
             protected virtual bool UpdateHost()
             {
-                var host = AttachedFork<T, TOwner>.GetAttachedPropertyHost(this.DependencyObject);
+                Debug.WriteLine("Update Host");
+                var host = AttachedFork<T, TOwner>.GetAttachedSetterProperty(this.DependencyObject);
                 if (host == HostObject)
                 {
                     Debug.WriteLine("Host not changed {0}", (object)((FrameworkElement)HostObject)?.Name);
@@ -349,18 +372,72 @@ this.OnValueChanged(value);
                 }
                 if (HostObject != null)
                 {
+                    Debug.WriteLine("Removing HostObject {0}", (object)((FrameworkElement)HostObject)?.Name);
                     AttachedFork<T, TOwner>.RemoveValueChangedHandler(HostObject, ValueChangedHandler);
+                    AttachedFork<T, TOwner>.GetHost(HostObject).HostChanged -= OnHostChanged;
+                } else
+                {
+                    Debug.WriteLine("Not Removed HostObject is null for {0}", this.GetType());
                 }
 
                 HostObject = host;
 
                 if (HostObject != null)
                 {
+                    Debug.WriteLine("Adding HostObject {0}", (object)((FrameworkElement)HostObject)?.Name);
                     AttachedFork<T, TOwner>.AddValueChangedHandler(HostObject, ValueChangedHandler);
-                }
-                else
+                    AttachedFork<T, TOwner>.GetHost(HostObject).HostChanged += OnHostChanged;
+
+                } else
                 {
-                    Debug.WriteLine("Host is null for {0}", this.GetType());
+                    Debug.WriteLine("Not Added HostObject is null for {0}", this.GetType());
+                }
+                this.UpdateValue();
+                return true;
+
+            }
+
+            /// <summary>
+            /// Called when [host changed].
+            /// </summary>
+            /// <param name="sender">The sender.</param>
+            /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+            private void OnHostChanged(object sender, EventArgs e)
+            {
+                Debug.WriteLine("On Host Changed {0}", (object)((FrameworkElement)((Host<T>)sender).Owner)?.Name);
+                this.UpdateHost();
+            }
+
+            /// <summary>
+            /// Updates the host old.
+            /// </summary>
+            /// <returns></returns>
+            protected virtual bool UpdateHostOld()
+            {
+                var host = AttachedFork<T, TOwner>.GetAttachedSetterProperty(this.DependencyObject);
+                if (host == HostObject)
+                {
+                    Debug.WriteLine("Host not changed {0}", (object)((FrameworkElement)HostObject)?.Name);
+                    return false;
+                }
+                if (HostObject != null)
+                {
+                    Debug.WriteLine("Removing HostObject {0}", (object)((FrameworkElement)HostObject)?.Name);
+                    AttachedFork<T, TOwner>.RemoveValueChangedHandler(HostObject, ValueChangedHandler);
+                } else
+                {
+                    Debug.WriteLine("Not Removed HostObject is null for {0}", this.GetType());
+                }
+
+                HostObject = host;
+
+                if (HostObject != null)
+                {
+                    Debug.WriteLine("Adding HostObject {0}", (object)((FrameworkElement)HostObject)?.Name);
+                    AttachedFork<T, TOwner>.AddValueChangedHandler(HostObject, ValueChangedHandler);
+                } else
+                {
+                    Debug.WriteLine("Not Added HostObject is null for {0}", this.GetType());
                 }
                 this.UpdateValue();
                 return true;
@@ -397,7 +474,7 @@ this.OnValueChanged(value);
             /// </summary>
             protected virtual void UpdateValue()
             {
-                this.Value = AttachedFork<T, TOwner>.GetSetter(this.HostObject);
+                this.Value = AttachedFork<T, TOwner>.GetHost(this.HostObject).Value;
                 Debug.WriteLine("Update Value {0} in {1}", this.Value, ((FrameworkElement)this.DependencyObject)?.Name);
             }
 

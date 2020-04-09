@@ -729,7 +729,7 @@ namespace Anori.WPF.AttachedForks
         ///     property
         /// </exception>
         [CanBeNull]
-        public static DependencyObject GetAttachedPropertyHost(
+        public static DependencyObject GetAttachedProperty(
             [NotNull] this DependencyObject target,
             [NotNull] DependencyProperty property)
         {

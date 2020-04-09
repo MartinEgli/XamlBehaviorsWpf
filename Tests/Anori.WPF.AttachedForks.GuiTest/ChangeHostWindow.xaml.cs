@@ -5,35 +5,22 @@
 // -----------------------------------------------------------------------
 
 using System.Windows;
-using System.Windows.Data;
-using Anori.WPF.AttachedForks;
 
-namespace AttachedPropertyTests
+namespace Anori.WPF.AttachedForks.GuiTest
 {
     /// <summary>
     ///     Interaction logic for SwitchContentWindow.xaml
     /// </summary>
-    public partial class SwitchContentWindow : Window
+    public partial class ChangeHostWindow : Window
     {
         private readonly FrameworkElement control;
 
-        public SwitchContentWindow()
+        public ChangeHostWindow()
         {
             this.InitializeComponent();
             this.control = new Anori.WPF.AttachedForks.GuiTest.AttachedUserControl();
         }
 
-        private void Button1_Click(object sender, RoutedEventArgs e)
-        {
-            this.Control2.Content = null;
-            this.Control1.Content = this.control;
-        }
-
-        private void Button2_Click(object sender, RoutedEventArgs e)
-        {
-            this.Control1.Content = null;
-            this.Control2.Content = this.control;
-        }
 
         private void AddFork_Click(object sender, RoutedEventArgs e)
         {

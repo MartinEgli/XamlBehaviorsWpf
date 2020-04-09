@@ -1,0 +1,30 @@
+﻿<Window
+    x:Class="Anori.WPF.AttachedForks.GuiTest.ChangeHostWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:attachedForks="clr-namespace:Anori.WPF.AttachedForks;assembly=Anori.WPF.AttachedForks"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:guiTest="clr-namespace:Anori.WPF.AttachedForks.GuiTest"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="Window"
+    Title="SwitchContentWindow"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <StackPanel x:Name="StackPanel">
+        <Button Click="AddFork_Click">Add Fork</Button>
+        <Button Click="RemoveFork_Click">Remove Fork</Button>
+        <Border
+            x:Name="Border"
+            attachedForks:AttachedForkString.Setter="Border"
+            BorderBrush="Pink"
+            BorderThickness="2">
+            <StackPanel x:Name="Panel">
+                <Label>Content</Label>
+                <ContentControl x:Name="ContentControl">
+                    <guiTest:AttachedSimpleUserControl />
+                </ContentControl>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</Window>
