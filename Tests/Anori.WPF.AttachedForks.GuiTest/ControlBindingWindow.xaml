@@ -4,17 +4,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:attachedForks="clr-namespace:Anori.WPF.AttachedForks;assembly=Anori.WPF.AttachedForks"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:AttachedPropertyTests"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="ControlBindingWindow"
     Width="800"
     Height="450"
     mc:Ignorable="d">
     <StackPanel>
+        <TextBlock>Entry Point</TextBlock>
         <TextBox x:Name="TextBox">Hallo</TextBox>
         <StackPanel attachedForks:AttachedForkObject.Setter="{Binding ElementName=TextBox, Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <TextBlock>End Point</TextBlock>
             <TextBox Text="{attachedForks:AttachedObjectGetter UpdateSourceTrigger=PropertyChanged}" />
-            <TextBox Text="{attachedForks:AttachedObjectGetter}" />
         </StackPanel>
     </StackPanel>
 </Window>

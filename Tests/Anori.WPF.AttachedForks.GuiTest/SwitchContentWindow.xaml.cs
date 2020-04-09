@@ -35,16 +35,6 @@ namespace AttachedPropertyTests
             this.Control2.Content = this.control;
         }
 
-        private void AddFork_Click(object sender, RoutedEventArgs e)
-        {
-            this.Panel.SetValue(AttachedForkString.SetterProperty, "Panel");
-        }
-
-        private void RemoveFork_Click(object sender, RoutedEventArgs e)
-        {
-            AttachedForkString.RemoveHost(this.Panel);
-
-  //          this.Panel.ClearValue(AttachedForkString.SetterProperty);
-        }
+       
     }
 }

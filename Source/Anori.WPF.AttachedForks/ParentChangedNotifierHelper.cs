@@ -747,6 +747,50 @@ namespace Anori.WPF.AttachedForks
             return attachedProperty;
         }
 
+
+        /// <summary>
+        /// Gets the attached host object.
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <param name="setterProperty">The setter property.</param>
+        /// <param name="shadowProperty">The shadow property.</param>
+        /// <param name="setter">The setter.</param>
+        /// <param name="shadow">The shadow.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">
+        /// target
+        /// or
+        /// setterProperty
+        /// or
+        /// shadowProperty
+        /// </exception>
+        [CanBeNull]
+        public static DependencyObject GetAttachedHostObject(
+            [NotNull] this DependencyObject target,
+            [NotNull] DependencyProperty setterProperty,
+            [NotNull] DependencyProperty shadowProperty,
+            [CanBeNull] out object setter,
+            [CanBeNull] out object shadow)
+        {
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
+
+            if (setterProperty == null)
+            {
+                throw new ArgumentNullException(nameof(setterProperty));
+            }
+
+            if (shadowProperty == null)
+            {
+                throw new ArgumentNullException(nameof(shadowProperty));
+            }
+
+            target.WalkTreeUpAttachedPropertySetterHost(setterProperty,shadowProperty, out DependencyObject hostObject,out setter, out shadow);
+            return hostObject;
+        }
+
         /// <summary>
         ///     Walks the tree up attached property object.
         /// </summary>
@@ -830,6 +874,76 @@ namespace Anori.WPF.AttachedForks
                 dependencyObject = parent;
             } while (true);
 
+            return false;
+        }
+
+
+        /// <summary>
+        /// Walks the tree up attached property setter host.
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <param name="setterProperty">The setter property.</param>
+        /// <param name="shadowProperty">The shadow property.</param>
+        /// <param name="hostObject">The attached property host.</param>
+        /// <returns></returns>
+        private static bool WalkTreeUpAttachedPropertySetterHost(
+            [NotNull] this DependencyObject target,
+            [NotNull] DependencyProperty setterProperty,
+            [NotNull] DependencyProperty shadowProperty,
+            [CanBeNull] out DependencyObject hostObject,
+            [CanBeNull] out object setter,
+            [CanBeNull] out object shadow)
+        {
+            DependencyObject dependencyObject = target;
+            hostObject = null;
+            do
+            {
+                if (dependencyObject.CheckType())
+                {
+                    break;
+                }
+
+                bool hasResult = dependencyObject.HasDependencyProperty(setterProperty, out setter);
+                if (hasResult)
+                {
+                    if (setter != null)
+                    {
+                        if (target != dependencyObject)
+                        {
+                            hostObject = dependencyObject;
+                            shadow = dependencyObject.GetValue(shadowProperty);
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        shadow = dependencyObject.GetValue(shadowProperty);
+                        if (shadow != null)
+                        {
+                            if (target != dependencyObject)
+                            {
+                                hostObject = dependencyObject;
+                                return true;
+                            }
+                        } 
+                    }
+                }
+
+                if (!dependencyObject.TryGetParent(out DependencyObject parent))
+                {
+                    break;
+                }
+
+                if (parent == null)
+                {
+                    break;
+                }
+
+                dependencyObject = parent;
+            } while (true);
+
+            shadow = null;
+            setter = null;
             return false;
         }
 

@@ -11,14 +11,28 @@
     Height="450"
     mc:Ignorable="d">
     <StackPanel>
+        <TextBlock>Entry Point</TextBlock>
         <TextBox x:Name="TextBox">Hallo</TextBox>
-        <TextBox x:Name="TextBox2">Hallo</TextBox>
         <StackPanel attachedForks:AttachedForkString.Setter="{Binding Text, ElementName=TextBox, Mode=TwoWay}">
-            <Label>Multible Texts:</Label>
-            <!--<TextBlock Text="{local:AttachedBindingStringGetter}" />-->
-            <TextBlock x:Name="First" Text="{attachedForks:AttachedBindingStringGetter}" />
-            <TextBlock x:Name="Second" Text="{attachedForks:AttachedBindingStringGetter}" />
-            <TextBlock x:Name="Third" Text="{attachedForks:AttachedBindingStringGetter}" />
+            <TextBlock>Multible Texts:</TextBlock>
+            <Border BorderBrush="Black" BorderThickness="1">
+                <StackPanel>
+                    <TextBlock>End Point 1</TextBlock>
+                    <TextBlock x:Name="First" Text="{attachedForks:AttachedBindingStringGetter}" />
+                </StackPanel>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1">
+                <StackPanel>
+                    <TextBlock>End Point 2</TextBlock>
+                    <TextBlock x:Name="Second" Text="{attachedForks:AttachedBindingStringGetter}" />
+                </StackPanel>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1">
+                <StackPanel>
+                    <TextBlock>End Point 3</TextBlock>
+                    <TextBlock x:Name="Third" Text="{attachedForks:AttachedBindingStringGetter}" />
+                </StackPanel>
+            </Border>
             <TextBlock>
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}">

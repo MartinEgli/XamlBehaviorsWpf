@@ -401,7 +401,8 @@ namespace Anori.WPF.Extensions
         /// <returns>
         ///     <c>true</c> if [has dependency property] [the specified property]; otherwise, <c>false</c>.
         /// </returns>
-        public static bool HasDependencyProperty([NotNull] this DependencyObject target, [NotNull] DependencyProperty property)
+        public static bool HasDependencyProperty([NotNull] this DependencyObject target,
+            [NotNull] DependencyProperty property)
         {
             if (target == null) throw new ArgumentNullException(nameof(target));
             if (property == null) throw new ArgumentNullException(nameof(property));
@@ -409,6 +410,34 @@ namespace Anori.WPF.Extensions
             var value = target.ReadLocalValue(property);
             return value != DependencyProperty.UnsetValue;
         }
+
+        /// <summary>
+        /// Determines whether [has dependency property] [the specified property].
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <param name="property">The property.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>
+        ///   <c>true</c> if [has dependency property] [the specified property]; otherwise, <c>false</c>.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// target
+        /// or
+        /// property
+        /// </exception>
+        public static bool HasDependencyProperty([NotNull] this DependencyObject target, [NotNull] DependencyProperty property, out object value)
+            {
+                if (target == null) throw new ArgumentNullException(nameof(target));
+                if (property == null) throw new ArgumentNullException(nameof(property));
+                var obj = target.ReadLocalValue(property);
+                if (obj != DependencyProperty.UnsetValue)
+                {
+                    value = obj;
+                    return true;
+                }
+                value = null;
+                return false;
+            }
 
         /// <summary>
         /// Tries the get attached properties.

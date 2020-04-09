@@ -10,4 +10,13 @@
     <ProjectReference Include="..\..\Source\Anori.WPF.AttachedForks\Anori.WPF.AttachedForks.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="ChangeHostAndSetterWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="TreeChangeHostWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
 </Project>

@@ -50,5 +50,23 @@ namespace AttachedPropertyTests
             var dialog = new ChangeHostWindow();
             dialog.ShowDialog();
         }
+
+        private void ChangeHostAndSetter_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new ChangeHostAndSetterWindow();
+            dialog.ShowDialog();
+        }
+
+        private void TreeChangeHost_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new TreeChangeHostWindow();
+            dialog.ShowDialog();
+        }
+
+        private void ItemsControlBindingWindow_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new ItemsControlBindingWindow();
+            dialog.ShowDialog();
+        }
     }
 }

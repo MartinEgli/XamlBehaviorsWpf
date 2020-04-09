@@ -12,11 +12,11 @@ namespace Anori.WPF.AttachedForks.GuiTest
     /// <summary>
     ///     Interaction logic for SwitchContentWindow.xaml
     /// </summary>
-    public partial class ChangeHostWindow : Window
+    public partial class TreeChangeHostWindow : Window
     {
         private readonly FrameworkElement control;
 
-        public ChangeHostWindow()
+        public TreeChangeHostWindow()
         {
             this.InitializeComponent();
         }
@@ -25,17 +25,25 @@ namespace Anori.WPF.AttachedForks.GuiTest
         private void AddFork_Click(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("--> Add Host");
-
             AttachedForkString.AddHost(this.Panel, "Panel");
         }
 
         private void RemoveFork_Click(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("--> Remove Host");
-
             AttachedForkString.RemoveHost(this.Panel);
+        }
 
-  //          this.Panel.ClearValue(AttachedForkString.SetterProperty);
+        private void AddSubFork_Click(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("--> Add Sub Host");
+            AttachedForkString.AddHost(this.SubPanel1, "SubPanel1");
+        }
+
+        private void RemoveSubFork_Click(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("--> Remove Sub Host");
+            AttachedForkString.RemoveHost(this.SubPanel1);
         }
     }
 }

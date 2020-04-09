@@ -10,10 +10,16 @@
     Height="450"
     mc:Ignorable="d">
     <StackPanel>
-        <Button Click="Button_Click">SwitchContent</Button>
-        <Button Click="ChangeHost_Click">ChangeHost</Button>
+        <Button Click="Button_Click">Switch Content</Button>
+        <Button Click="ChangeHost_Click">Change Host</Button>
+        <Button Click="ChangeHostAndSetter_Click">Change Host and Setter</Button>
+        <Button Click="TreeChangeHost_Click">Tree Change Host</Button>
         <Button Click="OneToMultiButton_Click">One To Multi</Button>
         <Button Click="SimpleBindingWindow_Click">Simple Binding</Button>
         <Button Click="ControlBindingWindow_Click">Control Binding</Button>
+        <Button Click="ItemsControlBindingWindow_Click">Items Control Binding Window</Button>
+
+
+
     </StackPanel>
 </Window>

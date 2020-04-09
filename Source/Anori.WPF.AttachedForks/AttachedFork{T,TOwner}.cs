@@ -34,18 +34,34 @@ namespace Anori.WPF.AttachedForks
             new PropertyMetadata(GetterChanged));
 
 
-        public static void RemoveHost(FrameworkElement element)
+        public static void RemoveHost([NotNull] FrameworkElement element)
         {
-            element.ClearValue(AttachedFork<T, TOwner>.SetterProperty);
-            var a = element.GetValue(AttachedFork<T, TOwner>.SetterProperty);
-            element.SetValue(AttachedFork<T, TOwner>.SetterProperty, DependencyProperty.UnsetValue);
-            var b = element.GetValue(AttachedFork<T, TOwner>.SetterProperty);
-            var desc = DependencyPropertyDescriptor.FromProperty(AttachedFork<T, TOwner>.SetterProperty, AttachedFork<T, TOwner>.SetterProperty.OwnerType);
-            desc.ResetValue(element);
-            var c = element.GetValue(AttachedFork<T, TOwner>.SetterProperty);
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
 
+            Debug.WriteLine("Remove Host Element {0}", (object)((FrameworkElement)element)?.Name);
+            var host = GetHost(element);
+            if (host != null)
+            {
+                host.UnsubscribeGetters();
+                element.ClearValue(AttachedFork<T, TOwner>.SetterProperty);
+                element.ClearValue(AttachedFork<T, TOwner>.HostProperty);
+                host.UpdateGetters();
+            } else
+            {
+                element.ClearValue(AttachedFork<T, TOwner>.SetterProperty);
+            }
+        }
 
-            element.ClearValue(AttachedFork<T, TOwner>.HostProperty);
+        public static void AddHost(FrameworkElement element, T value)
+        {
+            Debug.WriteLine("Add Host Element {0}", (object)((FrameworkElement)element)?.Name);
+            element.SetValue(AttachedFork<T, TOwner>.SetterProperty, value);
+            var hostObject = GetAttachedHostObject(element, out var host);
+            //var host = GetHost(hostObject);
+            host.UpdateGetters();
         }
 
         /// <summary>
@@ -55,7 +71,7 @@ namespace Anori.WPF.AttachedForks
         /// <param name="e">The <see cref="DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
         private static void GetterChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            DependencyObject hostObject = AttachedFork<T, TOwner>.GetAttachedSetterProperty(dependencyObject);
+            DependencyObject hostObject = AttachedFork<T, TOwner>.GetAttachedHostObject(dependencyObject, out _);
             if (hostObject != null)
             {
                 AddValueChangedHandler(hostObject, ValueChangedHandler);
@@ -126,11 +142,11 @@ namespace Anori.WPF.AttachedForks
             if (host == null)
             {
                 var h = new Host<T>(dependencyObject);
-                h.ValueChanged += (s, v) =>
-                {
-                    Debug.WriteLine("Value Changing {0}", (object)((FrameworkElement)dependencyObject)?.Name);
-                    dependencyObject.SetValue(SetterProperty, v);
-                };
+                //h.ValueChanged += (s, v) =>
+                //{
+                //    Debug.WriteLine("Value Changing {0}", (object)((FrameworkElement)dependencyObject)?.Name);
+                //    dependencyObject.SetValue(SetterProperty, v);
+                //};
                 dependencyObject.SetValue(HostProperty, h);
             }
         }
@@ -144,26 +160,26 @@ namespace Anori.WPF.AttachedForks
 
         private static void HostChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            if (e.OldValue is Host<T> oldHost)
-            {
-                oldHost.UpdateGetters();
-            }
+           // if (e.OldValue is Host<T> oldHost)
+           // {
+           //     oldHost.UpdateGetters();
+           // }
 
-            if (e.NewValue != null)
-           {
-               //    newHost.UpdateGetters();
-               //}
+           // if (e.NewValue != null)
+           //{
+           //    //    newHost.UpdateGetters();
+           //    //}
 
-               var hostObject = GetAttachedSetterProperty(dependencyObject);
+           //    var hostObject = GetAttachedHostObject(dependencyObject);
 
-               if (hostObject != null)
-               {
-                   Debug.WriteLine("Upper Host {0} of {1}", ((FrameworkElement)hostObject)?.Name,
-                       ((FrameworkElement)dependencyObject)?.Name);
-                   var host = GetHost(hostObject);
-                   host?.UpdateGetters();
-               }
-           }
+           //    if (hostObject != null)
+           //    {
+           //        Debug.WriteLine("Upper Host {0} of {1}", ((FrameworkElement)hostObject)?.Name,
+           //            ((FrameworkElement)dependencyObject)?.Name);
+           //        var host = GetHost(hostObject);
+           //        host?.UpdateGetters();
+           //    }
+           //}
         }
 
         /// <summary>
@@ -181,6 +197,24 @@ namespace Anori.WPF.AttachedForks
             return (Host<T>)element.GetValue(HostProperty);
         }
 
+        [NotNull]
+        internal static Host<T> GetOrCreateHost([NotNull] DependencyObject element)
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+
+            var host = AttachedFork<T, TOwner>.GetHost(element);
+            if (host == null || host == DependencyProperty.UnsetValue)
+            {
+                host = new Host<T>(element);
+                AttachedFork<T, TOwner>.SetHost(element, host);
+            }
+
+            return host;
+        }
+
         /// <summary>
         ///     Setters the changed.
         /// </summary>
@@ -188,23 +222,10 @@ namespace Anori.WPF.AttachedForks
         /// <param name="e">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
         private static void SetterChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            InitHost(obj);
-            GetHost(obj).Value = (T)e.NewValue;
+            //InitHost(obj);
+            //GetHost(obj).Value = (T)e.NewValue;
         }
-
-        private static void SetterChangedOld(DependencyObject obj, DependencyPropertyChangedEventArgs e)
-        {
-
-            var host = GetAttachedSetterProperty(obj);
-            if (host != null)
-            {
-                var temp = host.GetValue(SetterProperty);
-                host.SetValue(SetterProperty, null);
-                host.SetValue(SetterProperty, temp);
-            }
-           
-        }
-
+        
         /// <summary>
         ///     Getter of <see cref="DependencyProperty" /> default assembly.
         /// </summary>
@@ -330,16 +351,24 @@ namespace Anori.WPF.AttachedForks
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">target</exception>
         [CanBeNull]
-        public static DependencyObject GetAttachedSetterProperty([NotNull] DependencyObject target)
+        public static DependencyObject GetAttachedHostObject([NotNull] DependencyObject target, out Host<T> host)
         {
             if (target == null)
             {
                 throw new ArgumentNullException(nameof(target));
             }
-            var parentDependencyObject = target.GetAttachedProperty(
-                SetterProperty);
-
-            return parentDependencyObject;
+            var hostObject = target.GetAttachedHostObject(
+                SetterProperty, HostProperty, out var s, out var h);
+           
+            if (s != DependencyProperty.UnsetValue)
+            {
+                host = (Host<T>)h;
+            } else
+            {
+                host = new Host<T>(hostObject ?? throw new InvalidOperationException("HostObject is null"));
+                SetHost(hostObject, host);
+            }
+            return hostObject;
         }
 
 

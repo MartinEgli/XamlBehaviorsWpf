@@ -13,8 +13,6 @@
     <StackPanel>
         <Button Click="Button1_Click">Set Content 1</Button>
         <Button Click="Button2_Click">Set Content 2</Button>
-        <Button Click="AddFork_Click">Add Fork</Button>
-        <Button Click="RemoveFork_Click">Remove Fork</Button>
         <Border BorderBrush="Blue" BorderThickness="2">
             <StackPanel>
                 <Label>Content 1</Label>
@@ -31,27 +29,6 @@
                     x:Name="Control2"
                     attachedForks:AttachedForkBoolean.Setter="False"
                     attachedForks:AttachedForkString.Setter="xyz" />
-            </StackPanel>
-        </Border>
-
-        <Border BorderBrush="Green" BorderThickness="2">
-            <StackPanel>
-                <Label>Content</Label>
-                <ContentControl attachedForks:AttachedForkBoolean.Setter="True" attachedForks:AttachedForkString.Setter="123">
-                    <guiTest:AttachedUserControl />
-                </ContentControl>
-            </StackPanel>
-        </Border>
-
-        <Border
-            attachedForks:AttachedForkString.Setter="Border"
-            BorderBrush="Pink"
-            BorderThickness="2">
-            <StackPanel x:Name="Panel">
-                <Label>Content</Label>
-                <ContentControl attachedForks:AttachedForkBoolean.Setter="True">
-                    <guiTest:AttachedUserControl />
-                </ContentControl>
             </StackPanel>
         </Border>
     </StackPanel>

@@ -228,7 +228,7 @@ namespace Anori.WPF.AttachedForks
                         return;
                     }
 
-                    Debug.WriteLine("Set Value to new {0} old {1} from {2}", value, this.value, ((FrameworkElement)DependencyObject)?.Name);
+                    Debug.WriteLine("Set Value to new [{0}] old [{1}] DependencyObject {2}", value, this.value, ((FrameworkElement)DependencyObject)?.Name);
                     this.value = value;
                     this.OnValueChanged(value);
                     this.OnPropertyChanged();
@@ -244,6 +244,8 @@ namespace Anori.WPF.AttachedForks
             [CanBeNull]
             public BindingExpression ProvideValue([NotNull] IServiceProvider serviceProvider)
             {
+                Debug.WriteLine("Provide value DependencyObject {0}", (object)((FrameworkElement)DependencyObject)?.Name);
+
                 if (serviceProvider == null)
                 {
                     throw new ArgumentNullException(nameof(serviceProvider));
@@ -271,7 +273,8 @@ namespace Anori.WPF.AttachedForks
                     this.bindingExpression = expression;
 
                     frameworkElement.Loaded += OnLoaded;
-                   
+                    frameworkElement.Unloaded += OnUnloaded;
+
                 } else
                 {
                     this.UpdateHost();
@@ -291,6 +294,16 @@ namespace Anori.WPF.AttachedForks
                 return bindingExpression;
             }
 
+            private void OnUnloaded(object sender, RoutedEventArgs e)
+            {
+                Debug.WriteLine("On Unloaded DependencyObject {0}", (object)((FrameworkElement)DependencyObject)?.Name);
+                var host = AttachedFork<T, TOwner>.GetOrCreateHost(this.HostObject);
+                host.HostChanged -= OnHostChanged;
+                host.Unsubscribe -= HostOnUnsubscribe;
+                AttachedFork<T, TOwner>.RemoveValueChangedHandler(this.HostObject, ValueChangedHandler);
+
+            }
+
             /// <summary>
             /// Called when [loaded].
             /// </summary>
@@ -298,8 +311,7 @@ namespace Anori.WPF.AttachedForks
             /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
             private void OnLoaded(object sender, RoutedEventArgs e)
             {
-                Debug.WriteLine("On Loaded");
-
+                Debug.WriteLine("On Loaded DependencyObject {0}", (object)((FrameworkElement)DependencyObject)?.Name);
                 if (!this.UpdateHost())
                 {
                     return;
@@ -319,8 +331,7 @@ namespace Anori.WPF.AttachedForks
                 {
                     return false;
                 }
-                Debug.WriteLine("Set Source new {0} old {1}", value,this.value);
-
+                Debug.WriteLine("Set Source new [{0}] old [{1}] DependencyObject {2}", value, this.value , (object)((FrameworkElement)DependencyObject)?.Name);
                 this.value = value;
                 this.OnSourceChanged();
                 return true;
@@ -332,7 +343,8 @@ namespace Anori.WPF.AttachedForks
             /// <param name="host">The host.</param>
             protected virtual void OnHostChanged(DependencyObject host)
             {
-                Debug.WriteLine("On Host Changed");
+                Debug.WriteLine("On Host Changed DependencyObject {0}", (object)((FrameworkElement)DependencyObject)?.Name);
+
                 this.HostChanged?.Invoke(host);
             }
 
@@ -343,7 +355,8 @@ namespace Anori.WPF.AttachedForks
             [NotifyPropertyChangedInvocator]
             protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
             {
-                Debug.WriteLine("On Property Changed");
+                Debug.WriteLine("On Property Changed DependencyObject {0}", (object)((FrameworkElement)DependencyObject)?.Name);
+
                 this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
 
@@ -353,8 +366,9 @@ namespace Anori.WPF.AttachedForks
             /// <param name="value">The value.</param>
             protected virtual void OnValueChanged(T value)
             {
-                Debug.WriteLine("On Value Changed");
-                AttachedFork<T, TOwner>.GetHost(this.hostObject).Value = value;
+                Debug.WriteLine("On Value Changed DependencyObject {0}", (object)((FrameworkElement)DependencyObject)?.Name);
+
+                AttachedFork<T, TOwner>.SetSetter(this.hostObject,value);
                 this.ValueChanged?.Invoke(value);
             }
 
@@ -363,31 +377,37 @@ namespace Anori.WPF.AttachedForks
             /// </summary>
             protected virtual bool UpdateHost()
             {
-                Debug.WriteLine("Update Host");
-                var host = AttachedFork<T, TOwner>.GetAttachedSetterProperty(this.DependencyObject);
-                if (host == HostObject)
+                Debug.WriteLine("Update Host DependencyObject {0}", (object)((FrameworkElement)DependencyObject)?.Name);
+
+                var hostObject = AttachedFork<T, TOwner>.GetAttachedHostObject(this.DependencyObject ,out _);
+                if (hostObject == this.HostObject)
                 {
+                    if (this.HostObject != null)
+                    {
+                        AttachedFork<T, TOwner>.GetHost(this.HostObject).HostChanged += OnHostChanged;
+                    }
                     Debug.WriteLine("Host not changed {0}", (object)((FrameworkElement)HostObject)?.Name);
                     return false;
                 }
-                if (HostObject != null)
+                if (this.HostObject != null)
                 {
                     Debug.WriteLine("Removing HostObject {0}", (object)((FrameworkElement)HostObject)?.Name);
-                    AttachedFork<T, TOwner>.RemoveValueChangedHandler(HostObject, ValueChangedHandler);
-                    AttachedFork<T, TOwner>.GetHost(HostObject).HostChanged -= OnHostChanged;
+                    AttachedFork<T, TOwner>.RemoveValueChangedHandler(this.HostObject, ValueChangedHandler);
+ //                   AttachedFork<T, TOwner>.GetHost(this.HostObject).HostChanged -= OnHostChanged;
                 } else
                 {
                     Debug.WriteLine("Not Removed HostObject is null for {0}", this.GetType());
                 }
 
-                HostObject = host;
+                this.HostObject = hostObject;
 
-                if (HostObject != null)
+                if (this.HostObject != null)
                 {
                     Debug.WriteLine("Adding HostObject {0}", (object)((FrameworkElement)HostObject)?.Name);
-                    AttachedFork<T, TOwner>.AddValueChangedHandler(HostObject, ValueChangedHandler);
-                    AttachedFork<T, TOwner>.GetHost(HostObject).HostChanged += OnHostChanged;
-
+                    AttachedFork<T, TOwner>.AddValueChangedHandler(this.HostObject, ValueChangedHandler);
+                    var host = AttachedFork<T, TOwner>.GetOrCreateHost(this.HostObject);
+                    host.HostChanged += OnHostChanged;
+                    host.Unsubscribe += HostOnUnsubscribe;
                 } else
                 {
                     Debug.WriteLine("Not Added HostObject is null for {0}", this.GetType());
@@ -395,6 +415,12 @@ namespace Anori.WPF.AttachedForks
                 this.UpdateValue();
                 return true;
 
+            }
+
+            private void HostOnUnsubscribe(object sender, EventArgs e)
+            {
+                ((Host<T>)sender).Unsubscribe -= HostOnUnsubscribe;
+                AttachedFork<T, TOwner>.RemoveValueChangedHandler(this.HostObject, ValueChangedHandler);
             }
 
             /// <summary>
@@ -405,43 +431,8 @@ namespace Anori.WPF.AttachedForks
             private void OnHostChanged(object sender, EventArgs e)
             {
                 Debug.WriteLine("On Host Changed {0}", (object)((FrameworkElement)((Host<T>)sender).Owner)?.Name);
+                ((Host<T>)sender).HostChanged -= OnHostChanged;
                 this.UpdateHost();
-            }
-
-            /// <summary>
-            /// Updates the host old.
-            /// </summary>
-            /// <returns></returns>
-            protected virtual bool UpdateHostOld()
-            {
-                var host = AttachedFork<T, TOwner>.GetAttachedSetterProperty(this.DependencyObject);
-                if (host == HostObject)
-                {
-                    Debug.WriteLine("Host not changed {0}", (object)((FrameworkElement)HostObject)?.Name);
-                    return false;
-                }
-                if (HostObject != null)
-                {
-                    Debug.WriteLine("Removing HostObject {0}", (object)((FrameworkElement)HostObject)?.Name);
-                    AttachedFork<T, TOwner>.RemoveValueChangedHandler(HostObject, ValueChangedHandler);
-                } else
-                {
-                    Debug.WriteLine("Not Removed HostObject is null for {0}", this.GetType());
-                }
-
-                HostObject = host;
-
-                if (HostObject != null)
-                {
-                    Debug.WriteLine("Adding HostObject {0}", (object)((FrameworkElement)HostObject)?.Name);
-                    AttachedFork<T, TOwner>.AddValueChangedHandler(HostObject, ValueChangedHandler);
-                } else
-                {
-                    Debug.WriteLine("Not Added HostObject is null for {0}", this.GetType());
-                }
-                this.UpdateValue();
-                return true;
-
             }
 
             /// <summary>
@@ -451,6 +442,7 @@ namespace Anori.WPF.AttachedForks
             /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
             private void ValueChangedHandler(object sender, EventArgs e)
             {
+                Debug.WriteLine("Value Changed Handler DependencyObject {0}", (object)((FrameworkElement)DependencyObject)?.Name);
                 var dependencyObject = ((DependencyObject)sender);
                 var v = dependencyObject.GetValueSync<T>(AttachedFork<T, TOwner>.SetterProperty);
                 if (this.SetSource(v))
@@ -464,9 +456,9 @@ namespace Anori.WPF.AttachedForks
             /// </summary>
             protected virtual void UpdateTarget()
             {
+                Debug.WriteLine("Update target {0}", (object)((FrameworkElement)DependencyObject)?.Name);
                 BindingExpression expression = this.bindingExpression ?? throw new ArgumentNullException("bindingExpression");
                 expression.UpdateTarget();
-                Debug.WriteLine("Update Target {0}", (object)((FrameworkElement)expression.Target)?.Name);
             }
 
             /// <summary>
@@ -474,8 +466,9 @@ namespace Anori.WPF.AttachedForks
             /// </summary>
             protected virtual void UpdateValue()
             {
-                this.Value = AttachedFork<T, TOwner>.GetHost(this.HostObject).Value;
-                Debug.WriteLine("Update Value {0} in {1}", this.Value, ((FrameworkElement)this.DependencyObject)?.Name);
+                Debug.WriteLine("Update value DependencyObject {0}", (object)((FrameworkElement)DependencyObject)?.Name);
+                this.Value = AttachedFork<T, TOwner>.GetSetter(this.HostObject);
+                Debug.WriteLine("New Value {0} DependencyObject {1}", this.Value, ((FrameworkElement)this.DependencyObject)?.Name);
             }
 
             /// <summary>
@@ -485,6 +478,8 @@ namespace Anori.WPF.AttachedForks
             [NotNull]
             private Binding CreateBinding()
             {
+                Debug.WriteLine("Create Binding DependencyObject {0}", (object)((FrameworkElement)DependencyObject)?.Name);
+
                 var binding = new Binding(nameof(Setter.Value))
                 {
                     Mode = BindingMode.TwoWay,
@@ -504,6 +499,7 @@ namespace Anori.WPF.AttachedForks
             /// </summary>
             private void OnSourceChanged()
             {
+                Debug.WriteLine("On Source Changed DependencyObject {0}", (object)((FrameworkElement)DependencyObject)?.Name);
                 this.UpdateTarget();
                 this.SourceChanged?.Invoke();
             }

@@ -12,13 +12,14 @@ namespace Anori.WPF.AttachedForks.GuiTest
     /// <summary>
     ///     Interaction logic for SwitchContentWindow.xaml
     /// </summary>
-    public partial class ChangeHostWindow : Window
+    public partial class ChangeHostAndSetterWindow : Window
     {
         private readonly FrameworkElement control;
 
-        public ChangeHostWindow()
+        public ChangeHostAndSetterWindow()
         {
             this.InitializeComponent();
+            DataContext = new ChangeHostAndSetterViewModel();
         }
 
 

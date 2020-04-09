@@ -9,31 +9,7 @@ namespace Anori.WPF.AttachedForks
 {
     public class Host<T> : INotifyPropertyChanged
     {
-        /// <summary>
-        /// The value
-        /// </summary>
-        private T value;
-
-        /// <summary>
-        /// Gets or sets the value.
-        /// </summary>
-        /// <value>
-        /// The value.
-        /// </value>
-        public T Value
-        {
-            get
-            {
-                return this.value;
-            }
-            set
-            {
-                if (EqualityComparer<T>.Default.Equals(value, this.value)) return;
-                this.value = value;
-                this.OnValueChanged(value);
-                this.OnPropertyChanged();
-            }
-        }
+    
 
         public Host([NotNull] DependencyObject owner)
         {
@@ -42,7 +18,6 @@ namespace Anori.WPF.AttachedForks
 
         public DependencyObject Owner { get; }
 
-        public event EventHandler<T> ValueChanged;
 
         /// <summary>
         /// Occurs when a property value changes.
@@ -68,9 +43,20 @@ namespace Anori.WPF.AttachedForks
         }
 
         /// <summary>
+        /// Updates the getters.
+        /// </summary>
+        public void UnsubscribeGetters()
+        {
+            OnUnsubscribe();
+        }
+
+        /// <summary>
         /// Occurs when [host changed].
         /// </summary>
         public event EventHandler HostChanged;
+
+        public event EventHandler Unsubscribe;
+
 
         /// <summary>
         /// Called when [host changed].
@@ -80,13 +66,9 @@ namespace Anori.WPF.AttachedForks
             this.HostChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        /// <summary>
-        /// Called when [value changed].
-        /// </summary>
-        /// <param name="value">The value.</param>
-        protected virtual void OnValueChanged(T value)
+        protected virtual void OnUnsubscribe()
         {
-            this.ValueChanged?.Invoke(this, value);
+            this.Unsubscribe?.Invoke(this, EventArgs.Empty);
         }
     }
 }
