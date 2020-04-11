@@ -1,8 +1,7 @@
 ﻿namespace Anori.WPF.AttachedForks
 {
-    public abstract class AttachedBindingBooleanGetterExtension<TOwner> : AttachedBindingGetterExtension<bool, TOwner>
-        where TOwner : AttachedForkBoolean<TOwner>
-
+    public abstract class AttachedBindingBooleanGetterExtensionBase<TOwner> : AttachedBindingGetterExtension<TOwner,bool>
+    where TOwner : AttachedFork<TOwner, bool>
     {
     }
 }

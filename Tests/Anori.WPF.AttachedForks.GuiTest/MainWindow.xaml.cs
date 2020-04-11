@@ -68,5 +68,19 @@ namespace AttachedPropertyTests
             var dialog = new ItemsControlBindingWindow();
             dialog.ShowDialog();
         }
+
+        private void MuliBoolControlBindingWindow_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Anori.WPF.AttachedForks.GuiTest.MultiForkBoolControlBindingWindow();
+            dialog.ShowDialog();
+
+        }
+
+        private void MuliForkMuliEndPointBoolControlBindingWindow_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Anori.WPF.AttachedForks.GuiTest.MultiForkMultiEndPointBoolControlBindingWindow();
+            dialog.ShowDialog();
+
+        }
     }
 }

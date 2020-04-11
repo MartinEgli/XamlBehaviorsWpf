@@ -16,8 +16,7 @@ namespace Anori.WPF.AttachedForks
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TOwner"></typeparam>
     /// <seealso cref="System.Windows.Markup.MarkupExtension" />
-    public abstract class AttachedGetterExtension<T, TOwner> : UpdateableMarkupExtension
-        where TOwner : AttachedFork<T, TOwner>
+    public abstract class AttachedGetterExtension<TOwner,T> : UpdateableMarkupExtension
     {
         /// <summary>
         ///     When implemented in a derived class, returns an object that is provided as the value of the target property for
@@ -70,7 +69,7 @@ namespace Anori.WPF.AttachedForks
             {
                 ((FrameworkElement)dependencyObject).Loaded += this.OnLoaded;
 
-                return AttachedFork<T, TOwner>.GetValueOrRegisterParentChanged(dependencyObject, OnSourceChanged);
+                return AttachedFork<TOwner,T>.GetValueOrRegisterParentChanged(dependencyObject, OnSourceChanged);
 
             }
 
@@ -90,7 +89,7 @@ namespace Anori.WPF.AttachedForks
                 if (sender is DependencyObject dependencyObject)
 
                 {
-                    this.Update(AttachedFork<T, TOwner>.GetValueOrRegisterParentChanged(dependencyObject, OnSourceChanged));
+                    this.Update(AttachedFork<TOwner,T>.GetValueOrRegisterParentChanged(dependencyObject, OnSourceChanged));
                 }
             }
 
@@ -101,7 +100,7 @@ namespace Anori.WPF.AttachedForks
             /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
             private void OnSourceChanged(object sender, EventArgs e)
             {
-                this.Update(AttachedFork<T, TOwner>.GetValueOrRegisterParentChanged(dependencyObject, OnSourceChanged));
+                this.Update(AttachedFork<TOwner,T>.GetValueOrRegisterParentChanged(dependencyObject, OnSourceChanged));
             }
         }
 

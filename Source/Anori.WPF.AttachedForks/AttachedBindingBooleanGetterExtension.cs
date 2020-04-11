@@ -1,6 +1,6 @@
 ﻿namespace Anori.WPF.AttachedForks
 {
-    public sealed class AttachedBindingBooleanGetterExtension : AttachedBindingBooleanGetterExtension<AttachedForkBoolean>
+    public sealed class AttachedBindingBooleanGetterExtension : AttachedBindingBooleanGetterExtensionBase<AttachedForkBoolean>
     {
     }
 }

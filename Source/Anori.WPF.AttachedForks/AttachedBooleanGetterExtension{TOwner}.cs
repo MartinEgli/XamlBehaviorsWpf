@@ -11,8 +11,8 @@ namespace Anori.WPF.AttachedForks
     /// </summary>
     /// <typeparam name="TOwner">The type of the owner.</typeparam>
     /// <seealso cref="Anori.WPF.AttachedForks.AttachedGetterExtension{System.Boolean, TOwner}" />
-    public abstract class AttachedBooleanGetterExtension<TOwner> : AttachedGetterExtension<bool, TOwner>
-        where TOwner : AttachedForkBoolean<TOwner>
+    public abstract class AttachedBooleanGetterExtensionBase<TOwner> : AttachedGetterExtension<TOwner ,bool>
+    where TOwner : AttachedForkBooleanBase<TOwner>
 
     {
     }

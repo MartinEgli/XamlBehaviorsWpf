@@ -4,9 +4,8 @@
     /// 
     /// </summary>
     /// <seealso cref="Anori.WPF.AttachedForks.AttachedBindingGetterExtension{System.Object, Anori.WPF.AttachedForks.AttachedForkObject}" />
-    public class AttachedObjectGetterExtension<TOwner> : AttachedBindingGetterExtension<object, TOwner>
-        where TOwner : AttachedForkObject<TOwner>
-
+    public class AttachedObjectGetterExtensionBase<TOwner> : AttachedBindingGetterExtension<TOwner, object>
+       where TOwner : AttachedForkObjectBase<TOwner>
     {
     }
 }

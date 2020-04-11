@@ -3,7 +3,8 @@ using System.Windows.Controls;
 
 namespace Anori.WPF.AttachedForks
 {
-    public sealed class AttachedForkString : AttachedForkString<AttachedForkString>
+    public sealed class AttachedForkString : AttachedForkStringBase<AttachedForkString>
+        
     {
       
     }

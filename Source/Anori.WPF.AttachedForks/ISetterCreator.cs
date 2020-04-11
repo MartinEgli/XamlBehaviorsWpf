@@ -1,10 +1,10 @@
 ﻿using System.Windows;
 
-namespace AttachedPropertyTests
+namespace Anori.WPF.AttachedForks
 {
     public interface ISetterCreator
     {
-        object Create(object o);
+        void Create(DependencyObject dependencyObject);
 
        
         DependencyProperty Property

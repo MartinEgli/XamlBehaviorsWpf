@@ -35,16 +35,17 @@
             </Border>
             <TextBlock>
                 <TextBlock.Style>
-                    <Style TargetType="{x:Type TextBlock}">
+                    <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
                         <Setter Property="attachedForks:Stylizer.Setters">
                             <Setter.Value>
                                 <attachedForks:SetterCollection>
-                                    <attachedPropertyTests:ValueSetter Property="Text" Value="{attachedForks:AttachedBindingStringGetter}" />
+                                    <attachedForks:AttachedBindingStringGetterExtensionSetterCreator Property="Text" />
                                 </attachedForks:SetterCollection>
                             </Setter.Value>
                         </Setter>
                     </Style>
                 </TextBlock.Style>
+                StyleText
             </TextBlock>
         </StackPanel>
     </StackPanel>

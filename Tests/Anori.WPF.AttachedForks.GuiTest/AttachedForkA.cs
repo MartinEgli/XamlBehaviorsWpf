@@ -1,10 +1,10 @@
-﻿namespace Anori.WPF.AttachedForks
+﻿namespace Anori.WPF.AttachedForks.GuiTest
 {
     /// <summary>
     /// 
     /// </summary>
     /// <seealso cref="Anori.WPF.AttachedForks.AttachedFork{System.Boolean, TOwner}" />
-    public sealed class AttachedForkBoolean : AttachedForkBooleanBase<AttachedForkBoolean>
+    public sealed class AttachedForkA : AttachedForkBooleanBase<AttachedForkA>
     {
     }
 }

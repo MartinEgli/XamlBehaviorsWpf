@@ -1,24 +1,55 @@
-using System.Windows;
+﻿using System.Windows;
 
-namespace AttachedPropertyTests
+namespace Anori.WPF.AttachedForks
 {
     public class ValueSetter : ISetterCreator
     {
-        public object Create(object o)
+        private object value;
+
+        public void Create(DependencyObject o)
         {
-            return Value;
+            o.SetValue(Property, this.Value);
         }
 
         public object Value
+
         {
-            get;
-            set ; 
+            get
+            {
+                return this.value;
+            }
+            set
+            {
+                this.value = value;
+            }
         }
 
         public DependencyProperty Property
         {
             get; 
             set; 
+        }
+    }
+
+    public class AttachedBindingStringGetterExtensionSetterCreator : ISetterCreator
+    {
+        private DependencyProperty property;
+
+        public void Create(DependencyObject o)
+        {
+            new AttachedForkSetter<AttachedForkString,string>(o as DependencyObject).Create(o as DependencyObject, this.property );
+        }
+
+        public DependencyProperty Property
+        {
+            get
+            {
+                return this.property;
+            }
+            set
+            {
+                this.property = value;
+            }
         }
     }
 }

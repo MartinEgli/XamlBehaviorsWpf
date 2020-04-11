@@ -1,6 +1,8 @@
-﻿namespace Anori.WPF.AttachedForks
+﻿using System;
+
+namespace Anori.WPF.AttachedForks
 {
-    public sealed class AttachedForkObject : AttachedForkObject<AttachedForkObject>
+    public sealed class AttachedForkObject : AttachedForkObjectBase<AttachedForkObject>
     {
     }
 }

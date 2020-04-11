@@ -14,6 +14,9 @@
     <Page Update="ChangeHostAndSetterWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="MultiForkMultiEndPointBoolControlBindingWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="TreeChangeHostWindow.xaml">
       <SubType>Designer</SubType>
     </Page>

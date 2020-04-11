@@ -6,8 +6,7 @@
 
 namespace Anori.WPF.AttachedForks
 {
-    public abstract class AttachedForkString<TOwner> : AttachedFork<string, TOwner>
-        where TOwner : AttachedForkString<TOwner>
+    public abstract class AttachedForkStringBase<TOwner> : AttachedFork<TOwner, string>
     {
     }
 }

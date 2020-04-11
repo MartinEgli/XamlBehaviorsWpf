@@ -46,13 +46,13 @@ namespace Anori.WPF.AttachedForks
                 {
                     if (style == null) return;
 
-                    //  style.Setters.Add(new Setter());
+                    //  style.Setters.Add(new AttachedForkSetter());
                     return;
                 }
 
                 foreach (var creator in setterCollection)
                 {
-                    dependencyObject.SetValueSync(creator.Property, creator.Create(dependencyObject));
+                    creator.Create(dependencyObject);
                 }
             }
         }

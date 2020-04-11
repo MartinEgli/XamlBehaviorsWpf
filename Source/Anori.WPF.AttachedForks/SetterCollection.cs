@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using AttachedPropertyTests;
 
 namespace Anori.WPF.AttachedForks
 {

@@ -4,7 +4,9 @@
     /// 
     /// </summary>
     /// <seealso cref="Anori.WPF.AttachedForks.AttachedBooleanGetterExtension{Anori.WPF.AttachedForks.AttachedForkBoolean}" />
-    public sealed class AttachedBooleanGetterExtension : AttachedBooleanGetterExtension<AttachedForkBoolean>
+    public sealed class AttachedBooleanGetterExtension : AttachedBooleanGetterExtensionBase<AttachedForkBoolean>
     {
     }
+
+   
 }

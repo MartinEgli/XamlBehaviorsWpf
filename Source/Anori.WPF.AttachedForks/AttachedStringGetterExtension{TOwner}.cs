@@ -6,9 +6,8 @@
 
 namespace Anori.WPF.AttachedForks
 {
-    public abstract class AttachedStringGetterExtension<TOwner> : AttachedGetterExtension<string, TOwner>
-        where TOwner : AttachedForkString<TOwner>
-
+    public abstract class AttachedStringGetterExtensionBase<TOwner> : AttachedGetterExtension<TOwner ,string>
+    where TOwner : AttachedForkStringBase<TOwner>
     {
     }
 }
