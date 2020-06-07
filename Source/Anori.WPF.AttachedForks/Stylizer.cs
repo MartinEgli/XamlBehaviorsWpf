@@ -1,14 +1,13 @@
-﻿using System;
+﻿using Anori.WPF.Behaviors;
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
-using Anori.WPF.Behaviors;
-using Anori.WPF.Extensions;
 
-namespace Anori.WPF.AttachedForks
+namespace Anori.WPF.AttachedAncestorProperties
 {
     public static class Stylizer
     {
@@ -21,7 +20,6 @@ namespace Anori.WPF.AttachedForks
             typeof(Stylizer),
             new FrameworkPropertyMetadata(OnSettersChanged));
 
-
         /// <summary>
         ///     Gets or sets a value indicating whether to run as if in design mode.
         /// </summary>
@@ -33,8 +31,8 @@ namespace Anori.WPF.AttachedForks
 
         private static void OnSettersChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            var oldCollection = (SetterCollection) args.OldValue;
-            var newCollection = (SetterCollection) args.NewValue;
+            var oldCollection = (SetterCollection)args.OldValue;
+            var newCollection = (SetterCollection)args.NewValue;
 
             if (oldCollection != newCollection)
             {
@@ -46,7 +44,7 @@ namespace Anori.WPF.AttachedForks
                 {
                     if (style == null) return;
 
-                    //  style.Setters.Add(new AttachedForkSetter());
+                    //  style.Setters.Add(new AttachedAncestorPropertyBindableSetter());
                     return;
                 }
 
@@ -64,7 +62,7 @@ namespace Anori.WPF.AttachedForks
 
         public static SetterCollection GetSetters(DependencyObject obj)
         {
-            return (SetterCollection) obj.GetValue(SettersProperty);
+            return (SetterCollection)obj.GetValue(SettersProperty);
         }
 
         public static void SetSetters(DependencyObject element, SetterCollection value)
@@ -168,8 +166,7 @@ namespace Anori.WPF.AttachedForks
                         {
                             this.VerifyAdd(item);
                             this.ItemAdded(item);
-                        }
-                        finally
+                        } finally
                         {
                             this.snapshot.Insert(this.IndexOf(item), item);
                         }
@@ -188,8 +185,7 @@ namespace Anori.WPF.AttachedForks
                         {
                             this.VerifyAdd(item);
                             this.ItemAdded(item);
-                        }
-                        finally
+                        } finally
                         {
                             this.snapshot.Insert(this.IndexOf(item), item);
                         }
@@ -247,7 +243,7 @@ namespace Anori.WPF.AttachedForks
                 if (this.AssociatedObject != null) throw new InvalidOperationException();
 
                 if (Stylizer.ShouldRunInDesignMode
-                    || !(bool) this.GetValue(DesignerProperties.IsInDesignModeProperty))
+                    || !(bool)this.GetValue(DesignerProperties.IsInDesignModeProperty))
                 {
                     this.WritePreamble();
                     this.associatedObject = dependencyObject;

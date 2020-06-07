@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading;
+
 #if NETCOREAPP
 namespace Microsoft.Xaml.Interactions.UnitTests
 {

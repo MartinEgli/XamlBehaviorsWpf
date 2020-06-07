@@ -1,13 +1,9 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors.Core
 {
-    using System;
-    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using System.Reflection;
     using System.Windows;
-    using System.Windows.Data;
 
     /// <summary>
     /// Represents a trigger that performs actions when the bound data meets a specified condition.
@@ -77,7 +73,7 @@ namespace Anori.WPF.Behaviors.Core
         }
 
         /// <summary>
-        /// Called when the binding property has changed. 
+        /// Called when the binding property has changed.
         /// UA_REVIEW:chabiss
         /// </summary>
         /// <param name="args"><see cref="T:System.Windows.DependencyPropertyChangedEventArgs"/> argument.</param>

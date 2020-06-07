@@ -6,10 +6,9 @@
 
 namespace Anori.WPF.WeakEventManagers
 {
+    using JetBrains.Annotations;
     using System;
     using System.Windows;
-
-    using JetBrains.Annotations;
 
     /// <summary>
     ///     Manager for the DependencyObject.LostFocus event.

@@ -1,9 +1,9 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors
 {
-    using System.ComponentModel;
     using System;
+    using System.ComponentModel;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
 
@@ -20,8 +20,7 @@ namespace Anori.WPF.Behaviors
                     // This utility class is used to convert value that come from XAML, so we should use the invariant culture.
                     returnValue = converter.ConvertFrom(context: null, culture: CultureInfo.InvariantCulture, value: value);
                 }
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 if (!TypeConverterHelper.ShouldEatException(e))
                 {

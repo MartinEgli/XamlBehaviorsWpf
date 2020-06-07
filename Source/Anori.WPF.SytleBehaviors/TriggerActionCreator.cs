@@ -6,11 +6,9 @@
 
 namespace Anori.WPF.StyleBehaviors
 {
+    using JetBrains.Annotations;
     using System;
     using System.Windows;
-
-    using JetBrains.Annotations;
-
     using TriggerAction = Anori.WPF.Behaviors.TriggerAction;
 
     /// <summary>

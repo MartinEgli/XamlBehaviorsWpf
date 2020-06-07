@@ -6,8 +6,6 @@
 
 namespace Anori.WPF.Behaviors
 {
-    using System.Windows.Data;
-
     /// <summary>
     /// </summary>
     public interface IBehaviorCreator

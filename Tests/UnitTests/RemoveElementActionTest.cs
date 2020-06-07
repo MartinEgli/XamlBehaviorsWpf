@@ -6,16 +6,14 @@
 
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
+    using Anori.WPF.Behaviors;
+    using Anori.WPF.Behaviors.Core;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Documents;
     using System.Windows.Shapes;
-
-    using Anori.WPF.Behaviors;
-    using Anori.WPF.Behaviors.Core;
-
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
     public class RemoveElementActionTests

@@ -1,8 +1,8 @@
 ﻿<UserControl
-    x:Class="Anori.WPF.AttachedForks.GuiTest.AttachedUserControl"
+    x:Class="Anori.WPF.AttachedAncestorProperties.GuiTest.AttachedUserControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:attachedForks="clr-namespace:Anori.WPF.AttachedForks;assembly=Anori.WPF.AttachedForks"
+    xmlns:attachedForks="clr-namespace:Anori.WPF.AttachedAncestorProperties;assembly=Anori.WPF.AttachedAncestorProperties"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"

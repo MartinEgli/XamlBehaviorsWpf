@@ -1,0 +1,27 @@
+﻿<Window
+    x:Class="Anori.WPF.AttachedAncestorProperties.GuiTest.MultiAttachedBoolControlWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:guiTest="clr-namespace:Anori.WPF.AttachedAncestorProperties.GuiTest"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="ControlBindingWindow"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <StackPanel>
+        <TextBlock>Entry Points:</TextBlock>
+        <CheckBox x:Name="CheckBoxA">Entry Point A</CheckBox>
+        <CheckBox x:Name="CheckBoxB">Entry Point B</CheckBox>
+        <CheckBox x:Name="CheckBoxC">Entry Point C</CheckBox>
+        <StackPanel
+            guiTest:AttachedAncestorPropertyBooleanA.Setter="{Binding ElementName=CheckBoxA, Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            guiTest:AttachedAncestorPropertyBooleanB.Setter="{Binding ElementName=CheckBoxB, Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            guiTest:AttachedAncestorPropertyBooleanC.Setter="{Binding ElementName=CheckBoxC, Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <TextBlock>End Points:</TextBlock>
+            <CheckBox IsChecked="{guiTest:AttachedBooleanAGetter}">End Point A</CheckBox>
+            <CheckBox IsChecked="{guiTest:AttachedBooleanBGetter}">End Point B</CheckBox>
+            <CheckBox IsChecked="{guiTest:AttachedBooleanCGetter}">End Point C</CheckBox>
+        </StackPanel>
+    </StackPanel>
+</Window>

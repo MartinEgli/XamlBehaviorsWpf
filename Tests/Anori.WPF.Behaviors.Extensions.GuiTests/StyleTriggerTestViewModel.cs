@@ -6,16 +6,14 @@
 
 namespace Anori.WPF.Behaviors.Extensions.GuiTests
 {
+    using Anori.WPF.Behaviors.Core;
+    using Anori.WPF.Behaviors.Observables.GuiTests;
+    using JetBrains.Annotations;
     using System;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Threading;
     using System.Windows.Input;
-
-    using Anori.WPF.Behaviors.Core;
-    using Anori.WPF.Behaviors.Observables.GuiTests;
-
-    using JetBrains.Annotations;
 
     public class StyleTriggerTestViewModel : INotifyPropertyChanged
     {

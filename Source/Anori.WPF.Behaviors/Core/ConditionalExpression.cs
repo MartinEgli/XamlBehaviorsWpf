@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors.Core
 {
     using System.Windows;
@@ -15,7 +15,7 @@ namespace Anori.WPF.Behaviors.Core
     }
 
     /// <summary>
-    /// Represents a conditional expression that is set on a ConditionBehavior.Condition property. 
+    /// Represents a conditional expression that is set on a ConditionBehavior.Condition property.
     /// Contains a list of conditions that gets evaluated in order to return true or false for ICondition.Evaluate().
     /// </summary>
     [ContentProperty("Conditions")]
@@ -27,22 +27,25 @@ namespace Anori.WPF.Behaviors.Core
         public static readonly DependencyProperty ForwardChainingProperty = DependencyProperty.Register("ForwardChaining", typeof(ForwardChaining), typeof(ConditionalExpression), new PropertyMetadata(ForwardChaining.And));
 
         #region Freezable
+
         protected override Freezable CreateInstanceCore()
         {
             return new ConditionalExpression();
         }
-        #endregion
+
+        #endregion Freezable
 
         /// <summary>
         /// Gets or sets forward chaining for the conditions.
         /// If forward chaining is set to ForwardChaining.And, all conditions must be met.
-        /// If forward chaining is set to ForwardChaining.Or, only one condition must be met.		
+        /// If forward chaining is set to ForwardChaining.Or, only one condition must be met.
         /// </summary>
         public ForwardChaining ForwardChaining
         {
             get { return (ForwardChaining)GetValue(ForwardChainingProperty); }
             set { SetValue(ForwardChainingProperty, value); }
         }
+
         /// <summary>
         /// Return the Condition collections.
         /// </summary>
@@ -60,7 +63,7 @@ namespace Anori.WPF.Behaviors.Core
         }
 
         /// <summary>
-        /// Goes through the Conditions collection and evalutes each condition based on 
+        /// Goes through the Conditions collection and evalutes each condition based on
         /// ForwardChaining property.
         /// </summary>
         /// <returns>Returns true if conditions are met; otherwise, returns false.</returns>

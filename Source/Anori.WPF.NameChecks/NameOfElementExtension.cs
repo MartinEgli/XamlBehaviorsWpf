@@ -8,14 +8,13 @@ namespace Anori.WPF.NameChecks
 {
     #region
 
+    using JetBrains.Annotations;
     using System;
     using System.Linq;
     using System.Reflection;
     using System.Windows.Data;
     using System.Windows.Markup;
     using System.Xaml;
-
-    using JetBrains.Annotations;
 
     #endregion
 

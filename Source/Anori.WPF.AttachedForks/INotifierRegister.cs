@@ -6,7 +6,7 @@
 
 using System.Windows;
 
-namespace Anori.WPF.AttachedForks
+namespace Anori.WPF.AttachedAncestorProperties
 {
     public interface INotifierRegister
     {

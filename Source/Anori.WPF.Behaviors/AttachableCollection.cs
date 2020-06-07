@@ -9,12 +9,10 @@ namespace Anori.WPF.Behaviors
     using System;
     using System.Collections.ObjectModel;
     using System.Collections.Specialized;
-    using System.Diagnostics;
-    using System.Windows;
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.Globalization;
-
-    using Anori.WPF.Behaviors;
+    using System.Windows;
 
     /// <summary>
     ///     Represents a collection of IAttachedObject with a shared AssociatedObject and provides change notifications to its

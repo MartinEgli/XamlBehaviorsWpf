@@ -1,7 +1,9 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors.Layout
 {
+    using Anori.WPF.Behaviors;
+    using Anori.WPF.Behaviors.Core;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
@@ -11,8 +13,6 @@ namespace Anori.WPF.Behaviors.Layout
     using System.Windows.Media;
     using System.Windows.Media.Animation;
     using System.Windows.Shapes;
-    using Anori.WPF.Behaviors.Core;
-    using Anori.WPF.Behaviors;
 
     /// <summary>
     /// This enumerated type indicates whether a FluidMoveBehavior applies to the element to which it is attached, or to the children of that element.
@@ -45,6 +45,7 @@ namespace Anori.WPF.Behaviors.Layout
             get { return (FluidMoveScope)this.GetValue(AppliesToProperty); }
             set { this.SetValue(AppliesToProperty, value); }
         }
+
         /// <summary>
         /// Dependency property for the scope of the behavior. See FluidMoveScope for more details.
         /// </summary>
@@ -58,6 +59,7 @@ namespace Anori.WPF.Behaviors.Layout
             get { return (bool)this.GetValue(IsActiveProperty); }
             set { this.SetValue(IsActiveProperty, value); }
         }
+
         /// <summary>
         /// Dependency property for the active state of the behavior.
         /// </summary>
@@ -71,6 +73,7 @@ namespace Anori.WPF.Behaviors.Layout
             get { return (TagType)this.GetValue(TagProperty); }
             set { this.SetValue(TagProperty, value); }
         }
+
         /// <summary>
         /// Dependency property that provides the ability to use the element as its own tag, or the binding on the element.
         /// </summary>
@@ -84,6 +87,7 @@ namespace Anori.WPF.Behaviors.Layout
             get { return (string)this.GetValue(TagPathProperty); }
             set { this.SetValue(TagPathProperty, value); }
         }
+
         /// <summary>
         /// Dependency property for the extra path to add to the binding when UsaBindingAsTag is true.
         /// </summary>
@@ -93,8 +97,16 @@ namespace Anori.WPF.Behaviors.Layout
         /// Identity tag used to detect element motion between containers.
         /// </summary>
         protected static readonly DependencyProperty IdentityTagProperty = DependencyProperty.RegisterAttached("IdentityTag", typeof(object), typeof(FluidMoveBehaviorBase), new PropertyMetadata(null));
-        protected static object GetIdentityTag(DependencyObject obj) { return obj.GetValue(IdentityTagProperty); }
-        protected static void SetIdentityTag(DependencyObject obj, object value) { obj.SetValue(IdentityTagProperty, value); }
+
+        protected static object GetIdentityTag(DependencyObject obj)
+        {
+            return obj.GetValue(IdentityTagProperty);
+        }
+
+        protected static void SetIdentityTag(DependencyObject obj, object value)
+        {
+            obj.SetValue(IdentityTagProperty, value);
+        }
 
         /// <summary>
         /// Private structure that stores all relevant data pertaining to a tagged item.
@@ -113,6 +125,7 @@ namespace Anori.WPF.Behaviors.Layout
 
         // timer data to help purge objects we should no longer be tracking
         private static DateTime nextToLastPurgeTick = DateTime.MinValue;
+
         private static DateTime lastPurgeTick = DateTime.MinValue;
         private static TimeSpan minTickDelta = TimeSpan.FromSeconds(0.5);
 
@@ -139,7 +152,7 @@ namespace Anori.WPF.Behaviors.Layout
             // objects could reappear on the very next layout pass, we'll purge any tag who hasn't been seen since the purge tick before that.
             //
             // If we got a notification when elements were deleted, we would maintain a far shorter list of tags whose FEs were deleted since the last purge.
-            // 
+            //
             // We might also be able to use a WeakReference solution here, but this one is pretty cheap as it only runs when Layout is running anyway.
             if (DateTime.Now - lastPurgeTick >= minTickDelta)
             {
@@ -172,8 +185,7 @@ namespace Anori.WPF.Behaviors.Layout
             if (this.AppliesTo == FluidMoveScope.Self)
             {
                 this.UpdateLayoutTransition(this.AssociatedObject);
-            }
-            else
+            } else
             {
                 Panel panel = this.AssociatedObject as Panel;
                 if (panel != null)
@@ -207,8 +219,7 @@ namespace Anori.WPF.Behaviors.Layout
             try
             {
                 newTagData.AppRect = TranslateRect(newTagData.ParentRect, newTagData.Parent, root);
-            }
-            catch (System.ArgumentException)
+            } catch (System.ArgumentException)
             {
                 if (this.ShouldSkipInitialLayout)
                 {
@@ -316,6 +327,7 @@ namespace Anori.WPF.Behaviors.Layout
             get { return (Duration)this.GetValue(DurationProperty); }
             set { this.SetValue(DurationProperty, value); }
         }
+
         /// <summary>
         /// Dependency property for the duration of the move.
         /// </summary>
@@ -329,6 +341,7 @@ namespace Anori.WPF.Behaviors.Layout
             get { return (TagType)this.GetValue(InitialTagProperty); }
             set { this.SetValue(InitialTagProperty, value); }
         }
+
         /// <summary>
         /// Dependency property for the tag type to use just before the object is loaded.
         /// </summary>
@@ -342,6 +355,7 @@ namespace Anori.WPF.Behaviors.Layout
             get { return (string)this.GetValue(InitialTagPathProperty); }
             set { this.SetValue(InitialTagPathProperty, value); }
         }
+
         /// <summary>
         /// Dependency property for the extra path to add to the binding when UsaBindingAsTag is true.
         /// </summary>
@@ -352,8 +366,16 @@ namespace Anori.WPF.Behaviors.Layout
         /// </summary>
 
         private static readonly DependencyProperty initialIdentityTagProperty = DependencyProperty.RegisterAttached("InitialIdentityTag", typeof(object), typeof(FluidMoveBehavior), new PropertyMetadata(null));
-        private static object GetInitialIdentityTag(DependencyObject obj) { return obj.GetValue(initialIdentityTagProperty); }
-        private static void SetInitialIdentityTag(DependencyObject obj, object value) { obj.SetValue(initialIdentityTagProperty, value); }
+
+        private static object GetInitialIdentityTag(DependencyObject obj)
+        {
+            return obj.GetValue(initialIdentityTagProperty);
+        }
+
+        private static void SetInitialIdentityTag(DependencyObject obj, object value)
+        {
+            obj.SetValue(initialIdentityTagProperty, value);
+        }
 
         /// <summary>
         /// Flag that says whether elements are allowed to float above their containers (in a Popup or Adorner) when changing containers.
@@ -363,6 +385,7 @@ namespace Anori.WPF.Behaviors.Layout
             get { return (bool)this.GetValue(FloatAboveProperty); }
             set { this.SetValue(FloatAboveProperty, value); }
         }
+
         /// <summary>
         /// Dependency property for the FloatAbove flag.
         /// </summary>
@@ -376,6 +399,7 @@ namespace Anori.WPF.Behaviors.Layout
             get { return (IEasingFunction)this.GetValue(EaseXProperty); }
             set { this.SetValue(EaseXProperty, value); }
         }
+
         /// <summary>
         /// Dependency property for the EasingFunction to use for the horizontal component of the move.
         /// </summary>
@@ -389,6 +413,7 @@ namespace Anori.WPF.Behaviors.Layout
             get { return (IEasingFunction)this.GetValue(EaseYProperty); }
             set { this.SetValue(EaseYProperty, value); }
         }
+
         /// <summary>
         /// Dependency property for the EasingFunction to use for the vertical component of the move.
         /// </summary>
@@ -398,22 +423,46 @@ namespace Anori.WPF.Behaviors.Layout
         /// Remember the popup/adorner being used, in case of element motion between containers when FloatAbove is true.
         /// </summary>
         private static readonly DependencyProperty overlayProperty = DependencyProperty.RegisterAttached("Overlay", typeof(object), typeof(FluidMoveBehavior), new PropertyMetadata(null));
-        private static object GetOverlay(DependencyObject obj) { return obj.GetValue(overlayProperty); }
-        private static void SetOverlay(DependencyObject obj, object value) { obj.SetValue(overlayProperty, value); }
+
+        private static object GetOverlay(DependencyObject obj)
+        {
+            return obj.GetValue(overlayProperty);
+        }
+
+        private static void SetOverlay(DependencyObject obj, object value)
+        {
+            obj.SetValue(overlayProperty, value);
+        }
 
         /// <summary>
         /// Opacity cache used when floating a Popup.
         /// </summary>
         private static readonly DependencyProperty cacheDuringOverlayProperty = DependencyProperty.RegisterAttached("CacheDuringOverlay", typeof(object), typeof(FluidMoveBehavior), new PropertyMetadata(null));
-        private static object GetCacheDuringOverlay(DependencyObject obj) { return obj.GetValue(cacheDuringOverlayProperty); }
-        private static void SetCacheDuringOverlay(DependencyObject obj, object value) { obj.SetValue(cacheDuringOverlayProperty, value); }
+
+        private static object GetCacheDuringOverlay(DependencyObject obj)
+        {
+            return obj.GetValue(cacheDuringOverlayProperty);
+        }
+
+        private static void SetCacheDuringOverlay(DependencyObject obj, object value)
+        {
+            obj.SetValue(cacheDuringOverlayProperty, value);
+        }
 
         /// <summary>
         /// Marks the animation transform.
         /// </summary>
         private static readonly DependencyProperty hasTransformWrapperProperty = DependencyProperty.RegisterAttached("HasTransformWrapper", typeof(bool), typeof(FluidMoveBehavior), new PropertyMetadata(false));
-        private static bool GetHasTransformWrapper(DependencyObject obj) { return (bool)obj.GetValue(hasTransformWrapperProperty); }
-        private static void SetHasTransformWrapper(DependencyObject obj, bool value) { obj.SetValue(hasTransformWrapperProperty, value); }
+
+        private static bool GetHasTransformWrapper(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(hasTransformWrapperProperty);
+        }
+
+        private static void SetHasTransformWrapper(DependencyObject obj, bool value)
+        {
+            obj.SetValue(hasTransformWrapperProperty, value);
+        }
 
         private static Dictionary<object, Storyboard> transitionStoryboardDictionary = new Dictionary<object, Storyboard>();
 
@@ -468,21 +517,18 @@ namespace Anori.WPF.Behaviors.Layout
                     previousRect = TranslateRect(spawnData.AppRect, root, newTagData.Parent);
                     parentChange = true;
                     usingBeforeLoaded = true;
-                }
-                else
+                } else
                 {
                     previousRect = Rect.Empty;
                 }
 
                 tagData = new TagData() { ParentRect = Rect.Empty, AppRect = Rect.Empty, Parent = newTagData.Parent, Child = child, Timestamp = DateTime.Now, InitialTag = initialTag };
                 TagDictionary.Add(tag, tagData);
-            }
-            else if (tagData.Parent != VisualTreeHelper.GetParent(child))
+            } else if (tagData.Parent != VisualTreeHelper.GetParent(child))
             {
                 previousRect = TranslateRect(tagData.AppRect, root, newTagData.Parent);
                 parentChange = true;
-            }
-            else
+            } else
             {
                 previousRect = tagData.ParentRect;
             }
@@ -698,8 +744,7 @@ namespace Anori.WPF.Behaviors.Layout
             if (transformGroup != null && transformGroup.Children.Count > 0)
             {
                 return transformGroup.Children[transformGroup.Children.Count - 1];
-            }
-            else
+            } else
             {
                 return new TranslateTransform();
             }
@@ -715,8 +760,7 @@ namespace Anori.WPF.Behaviors.Layout
                 {
                     child.RenderTransform = transformGroup.Children[0];
                     SetHasTransformWrapper(child, false);
-                }
-                else
+                } else
                 {
                     transformGroup.Children.RemoveAt(transformGroup.Children.Count - 1);
                 }
@@ -731,12 +775,10 @@ namespace Anori.WPF.Behaviors.Layout
             if (bindingExpressionBase != null)
             {
                 element.SetBinding(dest, bindingExpressionBase.ParentBindingBase);
-            }
-            else if (value == DependencyProperty.UnsetValue)
+            } else if (value == DependencyProperty.UnsetValue)
             {
                 element.ClearValue(dest);
-            }
-            else
+            } else
             {
                 element.SetValue(dest, element.GetAnimationBaseValue(source));
             }

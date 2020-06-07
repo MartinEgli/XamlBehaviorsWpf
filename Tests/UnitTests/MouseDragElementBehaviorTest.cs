@@ -2,17 +2,15 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
+    using Anori.WPF.Behaviors;
+    using Anori.WPF.Behaviors.Layout;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
     using System.Windows.Shapes;
     using System.Windows.Threading;
-
-    using Anori.WPF.Behaviors;
-    using Anori.WPF.Behaviors.Layout;
-
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
     public class MouseDragElementBehaviorTest

@@ -7,7 +7,6 @@
 namespace Anori.WPF.Behaviors
 {
     using System.Windows;
-    using System.ComponentModel;
 
     /// <summary>
     ///     Represents a collection of triggers with a shared AssociatedObject and provides change notifications to its

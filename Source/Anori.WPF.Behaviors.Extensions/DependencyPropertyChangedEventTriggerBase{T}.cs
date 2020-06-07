@@ -1,7 +1,5 @@
 ﻿namespace Anori.WPF.Behaviors.Extensions
 {
-    using global::Behaviors.Extensions;
-
     /// <summary>
     ///     Represents a trigger that can listen to an element other than its AssociatedObject.
     /// </summary>

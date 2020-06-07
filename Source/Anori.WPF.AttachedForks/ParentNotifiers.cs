@@ -4,13 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using JetBrains.Annotations;
 
-namespace Anori.WPF.AttachedForks
+namespace Anori.WPF.AttachedAncestorProperties
 {
     /// <summary>
     ///     A memory safe dictionary storage for <see cref="ParentChangedNotifier" /> instances.

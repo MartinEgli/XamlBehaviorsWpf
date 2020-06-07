@@ -6,10 +6,9 @@
 
 namespace Anori.WPF.Behaviors.Extensions.GuiTests
 {
+    using Anori.WPF.Behaviors.Core;
     using System.Windows;
     using System.Windows.Input;
-
-    using Anori.WPF.Behaviors.Core;
 
     /// <summary>
     ///     StyleInteraction logic for InvokeCommandActionCreatorWindow.xaml

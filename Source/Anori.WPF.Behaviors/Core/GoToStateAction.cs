@@ -1,18 +1,18 @@
-// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors.Core
 {
+    using Anori.WPF.Behaviors;
     using System;
     using System.Globalization;
     using System.Windows;
-    using Anori.WPF.Behaviors;
 
     /// <summary>
     /// An action that will transition a FrameworkElement to a specified VisualState when invoked.
     /// </summary>
     /// <remarks>
     /// If the TargetName property is set, this action will attempt to change the state of the targeted element. If not, it walks
-    /// the element tree in an attempt to locate an alternative target that defines states. ControlTemplate and UserControl are 
+    /// the element tree in an attempt to locate an alternative target that defines states. ControlTemplate and UserControl are
     /// two common possibilities.
     /// </remarks>
     public class GoToStateAction : TargetedTriggerAction<FrameworkElement>
@@ -30,7 +30,7 @@ namespace Anori.WPF.Behaviors.Core
         }
 
         /// <summary>
-        /// The name of the VisualState.  
+        /// The name of the VisualState.
         /// </summary>
         public string StateName
         {
@@ -75,8 +75,7 @@ namespace Anori.WPF.Behaviors.Core
                                             ExceptionStringTable.GoToStateActionTargetHasNoStateGroups,
                                             frameworkElement.Name));
                 }
-            }
-            else
+            } else
             {
                 frameworkElement = this.Target;
             }

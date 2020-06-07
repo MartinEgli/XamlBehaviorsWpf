@@ -6,11 +6,10 @@
 
 namespace Anori.WPF.Behaviors.Observables
 {
+    using JetBrains.Annotations;
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Windows;
-
-    using JetBrains.Annotations;
 
     /// <summary>
     ///     A trigger that listens for a specified event on its source and fires when that event is fired.

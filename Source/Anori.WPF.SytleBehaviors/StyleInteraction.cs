@@ -6,11 +6,9 @@
 
 namespace Anori.WPF.StyleBehaviors
 {
+    using Anori.WPF.Behaviors;
     using System;
     using System.Windows;
-
-    using Anori.WPF.Behaviors;
-
     using TriggerCollection = Anori.WPF.Behaviors.TriggerCollection;
 
     /// <summary>

@@ -2,10 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
-    using System;
     using Anori.WPF.Behaviors;
     using Anori.WPF.Behaviors.Core;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System;
 
     [TestClass]
     public sealed class ComparisonLogicTest

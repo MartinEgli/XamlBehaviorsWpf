@@ -4,15 +4,17 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Anori.WPF.AttachedForks
+using Anori.WPF.AttachedAncestorProperties;
+
+namespace Anori.WPF.AttachedAncestorProperties
 {
     /// <summary>
     /// Generic Attached Boolean Getter Markup Extension.
     /// </summary>
     /// <typeparam name="TOwner">The type of the owner.</typeparam>
-    /// <seealso cref="Anori.WPF.AttachedForks.AttachedGetterExtension{System.Boolean, TOwner}" />
-    public abstract class AttachedBooleanGetterExtensionBase<TOwner> : AttachedGetterExtension<TOwner ,bool>
-    where TOwner : AttachedForkBooleanBase<TOwner>
+    /// <seealso cref="AttachedGetterExtension{TOwner, bool}" />
+    public abstract class AttachedBooleanGetterExtensionBase<TOwner> : AttachedGetterExtension<TOwner, bool>
+    where TOwner : AttachedAncestorPropertyBooleanBase<TOwner>
 
     {
     }

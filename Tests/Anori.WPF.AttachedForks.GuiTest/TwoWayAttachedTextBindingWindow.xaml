@@ -1,0 +1,28 @@
+﻿<Window
+    x:Class="Anori.WPF.AttachedAncestorProperties.GuiTest.TwoWayAttachedTextBindingWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:guiTest="clr-namespace:Anori.WPF.AttachedAncestorProperties.GuiTest"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="DynamicEndPointTextBindingWindow"
+    Width="800"
+    Height="450"
+    d:DataContext="{d:DesignInstance guiTest:SimpleAttachedTextBindingViewModel}"
+    mc:Ignorable="d">
+    <StackPanel>
+        <Button Click="Button_Click" />
+        <TextBlock>Entry Point</TextBlock>
+        <TextBox
+            x:Name="EntryPointTextBox"
+            x:FieldModifier="public"
+            Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <StackPanel x:Name="StackPanel" guiTest:AttachedAncestorPropertyTextA.Setter="{Binding Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <TextBlock>End Point</TextBlock>
+            <TextBox
+                x:Name="EndPointTextBoxA"
+                x:FieldModifier="public"
+                Text="{guiTest:AttachedBindingTextAGetter UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+    </StackPanel>
+</Window>

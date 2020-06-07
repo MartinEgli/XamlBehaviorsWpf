@@ -5,8 +5,6 @@
 // -----------------------------------------------------------------------
 
 using System.Windows;
-using System.Windows.Data;
-using Anori.WPF.AttachedForks;
 
 namespace AttachedPropertyTests
 {
@@ -20,7 +18,7 @@ namespace AttachedPropertyTests
         public SwitchContentWindow()
         {
             this.InitializeComponent();
-            this.control = new Anori.WPF.AttachedForks.GuiTest.AttachedUserControl();
+            this.control = new Anori.WPF.AttachedAncestorProperties.GuiTest.AttachedUserControl();
         }
 
         private void Button1_Click(object sender, RoutedEventArgs e)
@@ -34,7 +32,5 @@ namespace AttachedPropertyTests
             this.Control1.Content = null;
             this.Control2.Content = this.control;
         }
-
-       
     }
 }

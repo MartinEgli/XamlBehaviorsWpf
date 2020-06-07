@@ -1,12 +1,11 @@
 ﻿using System.Diagnostics;
 using System.Linq;
 using System.Windows;
-using AttachedPropertyTests;
 
-namespace Anori.WPF.AttachedForks.GuiTest
+namespace Anori.WPF.AttachedAncestorProperties.GuiTest
 {
     /// <summary>
-    /// Interaction logic for SimpleBindingWindow.xaml
+    /// Interaction logic for DynamicEndPointTextBindingWindow.xaml
     /// </summary>
     public partial class ItemsControlBindingWindow : Window
     {

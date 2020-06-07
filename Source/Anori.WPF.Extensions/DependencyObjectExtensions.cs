@@ -15,11 +15,10 @@ namespace Anori.WPF.Extensions
 {
     #region
 
+    using JetBrains.Annotations;
     using System;
     using System.Windows;
     using System.Windows.Media;
-
-    using JetBrains.Annotations;
 
     #endregion
 
@@ -72,8 +71,9 @@ namespace Anori.WPF.Extensions
             {
                 return true;
             }
+            return true;
 
-            return false;
+           // return false;
         }
 
         /// <summary>
@@ -85,15 +85,15 @@ namespace Anori.WPF.Extensions
         /// <returns></returns>
         public static T GetValueSync<T>(this DependencyObject obj, DependencyProperty property)
         {
-            if (obj.CheckAccess())
+            if (!obj.CheckAccess())
             {
-                var value = obj.GetValue(property);
-                return (T)value;
+                return (T)obj.Dispatcher.Invoke(() => obj.GetValue(property));
             }
 
-            return (T)obj.Dispatcher.Invoke(() => obj.GetValue(property));
-        }
+            var value = obj.GetValue(property);
+            return (T)value;
 
+        }
 
         /// <summary>
         /// Gets the property object synchronize.
@@ -159,7 +159,6 @@ namespace Anori.WPF.Extensions
             return Window.GetWindow(current);
         }
 
-
         /// <summary>
         ///     Adds the value changed.
         /// </summary>
@@ -193,6 +192,15 @@ namespace Anori.WPF.Extensions
             //  var desc = DependencyPropertyDescriptor.FromProperty(property, typeof(AttachedFork<T, TOwner>));
             var desc = DependencyPropertyDescriptor.FromProperty(property, property.OwnerType);
             desc?.AddValueChanged(sourceObject, ValueChangedHandler);
+        }
+
+        public static void UpdateValueChanged(
+            [NotNull] this DependencyObject sourceObject,
+            [NotNull] DependencyProperty property,
+            [NotNull] EventHandler valueChangedHandler)
+        {
+            RemoveValueChanged(sourceObject, property, valueChangedHandler);
+            AddValueChanged(sourceObject, property, valueChangedHandler);
         }
 
 
@@ -234,9 +242,11 @@ namespace Anori.WPF.Extensions
             {
                 desc.AddValueChanged(sourceObject, valueChangedHandler);
                 Debug.WriteLine("Add value changed handler form {0}", (object)desc.DisplayName);
-            } 
+            } else
+            {
+                throw new Exception("DependencyPropertyDescriptor is null!");
+            }
         }
-
 
         /// <summary>
         /// Removes the value changed.
@@ -277,6 +287,9 @@ namespace Anori.WPF.Extensions
             {
                 desc.RemoveValueChanged(sourceObject, valueChangedHandler);
                 Debug.WriteLine("Remove value changed handler form {0}", (object)desc.DisplayName);
+            } else
+            {
+                throw new Exception("DependencyPropertyDescriptor is null!");
             }
         }
 
@@ -426,40 +439,46 @@ namespace Anori.WPF.Extensions
         /// property
         /// </exception>
         public static bool HasDependencyProperty([NotNull] this DependencyObject target, [NotNull] DependencyProperty property, out object value)
+        {
+            if (target == null) throw new ArgumentNullException(nameof(target));
+            if (property == null) throw new ArgumentNullException(nameof(property));
+            var obj = target.ReadLocalValue(property);
+            if (obj != DependencyProperty.UnsetValue)
             {
-                if (target == null) throw new ArgumentNullException(nameof(target));
-                if (property == null) throw new ArgumentNullException(nameof(property));
-                var obj = target.ReadLocalValue(property);
-                if (obj != DependencyProperty.UnsetValue)
-                {
-                    value = obj;
-                    return true;
-                }
-                value = null;
-                return false;
+                value = obj;
+                return true;
             }
+            value = null;
+            return false;
+        }
 
         /// <summary>
         /// Tries the get attached properties.
         /// </summary>
         /// <param name="target">The target.</param>
         /// <param name="property">The property.</param>
-        /// <param name="attachedProperty">The attached properties.</param>
+        /// <param name="value">The attached properties.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">
         /// target
         /// or
         /// property
         /// </exception>
-        public static bool TryGetAttachedProperty([NotNull]this DependencyObject target, [NotNull]DependencyProperty property, [NotNull] out object attachedProperty)
+        public static bool TryGetAttachedProperty([NotNull]this DependencyObject target, [NotNull]DependencyProperty property, [NotNull] out object value)
         {
-            if (target == null) throw new ArgumentNullException(nameof(target));
-            if (property == null) throw new ArgumentNullException(nameof(property));
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
 
+            if (property == null)
+            {
+                throw new ArgumentNullException(nameof(property));
+            }
 
             // ReSharper disable once AssignNullToNotNullAttribute
-            attachedProperty = target.ReadLocalValue(property);
-            return attachedProperty != null && attachedProperty != DependencyProperty.UnsetValue;
+            value = target.ReadLocalValue(property);
+            return value != null && value != DependencyProperty.UnsetValue;
         }
 
         /// <summary>

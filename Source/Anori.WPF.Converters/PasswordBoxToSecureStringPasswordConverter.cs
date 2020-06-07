@@ -2,14 +2,13 @@
 {
     #region
 
+    using Anori.Strings;
     using System;
     using System.Globalization;
     using System.Security;
     using System.Windows.Controls;
     using System.Windows.Data;
     using System.Windows.Markup;
-
-    using Anori.Strings;
 
     #endregion
 

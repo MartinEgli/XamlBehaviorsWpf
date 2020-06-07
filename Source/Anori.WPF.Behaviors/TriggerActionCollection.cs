@@ -6,10 +6,9 @@
 
 namespace Anori.WPF.Behaviors
 {
-    using System.Windows;
     using System;
     using System.Diagnostics;
-    using System.ComponentModel;
+    using System.Windows;
 
     /// <summary>
     ///     Represents a collection of actions with a shared AssociatedObject and provides change notifications to its contents

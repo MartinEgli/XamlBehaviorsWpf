@@ -4,10 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Anori.WPF.AttachedForks
+namespace Anori.WPF.AttachedAncestorProperties
 {
     public abstract class AttachedBindingStringGetterExtensionBase<TOwner> : AttachedBindingGetterExtension<TOwner, string>
-       where TOwner : AttachedForkStringBase<TOwner>
+       where TOwner : AttachedAncestorPropertyStringBase<TOwner>
 
     {
     }

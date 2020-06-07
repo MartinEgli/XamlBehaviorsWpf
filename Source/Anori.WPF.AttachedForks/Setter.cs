@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Anori.WPF.AttachedForks
+namespace Anori.WPF.AttachedAncestorProperties
 {
     public class ValueSetter : ISetterCreator
     {
@@ -26,8 +26,8 @@ namespace Anori.WPF.AttachedForks
 
         public DependencyProperty Property
         {
-            get; 
-            set; 
+            get;
+            set;
         }
     }
 
@@ -37,7 +37,7 @@ namespace Anori.WPF.AttachedForks
 
         public void Create(DependencyObject o)
         {
-            new AttachedForkSetter<AttachedForkString,string>(o as DependencyObject).Create(o as DependencyObject, this.property );
+            new AttachedAncestorPropertyBindableSetter<AttachedAncestorPropertyString, string>(o as DependencyObject).Create(o as DependencyObject, this.property);
         }
 
         public DependencyProperty Property

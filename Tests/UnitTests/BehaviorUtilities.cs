@@ -6,17 +6,14 @@
 
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
+    using Anori.WPF.Behaviors;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Windows.Markup;
     using System.Windows.Shapes;
-
     using SysWindows = System.Windows;
-
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-    using Anori.WPF.Behaviors;
 
     internal sealed class UniqueClass : SysWindows.DependencyObject
     {

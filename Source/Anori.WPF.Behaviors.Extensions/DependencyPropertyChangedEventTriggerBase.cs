@@ -6,6 +6,8 @@
 
 namespace Anori.WPF.Behaviors.Extensions
 {
+    using Anori.WPF.Behaviors;
+    using global::Behaviors.Extensions;
     using System;
     using System.ComponentModel;
     using System.Diagnostics;
@@ -13,11 +15,6 @@ namespace Anori.WPF.Behaviors.Extensions
     using System.Globalization;
     using System.Reflection;
     using System.Windows;
-
-    using Anori.WPF.Behaviors;
-
-    using global::Behaviors.Extensions;
-
     using TriggerBase = Anori.WPF.Behaviors.TriggerBase;
 
     /// <summary>

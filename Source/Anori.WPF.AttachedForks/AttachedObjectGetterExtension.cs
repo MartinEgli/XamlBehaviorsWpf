@@ -1,6 +1,6 @@
-﻿namespace Anori.WPF.AttachedForks
+﻿namespace Anori.WPF.AttachedAncestorProperties
 {
-    public class AttachedObjectGetterExtension : AttachedObjectGetterExtensionBase<AttachedForkObject>
+    public class AttachedObjectGetterExtension : AttachedObjectGetterExtensionBase<AttachedAncestorPropertyObject>
     {
     }
 }

@@ -6,14 +6,12 @@
 
 namespace Anori.WPF.Conditions
 {
+    using Anori.WPF.Conditions.Resources;
+    using Anori.WPF.Converters;
+    using JetBrains.Annotations;
     using System;
     using System.ComponentModel;
     using System.Globalization;
-
-    using Anori.WPF.Conditions.Resources;
-    using Anori.WPF.Converters;
-
-    using JetBrains.Annotations;
 
     /// <summary>
     ///     Comparison Logic

@@ -6,15 +6,13 @@
 
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
+    using Anori.WPF.Behaviors;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System.Collections;
     using System.Globalization;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
-
-    using Anori.WPF.Behaviors;
-
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
     public sealed class VisualStateUtilitiesTest

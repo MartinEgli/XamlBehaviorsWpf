@@ -8,10 +8,9 @@ namespace Anori.WPF.Behaviors.Triggers
 {
     #region
 
+    using Anori.WPF.Converters;
     using System;
     using System.Windows;
-
-    using Anori.WPF.Converters;
 
     #endregion
 

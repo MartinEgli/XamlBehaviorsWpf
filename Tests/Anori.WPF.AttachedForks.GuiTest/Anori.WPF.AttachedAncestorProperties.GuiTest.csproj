@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFrameworks>net451</TargetFrameworks>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.12.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Source\Anori.WPF.AttachedForks\Anori.WPF.AttachedAncestorProperties.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="ChangeAttachedAncestorProperyAndSetterBindingWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="StaticMultiEndPointBooleanBindingWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MultiAttachedBoolControlWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="DynamicMultiEntryMultiEndPointBooleanBindingWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ChangeAttachedAncestorPropertiesInTreeWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="OneWayAttachedTextBindingWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+</Project>

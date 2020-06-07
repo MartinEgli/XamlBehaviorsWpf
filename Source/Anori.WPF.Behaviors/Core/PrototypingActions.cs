@@ -1,7 +1,8 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors.Core
 {
+    using Anori.WPF.Behaviors;
     using System; //Do not remove this - as the cref in the comments breaks if this is not included.
     using System.Collections;
     using System.Linq;
@@ -9,7 +10,6 @@ namespace Anori.WPF.Behaviors.Core
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
-    using Anori.WPF.Behaviors;
 
     [DefaultTrigger(typeof(ButtonBase), typeof(Behaviors.EventTrigger), "Click")]
     [DefaultTrigger(typeof(TextBox), typeof(Behaviors.EventTrigger), "TextChanged")]
@@ -43,8 +43,10 @@ namespace Anori.WPF.Behaviors.Core
     {
         public static readonly DependencyProperty TargetScreenProperty = DependencyProperty.Register(
             "TargetScreen", typeof(string), typeof(ActivateStateAction), new PropertyMetadata(null));
+
         public static readonly DependencyProperty TargetStateProperty = DependencyProperty.Register(
             "TargetState", typeof(string), typeof(ActivateStateAction), new PropertyMetadata(null));
+
         public string TargetScreen
         {
             get { return GetValue(TargetScreenProperty) as string; }
@@ -135,6 +137,7 @@ namespace Anori.WPF.Behaviors.Core
     {
         public static readonly DependencyProperty TargetScreenProperty = DependencyProperty.Register(
             "TargetScreen", typeof(string), typeof(PlaySketchFlowAnimationAction), new PropertyMetadata(null));
+
         public static readonly DependencyProperty SketchFlowAnimationProperty = DependencyProperty.Register(
             "StateAnimation", typeof(string), typeof(PlaySketchFlowAnimationAction), new PropertyMetadata(null));
 
@@ -235,8 +238,7 @@ namespace Anori.WPF.Behaviors.Core
             if (string.IsNullOrEmpty(this.TargetName) && !this.IsTargetObjectSet)
             {
                 VisualStateUtilities.TryFindNearestStatefulControl(this.AssociatedObject as FrameworkElement, out frameworkElement);
-            }
-            else
+            } else
             {
                 frameworkElement = this.Target;
             }
@@ -280,6 +282,7 @@ namespace Anori.WPF.Behaviors.Core
                             case "Checked":
                                 toggleButton.IsChecked = true;
                                 return;
+
                             case "Unchecked":
                                 toggleButton.IsChecked = false;
                                 return;
@@ -313,15 +316,14 @@ namespace Anori.WPF.Behaviors.Core
             {
                 if (items.ItemsSource != null)
                 {
-                    // Given the flexibility of databinding, we won't always have a collection where we can 
+                    // Given the flexibility of databinding, we won't always have a collection where we can
                     // remove an item.  But let's try a common scenario.
                     IList list = items.ItemsSource as IList;
                     if (list != null && !list.IsReadOnly && list.Contains(this.AssociatedObject.DataContext))
                     {
                         list.Remove(this.AssociatedObject.DataContext);
                     }
-                }
-                else
+                } else
                 {
                     ListBox listBox = this.ItemsControl as ListBox;
                     if (listBox != null)
@@ -334,7 +336,6 @@ namespace Anori.WPF.Behaviors.Core
                     }
                 }
             }
-
         }
 
         private ListBoxItem ItemContainer

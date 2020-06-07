@@ -6,8 +6,8 @@
 
 namespace Anori.WPF.Behaviors
 {
-    using System.Windows;
     using System.Diagnostics.CodeAnalysis;
+    using System.Windows;
 
     /// <summary>
     ///     A trigger that listens for a specified event on its source and fires when that event is fired.

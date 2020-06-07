@@ -8,14 +8,11 @@ namespace Anori.WPF.Behaviors.Triggers
 {
     #region
 
+    using Anori.WPF.Behaviors.Input;
+    using Anori.WPF.Extensions;
     using System;
     using System.Windows;
     using System.Windows.Input;
-
-    using Anori.WPF.Behaviors.Input;
-    using Anori.WPF.Extensions;
-
-    using KeyTrigger = Anori.WPF.Behaviors.Triggers.KeyTrigger;
 
     #endregion
 

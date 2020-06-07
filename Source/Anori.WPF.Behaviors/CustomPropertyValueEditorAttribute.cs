@@ -1,5 +1,5 @@
-// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors
 {
     using System;
@@ -13,23 +13,26 @@ namespace Anori.WPF.Behaviors
         /// Uses the element picker, if supported, to edit this property at design time.
         /// </summary>
         Element,
+
         /// <summary>
         /// Uses the storyboard picker, if supported, to edit this property at design time.
         /// </summary>
         Storyboard,
+
         /// <summary>
         /// Uses the state picker, if supported, to edit this property at design time.
         /// </summary>
         StateName,
+
         /// <summary>
         /// Uses the element-binding picker, if supported, to edit this property at design time.
         /// </summary>
         ElementBinding,
+
         /// <summary>
         /// Uses the property-binding picker, if supported, to edit this property at design time.
         /// </summary>
         PropertyBinding,
-
     }
 
     /// <summary>

@@ -1,6 +1,6 @@
-﻿namespace Anori.WPF.AttachedForks
+﻿namespace Anori.WPF.AttachedAncestorProperties
 {
-    public sealed class AttachedBindingStringGetterExtension : AttachedBindingStringGetterExtensionBase<AttachedForkString>
+    public sealed class AttachedBindingStringGetterExtension : AttachedBindingStringGetterExtensionBase<AttachedAncestorPropertyString>
     {
     }
 }

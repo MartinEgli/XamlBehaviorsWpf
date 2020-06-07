@@ -1,17 +1,17 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors.Media
 {
+    using Anori.WPF.Behaviors;
     using System;
     using System.Windows;
     using System.Windows.Media.Animation;
-    using Anori.WPF.Behaviors;
 
     /// <summary>
     /// An abstract class that provides the ability to target a Storyboard.
     /// </summary>
     /// <remarks>
-    /// For action authors, this class provides a standard way to target a Storyboard. Design tools may choose to provide a 
+    /// For action authors, this class provides a standard way to target a Storyboard. Design tools may choose to provide a
     /// special editing experience for classes that inherit from this action, thereby improving the designer experience.
     /// </remarks>
     public abstract class StoryboardAction : TriggerAction<DependencyObject>
@@ -75,7 +75,7 @@ namespace Anori.WPF.Behaviors.Media
         }
 
         /// <summary>
-        /// This method is called when some criteria is met and the action should be invoked. This method will attempt to 
+        /// This method is called when some criteria is met and the action should be invoked. This method will attempt to
         /// change the targeted storyboard in a way defined by the ControlStoryboardOption.
         /// </summary>
         /// <param name="parameter"></param>
@@ -88,9 +88,11 @@ namespace Anori.WPF.Behaviors.Media
                     case ControlStoryboardOption.Play:
                         this.Storyboard.Begin();
                         break;
+
                     case ControlStoryboardOption.Stop:
                         this.Storyboard.Stop();
                         break;
+
                     case ControlStoryboardOption.TogglePlayPause:
                         ClockState clockState = ClockState.Stopped;
                         bool isPaused = false;
@@ -98,29 +100,29 @@ namespace Anori.WPF.Behaviors.Media
                         {
                             clockState = this.Storyboard.GetCurrentState();
                             isPaused = this.Storyboard.GetIsPaused();
-                        }
-                        catch (InvalidOperationException)
+                        } catch (InvalidOperationException)
                         {
                         }
                         if (clockState == ClockState.Stopped)
                         {
                             this.Storyboard.Begin();
-                        }
-                        else if (isPaused)
+                        } else if (isPaused)
                         {
                             this.Storyboard.Resume();
-                        }
-                        else
+                        } else
                         {
                             this.Storyboard.Pause();
                         }
                         break;
+
                     case ControlStoryboardOption.Pause:
                         this.Storyboard.Pause();
                         break;
+
                     case ControlStoryboardOption.Resume:
                         this.Storyboard.Resume();
                         break;
+
                     case ControlStoryboardOption.SkipToFill:
                         this.Storyboard.SkipToFill();
                         break;

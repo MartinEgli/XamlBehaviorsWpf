@@ -6,11 +6,10 @@
 
 namespace Anori.WPF.Extensions
 {
+    using JetBrains.Annotations;
     using System;
     using System.Linq;
     using System.Windows.Input;
-
-    using JetBrains.Annotations;
 
     /// <summary>
     ///     Command Extensions

@@ -6,9 +6,8 @@
 
 namespace Anori.WPF.StyleBehaviors
 {
-    using System.Collections.ObjectModel;
-
     using Anori.WPF.Behaviors;
+    using System.Collections.ObjectModel;
 
     /// <summary>
     ///

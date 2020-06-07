@@ -1,14 +1,14 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors.Core
 {
+    using Anori.WPF.Behaviors;
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Windows;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
-    using Anori.WPF.Behaviors;
+    using System.Windows;
 
     /// <summary>
     /// Toggles between two states based on a conditional statement.
@@ -82,8 +82,7 @@ namespace Anori.WPF.Behaviors.Core
             if (parentElement != null && IsElementLoaded(parentElement))
             {
                 this.ValidateStateNames();
-            }
-            else
+            } else
             {
                 this.AssociatedObject.Loaded += (o, e) =>
                     {
@@ -186,8 +185,7 @@ namespace Anori.WPF.Behaviors.Core
                 if (ComparisonLogic.EvaluateImpl(this.Binding, ComparisonConditionType.Equal, this.Value))
                 {
                     stateName = this.TrueState;
-                }
-                else
+                } else
                 {
                     stateName = this.FalseState;
                 }

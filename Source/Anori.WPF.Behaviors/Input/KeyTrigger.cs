@@ -1,12 +1,12 @@
-// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors.Input
 {
+    using Anori.WPF.Behaviors;
     using System;
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Media;
-    using Anori.WPF.Behaviors;
 
     public enum KeyTriggerFiredOn
     {
@@ -85,12 +85,10 @@ namespace Anori.WPF.Behaviors.Input
             if (key == Key.LeftCtrl || key == Key.RightCtrl)
             {
                 modifiers |= ModifierKeys.Control;
-            }
-            else if (key == Key.LeftAlt || key == Key.RightAlt || key == Key.System)
+            } else if (key == Key.LeftAlt || key == Key.RightAlt || key == Key.System)
             {
                 modifiers |= ModifierKeys.Alt;
-            }
-            else if (key == Key.LeftShift || key == Key.RightShift)
+            } else if (key == Key.LeftShift || key == Key.RightShift)
             {
                 modifiers |= ModifierKeys.Shift;
             }
@@ -103,8 +101,7 @@ namespace Anori.WPF.Behaviors.Input
             if (this.ActiveOnFocus)
             {
                 this.targetElement = this.Source;
-            }
-            else
+            } else
             {
                 this.targetElement = KeyTrigger.GetRoot(this.Source);
             }
@@ -112,8 +109,7 @@ namespace Anori.WPF.Behaviors.Input
             if (this.FiredOn == KeyTriggerFiredOn.KeyDown)
             {
                 this.targetElement.KeyDown += this.OnKeyPress;
-            }
-            else
+            } else
             {
                 this.targetElement.KeyUp += this.OnKeyPress;
             }
@@ -126,8 +122,7 @@ namespace Anori.WPF.Behaviors.Input
                 if (this.FiredOn == KeyTriggerFiredOn.KeyDown)
                 {
                     this.targetElement.KeyDown -= this.OnKeyPress;
-                }
-                else
+                } else
                 {
                     this.targetElement.KeyUp -= this.OnKeyPress;
                 }

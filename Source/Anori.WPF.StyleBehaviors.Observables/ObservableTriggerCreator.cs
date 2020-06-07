@@ -6,16 +6,13 @@
 
 namespace Anori.WPF.StyleBehaviors.Observables
 {
+    using Anori.WPF.Behaviors;
+    using Anori.WPF.Behaviors.Observables;
+    using JetBrains.Annotations;
     using System;
     using System.Windows;
     using System.Windows.Data;
     using System.Windows.Markup;
-
-    using Anori.WPF.Behaviors;
-    using Anori.WPF.Behaviors.Observables;
-
-    using JetBrains.Annotations;
-
     using TriggerAction = Anori.WPF.Behaviors.TriggerAction;
     using TriggerBase = Anori.WPF.Behaviors.TriggerBase;
 

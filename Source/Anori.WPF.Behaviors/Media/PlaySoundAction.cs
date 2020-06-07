@@ -1,18 +1,18 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors.Media
 {
+    using Anori.WPF.Behaviors;
     using System;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
-    using Anori.WPF.Behaviors;
 
     /// <summary>
     /// An action that will play a sound to completion.
     /// </summary>
     /// <remarks>
-    /// This action is intended for use with short sound effects that don't need to be stopped or controlled. If you're trying 
+    /// This action is intended for use with short sound effects that don't need to be stopped or controlled. If you're trying
     /// to create a music player or game, it may not meet your needs.
     /// </remarks>
     public class PlaySoundAction : TriggerAction<DependencyObject>
@@ -53,7 +53,7 @@ namespace Anori.WPF.Behaviors.Media
         /// When the action is invoked, this method is used to customize the dynamically created MediaElement.
         /// </summary>
         /// <remarks>
-        /// This method may be useful for Action authors who wish to extend PlaySoundAction. If you want to control the 
+        /// This method may be useful for Action authors who wish to extend PlaySoundAction. If you want to control the
         /// MediaElement Balance property, you could inherit from PlaySoundAction and override this method.
         /// </remarks>
         /// <param name="mediaElement"></param>
@@ -67,11 +67,11 @@ namespace Anori.WPF.Behaviors.Media
         }
 
         /// <summary>
-        /// This method is called when some criteria are met and the action should be invoked. 
+        /// This method is called when some criteria are met and the action should be invoked.
         /// </summary>
         /// <remarks>
-        /// Each invocation of the Action plays a new sound. Although the implementation is subject-to-change, the caller should 
-        /// anticipate that this will create a new MediaElement that will be cleaned up when the sound completes or if the media 
+        /// Each invocation of the Action plays a new sound. Although the implementation is subject-to-change, the caller should
+        /// anticipate that this will create a new MediaElement that will be cleaned up when the sound completes or if the media
         /// fails to play.
         /// </remarks>
         /// <param name="parameter"></param>
@@ -90,7 +90,7 @@ namespace Anori.WPF.Behaviors.Media
 
             this.SetMediaElementProperties(mediaElement);
 
-            // Setup delegates that will free the MediaElement upon completion or failure 
+            // Setup delegates that will free the MediaElement upon completion or failure
             mediaElement.MediaEnded += delegate
             {
                 popup.Child = null;

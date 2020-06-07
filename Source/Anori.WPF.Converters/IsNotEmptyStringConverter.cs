@@ -8,12 +8,11 @@ namespace Anori.WPF.Converters
 {
     #region
 
+    using Anori.Strings;
     using System;
     using System.Globalization;
     using System.Windows.Data;
     using System.Windows.Markup;
-
-    using Anori.Strings;
 
     #endregion
 

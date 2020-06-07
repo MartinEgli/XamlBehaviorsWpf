@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
 using Anori.WPF.Behaviors.Core;
 using Anori.WPF.Behaviors.Input;
 using Anori.WPF.Behaviors.Layout;
 using Anori.WPF.Behaviors.Media;
+using System;
 
 namespace Anori.WPF.Behaviors.DesignTools
 {

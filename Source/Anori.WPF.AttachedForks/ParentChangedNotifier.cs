@@ -4,15 +4,15 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Anori.WPF.Extensions;
+using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
-using Anori.WPF.Extensions;
-using JetBrains.Annotations;
 
-namespace Anori.WPF.AttachedForks
+namespace Anori.WPF.AttachedAncestorProperties
 {
     /// <summary>
     ///     A class that helps listening to changes on the Parent property of FrameworkElement objects.
@@ -87,8 +87,7 @@ namespace Anori.WPF.AttachedForks
             if (element.CheckAccess())
             {
                 this.SetBinding();
-            }
-            else
+            } else
             {
                 element.Dispatcher?.Invoke(this.SetBinding);
             }
@@ -162,8 +161,7 @@ namespace Anori.WPF.AttachedForks
                     list.Clear();
                     OnParentChangedList.Remove(element);
                 }
-            }
-            finally
+            } finally
             {
                 this.weakElement = null;
             }

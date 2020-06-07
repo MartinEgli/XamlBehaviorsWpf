@@ -6,15 +6,13 @@
 
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
+    using Anori.WPF.Behaviors;
+    using Anori.WPF.Behaviors.Core;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
     using System.Collections.ObjectModel;
     using System.Windows;
     using System.Windows.Controls;
-
-    using Anori.WPF.Behaviors;
-    using Anori.WPF.Behaviors.Core;
-
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     public class VisualStateManagerStub : VisualStateManager
     {

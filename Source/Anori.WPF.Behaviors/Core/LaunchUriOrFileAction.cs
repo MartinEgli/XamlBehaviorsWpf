@@ -1,13 +1,13 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors.Core
 {
+    using Anori.WPF.Behaviors;
     using System.Diagnostics;
     using System.Windows;
-    using Anori.WPF.Behaviors;
 
     /// <summary>
-    /// An action that will launch a process to open a file or Uri. For files, this action will launch the default program 
+    /// An action that will launch a process to open a file or Uri. For files, this action will launch the default program
     /// for the given file extension. A Uri will open in a web browser.
     /// </summary>
     public class LaunchUriOrFileAction : TriggerAction<DependencyObject>
@@ -19,7 +19,7 @@ namespace Anori.WPF.Behaviors.Core
         }
 
         /// <summary>
-        /// The file or Uri to open. 
+        /// The file or Uri to open.
         /// </summary>
         public string Path
         {

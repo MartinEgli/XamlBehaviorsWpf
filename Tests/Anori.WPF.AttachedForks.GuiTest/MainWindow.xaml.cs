@@ -4,8 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Anori.WPF.AttachedAncestorProperties.GuiTest;
 using System.Windows;
-using Anori.WPF.AttachedForks.GuiTest;
 
 namespace AttachedPropertyTests
 {
@@ -31,9 +31,40 @@ namespace AttachedPropertyTests
             dialog.ShowDialog();
         }
 
+        private void OneToMultiCachedButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OneToMultibleCachedWindow();
+            dialog.ShowDialog();
+        }
+
+        private void OneToMultiStyleButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OneToMultibleStyleWindow();
+            dialog.ShowDialog();
+        }
+
         private void SimpleBindingWindow_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new SimpleBindingWindow();
+            var dialog = new DynamicEndPointTextBindingWindow{DataContext = new SimpleAttachedTextBindingViewModel()};
+            dialog.ShowDialog();
+        }
+
+        private void SimpleWindow_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new StaticEndPointTextBindingWindow();
+            dialog.ShowDialog();
+        }
+
+        private void TwoWayTextBindingWindow_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new TwoWayAttachedTextBindingWindow();
+            dialog.DataContext = new SimpleAttachedTextBindingViewModel();
+
+            dialog.ShowDialog();
+        }
+        private void OneWayTextBindingWindow_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OneWayAttachedTextBindingWindow();
             dialog.ShowDialog();
         }
 
@@ -41,25 +72,23 @@ namespace AttachedPropertyTests
         {
             var dialog = new ControlBindingWindow();
             dialog.ShowDialog();
-
         }
 
         private void ChangeHost_Click(object sender, RoutedEventArgs e)
         {
-
-            var dialog = new ChangeHostWindow();
+            var dialog = new ChangeAttachedAncestorPropertyInTreeWindow();
             dialog.ShowDialog();
         }
 
         private void ChangeHostAndSetter_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new ChangeHostAndSetterWindow();
+            var dialog = new ChangeAttachedAncestorPropertyAndSetterBindingWindow();
             dialog.ShowDialog();
         }
 
         private void TreeChangeHost_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new TreeChangeHostWindow();
+            var dialog = new ChangeAttachedAncestorPropertiesInTreeWindow();
             dialog.ShowDialog();
         }
 
@@ -69,18 +98,34 @@ namespace AttachedPropertyTests
             dialog.ShowDialog();
         }
 
-        private void MuliBoolControlBindingWindow_Click(object sender, RoutedEventArgs e)
+        private void MuliAttachedBoolControlBindingWindow_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new Anori.WPF.AttachedForks.GuiTest.MultiForkBoolControlBindingWindow();
+            var dialog = new MultiAttachedBoolControlBindingWindow();
             dialog.ShowDialog();
-
         }
 
-        private void MuliForkMuliEndPointBoolControlBindingWindow_Click(object sender, RoutedEventArgs e)
+        private void MuliAttachedBoolControlWindow_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new Anori.WPF.AttachedForks.GuiTest.MultiForkMultiEndPointBoolControlBindingWindow();
+            var dialog = new MultiAttachedBoolControlWindow();
             dialog.ShowDialog();
+        }
 
+        private void DynamicMultiEntryMultiEndPointBooleanBindingWindow_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new DynamicMultiEntryMultiEndPointBooleanBindingWindow();
+            dialog.ShowDialog();
+        }
+
+        private void StaticMultiEndPointBooleanBindingWindow_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new StaticMultiEndPointBooleanBindingWindow();
+            dialog.ShowDialog();
+        }
+
+        private void SimpleGetterBinding_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Anori.WPF.AttachedAncestorProperties.GuiTest.SimpleGetterBindingWindow();
+            dialog.ShowDialog();
         }
     }
 }

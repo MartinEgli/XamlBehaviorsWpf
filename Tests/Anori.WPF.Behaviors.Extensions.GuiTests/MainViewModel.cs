@@ -5,20 +5,14 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Anori.WPF.Behaviors.Extensions.GuiTests
 {
+    using Anori.WPF.Behaviors.Core;
+    using JetBrains.Annotations;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Windows.Input;
-
-    using Anori.WPF.Behaviors.Core;
-
-    using JetBrains.Annotations;
 
     internal class MainViewModel : INotifyPropertyChanged
     {

@@ -1,7 +1,10 @@
-﻿namespace Anori.WPF.AttachedForks
+﻿using Anori.WPF.AttachedAncestorProperties;
+
+namespace Anori.WPF.AttachedAncestorProperties
 {
-    public abstract class AttachedBindingBooleanGetterExtensionBase<TOwner> : AttachedBindingGetterExtension<TOwner,bool>
-    where TOwner : AttachedFork<TOwner, bool>
+    public abstract class AttachedBindingBooleanGetterExtensionBase<TOwner> :
+        AttachedBindingGetterExtension<TOwner, bool>
+    where TOwner : AttachedAncestorProperty<TOwner, bool>
     {
     }
 }

@@ -1,10 +1,10 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors.Media
 {
     using System.Windows;
-    using System.Windows.Media.Effects;
     using System.Windows.Media;
+    using System.Windows.Media.Effects;
 
     /// <summary>
     /// Defines a transition effect shader that transitions from one visual to another visual
@@ -13,6 +13,7 @@ namespace Anori.WPF.Behaviors.Media
     public abstract class TransitionEffect : ShaderEffect
     {
         #region Dependency Properties
+
         /// <summary>
         /// Brush-valued properties that turn into sampler-properties in the shader.
         /// Represents the image present in the final state of the transition.
@@ -31,7 +32,7 @@ namespace Anori.WPF.Behaviors.Media
         /// </summary>
         public static readonly DependencyProperty ProgressProperty = DependencyProperty.Register("Progress", typeof(double), typeof(TransitionEffect), new PropertyMetadata(0.0, PixelShaderConstantCallback(0)));
 
-        #endregion
+        #endregion Dependency Properties
 
         #region Constructors
 
@@ -61,7 +62,7 @@ namespace Anori.WPF.Behaviors.Media
             UpdateShaderValue(ProgressProperty);
         }
 
-        #endregion
+        #endregion Constructors
 
         /// <summary>
         /// Gets or sets the Input variable within the shader.

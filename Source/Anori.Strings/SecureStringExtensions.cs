@@ -6,10 +6,9 @@
 
 namespace Anori.Strings
 {
+    using JetBrains.Annotations;
     using System;
     using System.Security;
-
-    using JetBrains.Annotations;
 
     /// <summary>
     ///     Secure String Extensions Class

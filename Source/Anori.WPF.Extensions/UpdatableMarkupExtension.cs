@@ -71,13 +71,11 @@ namespace Anori.WPF.Extensions
                 if (targetObject.CheckAccess())
                 {
                     UpdateAction();
-                }
-                else
+                } else
                 {
                     targetObject.Dispatcher.Invoke((Action)UpdateAction);
                 }
-            }
-            else // _targetProperty is PropertyInfo
+            } else // _targetProperty is PropertyInfo
             {
                 var propertyInfo = this.TargetProperty as PropertyInfo;
                 propertyInfo?.SetValue(this.TargetObject, value, null);

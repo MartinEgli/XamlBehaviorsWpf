@@ -1,16 +1,16 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors
 {
+    using Anori.WPF.Behaviors.Core;
     using System;
     using System.ComponentModel;
     using System.Globalization;
-    using Anori.WPF.Behaviors.Core;
 
     internal static class ComparisonLogic
     {
         /// <summary>
-        /// This method evaluates operands. 
+        /// This method evaluates operands.
         /// </summary>
         /// <param name="leftOperand">Left operand from the LeftOperand property.</param>
         /// <param name="operatorType">Operator from Operator property.</param>
@@ -45,6 +45,7 @@ namespace Anori.WPF.Behaviors
                 case ComparisonConditionType.Equal:
                     result = object.Equals(leftOperand, rightOperand);
                     break;
+
                 case ComparisonConditionType.NotEqual:
                     result = !object.Equals(leftOperand, rightOperand);
                     break;
@@ -60,15 +61,13 @@ namespace Anori.WPF.Behaviors
                                                             leftOperand != null ? leftOperand.GetType().Name : "null",
                                                             rightOperand != null ? rightOperand.GetType().Name : "null",
                                                             operatorType.ToString()));
-                    }
-                    else if (leftComparableOperand == null)
+                    } else if (leftComparableOperand == null)
                     {
                         throw new ArgumentException(string.Format(CultureInfo.CurrentCulture,
                                                             ExceptionStringTable.InvalidLeftOperand,
                                                             leftOperand != null ? leftOperand.GetType().Name : "null",
                                                             operatorType.ToString()));
-                    }
-                    else
+                    } else
                     {
                         throw new ArgumentException(string.Format(CultureInfo.CurrentCulture,
                                         ExceptionStringTable.InvalidRightOperand,
@@ -93,12 +92,10 @@ namespace Anori.WPF.Behaviors
             try
             {
                 convertedOperand = Convert.ChangeType(rightOperand, leftOperand.GetType(), CultureInfo.CurrentCulture);
-            }
-            catch (FormatException)
+            } catch (FormatException)
             {
                 // FormatException: Convert.ChangeType("hello", typeof(double), ...);
-            }
-            catch (InvalidCastException)
+            } catch (InvalidCastException)
             {
                 // InvalidCastException: Convert.ChangeType(4.0d, typeof(Rectangle), ...);
             }
@@ -116,18 +113,23 @@ namespace Anori.WPF.Behaviors
                 case ComparisonConditionType.Equal:
                     result = comparison == 0;
                     break;
+
                 case ComparisonConditionType.GreaterThan:
                     result = comparison > 0;
                     break;
+
                 case ComparisonConditionType.GreaterThanOrEqual:
                     result = comparison >= 0;
                     break;
+
                 case ComparisonConditionType.LessThan:
                     result = comparison < 0;
                     break;
+
                 case ComparisonConditionType.LessThanOrEqual:
                     result = comparison <= 0;
                     break;
+
                 case ComparisonConditionType.NotEqual:
                     result = comparison != 0;
                     break;

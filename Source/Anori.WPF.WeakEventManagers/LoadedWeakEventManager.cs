@@ -2,10 +2,9 @@
 {
     #region
 
+    using JetBrains.Annotations;
     using System;
     using System.Windows;
-
-    using JetBrains.Annotations;
 
     #endregion
 

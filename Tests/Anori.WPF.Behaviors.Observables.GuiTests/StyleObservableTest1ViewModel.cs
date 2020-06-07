@@ -5,21 +5,15 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Anori.WPF.Behaviors.Observables.GuiTests
 {
+    using Anori.WPF.Behaviors.Core;
+    using JetBrains.Annotations;
     using System.ComponentModel;
     using System.Reactive.Subjects;
     using System.Runtime.CompilerServices;
     using System.Windows.Input;
-
-    using Anori.WPF.Behaviors.Core;
-
-    using JetBrains.Annotations;
 
     internal class StyleObservableTest1ViewModel : INotifyPropertyChanged
     {

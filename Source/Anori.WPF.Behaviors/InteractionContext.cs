@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors
 {
     using System;
@@ -16,8 +16,9 @@ namespace Anori.WPF.Behaviors
         #region private fields
 
         // Our Navigation actions can no longer take a hard dependency on PlayerContext. Fortunately we use very little of the PlayerContext from the runtime
-        // so we accumulate reflection info here to use to call the runtime dynamically. 
+        // so we accumulate reflection info here to use to call the runtime dynamically.
         private static Assembly runtimeAssembly;
+
         private static object playerContextInstance;
         private static object activeNavigationViewModelObject;
         private static PropertyInfo libraryNamePropertyInfo;
@@ -33,9 +34,9 @@ namespace Anori.WPF.Behaviors
 
         private static NavigationService navigationService;
         private static readonly string LibraryName;
+
         private static readonly Dictionary<string, Serializer.Data> NavigationData =
             new Dictionary<string, Serializer.Data>(StringComparer.OrdinalIgnoreCase);
-
 
         #endregion private fields
 
@@ -49,8 +50,7 @@ namespace Anori.WPF.Behaviors
                 InteractionContext.LibraryName = (string)InteractionContext.libraryNamePropertyInfo.GetValue(InteractionContext.playerContextInstance, null);
 
                 InteractionContext.LoadNavigationData(InteractionContext.LibraryName);
-            }
-            else
+            } else
             {
                 InteractionContext.InitalizePlatformNavigation();
             }
@@ -102,8 +102,7 @@ namespace Anori.WPF.Behaviors
                 {
                     InteractionContext.goBackMethodInfo.Invoke(ActiveNavigationViewModelObject, null);
                 }
-            }
-            else
+            } else
             {
                 InteractionContext.PlatformGoBack();
             }
@@ -117,8 +116,7 @@ namespace Anori.WPF.Behaviors
                 {
                     InteractionContext.goForwardMethodInfo.Invoke(ActiveNavigationViewModelObject, null);
                 }
-            }
-            else
+            } else
             {
                 InteractionContext.PlatformGoForward();
             }
@@ -149,8 +147,7 @@ namespace Anori.WPF.Behaviors
                 object[] paramArrary = new object[] { screenClassName, true };
 
                 InteractionContext.navigateToScreenMethodInfo.Invoke(ActiveNavigationViewModelObject, paramArrary);
-            }
-            else
+            } else
             {
                 // Verify we could tell where we were
                 if (assembly == null)
@@ -170,7 +167,7 @@ namespace Anori.WPF.Behaviors
 
         public static void GoToState(string screen, string state)
         {
-            // If you have XAML like the following - 
+            // If you have XAML like the following -
 
             //	<i:Interaction.Triggers>
             //		<i:EventTrigger>
@@ -192,8 +189,7 @@ namespace Anori.WPF.Behaviors
                 object[] paramArrary = new object[] { screen, state, false };
 
                 InteractionContext.invokeStateChangeMethodInfo.Invoke(ActiveNavigationViewModelObject, paramArrary);
-            }
-            else
+            } else
             {
                 // Neither platform (WPF or Silverlight) currently supports this as an option
             }
@@ -201,7 +197,7 @@ namespace Anori.WPF.Behaviors
 
         public static void PlaySketchFlowAnimation(string sketchFlowAnimation, string owningScreen)
         {
-            // If you have XAML like the following - 
+            // If you have XAML like the following -
 
             //	<i:Interaction.Triggers>
             //		<i:EventTrigger>
@@ -229,8 +225,7 @@ namespace Anori.WPF.Behaviors
                 };
 
                 InteractionContext.playSketchFlowAnimationMethodInfo.Invoke(activeNavigationViewModel, paramArrary);
-            }
-            else
+            } else
             {
                 // Neither platform (WPF or Silverlight) currently supports this as an option
             }
@@ -278,9 +273,7 @@ namespace Anori.WPF.Behaviors
                     data = Serializer.Deserialize(info.Stream);
                     InteractionContext.NavigationData[assemblyName] = data;
                 }
-            }
-            catch (IOException) { }
-            catch (InvalidOperationException) { }
+            } catch (IOException) { } catch (InvalidOperationException) { }
 
             return data ?? new Serializer.Data();
         }

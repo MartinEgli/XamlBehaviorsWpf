@@ -1,7 +1,8 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors.Core
 {
+    using Anori.WPF.Behaviors;
     using System;
     using System.ComponentModel;
     using System.Diagnostics;
@@ -11,7 +12,6 @@ namespace Anori.WPF.Behaviors.Core
     using System.Windows;
     using System.Windows.Media;
     using System.Windows.Media.Animation;
-    using Anori.WPF.Behaviors;
 
     /// <summary>
     /// An action that will change a specified property to a specified value when invoked.
@@ -135,8 +135,7 @@ namespace Anori.WPF.Behaviors.Core
                     if (converter != null && converter.CanConvertFrom(this.Value.GetType()))
                     {
                         newValue = converter.ConvertFrom(context: null, culture: CultureInfo.InvariantCulture, value: this.Value);
-                    }
-                    else
+                    } else
                     {
                         // Try asking the value if it can convert itself to the target property
                         converter = TypeConverterHelper.GetTypeConverter(this.Value.GetType());
@@ -157,8 +156,7 @@ namespace Anori.WPF.Behaviors.Core
                     this.ValidateAnimationPossible(targetType);
                     object fromValue = ChangePropertyAction.GetCurrentPropertyValue(this.Target, propertyInfo);
                     this.AnimatePropertyChange(propertyInfo, fromValue, newValue);
-                }
-                else
+                } else
                 {
                     if (this.Increment)
                     {
@@ -166,16 +164,13 @@ namespace Anori.WPF.Behaviors.Core
                     }
                     propertyInfo.SetValue(this.Target, newValue, new object[0]);
                 }
-            }
-            catch (FormatException e)
+            } catch (FormatException e)
             {
                 innerException = e;
-            }
-            catch (ArgumentException e)
+            } catch (ArgumentException e)
             {
                 innerException = e;
-            }
-            catch (MethodAccessException e)
+            } catch (MethodAccessException e)
             {
                 innerException = e;
             }
@@ -198,16 +193,13 @@ namespace Anori.WPF.Behaviors.Core
             if (typeof(double).IsAssignableFrom(propertyInfo.PropertyType))
             {
                 timeline = this.CreateDoubleAnimation((double)fromValue, (double)newValue);
-            }
-            else if (typeof(Color).IsAssignableFrom(propertyInfo.PropertyType))
+            } else if (typeof(Color).IsAssignableFrom(propertyInfo.PropertyType))
             {
                 timeline = this.CreateColorAnimation((Color)fromValue, (Color)newValue);
-            }
-            else if (typeof(Point).IsAssignableFrom(propertyInfo.PropertyType))
+            } else if (typeof(Point).IsAssignableFrom(propertyInfo.PropertyType))
             {
                 timeline = this.CreatePointAnimation((Point)fromValue, (Point)newValue);
-            }
-            else
+            } else
             {
                 timeline = this.CreateKeyFrameAnimation(fromValue, newValue);
             }
@@ -222,8 +214,7 @@ namespace Anori.WPF.Behaviors.Core
                 // Workaround Dev10 bug 542374, Storyboard.Target property does not work properly
                 // when the target of the animation is a freezable.
                 Storyboard.SetTargetName(sb, this.TargetName);
-            }
-            else
+            } else
             {
                 Storyboard.SetTarget(sb, (DependencyObject)this.Target);
             }
@@ -240,8 +231,7 @@ namespace Anori.WPF.Behaviors.Core
             if (containingObject != null)
             {
                 sb.Begin(containingObject);
-            }
-            else
+            } else
             {
                 sb.Begin();
             }
@@ -260,8 +250,7 @@ namespace Anori.WPF.Behaviors.Core
                 if (propertyInfo.Name == "Width")
                 {
                     fromValue = targetElement.ActualWidth;
-                }
-                else
+                } else
                 {
                     fromValue = targetElement.ActualHeight;
                 }
@@ -388,20 +377,16 @@ namespace Anori.WPF.Behaviors.Core
             if (typeof(double).IsAssignableFrom(propertyType))
             {
                 returnValue = (double)currentValue + (double)value;
-            }
-            else if (typeof(int).IsAssignableFrom(propertyType))
+            } else if (typeof(int).IsAssignableFrom(propertyType))
             {
                 returnValue = (int)currentValue + (int)value;
-            }
-            else if (typeof(float).IsAssignableFrom(propertyType))
+            } else if (typeof(float).IsAssignableFrom(propertyType))
             {
                 returnValue = (float)currentValue + (float)value;
-            }
-            else if (typeof(string).IsAssignableFrom(propertyType))
+            } else if (typeof(string).IsAssignableFrom(propertyType))
             {
                 returnValue = (string)currentValue + (string)value;
-            }
-            else
+            } else
             {
                 returnValue = TryAddition(currentValue, value);
             }
@@ -432,15 +417,13 @@ namespace Anori.WPF.Behaviors.Core
                 if (!parameters[0].ParameterType.IsAssignableFrom(additiveType))
                 {
                     continue;
-                }
-                else if (!secondParameterType.IsAssignableFrom(valueType))
+                } else if (!secondParameterType.IsAssignableFrom(valueType))
                 {
                     TypeConverter additionConverter = TypeConverterHelper.GetTypeConverter(secondParameterType);
                     if (additionConverter.CanConvertFrom(valueType))
                     {
                         convertedValue = TypeConverterHelper.DoConversionFrom(additionConverter, value);
-                    }
-                    else
+                    } else
                     {
                         continue;
                     }
@@ -459,8 +442,7 @@ namespace Anori.WPF.Behaviors.Core
             if (uniqueAdditionOperation != null)
             {
                 returnValue = uniqueAdditionOperation.Invoke(null, new object[] { currentValue, convertedValue });
-            }
-            else
+            } else
             {
                 // we couldn't figure out how to add, so pack it up and just set value
                 returnValue = value;

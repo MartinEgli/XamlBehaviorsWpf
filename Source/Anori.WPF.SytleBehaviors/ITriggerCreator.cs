@@ -17,6 +17,5 @@ namespace Anori.WPF.Behaviors
         /// </summary>
         /// <returns></returns>
         TriggerBase Create(DependencyObject dependencyObject);
-            }
-
+    }
 }

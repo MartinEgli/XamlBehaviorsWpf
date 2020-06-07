@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using JetBrains.Annotations;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using JetBrains.Annotations;
 
-namespace Anori.WPF.AttachedForks.GuiTest
+namespace Anori.WPF.AttachedAncestorProperties.GuiTest
 {
     public class ItemsControlBindingViewModel : INotifyPropertyChanged
     {
@@ -23,6 +17,12 @@ namespace Anori.WPF.AttachedForks.GuiTest
         /// </value>
         public ObservableCollection<ItemViewModel> Items { get; } = new ObservableCollection<ItemViewModel>();
 
+        /// <summary>
+        /// Gets or sets the text.
+        /// </summary>
+        /// <value>
+        /// The text.
+        /// </value>
         public string Text
         {
             get
@@ -46,33 +46,6 @@ namespace Anori.WPF.AttachedForks.GuiTest
         /// Called when [property changed].
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
-
-    public class ItemViewModel : INotifyPropertyChanged
-    {
-        private string text;
-
-        public string Text
-        {
-            get
-            {
-                return this.text;
-            }
-            set
-            {
-                if (value == this.text) return;
-                this.text = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

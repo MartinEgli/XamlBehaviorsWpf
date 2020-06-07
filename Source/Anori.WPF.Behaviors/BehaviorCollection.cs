@@ -24,8 +24,6 @@ namespace Anori.WPF.Behaviors
                 behavior.Attach(this.AssociatedObject);
             }
         }
-        //todo : fsdf
-
 
         /// <summary>
         ///     Called when the collection is being detached from its AssociatedObject, but before it has actually occurred.

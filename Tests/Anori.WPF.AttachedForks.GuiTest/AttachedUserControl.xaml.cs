@@ -6,7 +6,7 @@
 
 using System.Windows.Controls;
 
-namespace Anori.WPF.AttachedForks.GuiTest
+namespace Anori.WPF.AttachedAncestorProperties.GuiTest
 {
     /// <summary>
     ///     Interaction logic for UserControl.xaml

@@ -2,11 +2,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Microsoft.Xaml.Interactions.UnitTests
 {
+    using Anori.WPF.Behaviors;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
     using System.Diagnostics;
     using System.Windows.Controls;
-    using Anori.WPF.Behaviors;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using SysWindows = System.Windows;
 
     [TestClass]

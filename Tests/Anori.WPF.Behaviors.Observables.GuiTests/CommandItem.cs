@@ -6,14 +6,12 @@
 
 namespace Anori.WPF.Behaviors.Observables.GuiTests
 {
+    using Anori.WPF.Behaviors.Core;
+    using JetBrains.Annotations;
     using System;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Windows.Input;
-
-    using Anori.WPF.Behaviors.Core;
-
-    using JetBrains.Annotations;
 
     public class CommandItem : IItem, INotifyPropertyChanged
     {

@@ -8,10 +8,9 @@ namespace Anori.WPF.Extensions
 {
     #region
 
+    using JetBrains.Annotations;
     using System;
     using System.Windows.Threading;
-
-    using JetBrains.Annotations;
 
     #endregion
 

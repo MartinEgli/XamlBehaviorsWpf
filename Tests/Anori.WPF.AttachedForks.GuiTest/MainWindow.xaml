@@ -10,18 +10,23 @@
     Height="450"
     mc:Ignorable="d">
     <StackPanel>
+        <Button Click="SimpleWindow_Click">Simple Text</Button>
+        <Button Click="OneWayTextBindingWindow_Click">One Way Text Binding</Button>
+        <Button Click="TwoWayTextBindingWindow_Click">Two Way Text Binding</Button>
         <Button Click="Button_Click">Switch Content</Button>
-        <Button Click="ChangeHost_Click">Change Host</Button>
-        <Button Click="ChangeHostAndSetter_Click">Change Host and Setter</Button>
-        <Button Click="TreeChangeHost_Click">Tree Change Host</Button>
+        <Button Click="ChangeHost_Click">Change Fork</Button>
+        <Button Click="ChangeHostAndSetter_Click">Change Fork and Setter</Button>
+        <Button Click="TreeChangeHost_Click">Tree Change Fork</Button>
         <Button Click="OneToMultiButton_Click">One To Multi</Button>
+        <Button Click="OneToMultiCachedButton_Click">One To Multi Cached</Button>
+        <Button Click="OneToMultiStyleButton_Click">One To Multi with Style</Button>
         <Button Click="SimpleBindingWindow_Click">Simple Binding</Button>
         <Button Click="ControlBindingWindow_Click">Control Binding</Button>
-        <Button Click="MuliBoolControlBindingWindow_Click">Multi Fork Bool Control Binding</Button>
-        <Button Click="MuliForkMuliEndPointBoolControlBindingWindow_Click">Multi Fork and Multi End Point Bool Control Binding</Button>
+        <Button Click="MuliAttachedBoolControlBindingWindow_Click">Multi Attached Bool Control Binding</Button>
+        <Button Click="MuliAttachedBoolControlWindow_Click">Multi Attached Bool Control</Button>
+        <Button Click="DynamicMultiEntryMultiEndPointBooleanBindingWindow_Click">Dynamic Multi Entry and Multi End Point Boolean Binding</Button>
+        <Button Click="StaticMultiEndPointBooleanBindingWindow_Click">Static Multi End Point Boolean Binding</Button>
         <Button Click="ItemsControlBindingWindow_Click">Items Control Binding</Button>
-
-
-
+        <Button Click="SimpleGetterBinding_Click">Simple Getter Binding</Button>
     </StackPanel>
 </Window>

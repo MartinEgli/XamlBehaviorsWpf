@@ -1,0 +1,27 @@
+﻿<Window
+    x:Class="Anori.WPF.AttachedAncestorProperties.GuiTest.SimpleGetterBindingWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:attachedForks="clr-namespace:Anori.WPF.AttachedAncestorProperties;assembly=Anori.WPF.AttachedAncestorProperties"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:guiTest="clr-namespace:Anori.WPF.AttachedAncestorProperties.GuiTest"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="SimpleGetterBindingWindow"
+    Width="800"
+    Height="450"
+    d:DataContext="{d:DesignInstance guiTest:SimpleGetterBindingViewModel}"
+    mc:Ignorable="d">
+    <StackPanel>
+        <TextBlock>Entry Point</TextBlock>
+        <TextBox x:Name="TextBox" Text="{Binding SetterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <StackPanel x:Name="SetterStackPanel" attachedForks:AttachedAncestorPropertyObject.Setter="{Binding Path=SetterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <StackPanel x:Name="GetterStackPanel">
+                <attachedForks:AttachedAncestorPropertyObject.Getter>
+                    <attachedForks:AttachedAncestorPropertyGetter Binding="{Binding Path=GetterText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Type="{x:Type attachedForks:AttachedAncestorPropertyObject}" />
+                </attachedForks:AttachedAncestorPropertyObject.Getter>
+                <TextBlock>End Point</TextBlock>
+                <TextBox x:Name="TextBox1" Text="{Binding GetterText}" />
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+</Window>

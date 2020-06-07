@@ -64,7 +64,6 @@ namespace Behaviors.Extensions.GuiTests
             };
 
             return null;
-
         }
 
         /// <summary>

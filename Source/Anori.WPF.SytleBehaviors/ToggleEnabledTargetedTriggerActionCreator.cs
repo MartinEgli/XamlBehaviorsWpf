@@ -6,12 +6,8 @@
 
 namespace Anori.WPF.StyleBehaviors
 {
-    using System.Windows;
-
     using Anori.WPF.Behaviors.Extensions;
-
-    using global::Behaviors.Extensions;
-
+    using System.Windows;
     using TriggerAction = Anori.WPF.Behaviors.TriggerAction;
 
     /// <summary>
@@ -44,9 +40,10 @@ namespace Anori.WPF.StyleBehaviors
         public TriggerAction Create(DependencyObject dependencyObject)
         {
             return new ToggleEnabledTargetedTriggerAction
-                   {
-                       TargetName = this.TargetElementName, TargetObject = this.TargetObject
-                   };
+            {
+                TargetName = this.TargetElementName,
+                TargetObject = this.TargetObject
+            };
         }
 
         /// <summary>

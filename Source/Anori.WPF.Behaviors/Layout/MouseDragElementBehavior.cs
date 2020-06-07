@@ -1,15 +1,15 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors.Layout
 {
+    using Anori.WPF.Behaviors;
+    using Anori.WPF.Behaviors.Core;
     using System;
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Media;
-    using Anori.WPF.Behaviors.Core;
-    using Anori.WPF.Behaviors;
 
     /// <summary>
     /// Repositions the attached element in response to mouse drag gestures on the element.
@@ -22,7 +22,7 @@ namespace Anori.WPF.Behaviors.Layout
         private Point relativePosition;
         private Transform cachedRenderTransform;
 
-        #endregion
+        #endregion Fields
 
         #region Events
 
@@ -41,7 +41,7 @@ namespace Anori.WPF.Behaviors.Layout
         /// </summary>
         public event MouseEventHandler DragFinished;
 
-        #endregion
+        #endregion Events
 
         #region Dependency properties
 
@@ -60,7 +60,7 @@ namespace Anori.WPF.Behaviors.Layout
         /// </summary>
         public static readonly DependencyProperty ConstrainToParentBoundsProperty = DependencyProperty.Register("ConstrainToParentBounds", typeof(bool), typeof(MouseDragElementBehavior), new PropertyMetadata(false, new PropertyChangedCallback(OnConstrainToParentBoundsChanged)));
 
-        #endregion
+        #endregion Dependency properties
 
         #region Public properties
 
@@ -96,7 +96,7 @@ namespace Anori.WPF.Behaviors.Layout
             set { this.SetValue(ConstrainToParentBoundsProperty, value); }
         }
 
-        #endregion
+        #endregion Public properties
 
         #region PropertyChangedHandlers
 
@@ -118,7 +118,7 @@ namespace Anori.WPF.Behaviors.Layout
             b.UpdatePosition(new Point(b.X, b.Y));
         }
 
-        #endregion
+        #endregion PropertyChangedHandlers
 
         #region Private properties
 
@@ -135,7 +135,6 @@ namespace Anori.WPF.Behaviors.Layout
                 return new Point(translation.X, translation.Y);
             }
         }
-
 
         /// <summary>
         /// Gets the element bounds in element coordinates.
@@ -205,7 +204,7 @@ namespace Anori.WPF.Behaviors.Layout
             }
         }
 
-        #endregion
+        #endregion Private properties
 
         #region Private methods
 
@@ -258,8 +257,7 @@ namespace Anori.WPF.Behaviors.Layout
                         {
                             double diff = endPosition.X - parentBounds.Left;
                             x -= diff;
-                        }
-                        else if (endPosition.Right > parentBounds.Right)
+                        } else if (endPosition.Right > parentBounds.Right)
                         {
                             double diff = endPosition.Right - parentBounds.Right;
                             x -= diff;
@@ -269,8 +267,7 @@ namespace Anori.WPF.Behaviors.Layout
                         {
                             double diff = endPosition.Y - parentBounds.Top;
                             y -= diff;
-                        }
-                        else if (endPosition.Bottom > parentBounds.Bottom)
+                        } else if (endPosition.Bottom > parentBounds.Bottom)
                         {
                             double diff = endPosition.Bottom - parentBounds.Bottom;
                             y -= diff;
@@ -308,8 +305,7 @@ namespace Anori.WPF.Behaviors.Layout
                         translateTransform = new TranslateTransform();
                         renderTransformGroup.Children.Add(translateTransform);
                     }
-                }
-                else if (renderMatrixTransform != null)
+                } else if (renderMatrixTransform != null)
                 {
                     Matrix matrix = renderMatrixTransform.Matrix;
                     matrix.OffsetX += x;
@@ -318,8 +314,7 @@ namespace Anori.WPF.Behaviors.Layout
                     matrixTransform.Matrix = matrix;
                     this.RenderTransform = matrixTransform;
                     return;
-                }
-                else
+                } else
                 {
                     TransformGroup transformGroup = new TransformGroup();
                     translateTransform = new TranslateTransform();
@@ -368,8 +363,7 @@ namespace Anori.WPF.Behaviors.Layout
                     ScaleX = scaleTransform.ScaleX,
                     ScaleY = scaleTransform.ScaleY,
                 };
-            }
-            else if ((rotateTransform = transform as RotateTransform) != null)
+            } else if ((rotateTransform = transform as RotateTransform) != null)
             {
                 return new RotateTransform()
                 {
@@ -377,8 +371,7 @@ namespace Anori.WPF.Behaviors.Layout
                     CenterX = rotateTransform.CenterX,
                     CenterY = rotateTransform.CenterY,
                 };
-            }
-            else if ((skewTransform = transform as SkewTransform) != null)
+            } else if ((skewTransform = transform as SkewTransform) != null)
             {
                 return new SkewTransform()
                 {
@@ -387,23 +380,20 @@ namespace Anori.WPF.Behaviors.Layout
                     CenterX = skewTransform.CenterX,
                     CenterY = skewTransform.CenterY,
                 };
-            }
-            else if ((translateTransform = transform as TranslateTransform) != null)
+            } else if ((translateTransform = transform as TranslateTransform) != null)
             {
                 return new TranslateTransform()
                 {
                     X = translateTransform.X,
                     Y = translateTransform.Y,
                 };
-            }
-            else if ((matrixTransform = transform as MatrixTransform) != null)
+            } else if ((matrixTransform = transform as MatrixTransform) != null)
             {
                 return new MatrixTransform()
                 {
                     Matrix = matrixTransform.Matrix,
                 };
-            }
-            else if ((transformGroup = transform as TransformGroup) != null)
+            } else if ((transformGroup = transform as TransformGroup) != null)
             {
                 TransformGroup group = new TransformGroup();
                 foreach (Transform childTransform in transformGroup.Children)
@@ -495,7 +485,7 @@ namespace Anori.WPF.Behaviors.Layout
             }
         }
 
-        #endregion
+        #endregion Private methods
 
         #region Linear algebra helper methods
 
@@ -538,7 +528,7 @@ namespace Anori.WPF.Behaviors.Layout
             return transform.Transform(new Point(0, 0));
         }
 
-        #endregion
+        #endregion Linear algebra helper methods
 
         /// <summary>
         /// Called after the behavior is attached to an AssociatedObject.

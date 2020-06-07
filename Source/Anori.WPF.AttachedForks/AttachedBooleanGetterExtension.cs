@@ -1,12 +1,12 @@
-﻿namespace Anori.WPF.AttachedForks
+﻿using Anori.WPF.AttachedAncestorProperties;
+
+namespace Anori.WPF.AttachedAncestorProperties
 {
     /// <summary>
     /// 
     /// </summary>
-    /// <seealso cref="Anori.WPF.AttachedForks.AttachedBooleanGetterExtension{Anori.WPF.AttachedForks.AttachedForkBoolean}" />
-    public sealed class AttachedBooleanGetterExtension : AttachedBooleanGetterExtensionBase<AttachedForkBoolean>
+    /// <seealso cref="AttachedBooleanGetterExtensionBase{AttachedAncestorPropertyBoolean}" />
+    public sealed class AttachedBooleanGetterExtension : AttachedBooleanGetterExtensionBase<AttachedAncestorPropertyBoolean>
     {
     }
-
-   
 }

@@ -1,4 +1,4 @@
-// -----------------------------------------------------------------------
+﻿// -----------------------------------------------------------------------
 // <copyright file="DataBindingHelper.cs" company="bfa solutions ltd">
 // Copyright (c) bfa solutions ltd. All rights reserved.
 // </copyright>
@@ -6,12 +6,11 @@
 
 namespace Anori.WPF.Conditions
 {
+    using JetBrains.Annotations;
     using System;
     using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Data;
-
-    using JetBrains.Annotations;
 
     /// <summary>
     ///     Helper class for managing binding expressions on dependency objects.

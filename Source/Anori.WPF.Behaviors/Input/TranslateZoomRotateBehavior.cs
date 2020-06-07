@@ -1,13 +1,13 @@
-// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors.Input
 {
+    using Anori.WPF.Behaviors;
+    using Anori.WPF.Behaviors.Layout;
     using System;
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Media;
-    using Anori.WPF.Behaviors.Layout;
-    using Anori.WPF.Behaviors;
 
     /// <summary>
     /// Allows the user to use common touch gestures to translate, zoom, and rotate the attached object.
@@ -20,15 +20,19 @@ namespace Anori.WPF.Behaviors.Input
 
         // used for handling the mouse fallback behavior.
         private bool isDragging = false;
+
         // prevent us from trying to update the position when handling a mouse move
         private bool isAdjustingTransform = false;
+
         private Point lastMousePoint;
 
         // used to enforce min and max scale.
         private double lastScaleX = 1.0;
+
         private double lastScaleY = 1.0;
         private const double HardMinimumScale = 1e-6;
-        #endregion
+
+        #endregion Fields
 
         #region Dependency properties
 
@@ -50,9 +54,10 @@ namespace Anori.WPF.Behaviors.Input
         public static readonly DependencyProperty MaximumScaleProperty =
             DependencyProperty.Register("MaximumScale", typeof(double), typeof(TranslateZoomRotateBehavior), new PropertyMetadata(10.0));
 
-        #endregion
+        #endregion Dependency properties
 
         #region Public properties
+
         /// <summary>
         /// Gets or sets a value specifying which zooming and translation variants to support.
         /// </summary>
@@ -107,7 +112,7 @@ namespace Anori.WPF.Behaviors.Input
             set { this.SetValue(TranslateZoomRotateBehavior.MaximumScaleProperty, value); }
         }
 
-        #endregion
+        #endregion Public properties
 
         #region PropertyChangedHandlers
 
@@ -122,8 +127,7 @@ namespace Anori.WPF.Behaviors.Input
             return Math.Max(0, Math.Min(1, friction));
         }
 
-
-        #endregion
+        #endregion PropertyChangedHandlers
 
         #region Private properties
 
@@ -154,7 +158,6 @@ namespace Anori.WPF.Behaviors.Input
             {
                 return new Point(this.AssociatedObject.RenderTransformOrigin.X * this.AssociatedObject.ActualWidth,
                                 this.AssociatedObject.RenderTransformOrigin.Y * this.AssociatedObject.ActualHeight);
-
             }
         }
 
@@ -188,7 +191,7 @@ namespace Anori.WPF.Behaviors.Input
             }
         }
 
-        #endregion
+        #endregion Private properties
 
         #region Private methods
 
@@ -201,15 +204,14 @@ namespace Anori.WPF.Behaviors.Input
                 if (this.RenderTransform != null)
                 {
                     transform = new MatrixTransform(this.FullTransformValue);
-                }
-                else
+                } else
                 {
                     // can't use MatrixTransform.Identity because it is frozen.
                     transform = new MatrixTransform(Matrix.Identity);
                 }
                 this.RenderTransform = transform;
             }
-            // The touch manipulation deltas need to be applied relative to the element's actual center.  
+            // The touch manipulation deltas need to be applied relative to the element's actual center.
             // Keeping a render transform origin in place will cause the transform to be applied incorrectly, so we clear it.
             this.AssociatedObject.RenderTransformOrigin = new Point(0, 0);
         }
@@ -217,7 +219,7 @@ namespace Anori.WPF.Behaviors.Input
         internal void ApplyRotationTransform(double angle, Point rotationPoint)
         {
             // Need to use a temporary and set MatrixTransform.Matrix.
-            // Modifying the matrix property directly will only affect a local copy, since Matrix is a value type.  
+            // Modifying the matrix property directly will only affect a local copy, since Matrix is a value type.
             Matrix matrix = this.MatrixTransform.Matrix;
             matrix.RotateAt(angle, rotationPoint.X, rotationPoint.Y);
             this.MatrixTransform.Matrix = matrix;
@@ -239,7 +241,7 @@ namespace Anori.WPF.Behaviors.Input
             this.lastScaleY = scaleY * this.lastScaleY;
 
             // Need to use a temporary and set MatrixTransform.Matrix.
-            // Modifying the matrix property directly will only affect a local copy, since Matrix is a value type.  
+            // Modifying the matrix property directly will only affect a local copy, since Matrix is a value type.
             Matrix matrix = this.MatrixTransform.Matrix;
             matrix.ScaleAt(scaleX, scaleY, scalePoint.X, scalePoint.Y);
             this.MatrixTransform.Matrix = matrix;
@@ -375,7 +377,7 @@ namespace Anori.WPF.Behaviors.Input
             }
         }
 
-        #endregion
+        #endregion Private methods
 
         /// <summary>
         /// Called after the behavior is attached to an AssociatedObject.

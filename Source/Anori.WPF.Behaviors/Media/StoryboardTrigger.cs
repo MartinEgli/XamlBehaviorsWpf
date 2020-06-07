@@ -1,18 +1,18 @@
-﻿// Copyright (c) Microsoft. All rights reserved. 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information. 
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 namespace Anori.WPF.Behaviors.Media
 {
+    using Anori.WPF.Behaviors;
     using System;
     using System.Windows;
     using System.Windows.Media.Animation;
-    using Anori.WPF.Behaviors;
 
     /// <summary>
     /// An abstract class that provides the ability to target a Storyboard.
     /// </summary>
     /// <remarks>
-    /// For Trigger authors, this class provides a standard way to target a Storyboard. Design tools may choose to provide a 
-    /// special editing experience for classes that inherit from this trigger, thereby improving the designer experience. 
+    /// For Trigger authors, this class provides a standard way to target a Storyboard. Design tools may choose to provide a
+    /// special editing experience for classes that inherit from this trigger, thereby improving the designer experience.
     /// </remarks>
     public abstract class StoryboardTrigger : TriggerBase<DependencyObject>
     {

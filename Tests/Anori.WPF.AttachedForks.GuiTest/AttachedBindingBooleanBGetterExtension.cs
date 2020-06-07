@@ -1,6 +1,6 @@
-﻿namespace Anori.WPF.AttachedForks.GuiTest
+﻿namespace Anori.WPF.AttachedAncestorProperties.GuiTest
 {
-    public sealed class AttachedBindingBooleanBGetterExtension : AttachedBindingBooleanGetterExtensionBase<AttachedForkB>
+    public sealed class AttachedBindingBooleanBGetterExtension : AttachedBindingBooleanGetterExtensionBase<AttachedAncestorPropertyBooleanB>
     {
     }
 }

@@ -6,14 +6,13 @@
 
 namespace Anori.WPF.Behaviors.Core
 {
+    using Anori.WPF.Behaviors;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using System.Reflection;
     using System.Windows;
-
-    using Anori.WPF.Behaviors;
 
     /// <summary>
     ///     Calls a method on a specified object when invoked.
