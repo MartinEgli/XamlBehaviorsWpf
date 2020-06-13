@@ -11,9 +11,9 @@ namespace Anori.WPF.AttachedAncestorProperties.GuiTest
     /// <summary>
     ///     Interaction logic for UserControl.xaml
     /// </summary>
-    public partial class AttachedSimpleUserControl : UserControl
+    public partial class AttachedUpdateableTextUserControl : UserControl
     {
-        public AttachedSimpleUserControl()
+        public AttachedUpdateableTextUserControl()
         {
             this.InitializeComponent();
         }

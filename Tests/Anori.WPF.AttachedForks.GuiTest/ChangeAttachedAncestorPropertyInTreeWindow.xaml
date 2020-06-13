@@ -1,28 +1,26 @@
-﻿<Window
-    x:Class="Anori.WPF.AttachedAncestorProperties.GuiTest.ChangeAttachedAncestorPropertyInTreeWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:attachedAncestorProperties="clr-namespace:Anori.WPF.AttachedAncestorProperties;assembly=Anori.WPF.AttachedAncestorProperties"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:guiTest="clr-namespace:Anori.WPF.AttachedAncestorProperties.GuiTest"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    x:Name="Window"
-    Title="SwitchContentWindow"
-    Width="800"
-    Height="450"
-    mc:Ignorable="d">
+﻿<Window x:Class="Anori.WPF.AttachedAncestorProperties.GuiTest.ChangeAttachedAncestorPropertyInTreeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:attachedAncestorProperties="clr-namespace:Anori.WPF.AttachedAncestorProperties;assembly=Anori.WPF.AttachedAncestorProperties"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:guiTest="clr-namespace:Anori.WPF.AttachedAncestorProperties.GuiTest"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        x:Name="Window"
+        Title="SwitchContentWindow"
+        Width="800"
+        Height="450"
+        mc:Ignorable="d">
     <StackPanel x:Name="StackPanel">
         <Button Click="AddAttachedAncestorProperty_Click">Add Attached Ancestor Property</Button>
         <Button Click="RemoveAttachedAncestorProperty_Click">Remove Attached Ancestor Property</Button>
-        <Border
-            x:Name="Border"
-            attachedAncestorProperties:AttachedAncestorPropertyString.Setter="Border"
-            BorderBrush="Pink"
-            BorderThickness="2">
+        <Border x:Name="Border"
+                attachedAncestorProperties:AttachedAncestorPropertyString.Setter="Border"
+                BorderBrush="Pink"
+                BorderThickness="2">
             <StackPanel x:Name="Panel">
                 <Label>Content</Label>
                 <ContentControl x:Name="ContentControl">
-                    <guiTest:AttachedSimpleUserControl />
+                    <guiTest:AttachedBindingTextUserControl />
                 </ContentControl>
             </StackPanel>
         </Border>

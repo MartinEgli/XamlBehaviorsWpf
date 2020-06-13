@@ -7,8 +7,4 @@
     public sealed class AttachedAncestorPropertyBooleanA : AttachedAncestorPropertyBooleanBase<AttachedAncestorPropertyBooleanA>
     {
     }
-
-    public sealed class AttachedAncestorPropertyTextA : AttachedAncestorPropertyStringBase<AttachedAncestorPropertyTextA>
-    {
-    }
 }

@@ -1,6 +1,6 @@
-﻿using JetBrains.Annotations;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 
 namespace Anori.WPF.AttachedAncestorProperties.GuiTest
 {
@@ -10,6 +10,7 @@ namespace Anori.WPF.AttachedAncestorProperties.GuiTest
         /// The border text
         /// </summary>
         private string borderText;
+
         /// <summary>
         /// The panel text
         /// </summary>
@@ -18,40 +19,38 @@ namespace Anori.WPF.AttachedAncestorProperties.GuiTest
         /// <summary>
         /// Gets or sets the border text.
         /// </summary>
-        /// <value>
-        /// The border text.
-        /// </value>
+        /// <value>The border text.</value>
         public string BorderText
         {
-            get
-            {
-                return this.borderText;
-            }
+            get => borderText;
             set
             {
-                if (value == this.borderText) return;
-                this.borderText = value;
-                this.OnPropertyChanged();
+                if (value == borderText)
+                {
+                    return;
+                }
+
+                borderText = value;
+                OnPropertyChanged();
             }
         }
 
         /// <summary>
         /// Gets or sets the panel text.
         /// </summary>
-        /// <value>
-        /// The panel text.
-        /// </value>
+        /// <value>The panel text.</value>
         public string PanelText
         {
-            get
-            {
-                return this.panelText;
-            }
+            get => panelText;
             set
             {
-                if (value == this.panelText) return;
-                this.panelText = value;
-                this.OnPropertyChanged();
+                if (value == panelText)
+                {
+                    return;
+                }
+
+                panelText = value;
+                OnPropertyChanged();
             }
         }
 
@@ -65,6 +64,9 @@ namespace Anori.WPF.AttachedAncestorProperties.GuiTest
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

@@ -54,7 +54,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.AttachedAncestorP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.AttachedAncestorProperties.GuiTest", "..\Tests\Anori.WPF.AttachedForks.GuiTest\Anori.WPF.AttachedAncestorProperties.GuiTest.csproj", "{A83A044F-75C0-40B7-9FB3-908D3FEC8292}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.AttachedAncestorProperties.UnitTest", "..\Tests\Anori.WPF.AttachedForks.UnitTest\Anori.WPF.AttachedAncestorProperties.UnitTest.csproj", "{268A8F11-FE57-44CB-B441-DDB7543B1F2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.AttachedAncestorProperties.UnitTest", "..\Tests\Anori.WPF.AttachedForks.UnitTest\Anori.WPF.AttachedAncestorProperties.UnitTest.csproj", "{268A8F11-FE57-44CB-B441-DDB7543B1F2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anori.WPF.Testing", "..\Tests\Anori.WPF.Testing\WpfApp2\Anori.WPF.Testing.csproj", "{4C77631D-03F2-4093-8B22-FA33B336AED1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -232,6 +234,14 @@ Global
 		{268A8F11-FE57-44CB-B441-DDB7543B1F2E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{268A8F11-FE57-44CB-B441-DDB7543B1F2E}.Release|x86.ActiveCfg = Release|Any CPU
 		{268A8F11-FE57-44CB-B441-DDB7543B1F2E}.Release|x86.Build.0 = Release|Any CPU
+		{4C77631D-03F2-4093-8B22-FA33B336AED1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C77631D-03F2-4093-8B22-FA33B336AED1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C77631D-03F2-4093-8B22-FA33B336AED1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4C77631D-03F2-4093-8B22-FA33B336AED1}.Debug|x86.Build.0 = Debug|Any CPU
+		{4C77631D-03F2-4093-8B22-FA33B336AED1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C77631D-03F2-4093-8B22-FA33B336AED1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C77631D-03F2-4093-8B22-FA33B336AED1}.Release|x86.ActiveCfg = Release|Any CPU
+		{4C77631D-03F2-4093-8B22-FA33B336AED1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

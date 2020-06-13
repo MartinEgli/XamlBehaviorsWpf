@@ -1,24 +1,24 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="AttachedAncestorProperty.cs" company="Anori Soft">
-// Copyright (c) Anori Soft. All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
-
-using System;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Data;
-using Anori.WPF.Behaviors;
-using Anori.WPF.Extensions;
-using JetBrains.Annotations;
+﻿// ----------------------------------------------------------------------- <copyright
+// file="AttachedAncestorProperty{TOwner,TValue}.cs" company="Anori Soft" Copyright (c) Anori Soft.
+// All rights reserved. </copyright> -----------------------------------------------------------------------
 
 namespace Anori.WPF.AttachedAncestorProperties
 {
+    using System;
+    using System.Diagnostics;
+    using System.Windows;
+    using System.Windows.Data;
+
+    using Anori.WPF.Behaviors;
+    using Anori.WPF.Extensions;
+
+    using JetBrains.Annotations;
+
     /// <summary>
     /// </summary>
     /// <typeparam name="TOwner">The type of the owner.</typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <seealso cref="System.Windows.DependencyObject" />
+    /// <seealso cref="System.Windows.DependencyObject"/>
     public abstract class AttachedAncestorProperty<TOwner, TValue> : AttachedAncestorProperty
 
     {
@@ -27,33 +27,35 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// </summary>
         public static readonly DependencyProperty GetterProperty = DependencyProperty.RegisterAttached(
             "Getter",
-            typeof(AttachedAncestorPropertyGetter),
+            typeof(AttachedAncestorPropertyGetterBase),
             typeof(AttachedAncestorProperty<TOwner, TValue>),
-            new FrameworkPropertyMetadata(GetterChanged));
+            new PropertyMetadata(OnGetterChanged));
 
         /// <summary>
-        ///     The setter property
+        /// The setter property
         /// </summary>
         public static readonly DependencyProperty SetterProperty = DependencyProperty.RegisterAttached(
             "Setter",
             typeof(TValue),
             typeof(AttachedAncestorProperty<TOwner, TValue>),
-            new FrameworkPropertyMetadata(SetterChanged, CoerceValueCallback)
+            new FrameworkPropertyMetadata
             {
-                BindsTwoWayByDefault = true, DefaultUpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+                BindsTwoWayByDefault = true,
+                DefaultUpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             });
 
         /// <summary>
-        ///     The shadowAttachedAncestorProperty property
+        /// The shadowAttachedAncestorProperty property
         /// </summary>
-        internal static readonly DependencyProperty ShadowAttachedAncestorPropertyProperty = DependencyProperty.RegisterAttached(
-            "ShadowAttachedAncestorProperty",
-            typeof(ShadowAttachedAncestorProperty),
-            typeof(AttachedAncestorProperty<TOwner, TValue>),
-            new PropertyMetadata(default(ShadowAttachedAncestorProperty)));
+        internal static readonly DependencyProperty ShadowAttachedAncestorPropertyProperty =
+            DependencyProperty.RegisterAttached(
+                "ShadowAttachedAncestorProperty",
+                typeof(ShadowAttachedAncestorProperty),
+                typeof(AttachedAncestorProperty<TOwner, TValue>),
+                new PropertyMetadata(default(ShadowAttachedAncestorProperty)));
 
         /// <summary>
-        ///     Adds the shadowAttachedAncestorProperty.
+        /// Adds the shadowAttachedAncestorProperty.
         /// </summary>
         /// <param name="element">The element.</param>
         /// <param name="value">The value.</param>
@@ -66,7 +68,7 @@ namespace Anori.WPF.AttachedAncestorProperties
 
             Debug.WriteLine("Add Attached Ancestor Property Element {0}", (object)element?.Name);
             element.SetValue(SetterProperty, value);
-            GetAncestor(element, out ShadowAttachedAncestorProperty shadowAttachedAncestorProperty);
+            GetAncestor(element, out var shadowAttachedAncestorProperty);
             shadowAttachedAncestorProperty?.UpdateGetters();
         }
 
@@ -85,11 +87,16 @@ namespace Anori.WPF.AttachedAncestorProperties
 
             Debug.WriteLine("Add Attached Ancestor Property Element {0}", (object)element?.Name);
             element.SetBinding(SetterProperty, binding);
-            GetAncestor(element, out ShadowAttachedAncestorProperty shadowAttachedAncestorProperty);
+            GetAncestor(element, out var shadowAttachedAncestorProperty);
             shadowAttachedAncestorProperty?.UpdateGetters();
         }
 
-
+        /// <summary>
+        /// Adds the attached ancestor property.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <param name="path">The path.</param>
+        /// <exception cref="ArgumentNullException">element</exception>
         public static void AddAttachedAncestorProperty([NotNull] FrameworkElement element, PropertyPath path)
         {
             if (element == null)
@@ -98,87 +105,57 @@ namespace Anori.WPF.AttachedAncestorProperties
             }
 
             Debug.WriteLine("Add Attached Ancestor Property Element {0}", (object)element?.Name);
-            var binding = new Binding {Path = path};
+            var binding = new Binding { Path = path };
             element.SetBinding(SetterProperty, binding);
-            GetAncestor(element, out ShadowAttachedAncestorProperty shadowAttachedAncestorProperty);
+            GetAncestor(element, out var shadowAttachedAncestorProperty);
             shadowAttachedAncestorProperty?.UpdateGetters();
         }
 
         /// <summary>
-        ///     Adds the value changed handler.
+        /// Adds the value changed handler.
         /// </summary>
         /// <param name="target">The target.</param>
         /// <param name="valueChangedAction">The value changed action.</param>
         public static void AddValueChangedHandler(
             [NotNull] DependencyObject target,
-            [NotNull] EventHandler valueChangedAction) =>
-            target.AddValueChanged(SetterProperty, valueChangedAction);
-
-        /// <summary>
-        /// Gets the attached property shadowAttachedAncestorProperty.
-        /// </summary>
-        /// <param name="target">The target.</param>
-        /// <param name="shadowAttachedAncestorProperty">The shadowAttachedAncestorProperty.</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException">target</exception>
-        /// <exception cref="InvalidOperationException">Ancestor is null</exception>
-        [CanBeNull]
-        internal static DependencyObject GetAncestor(
-            [NotNull] DependencyObject target,
-            [CanBeNull] out ShadowAttachedAncestorProperty shadowAttachedAncestorProperty)
+            [NotNull] EventHandler valueChangedAction)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException(nameof(target));
-            }
-
-            DependencyObject ancestor = target.GetAncestor(
-                SetterProperty, ShadowAttachedAncestorPropertyProperty, out object s, out object h);
-
-            if (s != DependencyProperty.UnsetValue)
-            {
-                shadowAttachedAncestorProperty = (ShadowAttachedAncestorProperty)h;
-            } else
-            {
-                shadowAttachedAncestorProperty = new ShadowAttachedAncestorProperty(ancestor ?? throw new InvalidOperationException("Ancestor is null"));
-                SetShadowAttachedAncestorProperty(ancestor, shadowAttachedAncestorProperty);
-            }
-
-            return ancestor;
+            target.AddValueChanged(SetterProperty, valueChangedAction);
         }
 
         /// <summary>
-        ///     Gets the getter.
+        /// Gets the getter.
         /// </summary>
         /// <param name="dependencyObject">The dependency object.</param>
         /// <returns></returns>
-        public static AttachedAncestorPropertyGetter GetGetter(
-            [NotNull] DependencyObject dependencyObject) =>
-            (AttachedAncestorPropertyGetter)dependencyObject.GetValue(GetterProperty);
+        public static AttachedAncestorPropertyGetterBase GetGetter([NotNull] DependencyObject dependencyObject)
+        {
+            return (AttachedAncestorPropertyGetterBase)dependencyObject.GetValue(GetterProperty);
+        }
 
         /// <summary>
-        ///     Getter of <see cref="DependencyProperty" /> default assembly.
+        /// Getter of <see cref="DependencyProperty"/> default assembly.
         /// </summary>
         /// <param name="dependencyObject">The dependency object to get the default assembly from.</param>
         /// <returns>The default assembly.</returns>
-        public static TValue GetSetter(DependencyObject dependencyObject) =>
-            dependencyObject.GetValueSync<TValue>(SetterProperty);
+        public static TValue GetSetter(DependencyObject dependencyObject)
+        {
+            return dependencyObject.GetValueSync<TValue>(SetterProperty);
+        }
 
         /// <summary>
-        ///     Gets the value or register parent changed.
+        /// Gets the value or register parent changed.
         /// </summary>
         /// <param name="target">The target.</param>
         /// <param name="sourceChanged">The parent changed.</param>
         /// <returns></returns>
         public static TValue GetValueOrRegisterParentChanged(DependencyObject target, EventHandler sourceChanged)
         {
-            TValue value = target.GetValueOrRegisterParentNotifier<TValue>(
+            return target.GetValueOrRegisterParentNotifier<TValue>(
                 SetterProperty,
                 ParentChangedAction,
                 sourceChanged,
                 new ParentNotifiers());
-
-            return value;
         }
 
         /// <summary>
@@ -194,7 +171,7 @@ namespace Anori.WPF.AttachedAncestorProperties
             }
 
             Debug.WriteLine("Remove AttachedAncestorProperty Element {0}", (object)element?.Name);
-            ShadowAttachedAncestorProperty shadowAttachedAncestorProperty = GetShadowAttachedAncestorProperty(element);
+            var shadowAttachedAncestorProperty = GetShadowAttachedAncestorProperty(element);
             if (shadowAttachedAncestorProperty != null)
             {
                 shadowAttachedAncestorProperty.UnsubscribeGetters();
@@ -208,35 +185,75 @@ namespace Anori.WPF.AttachedAncestorProperties
         }
 
         /// <summary>
-        ///     Removes the value changed handler.
+        /// Removes the value changed handler.
         /// </summary>
         /// <param name="target">The target.</param>
         /// <param name="valueChangedAction">The value changed action.</param>
         public static void RemoveValueChangedHandler(
             [NotNull] DependencyObject target,
-            [NotNull] EventHandler valueChangedAction) =>
+            [NotNull] EventHandler valueChangedAction)
+        {
             target.RemoveValueChanged(SetterProperty, valueChangedAction);
+        }
 
         /// <summary>
-        ///     Sets the getter.
+        /// Sets the getter.
         /// </summary>
         /// <param name="dependencyObject">The dependency object.</param>
         /// <param name="value">The value.</param>
-        public static void SetGetter(DependencyObject dependencyObject, AttachedAncestorPropertyGetter value) => dependencyObject.SetValue(GetterProperty, value);
+        public static void SetGetter(
+            [NotNull] DependencyObject dependencyObject,
+            [NotNull] AttachedAncestorPropertyGetterBase value)
+        {
+            dependencyObject.SetValue(GetterProperty, value);
+        }
 
         /// <summary>
-        ///     AttachedAncestorPropertyBindableSetter of <see cref="DependencyProperty" /> default assembly.
+        /// AttachedAncestorPropertyBindableSetter of <see cref="DependencyProperty"/> default assembly.
         /// </summary>
         /// <param name="dependencyObject">The dependency object to set the default assembly to.</param>
         /// <param name="value">The assembly.</param>
-        public static void SetSetter(DependencyObject dependencyObject, TValue value) => dependencyObject.SetValueSync(SetterProperty, value);
+        public static void SetSetter(DependencyObject dependencyObject, TValue value)
+        {
+            dependencyObject.SetValueSync(SetterProperty, value);
+        }
 
         /// <summary>
-        /// Gets the shadow attached ancestor property.
+        /// Gets the attached property shadowAttachedAncestorProperty.
         /// </summary>
-        /// <param name="element">The element.</param>
+        /// <param name="target">The target.</param>
+        /// <param name="shadowAttachedAncestorProperty">The shadowAttachedAncestorProperty.</param>
         /// <returns></returns>
-        internal static ShadowAttachedAncestorProperty GetShadowAttachedAncestorProperty(DependencyObject element) => (ShadowAttachedAncestorProperty)element.GetValue(ShadowAttachedAncestorPropertyProperty);
+        /// <exception cref="ArgumentNullException">target</exception>
+        /// <exception cref="InvalidOperationException">Ancestor is null</exception>
+        [CanBeNull]
+        internal static DependencyObject GetAncestor(
+            [NotNull]       DependencyObject target,
+            [CanBeNull] out ShadowAttachedAncestorProperty shadowAttachedAncestorProperty)
+        {
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
+
+            var ancestor = target.GetAncestor(
+                SetterProperty,
+                ShadowAttachedAncestorPropertyProperty,
+                out var s,
+                out var h);
+
+            if (s != DependencyProperty.UnsetValue)
+            {
+                shadowAttachedAncestorProperty = (ShadowAttachedAncestorProperty)h;
+            } else
+            {
+                shadowAttachedAncestorProperty = new ShadowAttachedAncestorProperty(
+                    ancestor ?? throw new InvalidOperationException("Ancestor is null"));
+                SetShadowAttachedAncestorProperty(ancestor, shadowAttachedAncestorProperty);
+            }
+
+            return ancestor;
+        }
 
         /// <summary>
         /// Gets the or create host.
@@ -245,7 +262,8 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <returns></returns>
         /// <exception cref="System.ArgumentNullException">element</exception>
         [NotNull]
-        internal static ShadowAttachedAncestorProperty GetOrCreateShadowAttachedAncestorProperty([NotNull] DependencyObject element)
+        internal static ShadowAttachedAncestorProperty GetOrCreateShadowAttachedAncestorProperty(
+            [NotNull] DependencyObject element)
         {
             if (element == null)
             {
@@ -253,8 +271,8 @@ namespace Anori.WPF.AttachedAncestorProperties
             }
 
             var shadowAttachedAncestorProperty = GetShadowAttachedAncestorProperty(element);
-            if (shadowAttachedAncestorProperty != null &&
-                shadowAttachedAncestorProperty != DependencyProperty.UnsetValue)
+            if (shadowAttachedAncestorProperty != null
+                && shadowAttachedAncestorProperty != DependencyProperty.UnsetValue)
             {
                 return shadowAttachedAncestorProperty;
             }
@@ -266,44 +284,39 @@ namespace Anori.WPF.AttachedAncestorProperties
         }
 
         /// <summary>
-        ///     Sets the shadowAttachedAncestorProperty.
+        /// Gets the shadow attached ancestor property.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <returns></returns>
+        internal static ShadowAttachedAncestorProperty GetShadowAttachedAncestorProperty(DependencyObject element)
+        {
+            return (ShadowAttachedAncestorProperty)element.GetValue(ShadowAttachedAncestorPropertyProperty);
+        }
+
+        /// <summary>
+        /// Sets the shadowAttachedAncestorProperty.
         /// </summary>
         /// <param name="element">The element.</param>
         /// <param name="value">The value.</param>
-        internal static void SetShadowAttachedAncestorProperty(DependencyObject element, ShadowAttachedAncestorProperty value) => element.SetValue(ShadowAttachedAncestorPropertyProperty, value);
-
-        /// <summary>
-        ///     Coerces the value callback.
-        /// </summary>
-        /// <param name="dependencyObject">The dependency object.</param>
-        /// <param name="baseValue">The base value.</param>
-        /// <returns></returns>
-        private static object CoerceValueCallback(DependencyObject dependencyObject, object baseValue) => baseValue;
-
-        /// <summary>
-        ///     Getters the changed.
-        /// </summary>
-        /// <param name="dependencyObject">The dependency object.</param>
-        /// <param name="args">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
-        /// <exception cref="InvalidOperationException"></exception>
-        private static void GetterChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        internal static void SetShadowAttachedAncestorProperty(
+            DependencyObject element,
+            ShadowAttachedAncestorProperty value)
         {
-            //DependencyObject hostObject = GetAncestor(dependencyObject);
-            //if (hostObject != null)
-            //{
-            //    // BindingOperations.SetBinding(hostObject, setterProperty , ((AttachedAncestorPropertyGetter)e.NewValue).Binding);
-            //    //   EventHandler ValueChangedHandler= (sender, args) =>
-            //    //   {
-            //    ////       SetGetter(((DependencyObject)dependencyObject), ((DependencyObject)hostObject).GetValueSync<T>(setterProperty));
-            //    //   };
-            //    //   AddValueChangedHandler(hostObject, ValueChangedHandler);
+            element.SetValue(ShadowAttachedAncestorPropertyProperty, value);
+        }
 
-            //    //AddValueChanged(hostObject,
-            //    //    obj => SetGetter(dependencyObject, obj));
-            //}
-
-            AttachedAncestorPropertyGetter oldContent = (AttachedAncestorPropertyGetter)args.OldValue;
-            AttachedAncestorPropertyGetter newContent = (AttachedAncestorPropertyGetter)args.NewValue;
+        /// <summary>
+        /// Getters the changed.
+        /// </summary>
+        /// <param name="dependencyObject">The dependency object.</param>
+        /// <param name="args">
+        /// The <see cref="DependencyPropertyChangedEventArgs"/> instance containing the event data.
+        /// </param>
+        /// <exception cref="InvalidOperationException"></exception>
+        private static void OnGetterChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            var oldContent = (Getter)args.OldValue;
+            var newContent = (Getter)args.NewValue;
 
             if (oldContent == newContent)
             {
@@ -325,27 +338,16 @@ namespace Anori.WPF.AttachedAncestorProperties
                 throw new InvalidOperationException();
             }
 
+            newContent.Type = typeof(TOwner);
             newContent.Attach(dependencyObject);
         }
-        
+
         /// <summary>
-        ///     Parents the changed action.
+        /// Parents the changed action.
         /// </summary>
         /// <param name="obj">The object.</param>
         private static void ParentChangedAction(DependencyObject obj)
         {
         }
-
-        /// <summary>
-        ///     Setters the changed.
-        /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="e">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
-        private static void SetterChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
-        {
-            //InitHost(obj);
-            //GetShadowAttachedAncestorProperty(obj).Value = (T)e.NewValue;
-        }
-       
     }
 }

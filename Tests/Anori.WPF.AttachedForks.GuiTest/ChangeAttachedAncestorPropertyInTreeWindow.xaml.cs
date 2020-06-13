@@ -14,8 +14,6 @@ namespace Anori.WPF.AttachedAncestorProperties.GuiTest
     /// </summary>
     public partial class ChangeAttachedAncestorPropertyInTreeWindow : Window
     {
-        private readonly FrameworkElement control;
-
         public ChangeAttachedAncestorPropertyInTreeWindow()
         {
             this.InitializeComponent();

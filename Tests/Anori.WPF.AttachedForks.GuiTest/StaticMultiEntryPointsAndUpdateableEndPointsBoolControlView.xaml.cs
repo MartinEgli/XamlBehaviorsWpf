@@ -1,13 +1,14 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace Anori.WPF.AttachedAncestorProperties.GuiTest
 {
     /// <summary>
     /// Interaction logic for ControlBindingWindow.xaml
     /// </summary>
-    public partial class MultiAttachedBoolControlWindow : Window
+    public partial class StaticMultiEntryPointsAndUpdateableEndPointsBoolControlView : UserControl
     {
-        public MultiAttachedBoolControlWindow()
+        public StaticMultiEntryPointsAndUpdateableEndPointsBoolControlView()
         {
             InitializeComponent();
         }

@@ -67,17 +67,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="10.2.1" />
+    <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" />
     <PackageReference Include="MicroBuild.Core" Version="0.3.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudioEng.MicroBuild.Core" Version="0.4.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Nerdbank.GitVersioning" Version="2.3.38" PrivateAssets="All" />
+    <PackageReference Include="Nerdbank.GitVersioning" Version="3.1.91" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
@@ -102,14 +102,10 @@
 
   <Target Name="IncludeProjectToProjectAssets">
     <ItemGroup>
-      <BuildOutputInPackage
-        Include="$(ProjectDir)bin\$(Configuration)\net45\Design\Anori.WPF.Behaviors.DesignTools.dll"
-        Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
+      <BuildOutputInPackage Include="$(ProjectDir)bin\$(Configuration)\net45\Design\Anori.WPF.Behaviors.DesignTools.dll" Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
         <TargetPath>Design</TargetPath>
       </BuildOutputInPackage>
-      <BuildOutputInPackage
-        Include="$(ProjectDir)bin\$(Configuration)\net45\Design\Anori.WPF.Behaviors.Design.dll"
-        Condition="'$(TargetFramework)' == 'net45'">
+      <BuildOutputInPackage Include="$(ProjectDir)bin\$(Configuration)\net45\Design\Anori.WPF.Behaviors.Design.dll" Condition="'$(TargetFramework)' == 'net45'">
         <TargetPath>Design</TargetPath>
       </BuildOutputInPackage>
     </ItemGroup>

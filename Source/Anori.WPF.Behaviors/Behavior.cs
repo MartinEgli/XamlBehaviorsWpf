@@ -114,13 +114,7 @@ namespace Anori.WPF.Behaviors
         /// Gets the associated object.
         /// </summary>
         /// <value>The associated object.</value>
-        DependencyObject IAttachedObject.AssociatedObject
-        {
-            get
-            {
-                return this.AssociatedObject;
-            }
-        }
+        DependencyObject IAttachedObject.AssociatedObject => this.AssociatedObject;
 
         /// <summary>
         /// Attaches to the specified object.

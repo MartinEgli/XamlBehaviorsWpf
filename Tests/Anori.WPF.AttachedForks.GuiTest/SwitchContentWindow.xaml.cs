@@ -6,7 +6,7 @@
 
 using System.Windows;
 
-namespace AttachedPropertyTests
+namespace Anori.WPF.AttachedAncestorProperties.GuiTest
 {
     /// <summary>
     ///     Interaction logic for SwitchContentWindow.xaml
@@ -18,7 +18,7 @@ namespace AttachedPropertyTests
         public SwitchContentWindow()
         {
             this.InitializeComponent();
-            this.control = new Anori.WPF.AttachedAncestorProperties.GuiTest.AttachedUserControl();
+            this.control = new AttachedUserControl();
         }
 
         private void Button1_Click(object sender, RoutedEventArgs e)

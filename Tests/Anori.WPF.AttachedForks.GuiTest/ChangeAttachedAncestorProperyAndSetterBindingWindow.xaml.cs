@@ -14,8 +14,6 @@ namespace Anori.WPF.AttachedAncestorProperties.GuiTest
     /// </summary>
     public partial class ChangeAttachedAncestorPropertyAndSetterBindingWindow : Window
     {
-        private readonly FrameworkElement control;
-
         public ChangeAttachedAncestorPropertyAndSetterBindingWindow()
         {
             this.InitializeComponent();

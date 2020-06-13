@@ -11,6 +11,9 @@
     <StackPanel>
         <Label IsEnabled="{attachedForks:AttachedBindingBooleanGetter}">Binding Boolean Test Text:</Label>
         <Label IsEnabled="{attachedForks:AttachedBindingBooleanGetter}">Boolean Test Text:</Label>
-        <TextBox IsEnabled="{attachedForks:AttachedBindingBooleanGetter}" Text="{attachedForks:AttachedBindingStringGetter}" />
+        <TextBox
+            x:Name="EndPoint"
+            IsEnabled="{attachedForks:AttachedBindingBooleanGetter}"
+            Text="{attachedForks:AttachedBindingStringGetter}" />
     </StackPanel>
 </UserControl>

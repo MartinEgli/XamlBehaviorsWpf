@@ -21,7 +21,7 @@ namespace AttachedPropertyTests
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new SwitchContentWindow();
+            var dialog = new Anori.WPF.AttachedAncestorProperties.GuiTest.SwitchContentWindow();
             dialog.ShowDialog();
         }
 
@@ -51,7 +51,7 @@ namespace AttachedPropertyTests
 
         private void SimpleWindow_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new StaticEndPointTextBindingWindow();
+            var dialog = new StaticEntryPointAndUpdateableEndPointTextWindow();
             dialog.ShowDialog();
         }
 
@@ -88,7 +88,7 @@ namespace AttachedPropertyTests
 
         private void TreeChangeHost_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new ChangeAttachedAncestorPropertiesInTreeWindow();
+            var dialog = new StaticChangeEntryPointsTreeAndUpdateEndPointWindow();
             dialog.ShowDialog();
         }
 
@@ -106,7 +106,7 @@ namespace AttachedPropertyTests
 
         private void MuliAttachedBoolControlWindow_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new MultiAttachedBoolControlWindow();
+            var dialog = new StaticMultiEntryPointsAndUpdateableEndPointsBoolControlWindow();
             dialog.ShowDialog();
         }
 

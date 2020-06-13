@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using AttachedPropertyTests;
 
 namespace Anori.WPF.AttachedAncestorProperties.GuiTest
@@ -6,9 +7,9 @@ namespace Anori.WPF.AttachedAncestorProperties.GuiTest
     /// <summary>
     /// Interaction logic for SimpleWindow.xaml
     /// </summary>
-    public partial class StaticEndPointTextBindingWindow : Window
+    public partial class StaticEntryPointAndBoundEndPointTextView : UserControl
     {
-        public StaticEndPointTextBindingWindow()
+        public StaticEntryPointAndBoundEndPointTextView()
         {
             InitializeComponent();
         }

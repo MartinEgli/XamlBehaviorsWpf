@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -643,6 +644,7 @@ namespace Anori.WPF.AttachedAncestorProperties
 
             do
             {
+                DebugLogWalk(dependencyObject);
                 bool hasResult = tryGetPropertyValue(dependencyObject, out result);
 
                 if (hasResult && result != null)
@@ -678,6 +680,26 @@ namespace Anori.WPF.AttachedAncestorProperties
             return result;
         }
 
+        [Conditional("DEBUG")]
+        private static void DebugLogWalk(DependencyObject dependencyObject)
+        {
+            if (dependencyObject is FrameworkElement frameworkElement)
+            {
+                if (!string.IsNullOrEmpty(frameworkElement.Name))
+                {
+                    Debug.WriteLine("Walk item name {1} type {0}", dependencyObject.GetType(), frameworkElement.Name);
+                }
+                else
+                {
+                    Debug.WriteLine("Walk item type {0}", dependencyObject.GetType());
+                }
+            }
+            else
+            {
+                Debug.WriteLine("Walk item type {0}", dependencyObject.GetType());
+            }
+        }
+
         /// <summary>
         ///     Walks the tree up.
         /// </summary>
@@ -700,6 +722,8 @@ namespace Anori.WPF.AttachedAncestorProperties
 
             do
             {
+                DebugLogWalk(ancestor);
+
                 bool hasResult = ancestor.HasDependencyProperty(property);
 
                 if (hasResult)
@@ -895,6 +919,8 @@ namespace Anori.WPF.AttachedAncestorProperties
             ancestor = null;
             do
             {
+                DebugLogWalk(dependencyObject);
+
                 //if (ancestor.CheckType())
                 //{
                 //    break;

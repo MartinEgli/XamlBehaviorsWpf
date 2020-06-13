@@ -1,30 +1,29 @@
-﻿<Window
-    x:Class="Anori.WPF.AttachedAncestorProperties.GuiTest.ChangeAttachedAncestorPropertyAndSetterBindingWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:attachedForks="clr-namespace:Anori.WPF.AttachedAncestorProperties;assembly=Anori.WPF.AttachedAncestorProperties"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:guiTest="clr-namespace:Anori.WPF.AttachedAncestorProperties.GuiTest"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    x:Name="Window"
-    Title="SwitchContentWindow"
-    Width="800"
-    Height="450"
-    d:DataContext="{d:DesignInstance guiTest:ChangeHostAndSetterViewModel}"
-    mc:Ignorable="d">
+﻿<Window x:Class="Anori.WPF.AttachedAncestorProperties.GuiTest.ChangeAttachedAncestorPropertyAndSetterBindingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:attachedForks="clr-namespace:Anori.WPF.AttachedAncestorProperties;assembly=Anori.WPF.AttachedAncestorProperties"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:guiTest="clr-namespace:Anori.WPF.AttachedAncestorProperties.GuiTest"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        x:Name="Window"
+        Title="SwitchContentWindow"
+        Width="800"
+        Height="450"
+        d:DataContext="{d:DesignInstance guiTest:ChangeHostAndSetterViewModel}"
+        mc:Ignorable="d">
     <StackPanel x:Name="StackPanel">
         <Button Click="AddAttachedAncestorProperty_Click">Add AttachedAncestorProperty</Button>
         <Button Click="RemoveAttachedAncestorProperty_Click">Remove AttachedAncestorProperty</Button>
         <TextBox Text="{Binding BorderText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-        <Border
-            x:Name="Border"
-            attachedForks:AttachedAncestorPropertyString.Setter="{Binding BorderText, Mode=TwoWay}"
-            BorderBrush="Pink"
-            BorderThickness="2">
+        <Border x:Name="Border"
+                attachedForks:AttachedAncestorPropertyString.Setter="{Binding BorderText,
+                                                                              Mode=TwoWay}"
+                BorderBrush="Pink"
+                BorderThickness="2">
             <StackPanel x:Name="Panel">
                 <Label>Content</Label>
                 <ContentControl x:Name="ContentControl">
-                    <guiTest:AttachedSimpleUserControl />
+                    <guiTest:AttachedBindingTextUserControl />
                 </ContentControl>
             </StackPanel>
         </Border>

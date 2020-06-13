@@ -17,17 +17,9 @@ namespace Anori.WPF.AttachedForks.UnitTest
         [Apartment(ApartmentState.STA)]
         public void SimpleAttachedTextWindow_Test()
         {
-            var gui = new StaticEndPointTextBindingWindow();
-            var result =gui.TextBox1.Text;
-            Assert.AreEqual("Attached Text", result);
-            gui.Show();
-            result = gui.TextBox1.Text;
-            Assert.AreEqual("Attached Text", result);
-            gui.Close();
         }
 
 
-        [Test]
         [Apartment(ApartmentState.STA)]
         public async Task TwoWayAttachedTextBindingWindow_Test()
         {
@@ -56,7 +48,6 @@ namespace Anori.WPF.AttachedForks.UnitTest
         }
 
 
-        [Test]
         public void Test_window()
         {
             var showMonitor = new ManualResetEventSlim(false);

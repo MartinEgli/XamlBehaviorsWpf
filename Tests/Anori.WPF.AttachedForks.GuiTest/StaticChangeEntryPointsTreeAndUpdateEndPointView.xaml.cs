@@ -6,40 +6,39 @@
 
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Anori.WPF.AttachedAncestorProperties.GuiTest
 {
     /// <summary>
     ///     Interaction logic for SwitchContentWindow.xaml
     /// </summary>
-    public partial class ChangeAttachedAncestorPropertiesInTreeWindow : Window
+    public partial class StaticChangeEntryPointsTreeAndUpdateEndPointView : UserControl
     {
-        private readonly FrameworkElement control;
-
-        public ChangeAttachedAncestorPropertiesInTreeWindow()
+        public StaticChangeEntryPointsTreeAndUpdateEndPointView()
         {
             this.InitializeComponent();
         }
 
-        private void AddFork_Click(object sender, RoutedEventArgs e)
+        private void AddPanel_Click(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("--> Add AttachedAncestorProperty");
             AttachedAncestorPropertyString.AddAttachedAncestorProperty(this.Panel, "Panel");
         }
 
-        private void RemoveFork_Click(object sender, RoutedEventArgs e)
+        private void RemovePanel_Click(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("--> Remove AttachedAncestorProperty");
             AttachedAncestorPropertyString.RemoveAttachedAncestorProperty(this.Panel);
         }
 
-        private void AddSubFork_Click(object sender, RoutedEventArgs e)
+        private void AddSubPanel_Click(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("--> Add Sub AttachedAncestorProperty");
             AttachedAncestorPropertyString.AddAttachedAncestorProperty(this.SubPanel1, "SubPanel1");
         }
 
-        private void RemoveSubFork_Click(object sender, RoutedEventArgs e)
+        private void RemoveSubPanel_Click(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("--> Remove Sub AttachedAncestorProperty");
             AttachedAncestorPropertyString.RemoveAttachedAncestorProperty(this.SubPanel1);

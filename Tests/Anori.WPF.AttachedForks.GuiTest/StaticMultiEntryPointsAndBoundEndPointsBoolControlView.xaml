@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="Anori.WPF.AttachedAncestorProperties.GuiTest.StaticMultiEntryPointsAndBoundEndPointsBoolControlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:guiTest="clr-namespace:Anori.WPF.AttachedAncestorProperties.GuiTest"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+    <StackPanel>
+        <TextBlock>Entry Points</TextBlock>
+        <CheckBox x:Name="EntryPointA">Entry Point A</CheckBox>
+        <CheckBox x:Name="EntryPointB">Entry Point B</CheckBox>
+        <CheckBox x:Name="EntryPointC">Entry Point C</CheckBox>
+        <StackPanel guiTest:AttachedAncestorPropertyBooleanA.Setter="{Binding ElementName=EntryPointA,
+                                                                              Path=IsChecked,
+                                                                              Mode=TwoWay,
+                                                                              UpdateSourceTrigger=PropertyChanged}"
+                    guiTest:AttachedAncestorPropertyBooleanB.Setter="{Binding ElementName=EntryPointB,
+                                                                              Path=IsChecked,
+                                                                              Mode=TwoWay,
+                                                                              UpdateSourceTrigger=PropertyChanged}"
+                    guiTest:AttachedAncestorPropertyBooleanC.Setter="{Binding ElementName=EntryPointC,
+                                                                              Path=IsChecked,
+                                                                              Mode=TwoWay,
+                                                                              UpdateSourceTrigger=PropertyChanged}">
+            <TextBlock>End Points</TextBlock>
+            <CheckBox x:Name="EndPointA"
+                      IsChecked="{guiTest:AttachedBindingBooleanAGetter}">
+                End Point A
+            </CheckBox>
+            <CheckBox x:Name="EndPointB"
+                      IsChecked="{guiTest:AttachedBindingBooleanBGetter}">
+                End Point B
+            </CheckBox>
+            <CheckBox x:Name="EndPointC"
+                      IsChecked="{guiTest:AttachedBindingBooleanCGetter}">
+                End Point C
+            </CheckBox>
+        </StackPanel>
+    </StackPanel>
+</UserControl>
