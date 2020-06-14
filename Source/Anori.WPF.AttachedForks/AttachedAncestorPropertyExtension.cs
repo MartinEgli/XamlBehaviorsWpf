@@ -18,6 +18,12 @@ namespace Anori.WPF.AttachedAncestorProperties
     public static class AttachedAncestorPropertyExtension
     {
 
+
+
+
+
+
+
         /// <summary>
         ///     TryGetFunc
         /// </summary>
