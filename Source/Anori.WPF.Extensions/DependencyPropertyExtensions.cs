@@ -41,7 +41,7 @@ namespace Anori.WPF.Extensions
                                               BindingFlags.DeclaredOnly;
             while (type != null)
             {
-                FieldInfo fieldInfo = type.GetField(name, bindingFlags);
+                var fieldInfo = type.GetField(name, bindingFlags);
                 if (fieldInfo == null)
                 {
                     type = type.BaseType;
