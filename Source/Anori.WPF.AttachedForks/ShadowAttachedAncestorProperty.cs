@@ -15,11 +15,11 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <summary>
         /// Initializes a new instance of the <see cref="ShadowAttachedAncestorProperty"/> class.
         /// </summary>
-        /// <param name="owner">The owner.</param>
+        /// <param name="ancestor">The owner.</param>
         /// <exception cref="ArgumentNullException">owner</exception>
-        public ShadowAttachedAncestorProperty([NotNull] DependencyObject owner)
+        public ShadowAttachedAncestorProperty([NotNull] DependencyObject ancestor)
         {
-            Owner = owner ?? throw new ArgumentNullException(nameof(owner));
+            Ancestor = ancestor ?? throw new ArgumentNullException(nameof(ancestor));
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <value>
         /// The owner.
         /// </value>
-        public DependencyObject Owner { get; }
+        public DependencyObject Ancestor { get; }
 
         /// <summary>
         /// Occurs when a property value changes.
@@ -45,7 +45,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <summary>
         /// Updates the getters.
         /// </summary>
-        public void UpdateGetters() => OnHostChanged();
+        public void UpdateGetters() => OnAncestorChanged();
 
         /// <summary>
         /// Updates the getters.
@@ -55,7 +55,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <summary>
         /// Occurs when [host changed].
         /// </summary>
-        public event EventHandler AttachedAncestorChanged;
+        public event EventHandler AncestorChanged;
 
         /// <summary>
         /// Occurs when [unsubscribe].
@@ -65,7 +65,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <summary>
         /// Called when [host changed].
         /// </summary>
-        protected virtual void OnHostChanged() => this.AttachedAncestorChanged?.Invoke(this, EventArgs.Empty);
+        protected virtual void OnAncestorChanged() => this.AncestorChanged?.Invoke(this, EventArgs.Empty);
 
         /// <summary>
         /// Called when [unsubscribe].

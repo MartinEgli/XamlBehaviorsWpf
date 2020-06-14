@@ -288,10 +288,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// </summary>
         /// <param name="element">The element.</param>
         /// <returns></returns>
-        internal static ShadowAttachedAncestorProperty GetShadowAttachedAncestorProperty(DependencyObject element)
-        {
-            return (ShadowAttachedAncestorProperty)element.GetValue(ShadowAttachedAncestorPropertyProperty);
-        }
+        internal static ShadowAttachedAncestorProperty GetShadowAttachedAncestorProperty(DependencyObject element) => (ShadowAttachedAncestorProperty)element.GetValue(ShadowAttachedAncestorPropertyProperty);
 
         /// <summary>
         /// Sets the shadowAttachedAncestorProperty.
@@ -300,10 +297,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <param name="value">The value.</param>
         internal static void SetShadowAttachedAncestorProperty(
             DependencyObject element,
-            ShadowAttachedAncestorProperty value)
-        {
-            element.SetValue(ShadowAttachedAncestorPropertyProperty, value);
-        }
+            ShadowAttachedAncestorProperty value) => element.SetValue(ShadowAttachedAncestorPropertyProperty, value);
 
         /// <summary>
         /// Getters the changed.

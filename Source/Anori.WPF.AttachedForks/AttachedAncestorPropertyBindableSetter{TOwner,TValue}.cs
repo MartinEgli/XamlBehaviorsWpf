@@ -268,7 +268,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         {
             Debug.WriteLine("On Unloaded DependencyObject {0}", (object)((FrameworkElement)this.DependencyObject)?.Name);
             var attachedAncestorProperty = AttachedAncestorProperty<TOwner, TValue>.GetOrCreateShadowAttachedAncestorProperty(this.Ancestor);
-            attachedAncestorProperty.AttachedAncestorChanged -= this.OnAttachedAncestorChanged;
+            attachedAncestorProperty.AncestorChanged -= this.OnAttachedAncestorChanged;
             attachedAncestorProperty.Unsubscribe -= this.OnUnsubscribe;
             AttachedAncestorProperty<TOwner, TValue>.RemoveValueChangedHandler(this.Ancestor, this.ValueChangedHandler);
         }
@@ -358,7 +358,7 @@ namespace Anori.WPF.AttachedAncestorProperties
             {
                 if (this.Ancestor != null)
                 {
-                    AttachedAncestorProperty<TOwner, TValue>.GetShadowAttachedAncestorProperty(this.Ancestor).AttachedAncestorChanged += this.OnAttachedAncestorChanged;
+                    AttachedAncestorProperty<TOwner, TValue>.GetShadowAttachedAncestorProperty(this.Ancestor).AncestorChanged += this.OnAttachedAncestorChanged;
                 }
                 Debug.WriteLine("ShadowAttachedAncestorProperty not changed {0}", (object)((FrameworkElement)this.Ancestor)?.Name);
                 return false;
@@ -380,7 +380,7 @@ namespace Anori.WPF.AttachedAncestorProperties
                 Debug.WriteLine("Adding Ancestor {0}", (object)((FrameworkElement)this.Ancestor)?.Name);
                 AttachedAncestorProperty<TOwner, TValue>.AddValueChangedHandler(this.Ancestor, this.ValueChangedHandler);
                 var shadowAttachedAncestorProperty = AttachedAncestorProperty<TOwner, TValue>.GetOrCreateShadowAttachedAncestorProperty(this.Ancestor);
-                shadowAttachedAncestorProperty.AttachedAncestorChanged += this.OnAttachedAncestorChanged;
+                shadowAttachedAncestorProperty.AncestorChanged += this.OnAttachedAncestorChanged;
                 shadowAttachedAncestorProperty.Unsubscribe += this.OnUnsubscribe;
             } else
             {
@@ -408,8 +408,8 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void OnAttachedAncestorChanged(object sender, EventArgs e)
         {
-            Debug.WriteLine("On ShadowAttachedAncestorProperty Changed {0}", (object)((FrameworkElement)((ShadowAttachedAncestorProperty)sender).Owner)?.Name);
-            ((ShadowAttachedAncestorProperty)sender).AttachedAncestorChanged -= this.OnAttachedAncestorChanged;
+            Debug.WriteLine("On ShadowAttachedAncestorProperty Changed {0}", (object)((FrameworkElement)((ShadowAttachedAncestorProperty)sender).Ancestor)?.Name);
+            ((ShadowAttachedAncestorProperty)sender).AncestorChanged -= this.OnAttachedAncestorChanged;
             this.UpdateAttachedAncestorProperty();
         }
 
