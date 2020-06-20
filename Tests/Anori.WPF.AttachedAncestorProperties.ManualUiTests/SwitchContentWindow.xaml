@@ -1,0 +1,33 @@
+﻿<Window x:Class="Anori.WPF.AttachedAncestorProperties.ManualUiTests.SwitchContentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:attachedForks="clr-namespace:Anori.WPF.AttachedAncestorProperties;assembly=Anori.WPF.AttachedAncestorProperties"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="SwitchContentWindow"
+        Width="800"
+        Height="450"
+        mc:Ignorable="d">
+    <StackPanel>
+        <Button Click="Button1_Click">Set Content 1</Button>
+        <Button Click="Button2_Click">Set Content 2</Button>
+        <Border BorderBrush="Blue"
+                BorderThickness="2">
+            <StackPanel>
+                <Label>Content 1</Label>
+                <ContentControl x:Name="Control1"
+                                attachedForks:AttachedAncestorPropertyBoolean.Setter="True"
+                                attachedForks:AttachedAncestorPropertyString.Setter="abc" />
+            </StackPanel>
+        </Border>
+        <Border BorderBrush="Red"
+                BorderThickness="2">
+            <StackPanel>
+                <Label>Content 2</Label>
+                <ContentControl x:Name="Control2"
+                                attachedForks:AttachedAncestorPropertyBoolean.Setter="False"
+                                attachedForks:AttachedAncestorPropertyString.Setter="xyz" />
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</Window>

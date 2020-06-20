@@ -1,0 +1,12 @@
+﻿<Window x:Class="Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.ItemsControl.StaticEntryPointAndEndPointItemsBindingMvvmWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:itemsControl="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.ItemsControl"
+        Width="800"
+        Height="450"
+        d:DataContext="{d:DesignInstance itemsControl:ItemsControlBindingViewModel}"
+        mc:Ignorable="d">
+    <itemsControl:StaticEntryPointAndEndPointItemsBindingMvvmView />
+</Window>
