@@ -6,15 +6,15 @@
 
 namespace Anori.WPF.AttachedAncestorProperties
 {
-    using System;
-    using System.Diagnostics;
-    using System.Windows;
-    using System.Windows.Data;
-
     using Anori.WPF.Behaviors;
     using Anori.WPF.Extensions;
 
     using JetBrains.Annotations;
+
+    using System;
+    using System.Diagnostics;
+    using System.Windows;
+    using System.Windows.Data;
 
     /// <summary>
     /// </summary>
@@ -41,22 +41,21 @@ namespace Anori.WPF.AttachedAncestorProperties
             typeof(TValue),
             typeof(AttachedAncestorProperty<TOwner, TValue>),
             new FrameworkPropertyMetadata
-                {
-                    BindsTwoWayByDefault = true, DefaultUpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
-                });
+            {
+                BindsTwoWayByDefault = true, DefaultUpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            });
 
         /// <summary>
-        ///     The shadowAttachedAncestorProperty property
+        ///     The endPointUpdater property
         /// </summary>
-        internal static readonly DependencyProperty ShadowAttachedAncestorPropertyProperty =
-            DependencyProperty.RegisterAttached(
-                "ShadowAttachedAncestorProperty",
-                typeof(ShadowAttachedAncestorProperty),
-                typeof(AttachedAncestorProperty<TOwner, TValue>),
-                new PropertyMetadata(default(ShadowAttachedAncestorProperty)));
+        internal static readonly DependencyProperty ShadowEndPointUpdaterProperty = DependencyProperty.RegisterAttached(
+            "ShadowEndPointUpdater",
+            typeof(EndPointUpdater),
+            typeof(AttachedAncestorProperty<TOwner, TValue>),
+            new PropertyMetadata(default(EndPointUpdater)));
 
         /// <summary>
-        ///     Adds the shadowAttachedAncestorProperty.
+        ///     Adds the endPointUpdater.
         /// </summary>
         /// <param name="element">The element.</param>
         /// <param name="value">The value.</param>
@@ -69,7 +68,7 @@ namespace Anori.WPF.AttachedAncestorProperties
 
             Debug.WriteLine("Add Attached Ancestor Property Element {0}", (object)element?.Name);
             element.SetValue(SetterProperty, value);
-            GetAncestor(element, out var shadowAttachedAncestorProperty);
+            GetAncestor(element, out EndPointUpdater shadowAttachedAncestorProperty);
             shadowAttachedAncestorProperty?.UpdateGetters();
         }
 
@@ -88,7 +87,7 @@ namespace Anori.WPF.AttachedAncestorProperties
 
             Debug.WriteLine("Add Attached Ancestor Property Element {0}", (object)element?.Name);
             element.SetBinding(SetterProperty, binding);
-            GetAncestor(element, out var shadowAttachedAncestorProperty);
+            GetAncestor(element, out EndPointUpdater shadowAttachedAncestorProperty);
             shadowAttachedAncestorProperty?.UpdateGetters();
         }
 
@@ -106,9 +105,9 @@ namespace Anori.WPF.AttachedAncestorProperties
             }
 
             Debug.WriteLine("Add Attached Ancestor Property Element {0}", (object)element?.Name);
-            var binding = new Binding { Path = path };
+            Binding binding = new Binding { Path = path };
             element.SetBinding(SetterProperty, binding);
-            GetAncestor(element, out var shadowAttachedAncestorProperty);
+            GetAncestor(element, out EndPointUpdater shadowAttachedAncestorProperty);
             shadowAttachedAncestorProperty?.UpdateGetters();
         }
 
@@ -119,7 +118,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <param name="valueChangedAction">The value changed action.</param>
         public static void AddValueChangedHandler(
             [NotNull] DependencyObject target,
-            [NotNull] EventHandler     valueChangedAction) =>
+            [NotNull] EventHandler valueChangedAction) =>
             target.AddValueChanged(SetterProperty, valueChangedAction);
 
         /// <summary>
@@ -152,7 +151,7 @@ namespace Anori.WPF.AttachedAncestorProperties
                 new ParentNotifiers());
 
         /// <summary>
-        ///     Removes the shadowAttachedAncestorProperty.
+        ///     Removes the endPointUpdater.
         /// </summary>
         /// <param name="element">The element.</param>
         /// <exception cref="ArgumentNullException">element</exception>
@@ -164,15 +163,14 @@ namespace Anori.WPF.AttachedAncestorProperties
             }
 
             Debug.WriteLine("Remove AttachedAncestorProperty Element {0}", (object)element?.Name);
-            var shadowAttachedAncestorProperty = GetShadowAttachedAncestorProperty(element);
+            EndPointUpdater shadowAttachedAncestorProperty = GetShadowEndPointUpdater(element);
             if (shadowAttachedAncestorProperty != null)
             {
                 shadowAttachedAncestorProperty.UnsubscribeGetters();
                 element.ClearValue(SetterProperty);
-                element.ClearValue(ShadowAttachedAncestorPropertyProperty);
+                element.ClearValue(ShadowEndPointUpdaterProperty);
                 shadowAttachedAncestorProperty.UpdateGetters();
-            }
-            else
+            } else
             {
                 element.ClearValue(SetterProperty);
             }
@@ -185,7 +183,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <param name="valueChangedAction">The value changed action.</param>
         public static void RemoveValueChangedHandler(
             [NotNull] DependencyObject target,
-            [NotNull] EventHandler     valueChangedAction) =>
+            [NotNull] EventHandler valueChangedAction) =>
             target.RemoveValueChanged(SetterProperty, valueChangedAction);
 
         /// <summary>
@@ -194,7 +192,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <param name="dependencyObject">The dependency object.</param>
         /// <param name="value">The value.</param>
         public static void SetGetter(
-            [NotNull] DependencyObject                   dependencyObject,
+            [NotNull] DependencyObject dependencyObject,
             [NotNull] AttachedAncestorPropertyGetterBase value) =>
             dependencyObject.SetValue(GetterProperty, value);
 
@@ -207,39 +205,37 @@ namespace Anori.WPF.AttachedAncestorProperties
             dependencyObject.SetValueSync(SetterProperty, value);
 
         /// <summary>
-        ///     Gets the attached property shadowAttachedAncestorProperty.
+        ///     Gets the attached property endPointUpdater.
         /// </summary>
         /// <param name="target">The target.</param>
-        /// <param name="shadowAttachedAncestorProperty">The shadowAttachedAncestorProperty.</param>
+        /// <param name="endPointUpdater">The endPointUpdater.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">target</exception>
         /// <exception cref="InvalidOperationException">Ancestor is null</exception>
         [CanBeNull]
         internal static DependencyObject GetAncestor(
             [NotNull] DependencyObject target,
-            [CanBeNull] out ShadowAttachedAncestorProperty shadowAttachedAncestorProperty)
+            [CanBeNull] out EndPointUpdater endPointUpdater)
         {
             if (target == null)
             {
                 throw new ArgumentNullException(nameof(target));
             }
-           
 
-            var ancestor = target.GetAncestor(
+            DependencyObject ancestor = target.GetAncestor(
                 SetterProperty,
-                ShadowAttachedAncestorPropertyProperty,
-                out var s,
-                out var h);
+                ShadowEndPointUpdaterProperty,
+                out object s,
+                out object h);
 
             if (s != DependencyProperty.UnsetValue)
             {
-                shadowAttachedAncestorProperty = (ShadowAttachedAncestorProperty)h;
-            }
-            else
+                endPointUpdater = (EndPointUpdater)h;
+            } else
             {
-                shadowAttachedAncestorProperty = new ShadowAttachedAncestorProperty(
+                endPointUpdater = new EndPointUpdater(
                     ancestor ?? throw new InvalidOperationException("Ancestor is null"));
-                SetShadowAttachedAncestorProperty(ancestor, shadowAttachedAncestorProperty);
+                SetShadowEndPointUpdater(ancestor, endPointUpdater);
             }
 
             return ancestor;
@@ -252,23 +248,22 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <returns></returns>
         /// <exception cref="System.ArgumentNullException">element</exception>
         [NotNull]
-        internal static ShadowAttachedAncestorProperty GetOrCreateShadowAttachedAncestorProperty(
-            [NotNull] DependencyObject element)
+        internal static EndPointUpdater GetOrCreateEndPointUpdater([NotNull] DependencyObject element)
         {
             if (element == null)
             {
                 throw new ArgumentNullException(nameof(element));
             }
 
-            var shadowAttachedAncestorProperty = GetShadowAttachedAncestorProperty(element);
+            EndPointUpdater shadowAttachedAncestorProperty = GetShadowEndPointUpdater(element);
             if (shadowAttachedAncestorProperty != null
                 && shadowAttachedAncestorProperty != DependencyProperty.UnsetValue)
             {
                 return shadowAttachedAncestorProperty;
             }
 
-            shadowAttachedAncestorProperty = new ShadowAttachedAncestorProperty(element);
-            SetShadowAttachedAncestorProperty(element, shadowAttachedAncestorProperty);
+            shadowAttachedAncestorProperty = new EndPointUpdater(element);
+            SetShadowEndPointUpdater(element, shadowAttachedAncestorProperty);
 
             return shadowAttachedAncestorProperty;
         }
@@ -277,19 +272,17 @@ namespace Anori.WPF.AttachedAncestorProperties
         ///     Gets the shadow attached ancestor property.
         /// </summary>
         /// <param name="element">The element.</param>
-        /// <returns></returns> 
-        internal static ShadowAttachedAncestorProperty GetShadowAttachedAncestorProperty(DependencyObject element) =>
-            (ShadowAttachedAncestorProperty)element.GetValue(ShadowAttachedAncestorPropertyProperty);
+        /// <returns></returns>
+        internal static EndPointUpdater GetShadowEndPointUpdater(DependencyObject element) =>
+            (EndPointUpdater)element.GetValue(ShadowEndPointUpdaterProperty);
 
         /// <summary>
-        ///     Sets the shadowAttachedAncestorProperty.
+        ///     Sets the endPointUpdater.
         /// </summary>
         /// <param name="element">The element.</param>
         /// <param name="value">The value.</param>
-        internal static void SetShadowAttachedAncestorProperty(
-            DependencyObject element,
-            ShadowAttachedAncestorProperty value) =>
-            element.SetValue(ShadowAttachedAncestorPropertyProperty, value);
+        internal static void SetShadowEndPointUpdater(DependencyObject element, EndPointUpdater value) =>
+            element.SetValue(ShadowEndPointUpdaterProperty, value);
 
         /// <summary>
         ///     Getters the changed.
@@ -301,8 +294,8 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <exception cref="InvalidOperationException"></exception>
         private static void OnGetterChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            var oldContent = (Getter)args.OldValue;
-            var newContent = (Getter)args.NewValue;
+            Getter oldContent = (Getter)args.OldValue;
+            Getter newContent = (Getter)args.NewValue;
 
             if (oldContent == newContent)
             {

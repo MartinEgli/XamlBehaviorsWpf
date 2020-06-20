@@ -63,7 +63,10 @@ namespace Anori.WPF.Extensions
             {
                 var targetObject = this.TargetObject as DependencyObject;
 
-                void UpdateAction() => targetObject.SetValue(property, value);
+                void UpdateAction()
+                {
+                    targetObject.SetValue(property, value);
+                }
 
                 // Check whether the target object can be accessed from the
                 // current thread, and use Dispatcher.Invoke if it can't

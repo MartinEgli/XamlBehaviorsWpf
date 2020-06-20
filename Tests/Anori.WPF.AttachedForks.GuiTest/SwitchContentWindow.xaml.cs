@@ -18,7 +18,7 @@ namespace Anori.WPF.AttachedAncestorProperties.GuiTest
         public SwitchContentWindow()
         {
             this.InitializeComponent();
-            this.control = new AttachedUserControl();
+            this.control = new SingleSetter.Controls.AttachedUserControl();
         }
 
         private void Button1_Click(object sender, RoutedEventArgs e)

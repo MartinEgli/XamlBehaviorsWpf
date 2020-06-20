@@ -10,10 +10,20 @@
     <StackPanel>
         <TextBlock x:Name="Header"
                    Text="Test GUI" />
-        <Button Click="SimpleWindow_Click">Simple Text</Button>
+        <Button Click="SingleStaticUpdateableText_Click">Single Setter Static Entry Point and Updateable End Point Text</Button>
+        <Button Click="MultiStaticUpdateableText_Click">Multi Setter Static Entry Point and Updateable End Point Text</Button>
+        <Button Click="SingleStaticBoundText_Click">Single Setter Static Entry Point and Bound End Point Text</Button>
+        <Button Click="MultiStaticBoundText_Click">Multi Setter Static Entry Point and Bound End Point Text</Button>
+
+
+        <Button Click="TreeChangeHost2_Click">Tree Change Fork</Button>
+        <Button Click="TreeChangeHost_Bindable2_Click">Tree Change Fork Bindable</Button>
+        <Button Click="TwoWayTextBindingWindow2_Click">Two Way Text Binding</Button>
         <Button Click="OneWayTextBindingWindow_Click">One Way Text Binding</Button>
         <Button Click="TwoWayTextBindingWindow_Click">Two Way Text Binding</Button>
         <Button Click="Button_Click">Switch Content</Button>
+        <Button Click="Switch2_Click">Switch Content 2</Button>
+        <Button Click="Switch3_Click">Switch Content 3</Button>
         <Button Click="ChangeHost_Click">Change Fork</Button>
         <Button Click="ChangeHostAndSetter_Click">Change Fork and Setter</Button>
         <Button Click="TreeChangeHost_Click">Tree Change Fork</Button>
@@ -28,5 +38,9 @@
         <Button Click="StaticMultiEndPointBooleanBindingWindow_Click">Static Multi End Point Boolean Binding</Button>
         <Button Click="ItemsControlBindingWindow_Click">Items Control Binding</Button>
         <Button Click="SimpleGetterBinding_Click">Simple Getter Binding</Button>
+
+
+        <Button Click="MultiStaticEntryEndItemsBindingMvvm_Click">Multi Setter Static Entry Point And End Point Items Binding Mvvm</Button>
+
     </StackPanel>
 </Window>

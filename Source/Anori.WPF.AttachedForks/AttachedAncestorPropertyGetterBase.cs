@@ -87,7 +87,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <param name="dependencyObject">The object to attach to.</param>
         /// <exception cref="ArgumentNullException">
         ///     dependencyObject or GetDependencyProperty(Type, \"SetterProperty\") or
-        ///     GetInternalDependencyProperty(Type, \"ShadowAttachedAncestorPropertyProperty\")
+        ///     GetInternalDependencyProperty(Type, \"ShadowEndPointUpdaterProperty\")
         /// </exception>
         public void Attach([NotNull] DependencyObject dependencyObject)
         {
@@ -98,9 +98,9 @@ namespace Anori.WPF.AttachedAncestorProperties
 
             this.setterProperty = this.Type.GetDependencyProperty("SetterProperty")
                                   ?? throw new ArgumentNullException("GetDependencyProperty(Type, \"SetterProperty\")");
-            var shadowProperty = this.Type.GetInternalDependencyProperty( "ShadowAttachedAncestorPropertyProperty")
+            var shadowProperty = this.Type.GetInternalDependencyProperty( "ShadowEndPointUpdaterProperty")
                                  ?? throw new ArgumentNullException(
-                                     "GetInternalDependencyProperty(Type, \"ShadowAttachedAncestorPropertyProperty\")");
+                                     "GetInternalDependencyProperty(Type, \"ShadowEndPointUpdaterProperty\")");
 
             this.ancestor = dependencyObject.GetAncestor(this.setterProperty, shadowProperty);
             if (this.ancestor == null)

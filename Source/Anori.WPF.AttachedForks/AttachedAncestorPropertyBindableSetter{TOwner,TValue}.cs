@@ -33,7 +33,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         [CanBeNull] private BindingExpression bindingExpression;
 
         /// <summary>
-        /// The host object
+        /// The ancestor object
         /// </summary>
         [CanBeNull] private DependencyObject ancestor;
 
@@ -104,10 +104,10 @@ namespace Anori.WPF.AttachedAncestorProperties
         public DependencyObject DependencyObject { get; }
 
         /// <summary>
-        /// Gets or sets the host object.
+        /// Gets or sets the ancestor object.
         /// </summary>
         /// <value>
-        /// The host object.
+        /// The ancestor object.
         /// </value>
         public DependencyObject Ancestor
         {
@@ -119,7 +119,7 @@ namespace Anori.WPF.AttachedAncestorProperties
                     return;
                 }
                 this.ancestor = value;
-                this.OnHostChanged(this.ancestor);
+                this.OnAncestorChanged(this.ancestor);
                 this.OnPropertyChanged();
             }
         }
@@ -267,9 +267,9 @@ namespace Anori.WPF.AttachedAncestorProperties
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("On Unloaded DependencyObject {0}", (object)((FrameworkElement)this.DependencyObject)?.Name);
-            var attachedAncestorProperty = AttachedAncestorProperty<TOwner, TValue>.GetOrCreateShadowAttachedAncestorProperty(this.Ancestor);
-            attachedAncestorProperty.AncestorChanged -= this.OnAttachedAncestorChanged;
-            attachedAncestorProperty.Unsubscribe -= this.OnUnsubscribe;
+            var endPointUpdater = AttachedAncestorProperty<TOwner, TValue>.GetOrCreateEndPointUpdater(this.Ancestor);
+            endPointUpdater.AncestorChanged -= this.OnAttachedAncestorChanged;
+            endPointUpdater.Unsubscribe -= this.OnUnsubscribe;
             AttachedAncestorProperty<TOwner, TValue>.RemoveValueChangedHandler(this.Ancestor, this.ValueChangedHandler);
         }
 
@@ -307,14 +307,14 @@ namespace Anori.WPF.AttachedAncestorProperties
         }
 
         /// <summary>
-        /// Called when [host changed].
+        /// Called when [ancestor changed].
         /// </summary>
-        /// <param name="host">The host.</param>
-        protected virtual void OnHostChanged(DependencyObject host)
+        /// <param name="ancestor">The ancestor.</param>
+        protected virtual void OnAncestorChanged(DependencyObject ancestor)
         {
-            Debug.WriteLine("On ShadowAttachedAncestorProperty Changed DependencyObject {0}", (object)((FrameworkElement)this.DependencyObject)?.Name);
+            Debug.WriteLine("On EndPointUpdater Changed DependencyObject {0}", (object)((FrameworkElement)this.DependencyObject)?.Name);
 
-            this.HostChanged?.Invoke(host);
+            this.HostChanged?.Invoke(ancestor);
         }
 
         /// <summary>
@@ -347,20 +347,20 @@ namespace Anori.WPF.AttachedAncestorProperties
         }
 
         /// <summary>
-        /// Updates the host.
+        /// Updates the ancestor.
         /// </summary>
         protected virtual bool UpdateAttachedAncestorProperty()
         {
-            Debug.WriteLine("Update ShadowAttachedAncestorProperty DependencyObject {0}", (object)((FrameworkElement)this.DependencyObject)?.Name);
+            Debug.WriteLine("Update Ancestor DependencyObject {0}", (object)((FrameworkElement)this.DependencyObject)?.Name);
 
             var ancestorObject = AttachedAncestorProperty<TOwner, TValue>.GetAncestor(this.DependencyObject, out _);
             if (ancestorObject == this.Ancestor)
             {
                 if (this.Ancestor != null)
                 {
-                    AttachedAncestorProperty<TOwner, TValue>.GetShadowAttachedAncestorProperty(this.Ancestor).AncestorChanged += this.OnAttachedAncestorChanged;
+                    AttachedAncestorProperty<TOwner, TValue>.GetShadowEndPointUpdater(this.Ancestor).AncestorChanged += this.OnAttachedAncestorChanged;
                 }
-                Debug.WriteLine("ShadowAttachedAncestorProperty not changed {0}", (object)((FrameworkElement)this.Ancestor)?.Name);
+                Debug.WriteLine("Ancestor not changed {0}", (object)((FrameworkElement)this.Ancestor)?.Name);
                 return false;
             }
             if (this.Ancestor != null)
@@ -379,9 +379,9 @@ namespace Anori.WPF.AttachedAncestorProperties
             {
                 Debug.WriteLine("Adding Ancestor {0}", (object)((FrameworkElement)this.Ancestor)?.Name);
                 AttachedAncestorProperty<TOwner, TValue>.AddValueChangedHandler(this.Ancestor, this.ValueChangedHandler);
-                var shadowAttachedAncestorProperty = AttachedAncestorProperty<TOwner, TValue>.GetOrCreateShadowAttachedAncestorProperty(this.Ancestor);
-                shadowAttachedAncestorProperty.AncestorChanged += this.OnAttachedAncestorChanged;
-                shadowAttachedAncestorProperty.Unsubscribe += this.OnUnsubscribe;
+                var endPointUpdater = AttachedAncestorProperty<TOwner, TValue>.GetOrCreateEndPointUpdater(this.Ancestor);
+                endPointUpdater.AncestorChanged += this.OnAttachedAncestorChanged;
+                endPointUpdater.Unsubscribe += this.OnUnsubscribe;
             } else
             {
                 Debug.WriteLine("Not Added Ancestor is null for {0}", this.GetType());
@@ -397,19 +397,19 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void OnUnsubscribe(object sender, EventArgs e)
         {
-            ((ShadowAttachedAncestorProperty)sender).Unsubscribe -= this.OnUnsubscribe;
+            ((EndPointUpdater)sender).Unsubscribe -= this.OnUnsubscribe;
             AttachedAncestorProperty<TOwner, TValue>.RemoveValueChangedHandler(this.Ancestor, this.ValueChangedHandler);
         }
 
         /// <summary>
-        /// Called when [host changed].
+        /// Called when [ancestor changed].
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void OnAttachedAncestorChanged(object sender, EventArgs e)
         {
-            Debug.WriteLine("On ShadowAttachedAncestorProperty Changed {0}", (object)((FrameworkElement)((ShadowAttachedAncestorProperty)sender).Ancestor)?.Name);
-            ((ShadowAttachedAncestorProperty)sender).AncestorChanged -= this.OnAttachedAncestorChanged;
+            Debug.WriteLine("On EndPointUpdater Changed {0}", (object)((FrameworkElement)((EndPointUpdater)sender).Ancestor)?.Name);
+            ((EndPointUpdater)sender).AncestorChanged -= this.OnAttachedAncestorChanged;
             this.UpdateAttachedAncestorProperty();
         }
 

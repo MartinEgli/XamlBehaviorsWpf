@@ -121,7 +121,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <exception cref="ArgumentNullException">
         ///     target
         ///     or
-        ///     setterProperty
+        ///     SetterProperty
         ///     or
         ///     shadowProperty
         /// </exception>
@@ -164,7 +164,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <exception cref="System.ArgumentNullException">
         ///     target
         ///     or
-        ///     setterProperty
+        ///     SetterProperty
         ///     or
         ///     shadowProperty
         /// </exception>

@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:guiTest="clr-namespace:Anori.WPF.AttachedAncestorProperties.GuiTest"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:singleSetter="clr-namespace:Anori.WPF.AttachedAncestorProperties.GuiTest.SingleSetter"
     Title="DynamicEndPointTextBindingWindow"
     Width="800"
     Height="450"
@@ -17,12 +18,12 @@
             x:Name="EntryPointTextBox"
             x:FieldModifier="public"
             Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-        <StackPanel x:Name="StackPanel" guiTest:AttachedAncestorPropertyTextA.Setter="{Binding Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <StackPanel x:Name="StackPanel" singleSetter:AttachedAncestorPropertyTextA.Setter="{Binding Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <TextBlock>End Point</TextBlock>
             <TextBox
                 x:Name="EndPointTextBoxA"
                 x:FieldModifier="public"
-                Text="{guiTest:AttachedBindingTextAGetter UpdateSourceTrigger=PropertyChanged}" />
+                Text="{singleSetter:AttachedBindingTextAGetter UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
     </StackPanel>
 </Window>

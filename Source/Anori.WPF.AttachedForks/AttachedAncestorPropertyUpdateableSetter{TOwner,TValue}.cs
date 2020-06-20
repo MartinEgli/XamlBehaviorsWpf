@@ -1,4 +1,10 @@
-﻿using System;
+﻿// -----------------------------------------------------------------------
+// <copyright file="AttachedAncestorPropertyUpdateableSetter{TOwner,TValue}.cs" company="Anori Soft"
+// Copyright (c) Anori Soft. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System;
 using System.Windows;
 
 namespace Anori.WPF.AttachedAncestorProperties
@@ -6,17 +12,20 @@ namespace Anori.WPF.AttachedAncestorProperties
     internal class AttachedAncestorPropertyUpdateableSetter<TOwner, TValue>
     {
         /// <summary>
-        /// The dependency object
+        ///     The dependency object
         /// </summary>
         private readonly DependencyObject dependencyObject;
 
         /// <summary>
-        /// The update action
+        ///     The update action
         /// </summary>
         private readonly Action<object> updateAction;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttachedAncestorPropertyUpdateableSetter{TOwner,TValue}"/> class.
+        ///     Initializes a new instance of the
+        ///     <see
+        ///         cref="AttachedAncestorPropertyUpdateableSetter{TOwner,TValue}" />
+        ///     class.
         /// </summary>
         /// <param name="dependencyObject">The dependency object.</param>
         /// <param name="updateAction">The update action.</param>
@@ -27,13 +36,15 @@ namespace Anori.WPF.AttachedAncestorProperties
         }
 
         /// <summary>
-        /// Provides the value.
+        ///     Provides the value.
         /// </summary>
         /// <returns></returns>
         public object ProvideValue()
         {
             ((FrameworkElement)this.dependencyObject).Loaded += this.OnLoaded;
-            return AttachedAncestorProperty<TOwner, TValue>.GetValueOrRegisterParentChanged(this.dependencyObject, this.OnSourceChanged);
+            return AttachedAncestorProperty<TOwner, TValue>.GetValueOrRegisterParentChanged(
+                this.dependencyObject,
+                this.OnSourceChanged);
         }
 
         /// <summary>
@@ -51,15 +62,22 @@ namespace Anori.WPF.AttachedAncestorProperties
         {
             if (sender is DependencyObject dependencyObj)
             {
-                this.Update(AttachedAncestorProperty<TOwner, TValue>.GetValueOrRegisterParentChanged(dependencyObj, this.OnSourceChanged));
+                this.Update(
+                    AttachedAncestorProperty<TOwner, TValue>.GetValueOrRegisterParentChanged(
+                        dependencyObj,
+                        this.OnSourceChanged));
             }
         }
 
         /// <summary>
-        /// Called when [source changed].
+        ///     Called when [source changed].
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void OnSourceChanged(object sender, EventArgs e) => this.Update(AttachedAncestorProperty<TOwner, TValue>.GetValueOrRegisterParentChanged(this.dependencyObject, this.OnSourceChanged));
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        private void OnSourceChanged(object sender, EventArgs e) =>
+            this.Update(
+                AttachedAncestorProperty<TOwner, TValue>.GetValueOrRegisterParentChanged(
+                    this.dependencyObject,
+                    this.OnSourceChanged));
     }
 }

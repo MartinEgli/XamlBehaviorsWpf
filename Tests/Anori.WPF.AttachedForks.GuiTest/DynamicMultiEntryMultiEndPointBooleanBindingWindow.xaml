@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:guiTest="clr-namespace:Anori.WPF.AttachedAncestorProperties.GuiTest"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:singleSetter="clr-namespace:Anori.WPF.AttachedAncestorProperties.GuiTest.SingleSetter"
         Title="ControlBindingWindow"
         Width="800"
         Height="450"
@@ -13,26 +14,26 @@
         <CheckBox x:Name="CheckBoxA">Entry Point A</CheckBox>
         <CheckBox x:Name="CheckBoxB">Entry Point B</CheckBox>
         <CheckBox x:Name="CheckBoxC">Entry Point C</CheckBox>
-        <StackPanel guiTest:AttachedAncestorPropertyBooleanA.Setter="{Binding ElementName=CheckBoxA,
-                                                                              Path=IsChecked,
-                                                                              Mode=TwoWay,
-                                                                              UpdateSourceTrigger=PropertyChanged}"
-                    guiTest:AttachedAncestorPropertyBooleanB.Setter="{Binding ElementName=CheckBoxB,
-                                                                              Path=IsChecked,
-                                                                              Mode=TwoWay,
-                                                                              UpdateSourceTrigger=PropertyChanged}"
-                    guiTest:AttachedAncestorPropertyBooleanC.Setter="{Binding ElementName=CheckBoxC,
-                                                                              Path=IsChecked,
-                                                                              Mode=TwoWay,
-                                                                              UpdateSourceTrigger=PropertyChanged}">
+        <StackPanel singleSetter:AttachedAncestorPropertyBooleanA.Setter="{Binding ElementName=CheckBoxA,
+                                                                                   Path=IsChecked,
+                                                                                   Mode=TwoWay,
+                                                                                   UpdateSourceTrigger=PropertyChanged}"
+                    singleSetter:AttachedAncestorPropertyBooleanB.Setter="{Binding ElementName=CheckBoxB,
+                                                                                   Path=IsChecked,
+                                                                                   Mode=TwoWay,
+                                                                                   UpdateSourceTrigger=PropertyChanged}"
+                    singleSetter:AttachedAncestorPropertyBooleanC.Setter="{Binding ElementName=CheckBoxC,
+                                                                                   Path=IsChecked,
+                                                                                   Mode=TwoWay,
+                                                                                   UpdateSourceTrigger=PropertyChanged}">
             <TextBlock>End Points 1:</TextBlock>
-            <CheckBox IsChecked="{guiTest:AttachedBindingBooleanAGetter UpdateSourceTrigger=PropertyChanged}">End Point A</CheckBox>
-            <CheckBox IsChecked="{guiTest:AttachedBindingBooleanBGetter UpdateSourceTrigger=PropertyChanged}">End Point B</CheckBox>
-            <CheckBox IsChecked="{guiTest:AttachedBindingBooleanCGetter UpdateSourceTrigger=PropertyChanged}">End Point C</CheckBox>
+            <CheckBox IsChecked="{singleSetter:AttachedBindingBooleanAGetter UpdateSourceTrigger=PropertyChanged}">End Point A</CheckBox>
+            <CheckBox IsChecked="{singleSetter:AttachedBindingBooleanBGetter UpdateSourceTrigger=PropertyChanged}">End Point B</CheckBox>
+            <CheckBox IsChecked="{singleSetter:AttachedBindingBooleanCGetter UpdateSourceTrigger=PropertyChanged}">End Point C</CheckBox>
             <TextBlock>End Points 2:</TextBlock>
-            <CheckBox IsChecked="{guiTest:AttachedBindingBooleanAGetter UpdateSourceTrigger=PropertyChanged}">End Point A</CheckBox>
-            <CheckBox IsChecked="{guiTest:AttachedBindingBooleanBGetter UpdateSourceTrigger=PropertyChanged}">End Point B</CheckBox>
-            <CheckBox IsChecked="{guiTest:AttachedBindingBooleanCGetter UpdateSourceTrigger=PropertyChanged}">End Point C</CheckBox>
+            <CheckBox IsChecked="{singleSetter:AttachedBindingBooleanAGetter UpdateSourceTrigger=PropertyChanged}">End Point A</CheckBox>
+            <CheckBox IsChecked="{singleSetter:AttachedBindingBooleanBGetter UpdateSourceTrigger=PropertyChanged}">End Point B</CheckBox>
+            <CheckBox IsChecked="{singleSetter:AttachedBindingBooleanCGetter UpdateSourceTrigger=PropertyChanged}">End Point C</CheckBox>
         </StackPanel>
     </StackPanel>
 </Window>

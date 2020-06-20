@@ -5,6 +5,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:guiTest="clr-namespace:Anori.WPF.AttachedAncestorProperties.GuiTest"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:singleSetter="clr-namespace:Anori.WPF.AttachedAncestorProperties.GuiTest.SingleSetter"
+        xmlns:controls="clr-namespace:Anori.WPF.AttachedAncestorProperties.GuiTest.SingleSetter.Controls"
         x:Name="Window"
         Title="SwitchContentWindow"
         Width="800"
@@ -20,7 +22,7 @@
             <StackPanel x:Name="Panel">
                 <Label>Content</Label>
                 <ContentControl x:Name="ContentControl">
-                    <guiTest:AttachedBindingTextUserControl />
+                    <controls:AttachedBindingTextUserControl />
                 </ContentControl>
             </StackPanel>
         </Border>

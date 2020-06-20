@@ -3,7 +3,7 @@
 namespace Anori.WPF.AttachedAncestorProperties
 {
     /// <summary>
-    /// Attached ShadowAttachedAncestorProperty
+    /// Attached EndPointUpdater
     /// </summary>
     /// <seealso cref="System.Windows.DependencyObject"/>
     public abstract class AttachedAncestorProperty : DependencyObject

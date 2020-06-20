@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:guiTest="clr-namespace:Anori.WPF.AttachedAncestorProperties.GuiTest"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:singleSetter="clr-namespace:Anori.WPF.AttachedAncestorProperties.GuiTest.SingleSetter"
              Width="800"
              Height="450"
              mc:Ignorable="d">
@@ -13,53 +14,53 @@
         <TextBlock>Entry Point B</TextBlock>
         <TextBox x:Name="EntryPointB" />
         <StackPanel x:Name="StackPanel"
-                    guiTest:AttachedAncestorPropertyTextA.Setter="{Binding Path=Text,
+                    singleSetter:AttachedAncestorPropertyTextA.Setter="{Binding Path=Text,
                                                                            ElementName=EntryPointA,
                                                                            Mode=TwoWay,
                                                                            UpdateSourceTrigger=PropertyChanged}"
-                    guiTest:AttachedAncestorPropertyTextB.Setter="{Binding Path=Text,
+                    singleSetter:AttachedAncestorPropertyTextB.Setter="{Binding Path=Text,
                                                                            ElementName=EntryPointB,
                                                                            Mode=TwoWay,
                                                                            UpdateSourceTrigger=PropertyChanged}">
             <StackPanel>
                 <TextBlock>End Point A Default</TextBlock>
                 <TextBox x:Name="EndPointADefault"
-                         Text="{guiTest:AttachedBindingTextAGetter UpdateSourceTrigger=Default}" />
+                         Text="{singleSetter:AttachedBindingTextAGetter UpdateSourceTrigger=Default}" />
             </StackPanel>
             <StackPanel>
                 <TextBlock>End Point A PropertyChanged</TextBlock>
                 <TextBox x:Name="EndPointAPropertyChanged"
-                         Text="{guiTest:AttachedBindingTextAGetter UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{singleSetter:AttachedBindingTextAGetter UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
             <StackPanel>
                 <TextBlock>End Point A Explicit</TextBlock>
                 <TextBox x:Name="EndPointAExplicit"
-                         Text="{guiTest:AttachedBindingTextAGetter UpdateSourceTrigger=Explicit}" />
+                         Text="{singleSetter:AttachedBindingTextAGetter UpdateSourceTrigger=Explicit}" />
             </StackPanel>
             <StackPanel>
                 <TextBlock>End Point A LostFocus</TextBlock>
                 <TextBox x:Name="EndPointALostFocus"
-                         Text="{guiTest:AttachedBindingTextAGetter UpdateSourceTrigger=LostFocus}" />
+                         Text="{singleSetter:AttachedBindingTextAGetter UpdateSourceTrigger=LostFocus}" />
             </StackPanel>
             <StackPanel>
                 <TextBlock>End Point B Default</TextBlock>
                 <TextBox x:Name="EndPointBDefault"
-                         Text="{guiTest:AttachedBindingTextBGetter UpdateSourceTrigger=Default}" />
+                         Text="{singleSetter:AttachedBindingTextBGetter UpdateSourceTrigger=Default}" />
             </StackPanel>
             <StackPanel>
                 <TextBlock>End Point B PropertyChanged</TextBlock>
                 <TextBox x:Name="EndPointBPropertyChanged"
-                         Text="{guiTest:AttachedBindingTextBGetter UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{singleSetter:AttachedBindingTextBGetter UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
             <StackPanel>
                 <TextBlock>End Point B Explicit</TextBlock>
                 <TextBox x:Name="EndPointBExplicit"
-                         Text="{guiTest:AttachedBindingTextBGetter UpdateSourceTrigger=Explicit}" />
+                         Text="{singleSetter:AttachedBindingTextBGetter UpdateSourceTrigger=Explicit}" />
             </StackPanel>
             <StackPanel>
                 <TextBlock>End Point B LostFocus</TextBlock>
                 <TextBox x:Name="EndPointBLostFocus"
-                         Text="{guiTest:AttachedBindingTextBGetter UpdateSourceTrigger=LostFocus}" />
+                         Text="{singleSetter:AttachedBindingTextBGetter UpdateSourceTrigger=LostFocus}" />
             </StackPanel>
         </StackPanel>
     </StackPanel>

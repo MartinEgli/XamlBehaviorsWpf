@@ -9,6 +9,7 @@ namespace Anori.WPF.AttachedAncestorProperties.UnitTest
     using System.Threading.Tasks;
 
     using Anori.WPF.AttachedAncestorProperties.GuiTest;
+    using Anori.WPF.AttachedAncestorProperties.GuiTest.SingleSetter.Mvvm;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -139,7 +140,7 @@ namespace Anori.WPF.AttachedAncestorProperties.UnitTest
         [TestInitialize]
         public void TestInitialize() =>
             SetContent(
-                () => new BoundEntryPointAndTwoBoundEndPointTextMVVMView
+                () => new BoundEntryPointAndTwoBoundEndPointTextMvvmView
                           {
                               DataContext = new SimpleAttachedTextBindingViewModel()
                           });
