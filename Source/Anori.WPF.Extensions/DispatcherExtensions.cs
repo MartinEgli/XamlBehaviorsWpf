@@ -74,12 +74,15 @@ namespace Anori.WPF.Extensions
                 throw new ArgumentNullException(nameof(action));
             }
 
-            if (!dispatcherObject.CheckAccess())
+            if (dispatcherObject.CheckAccess())
             {
                 action();
             }
 
-            dispatcherObject.Dispatcher?.Invoke(() => action);
+            dispatcherObject.Dispatcher?.Invoke(() =>
+            {
+                action();
+            });
         }
     }
 }

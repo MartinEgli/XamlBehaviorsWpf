@@ -52,7 +52,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.Testing", "..\Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.AttachedAncestorProperties", "Anori.WPF.AttachedAncestorProperties\Anori.WPF.AttachedAncestorProperties.csproj", "{D40A5DBC-826F-4832-815E-D73FF5FDA116}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.AttachedAncestorProperties.AutomatedUiTest", "..\Tests\Anori.WPF.AttachedAncestorProperties.AutomatedUiTests\Anori.WPF.AttachedAncestorProperties.AutomatedUiTest.csproj", "{769F6865-91AA-4A77-BD46-AAADE396056A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.AttachedAncestorProperties.AutomatedUiTests", "..\Tests\Anori.WPF.AttachedAncestorProperties.AutomatedUiTests\Anori.WPF.AttachedAncestorProperties.AutomatedUiTests.csproj", "{769F6865-91AA-4A77-BD46-AAADE396056A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anori.WPF.AttachedAncestorProperties.ManualUiTests", "..\Tests\Anori.WPF.AttachedAncestorProperties.ManualUiTests\Anori.WPF.AttachedAncestorProperties.ManualUiTests.csproj", "{344BFE5A-A278-46FF-9FD6-54B76CE224FC}"
 EndProject

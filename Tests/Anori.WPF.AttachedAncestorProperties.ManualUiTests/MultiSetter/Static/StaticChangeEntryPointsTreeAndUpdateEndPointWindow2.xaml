@@ -1,5 +1,5 @@
 ﻿<Window
-    x:Class="Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.StaticChangeEntryPointsTreeAndUpdateEndPointWindow2"
+    x:Class="Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.StaticChangeEntryPointsTreeAndOneWayEndPointtWindow2"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -11,5 +11,5 @@
     Width="800"
     Height="450"
     mc:Ignorable="d">
-    <multiSetter:StaticChangeEntryPointsTreeAndUpdateEndPointView2 />
+    <multiSetter:StaticChangeEntryPointsTreeAndOneWayEndPointtView2 />
 </Window>

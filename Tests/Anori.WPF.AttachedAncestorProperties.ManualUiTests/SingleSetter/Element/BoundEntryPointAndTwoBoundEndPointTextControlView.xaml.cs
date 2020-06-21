@@ -5,9 +5,9 @@
     /// <summary>
     /// Interaction logic for DynamicEndPointTextBindingWindow.xaml
     /// </summary>
-    public partial class BoundEntryPointAndTwoBoundEndPointTextControlView : UserControl
+    public partial class BoundEntryPointAndTwoTwoWayEndPointTextControlView : UserControl
     {
-        public BoundEntryPointAndTwoBoundEndPointTextControlView()
+        public BoundEntryPointAndTwoTwoWayEndPointTextControlView()
         {
             InitializeComponent();
         }

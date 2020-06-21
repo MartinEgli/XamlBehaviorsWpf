@@ -16,34 +16,34 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="MultiSetter\Element\BoundEntryPointAndUpdateableEndPointTextControlWindow2.xaml.cs">
+    <Compile Update="MultiSetter\Element\BoundEntryPointAndOneWayEndPointTextControlWindow2.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="MultiSetter\ItemsControl\AttachedBindingItemView.xaml.cs">
+    <Compile Update="MultiSetter\ItemsControl\AttachedTwoWayItemView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="MultiSetter\ItemsControl\StaticEntryPointAndEndPointItemsBindingMvvmView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="MultiSetter\Static\StaticEntryPointAndBoundEndPointSwitchContentView.xaml.cs">
+    <Compile Update="MultiSetter\Static\StaticEntryPointAndTwoWayEndPointSwitchContentView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="SingleSetter\Element\BoundEntryPointAndUpdateableEndPointTextControlWindow.xaml.cs">
+    <Compile Update="SingleSetter\Element\BoundEntryPointAndOneWayEndPointTextControlWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="MultiSetter\Element\BoundEntryPointAndTwoBoundEndPointTextControlView.xaml">
+    <Page Update="MultiSetter\Element\BoundEntryPointAndTwoTwoWayEndPointTextControlView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MultiSetter\Element\BoundEntryPointAndUpdateableEndPointTextControlWindow2.xaml">
+    <Page Update="MultiSetter\Element\BoundEntryPointAndOneWayEndPointTextControlWindow2.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MultiSetter\Element\BoundEntryPointAndUpdateableEndPointTextControlView2.xaml">
+    <Page Update="MultiSetter\Element\BoundEntryPointAndOneWayEndPointTextControlView2.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MultiSetter\ItemsControl\AttachedBindingItemView.xaml">
+    <Page Update="MultiSetter\ItemsControl\AttachedTwoWayItemView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MultiSetter\ItemsControl\StaticEntryPointAndEndPointItemsBindingMvvmView.xaml">
@@ -52,118 +52,121 @@
     <Page Update="MultiSetter\ItemsControl\StaticEntryPointAndEndPointItemsBindingMvvmWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MultiSetter\Static\StaticEntryPointAndBoundEndPointSwitchContentView.xaml">
+    <Page Update="MultiSetter\Static\StaticEntryPointAndTwoWayEndPointSwitchContentView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MultiSetter\Static\StaticEntryPointAndBoundEndPointSwitchContentWindow.xaml">
+    <Page Update="MultiSetter\Static\StaticEntryPointAndTwoWayEndPointSwitchContentWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="SingleSetter\Controls\AttachedBindableUserControl.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MultiSetter\Controls\AttachedBindableTextUserControl2.xaml">
+    <Page Update="MultiSetter\Controls\AttachedTwoWayTextUserControl2.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MultiSetter\Controls\AttachedUpdateableTextUserControl2.xaml">
+    <Page Update="MultiSetter\Controls\AttachedOneWayTextUserControl2.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SingleSetter\Controls\AttachedOneWayTextUserControl.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="SingleSetter\Controls\AttachedUpdateableTextUserControl.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MultiSetter\Element\BoundEntryPointAndBoundEndPointTextControlView2.xaml">
+    <Page Update="MultiSetter\Element\BoundEntryPointAndTwoWayEndPointTextControlView2.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SingleSetter\Element\BoundEntryPointAndTwoBoundEndPointObjectMVVMView.xaml">
+    <Page Update="SingleSetter\Element\BoundEntryPointAndTwoTwoWayEndPointObjectMVVMView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SingleSetter\Element\BoundEntryPointAndTwoBoundEndPointTextControlView.xaml">
+    <Page Update="SingleSetter\Element\BoundEntryPointAndTwoTwoWayEndPointTextControlView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SingleSetter\Element\BoundEntryPointAndUpdateableEndPointTextControlWindow.xaml">
+    <Page Update="SingleSetter\Element\BoundEntryPointAndOneWayEndPointTextControlWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SingleSetter\Element\BoundEntryPointAndUpdateableEndPointTextControlView.xaml">
+    <Page Update="SingleSetter\Element\BoundEntryPointAndOneWayEndPointTextControlView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SingleSetter\Static\StaticChangeEntryPointsTreeAndBindableEndPointView.xaml">
+    <Page Update="SingleSetter\Static\StaticChangeEntryPointsTreeAndTwoWayEndPointView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MultiSetter\Static\StaticChangeEntryPointsTreeAndBindableEndPointView2.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MultiSetter\Static\StaticChangeEntryPointsTreeAndUpdateEndPointView2.xaml">
+    <Page Update="MultiSetter\Static\StaticChangeEntryPointsTreeAndOneWayEndPointtView2.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SingleSetter\Static\StaticChangeEntryPointsTreeAndUpdateEndPointView.xaml">
+    <Page Update="SingleSetter\Static\StaticChangeEntryPointsTreeAndOneWayEndPointView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MultiSetter\Static\StaticChangeEntryPointsTreeAndBindableEndPointWindow2.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MultiSetter\Static\StaticChangeEntryPointsTreeAndUpdateEndPointWindow2.xaml">
+    <Page Update="MultiSetter\Static\StaticChangeEntryPointsTreeAndOneWayEndPointtWindow2.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MultiSetter\Static\StaticEntryPointAndBoundEndPointTextView2.xaml">
+    <Page Update="MultiSetter\Static\StaticEntryPointAndTwoWayEndPointTextView2.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MultiSetter\Static\StaticEntryPointAndUpdateableEndPointTextView2.xaml">
+    <Page Update="MultiSetter\Static\StaticEntryPointAndOneWayEndPointTextView2.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MultiSetter\Static\StaticEntryPointAndUpdateableEndPointTextWindow2.xaml">
+    <Page Update="MultiSetter\Static\StaticEntryPointAndOneWayEndPointTextWindow2.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SingleSetter\Static\StaticEntryPointAndBoundEndPointTextWindow.xaml">
+    <Page Update="SingleSetter\Static\StaticEntryPointAndTwoWayEndPointTextWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SingleSetter\Static\StaticMultiEntryPointsAndBoundEndPointsBoolControlView.xaml">
+    <Page Update="SingleSetter\Static\StaticMultiEntryPointsAndTwoWayEndPointsBoolControlView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SingleSetter\Static\StaticMultiEntryPointsAndUpdateableEndPointsBoolControlView.xaml">
+    <Page Update="SingleSetter\Static\StaticMultiEntryPointsAndOneWayAndOneWayEndPointsBoolControlView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="UpdateSourceTriggerBoundEntryPointAndBoundEndPointTextControlView.xaml">
+    <Page Update="UpdateSourceTriggerBoundEntryPointAndTwoWayEndPointTextControlView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="TwoBoundEntryPointAndBoundEndPointTextControlView.xaml">
+    <Page Update="TwoBoundEntryPointAndTwoWayEndPointTextControlView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SingleSetter\Element\BoundEntryPointAndBoundEndPointTextControlView.xaml">
+    <Page Update="SingleSetter\Element\BoundEntryPointAndTwoWayEndPointTextControlView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SingleSetter\Mvvm\BoundEntryPointAndUpdateableEndPointTextMVVMView.xaml">
+    <Page Update="SingleSetter\Mvvm\BoundEntryPointAndOneWayEndPointTextMVVMView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SingleSetter\Mvvm\BoundEntryPointAndTwoBoundEndPointTextMVVView.xaml">
+    <Page Update="SingleSetter\Mvvm\BoundEntryPointAndTwoTwoWayEndPointTextMVVView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SingleSetter\Mvvm\BoundEntryPointAndTwoBoundEndPointObjectMVVMView.xaml">
+    <Page Update="SingleSetter\Mvvm\BoundEntryPointAndTwoTwoWayEndPointObjectMVVMView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="ChangeAttachedAncestorProperyAndSetterBindingWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SingleSetter\Static\StaticEntryPointAndTwoBoundEndPointTextView.xaml">
+    <Page Update="SingleSetter\Static\StaticEntryPointAndTwoTwoWayEndPointTextView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SingleSetter\Static\StaticEntryPointAndBoundEndPointTextView.xaml">
+    <Page Update="SingleSetter\Static\StaticEntryPointAndTwoWayEndPointTextView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SingleSetter\Static\StaticEntryPointAndTwoUpdateableEndPointTextView.xaml">
+    <Page Update="SingleSetter\Static\StaticEntryPointAndTwoOneWayEndPointTextView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SingleSetter\Static\StaticEntryPointAndUpdateableEndPointTextView.xaml">
+    <Page Update="SingleSetter\Static\StaticEntryPointAndOneWayEndPointTextView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="SingleSetter\Static\StaticMultiEndPointBooleanBindingWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SingleSetter\Static\StaticMultiEntryPointsAndUpdateableEndPointsBoolControlWindow.xaml">
+    <Page Update="SingleSetter\Static\StaticMultiEntryPointsAndOneWayEndPointsBoolControlWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="DynamicMultiEntryMultiEndPointBooleanBindingWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="SingleSetter\Static\StaticChangeEntryPointsTreeAndUpdateEndPointWindow.xaml">
+    <Page Update="SingleSetter\Static\StaticChangeEntryPointsTreeAndOneWayEndPointtWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="OneWayAttachedTextBindingWindow.xaml">

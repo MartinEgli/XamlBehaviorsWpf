@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="BoundEntryPointAndBoundEndPointTextControlWindow.xaml.cs" company="Anori Soft"
+// <copyright file="BoundEntryPointAndTwoWayEndPointTextControlWindow.xaml.cs" company="Anori Soft"
 // Copyright (c) Anori Soft. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -9,11 +9,11 @@ namespace Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Elemen
     using System.Windows;
 
     /// <summary>
-    ///     Interaction logic for BoundEntryPointAndBoundEndPointTextControlWindow.xaml
+    ///     Interaction logic for BoundEntryPointAndTwoWayEndPointTextControlWindow.xaml
     /// </summary>
-    public partial class BoundEntryPointAndUpdateableEndPointTextControlWindow : Window
+    public partial class BoundEntryPointAndOneWayEndPointTextControlWindow : Window
     {
-        public BoundEntryPointAndUpdateableEndPointTextControlWindow()
+        public BoundEntryPointAndOneWayEndPointTextControlWindow()
         {
             InitializeComponent();
         }

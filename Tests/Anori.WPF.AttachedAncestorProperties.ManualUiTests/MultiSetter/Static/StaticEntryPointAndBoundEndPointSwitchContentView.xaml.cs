@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="StaticEntryPointAndBoundEndPointSwitchContentView.xaml.cs" company="Anori Soft"
+// <copyright file="StaticEntryPointAndTwoWayEndPointSwitchContentView.xaml.cs" company="Anori Soft"
 // Copyright (c) Anori Soft. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -26,14 +26,14 @@ namespace Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter
     /// <summary>
     ///     Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class StaticEntryPointAndBoundEndPointSwitchContentView : UserControl
+    public partial class StaticEntryPointAndTwoWayEndPointSwitchContentView : UserControl
     {
         private readonly FrameworkElement control;
 
-        public StaticEntryPointAndBoundEndPointSwitchContentView()
+        public StaticEntryPointAndTwoWayEndPointSwitchContentView()
         {
             InitializeComponent();
-            this.control = new AttachedBindableTextUserControl2();
+            this.control = new AttachedTwoWayTextUserControl2();
         }
 
         private void Button1_Click(object sender, RoutedEventArgs e)

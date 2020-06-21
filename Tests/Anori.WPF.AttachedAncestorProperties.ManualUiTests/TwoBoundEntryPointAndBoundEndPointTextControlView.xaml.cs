@@ -7,9 +7,9 @@ namespace Anori.WPF.AttachedAncestorProperties.ManualUiTests
     /// <summary>
     /// Interaction logic for DynamicEndPointTextBindingWindow.xaml
     /// </summary>
-    public partial class TwoBoundEntryPointAndBoundEndPointTextControlView : UserControl
+    public partial class TwoBoundEntryPointAndTwoWayEndPointTextControlView : UserControl
     {
-        public TwoBoundEntryPointAndBoundEndPointTextControlView()
+        public TwoBoundEntryPointAndTwoWayEndPointTextControlView()
         {
             InitializeComponent();
         }

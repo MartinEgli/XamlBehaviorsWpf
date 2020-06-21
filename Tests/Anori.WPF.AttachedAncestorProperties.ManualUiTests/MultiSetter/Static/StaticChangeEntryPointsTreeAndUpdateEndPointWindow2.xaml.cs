@@ -11,10 +11,10 @@ namespace Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter
     /// <summary>
     ///     Interaction logic for SwitchContentWindow.xaml
     /// </summary>
-    public partial class StaticChangeEntryPointsTreeAndUpdateEndPointWindow2 : Window
+    public partial class StaticChangeEntryPointsTreeAndOneWayEndPointtWindow2 : Window
     {
         
-        public StaticChangeEntryPointsTreeAndUpdateEndPointWindow2()
+        public StaticChangeEntryPointsTreeAndOneWayEndPointtWindow2()
         {
             this.InitializeComponent();
         }

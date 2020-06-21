@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.Static.StaticEntryPointAndBoundEndPointTextView2"
+﻿<UserControl x:Class="Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.Static.StaticEntryPointAndTwoWayEndPointTextView2"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:attachedAncestorProperties="clr-namespace:Anori.WPF.AttachedAncestorProperties;assembly=Anori.WPF.AttachedAncestorProperties"
@@ -16,13 +16,13 @@
             <TextBlock>End Point</TextBlock>
             <TextBox x:Name="EndPointA"
                      x:FieldModifier="public"
-                     Text="{attachedAncestorProperties:BindingGetter SetterProperty={x:Static multiSetter:AttachedAncestorProperties.SetterAProperty},
-                                                                     UpdateSourceTrigger=PropertyChanged}" />
+                     Text="{attachedAncestorProperties:TwoWayGetter SetterProperty={x:Static multiSetter:AttachedAncestorProperties.SetterAProperty},
+                                                                    UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBox x:Name="EndPointB"
                      x:FieldModifier="public"
-                     Text="{attachedAncestorProperties:BindingGetter SetterProperty={x:Static multiSetter:AttachedAncestorProperties.SetterBProperty},
-                                                                     UpdateSourceTrigger=PropertyChanged}" />
+                     Text="{attachedAncestorProperties:TwoWayGetter SetterProperty={x:Static multiSetter:AttachedAncestorProperties.SetterBProperty},
+                                                                    UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
     </StackPanel>
 </UserControl>

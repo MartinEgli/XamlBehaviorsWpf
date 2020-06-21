@@ -20,9 +20,7 @@ namespace Anori.WPF.AttachedAncestorProperties
     /// <typeparam name="TOwner">The type of the owner.</typeparam>
     /// <seealso cref="System.Windows.DependencyObject" />
     public abstract class AncestorPropertiesBase<TOwner> : DependencyObject
-
     {
-        
         /// <summary>
         ///     The endPointUpdater property
         /// </summary>

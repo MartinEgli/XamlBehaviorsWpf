@@ -147,11 +147,11 @@ namespace Anori.WPF.AttachedAncestorProperties
                 "On Unloaded DependencyObject {0}",
                 (object)((FrameworkElement)this.DependencyObject)?.Name);
             EndPointUpdater endPointUpdater =
-                AncestorProperty.GetOrCreateEndPointUpdater(this.Ancestor, this.SetterProperty);
+                AncestorPropertyHelper.GetOrCreateEndPointUpdater(this.Ancestor, this.SetterProperty);
             endPointUpdater.AncestorChanged -= this.OnAncestorChanged;
             endPointUpdater.Unsubscribe -= this.OnUnsubscribe;
             this.UnsubscribeValueChanged();
-            //AncestorProperty.RemoveValueChangedHandler(this.Ancestor, this.SetterProperty, this.ValueChangedHandler);
+            //AncestorPropertyHelper.RemoveValueChangedHandler(this.Ancestor, this.SetterProperty, this.ValueChangedHandler);
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         {
             ((EndPointUpdater)sender).Unsubscribe -= this.OnUnsubscribe;
             this.UnsubscribeValueChanged();
-            //AncestorProperty.RemoveValueChangedHandler(this.Ancestor, this.SetterProperty, this.ValueChangedHandler);
+            //AncestorPropertyHelper.RemoveValueChangedHandler(this.Ancestor, this.SetterProperty, this.ValueChangedHandler);
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Anori.WPF.AttachedAncestorProperties
                 "Update EndPointUpdater DependencyObject {0}",
                 (object)((FrameworkElement)this.DependencyObject)?.Name);
 
-            DependencyObject ancestorObject = AncestorProperty.GetAncestor(
+            DependencyObject ancestorObject = AncestorPropertyHelper.GetAncestor(
                 this.DependencyObject ?? throw new InvalidOperationException(),
                 this.SetterProperty,
                 out _);
@@ -196,7 +196,7 @@ namespace Anori.WPF.AttachedAncestorProperties
             {
                 if (this.Ancestor != null)
                 {
-                    AncestorProperty.GetUpdater(this.Ancestor, this.SetterProperty).AncestorChanged +=
+                    AncestorPropertyHelper.GetUpdater(this.Ancestor, this.SetterProperty).AncestorChanged +=
                         this.OnAncestorChanged;
                 }
 
@@ -220,7 +220,7 @@ namespace Anori.WPF.AttachedAncestorProperties
                 Debug.WriteLine("Adding Ancestor {0}", (object)((FrameworkElement)this.Ancestor)?.Name);
                 this.SubscribeValueChanged();
                 EndPointUpdater endPointUpdater =
-                    AncestorProperty.GetOrCreateEndPointUpdater(this.Ancestor, this.SetterProperty);
+                    AncestorPropertyHelper.GetOrCreateEndPointUpdater(this.Ancestor, this.SetterProperty);
                 endPointUpdater.AncestorChanged += this.OnAncestorChanged;
                 endPointUpdater.Unsubscribe += this.OnUnsubscribe;
             } else

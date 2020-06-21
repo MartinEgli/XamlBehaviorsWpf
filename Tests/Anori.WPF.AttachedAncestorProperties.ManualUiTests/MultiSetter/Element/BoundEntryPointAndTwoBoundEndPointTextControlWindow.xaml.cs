@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.Element
 {
     /// <summary>
-    /// Interaction logic for BoundEntryPointAndTwoBoundEndPointTextControlWindow.xaml
+    /// Interaction logic for BoundEntryPointAndTwoTwoWayEndPointTextControlWindow.xaml
     /// </summary>
-    public partial class BoundEntryPointAndTwoBoundEndPointTextControlWindow : Window
+    public partial class BoundEntryPointAndTwoTwoWayEndPointTextControlWindow : Window
     {
-        public BoundEntryPointAndTwoBoundEndPointTextControlWindow()
+        public BoundEntryPointAndTwoTwoWayEndPointTextControlWindow()
         {
             InitializeComponent();
         }

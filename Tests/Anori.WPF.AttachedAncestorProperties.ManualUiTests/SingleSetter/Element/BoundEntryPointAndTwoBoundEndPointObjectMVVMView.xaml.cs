@@ -5,9 +5,9 @@
     /// <summary>
     /// Interaction logic for DynamicEndPointTextBindingWindow.xaml
     /// </summary>
-    public partial class BoundEntryPointAndTwoBoundEndPointObjectMVVMView : UserControl
+    public partial class BoundEntryPointAndTwoTwoWayEndPointObjectMVVMView : UserControl
     {
-        public BoundEntryPointAndTwoBoundEndPointObjectMVVMView()
+        public BoundEntryPointAndTwoTwoWayEndPointObjectMVVMView()
         {
             InitializeComponent();
         }

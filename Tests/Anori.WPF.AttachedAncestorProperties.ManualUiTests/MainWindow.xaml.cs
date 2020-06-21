@@ -12,8 +12,11 @@ namespace AttachedPropertyTests
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter;
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.Element;
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.ItemsControl;
+    using Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.Static;
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter;
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Static;
+
+    using StaticChangeEntryPointsTreeAndBindableEndPointWindow2 = Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.Static.StaticChangeEntryPointsTreeAndBindableEndPointWindow2;
 
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
@@ -51,13 +54,13 @@ namespace AttachedPropertyTests
 
         private void SimpleBindingWindow_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new BoundEntryPointAndBoundEndPointTextMVVMWindow { DataContext = new SimpleAttachedTextBindingViewModel()};
+            var dialog = new BoundEntryPointAndTwoWayEndPointTextMVVMWindow { DataContext = new SimpleAttachedTextBindingViewModel()};
             dialog.ShowDialog();
         }
 
         private void SingleStaticUpdateableText_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new StaticEntryPointAndUpdateableEndPointTextWindow();
+            var dialog = new StaticEntryPointAndOneWayEndPointTextWindow();
             dialog.ShowDialog();
         }
 
@@ -94,7 +97,7 @@ namespace AttachedPropertyTests
 
         private void TreeChangeHost_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new StaticChangeEntryPointsTreeAndUpdateEndPointWindow();
+            var dialog = new StaticChangeEntryPointsTreeAndOneWayEndPointtWindow();
             dialog.ShowDialog();
         }
 
@@ -112,7 +115,7 @@ namespace AttachedPropertyTests
 
         private void MuliAttachedBoolControlWindow_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new StaticMultiEntryPointsAndUpdateableEndPointsBoolControlWindow();
+            var dialog = new StaticMultiEntryPointsAndOneWayEndPointsBoolControlWindow();
             dialog.ShowDialog();
         }
 
@@ -136,31 +139,31 @@ namespace AttachedPropertyTests
 
         private void MultiStaticBoundText_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new StaticEntryPointAndBoundEndPointTextWindow2();
+            var dialog = new StaticEntryPointAndTwoWayEndPointTextWindow2();
             dialog.ShowDialog();
         }
 
         private void SingleStaticBoundText_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new StaticEntryPointAndBoundEndPointTextWindow();
+            var dialog = new StaticEntryPointAndTwoWayEndPointTextWindow();
             dialog.ShowDialog();
         }
 
         private void MultiStaticUpdateableText_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new StaticEntryPointAndUpdateableEndPointTextWindow2();
+            var dialog = new StaticEntryPointAndOneWayEndPointTextWindow2();
             dialog.ShowDialog();
         }
 
         private void TwoWayTextBindingWindow2_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new BoundEntryPointAndBoundEndPointTextControlWindow2();
+            var dialog = new BoundEntryPointAndTwoWayEndPointTextControlWindow2();
             dialog.ShowDialog();
         }
 
         private void TreeChangeHost2_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new StaticChangeEntryPointsTreeAndUpdateEndPointWindow2();
+            var dialog = new StaticChangeEntryPointsTreeAndOneWayEndPointtWindow2();
             dialog.ShowDialog();
 
         }
@@ -174,14 +177,14 @@ namespace AttachedPropertyTests
 
         private void Switch2_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new StaticEntryPointAndUpdateableEndPointSwitchContentWindow();
+            var dialog = new StaticEntryPointAndOneWayEndPointSwitchContentWindow();
             dialog.ShowDialog();
         }
 
 
         private void Switch3_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new StaticEntryPointAndBoundEndPointSwitchContentWindow();
+            var dialog = new StaticEntryPointAndTwoWayEndPointSwitchContentWindow();
             dialog.ShowDialog();
         }
 

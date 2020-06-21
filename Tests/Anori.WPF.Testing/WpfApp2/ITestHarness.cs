@@ -13,5 +13,6 @@ namespace Anori.WPF.Testing
         void SetContent(Func<UserControl> content);
         void Invoke(Action action);
         TResult Invoke<TResult>(Func<TResult> func);
+        void Close();
     }
 }

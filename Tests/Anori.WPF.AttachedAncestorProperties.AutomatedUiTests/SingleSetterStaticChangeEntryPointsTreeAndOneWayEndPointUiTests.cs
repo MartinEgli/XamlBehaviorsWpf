@@ -1,0 +1,139 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="SingleSetterStaticChangeEntryPointsTreeAndOneWayEndPointUiTests.cs" company="Anori Soft"
+// Copyright (c) Anori Soft. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
+{
+    using System.Threading.Tasks;
+
+    using Anori.WPF.AttachedAncestorProperties.ManualUiTests;
+    using Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Static;
+    using Anori.WPF.Testing;
+
+    using NUnit.Framework;
+
+    using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+    using TestContext = Microsoft.VisualStudio.TestTools.UnitTesting.TestContext;
+
+    [TestFixture, UserInterface]
+    public class SingleSetterStaticChangeEntryPointsTreeAndOneWayEndPointUiTests : UiTestSessionBase
+    {
+        private const string Addpanel = "AddPanel";
+
+        private const string Addsubpanel = "AddSubPanel";
+
+        private const string Endpoint = "EndPoint";
+
+        private const string Removepanel = "RemovePanel";
+
+        private const string Removesubpanel = "RemoveSubPanel";
+
+        /// <summary>
+        ///     Classes the cleanup.
+        /// </summary>
+        [OneTimeTearDown]
+        public static void ClassCleanup() => TearDown();
+
+        /// <summary>
+        ///     Classes the initialize.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        [OneTimeSetUp]
+        public static void ClassInitialize(TestContext context) => Setup(context);
+
+        [Test]
+        public async Task AttachedAncestorProperty_CheckText_Test()
+        {
+            var endpoint       = Session.FindElementsByAccessibilityId(Endpoint);
+            var addpanel       = Session.FindElementByAccessibilityId(Addpanel);
+            var removepanel    = Session.FindElementByAccessibilityId(Removepanel);
+            var addsubpanel    = Session.FindElementByAccessibilityId(Addsubpanel);
+            var removesubpanel = Session.FindElementByAccessibilityId(Removesubpanel);
+
+            var texts = endpoint.Texts();
+            Assert.AreEqual(2,        texts.Count);
+            Assert.AreEqual("Border", texts[0]);
+            Assert.AreEqual("Border", texts[1]);
+
+            addpanel.Click();
+            texts = endpoint.Texts();
+            Assert.AreEqual(2,       texts.Count);
+            Assert.AreEqual("Panel", texts[0]);
+            Assert.AreEqual("Panel", texts[1]);
+
+            removepanel.Click();
+            texts = endpoint.Texts();
+            Assert.AreEqual(2,        texts.Count);
+            Assert.AreEqual("Border", texts[0]);
+            Assert.AreEqual("Border", texts[1]);
+
+            addsubpanel.Click();
+            texts = endpoint.Texts();
+            Assert.AreEqual(2,           texts.Count);
+            Assert.AreEqual("SubPanel1", texts[0]);
+            Assert.AreEqual("Border",    texts[1]);
+
+            removesubpanel.Click();
+            texts = endpoint.Texts();
+            Assert.AreEqual(2,        texts.Count);
+            Assert.AreEqual("Border", texts[0]);
+            Assert.AreEqual("Border", texts[1]);
+
+            addpanel.Click();
+            texts = endpoint.Texts();
+            Assert.AreEqual(2,       texts.Count);
+            Assert.AreEqual("Panel", texts[0]);
+            Assert.AreEqual("Panel", texts[1]);
+
+            addsubpanel.Click();
+            texts = endpoint.Texts();
+            Assert.AreEqual(2,           texts.Count);
+            Assert.AreEqual("SubPanel1", texts[0]);
+            Assert.AreEqual("Panel",     texts[1]);
+
+            removesubpanel.Click();
+            texts = endpoint.Texts();
+            Assert.AreEqual(2,       texts.Count);
+            Assert.AreEqual("Panel", texts[0]);
+            Assert.AreEqual("Panel", texts[1]);
+
+            removepanel.Click();
+            texts = endpoint.Texts();
+            Assert.AreEqual(2,        texts.Count);
+            Assert.AreEqual("Border", texts[0]);
+            Assert.AreEqual("Border", texts[1]);
+
+            addpanel.Click();
+            texts = endpoint.Texts();
+            Assert.AreEqual(2,       texts.Count);
+            Assert.AreEqual("Panel", texts[0]);
+            Assert.AreEqual("Panel", texts[1]);
+
+            addsubpanel.Click();
+            texts = endpoint.Texts();
+            Assert.AreEqual(2,           texts.Count);
+            Assert.AreEqual("SubPanel1", texts[0]);
+            Assert.AreEqual("Panel",     texts[1]);
+
+            removepanel.Click();
+            texts = endpoint.Texts();
+            Assert.AreEqual(2,           texts.Count);
+            Assert.AreEqual("SubPanel1", texts[0]);
+            Assert.AreEqual("Border",    texts[1]);
+
+            removesubpanel.Click();
+            texts = endpoint.Texts();
+            Assert.AreEqual(2,        texts.Count);
+            Assert.AreEqual("Border", texts[0]);
+            Assert.AreEqual("Border", texts[1]);
+        }
+
+        /// <summary>
+        ///     Tests the initialize.
+        /// </summary>
+        [SetUp]
+        public void TestInitialize() => SetContent(() => new StaticChangeEntryPointsTreeAndOneWayEndPointView());
+    }
+}

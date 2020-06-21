@@ -22,7 +22,7 @@
                                                                                   UpdateSourceTrigger=PropertyChanged}">
             <StackPanel.Resources>
                 <DataTemplate DataType="{x:Type itemsControl:ItemViewModel}">
-                    <itemsControl:AttachedBindingItemView />
+                    <itemsControl:AttachedTwoWayItemView />
                 </DataTemplate>
             </StackPanel.Resources>
             <ItemsControl ItemsSource="{Binding Items}" />

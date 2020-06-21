@@ -9,10 +9,13 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
     using System.Threading.Tasks;
 
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests;
+    using Anori.WPF.Testing;
 
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
 
-    [TestClass]
+    using Assert = NUnit.Framework.Assert;
+
+    [TestFixture, UserInterface]
     public class TwoBoundEntryPointAndBoundEndPointTextControlUiTests : UiTestSessionBase
     {
         private const string EndPointA = "EndPointA";
@@ -23,13 +26,13 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
 
         private const string EntryPointB = "EntryPointB";
 
-        [ClassCleanup]
+        [OneTimeTearDown]
         public static void ClassCleanup() => TearDown();
 
-        [ClassInitialize]
-        public static void ClassInitialize(TestContext context) => Setup(context);
+        [OneTimeSetUp]
+        public static void ClassInitialize() => Setup();
 
-        [TestMethod]
+        [Test]
         public async Task AttachedAncestorProperty_CheckText_EndPointA_Test()
         {
             var entryPointA = Session.FindElementByAccessibilityId(EntryPointA);
@@ -61,7 +64,7 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
             Assert.AreEqual(endPointB.Text,   "");
         }
 
-        [TestMethod]
+        [Test]
         public async Task AttachedAncestorProperty_CheckText_EndPointAAndB_Test()
         {
             var entryPointA = Session.FindElementByAccessibilityId(EntryPointA);
@@ -111,7 +114,7 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
             Assert.AreEqual("", endPointB.Text);
         }
 
-        [TestMethod]
+        [Test]
         public async Task AttachedAncestorProperty_CheckText_EndPointB_Test()
         {
             var entryPointA = Session.FindElementByAccessibilityId(EntryPointA);
@@ -143,7 +146,7 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
             Assert.AreEqual("", endPointB.Text);
         }
 
-        [TestMethod]
+        [Test]
         public async Task AttachedAncestorProperty_CheckText_EntryPointA_Test()
         {
             var entryPointA = Session.FindElementByAccessibilityId(EntryPointA);
@@ -175,7 +178,7 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
             Assert.AreEqual("", endPointB.Text);
         }
 
-        [TestMethod]
+        [Test]
         public async Task AttachedAncestorProperty_CheckText_EntryPointAAndB_Test()
         {
             var entryPointA = Session.FindElementByAccessibilityId(EntryPointA);
@@ -225,7 +228,7 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
             Assert.AreEqual("", endPointB.Text);
         }
 
-        [TestMethod]
+        [Test]
         public async Task AttachedAncestorProperty_CheckText_EntryPointB_Test()
         {
             var entryPointA = Session.FindElementByAccessibilityId(EntryPointA);
@@ -260,7 +263,7 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
         /// <summary>
         ///     Tests the initialize.
         /// </summary>
-        [TestInitialize]
-        public void TestInitialize() => SetContent(() => new TwoBoundEntryPointAndBoundEndPointTextControlView());
+        [SetUp]
+        public void TestInitialize() => SetContent(() => new TwoBoundEntryPointAndTwoWayEndPointTextControlView());
     }
 }

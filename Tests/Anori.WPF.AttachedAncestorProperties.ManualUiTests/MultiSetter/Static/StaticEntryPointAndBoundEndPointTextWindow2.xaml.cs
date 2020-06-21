@@ -3,11 +3,11 @@
     using System.Windows;
 
     /// <summary>
-    /// Interaction logic for StaticEntryPointAndBoundEndPointTextWindow2.xaml
+    /// Interaction logic for StaticEntryPointAndTwoWayEndPointTextWindow2.xaml
     /// </summary>
-    public partial class StaticEntryPointAndBoundEndPointTextWindow2 : Window
+    public partial class StaticEntryPointAndTwoWayEndPointTextWindow2 : Window
     {
-        public StaticEntryPointAndBoundEndPointTextWindow2()
+        public StaticEntryPointAndTwoWayEndPointTextWindow2()
         {
             InitializeComponent();
         }

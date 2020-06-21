@@ -1,4 +1,4 @@
-﻿<Window x:Class="Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.StaticEntryPointAndBoundEndPointTextWindow2"
+﻿<Window x:Class="Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.StaticEntryPointAndTwoWayEndPointTextWindow2"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,8 +7,8 @@
         xmlns:multiSetter="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter"
         xmlns:static="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.Static"
         mc:Ignorable="d"
-        Title="StaticEntryPointAndBoundEndPointTextWindow2" Height="450" Width="800">
-    <static:StaticEntryPointAndBoundEndPointTextView2>
+        Title="StaticEntryPointAndTwoWayEndPointTextWindow2" Height="450" Width="800">
+    <static:StaticEntryPointAndTwoWayEndPointTextView2>
         
-    </static:StaticEntryPointAndBoundEndPointTextView2>
+    </static:StaticEntryPointAndTwoWayEndPointTextView2>
 </Window>

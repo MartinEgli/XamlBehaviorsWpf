@@ -14,8 +14,8 @@
         d:DataContext="{d:DesignInstance guiTest:ChangeHostAndSetterViewModel}"
         mc:Ignorable="d">
     <StackPanel x:Name="StackPanel">
-        <Button Click="AddAttachedAncestorProperty_Click">Add AttachedAncestorProperty</Button>
-        <Button Click="RemoveAttachedAncestorProperty_Click">Remove AttachedAncestorProperty</Button>
+        <Button Click="AddAttachedAncestorProperty_Click">Add AttachedAncestorPropertyHelper</Button>
+        <Button Click="RemoveAttachedAncestorProperty_Click">Remove AttachedAncestorPropertyHelper</Button>
         <TextBox Text="{Binding BorderText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <Border x:Name="Border"
                 attachedForks:AttachedAncestorPropertyString.Setter="{Binding BorderText,

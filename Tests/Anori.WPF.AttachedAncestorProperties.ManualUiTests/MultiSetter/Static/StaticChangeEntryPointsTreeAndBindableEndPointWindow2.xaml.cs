@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter
+namespace Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.Static
 {
     using System.Windows;
 

@@ -5,9 +5,9 @@
     /// <summary>
     /// Interaction logic for SimpleWindow.xaml
     /// </summary>
-    public partial class StaticEntryPointAndBoundEndPointTextView2 : UserControl
+    public partial class StaticEntryPointAndTwoWayEndPointTextView2 : UserControl
     {
-        public StaticEntryPointAndBoundEndPointTextView2()
+        public StaticEntryPointAndTwoWayEndPointTextView2()
         {
             InitializeComponent();
         }
