@@ -1,8 +1,12 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="AttachedAncestorPropertyExtension.cs" company="Anori Soft">
+// <copyright file="AttachedAncestorPropertyExtension.cs" company="Anori Soft"
 // Copyright (c) Anori Soft. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
+
+using Anori.WPF.Extensions;
+
+using JetBrains.Annotations;
 
 using System;
 using System.Diagnostics;
@@ -10,20 +14,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using Anori.WPF.Extensions;
-using JetBrains.Annotations;
 
 namespace Anori.WPF.AttachedAncestorProperties
 {
     public static class AttachedAncestorPropertyExtension
     {
-
-
-
-
-
-
-
         /// <summary>
         ///     TryGetFunc
         /// </summary>
@@ -34,57 +29,13 @@ namespace Anori.WPF.AttachedAncestorProperties
         public delegate bool TryGetFunc<TResult>(in DependencyObject dependencyObject, out TResult result);
 
         /// <summary>
-        /// Gets the attached property fork.
-        /// </summary>
-        /// <param name="target">The target.</param>
-        /// <param name="setterProperty">The setter property.</param>
-        /// <param name="shadowProperty">The shadow property.</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException">target</exception>
-        [CanBeNull]
-        public static DependencyObject GetAncestor(
-            [NotNull] this DependencyObject target,
-            [NotNull] DependencyProperty setterProperty,
-            [NotNull] DependencyProperty shadowProperty)
-        {
-            if (target == null)
-            {
-                throw new ArgumentNullException(nameof(target));
-            }
-
-            if (setterProperty == null)
-            {
-                throw new ArgumentNullException(nameof(setterProperty));
-            }
-
-            if (shadowProperty == null)
-            {
-                throw new ArgumentNullException(nameof(shadowProperty));
-            }
-
-            var ancestor = target.GetAncestor(
-                setterProperty,
-                shadowProperty,
-                out var s,
-                out var h);
-
-            return ancestor;
-        }
-
-        /// <summary>
         ///     Adds the value changed action.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="target">The target.</param>
         /// <param name="property">The property.</param>
         /// <param name="valueChangedAction">The value changed action.</param>
-        /// <exception cref="ArgumentNullException">
-        ///     target
-        ///     or
-        ///     property
-        ///     or
-        ///     valueChangedAction
-        /// </exception>
+        /// <exception cref="ArgumentNullException">target or property or valueChangedAction</exception>
         public static void AddValueChangedAction<T>(
             [NotNull] this DependencyObject target,
             [NotNull] DependencyProperty property,
@@ -110,6 +61,40 @@ namespace Anori.WPF.AttachedAncestorProperties
         }
 
         /// <summary>
+        ///     Gets the ancestor.
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <param name="setterProperty">The setter property.</param>
+        /// <param name="shadowProperty">The shadow property.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">target or setterProperty or shadowProperty</exception>
+        [CanBeNull]
+        public static DependencyObject GetAncestor(
+            [NotNull] this DependencyObject target,
+            [NotNull] DependencyProperty setterProperty,
+            [NotNull] DependencyProperty shadowProperty)
+        {
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
+
+            if (setterProperty == null)
+            {
+                throw new ArgumentNullException(nameof(setterProperty));
+            }
+
+            if (shadowProperty == null)
+            {
+                throw new ArgumentNullException(nameof(shadowProperty));
+            }
+
+            DependencyObject ancestor = target.GetAncestor(setterProperty, shadowProperty, out object s, out object h);
+
+            return ancestor;
+        }
+
+        /// <summary>
         ///     Gets the attached host object.
         /// </summary>
         /// <param name="target">The target.</param>
@@ -118,13 +103,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <param name="setter">The setter.</param>
         /// <param name="shadow">The shadow.</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException">
-        ///     target
-        ///     or
-        ///     SetterProperty
-        ///     or
-        ///     shadowProperty
-        /// </exception>
+        /// <exception cref="ArgumentNullException">target or SetterProperty or shadowProperty</exception>
         [CanBeNull]
         public static DependencyObject GetAncestor(
             [NotNull] this DependencyObject target,
@@ -148,8 +127,12 @@ namespace Anori.WPF.AttachedAncestorProperties
                 throw new ArgumentNullException(nameof(shadowProperty));
             }
 
-            target.WalkTreeUpAttachedPropertyAncestor(setterProperty, shadowProperty, out DependencyObject ancestor,
-                out setter, out shadow);
+            target.WalkTreeUpAttachedPropertyAncestor(
+                setterProperty,
+                shadowProperty,
+                out DependencyObject ancestor,
+                out setter,
+                out shadow);
             return ancestor;
         }
 
@@ -161,13 +144,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <param name="shadowProperty">The shadow property.</param>
         /// <param name="setter">The setter.</param>
         /// <returns></returns>
-        /// <exception cref="System.ArgumentNullException">
-        ///     target
-        ///     or
-        ///     SetterProperty
-        ///     or
-        ///     shadowProperty
-        /// </exception>
+        /// <exception cref="System.ArgumentNullException">target or SetterProperty or shadowProperty</exception>
         [CanBeNull]
         public static DependencyObject GetAncestor(
             [NotNull] this DependencyObject target,
@@ -190,8 +167,12 @@ namespace Anori.WPF.AttachedAncestorProperties
                 throw new ArgumentNullException(nameof(shadowProperty));
             }
 
-            target.WalkTreeUpAttachedPropertyAncestor(setterProperty, shadowProperty, out DependencyObject ancestor,
-                out setter, out _);
+            target.WalkTreeUpAttachedPropertyAncestor(
+                setterProperty,
+                shadowProperty,
+                out DependencyObject ancestor,
+                out setter,
+                out _);
             return ancestor;
         }
 
@@ -201,11 +182,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <param name="target">The target.</param>
         /// <param name="property">The property.</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException">
-        ///     target
-        ///     or
-        ///     property
-        /// </exception>
+        /// <exception cref="ArgumentNullException">target or property</exception>
         [CanBeNull]
         public static DependencyObject GetAncestor(
             [NotNull] this DependencyObject target,
@@ -232,9 +209,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <param name="isVisualTree">True for visual tree, false for logical tree.</param>
         /// <returns>The ancestor, if available.</returns>
         [CanBeNull]
-        public static DependencyObject GetParent(
-            [NotNull] this DependencyObject target,
-            bool isVisualTree)
+        public static DependencyObject GetParent([NotNull] this DependencyObject target, bool isVisualTree)
         {
             if (target == null)
             {
@@ -300,7 +275,8 @@ namespace Anori.WPF.AttachedAncestorProperties
                     }
                 }
 
-                // If this failed, try again using the Parent property (sometimes this is not covered by the VisualTreeHelper class :-P.
+                // If this failed, try again using the Parent property (sometimes this is not
+                // covered by the VisualTreeHelper class :-P.
                 if (depObjParent == null && depObj is FrameworkElement frameworkElement)
                 {
                     depObjParent = frameworkElement.Parent;
@@ -320,16 +296,19 @@ namespace Anori.WPF.AttachedAncestorProperties
 
         /// <summary>
         ///     Tries to get a value that is stored somewhere in the visual tree above this <see cref="DependencyObject" />.
-        ///     <para>If this is not available, it will register a <see cref="ParentChangedNotifier" /> on the last element.</para>
+        ///     <para>
+        ///         If this is not available, it will register a <see cref="ParentChangedNotifier" /> on the
+        ///         last element.
+        ///     </para>
         /// </summary>
         /// <typeparam name="T">The return type.</typeparam>
         /// <param name="target">The <see cref="DependencyObject" />.</param>
         /// <param name="getFunc">The function that gets the value from a <see cref="DependencyObject" />.</param>
-        /// <param name="parentChangedAction">The notification action on the change event of the Parent property.</param>
+        /// <param name="parentChangedAction">
+        ///     The notification action on the change event of the Parent property.
+        /// </param>
         /// <param name="parentNotifiers">A dictionary of already registered notifiers.</param>
-        /// <returns>
-        ///     The value, if possible.
-        /// </returns>
+        /// <returns>The value, if possible.</returns>
         [CanBeNull]
         public static T GetValueOrRegisterParentNotifier<T>(
             [NotNull] this DependencyObject target,
@@ -351,11 +330,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <param name="ancestor">The dependency object.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">
-        ///     tryGetPropertyValue
-        ///     or
-        ///     parentChangedAction
-        ///     or
-        ///     parentNotifiersRegister
+        ///     tryGetPropertyValue or parentChangedAction or parentNotifiersRegister
         /// </exception>
         [CanBeNull]
         public static T GetValueOrRegisterParentNotifier<T>(
@@ -400,11 +375,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <param name="parentNotifiers">The parent notifiers.</param>
         /// <param name="ancestor">The ancestor object.</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException">
-        ///     parentChangedAction
-        ///     or
-        ///     parentNotifiers
-        /// </exception>
+        /// <exception cref="ArgumentNullException">parentChangedAction or parentNotifiers</exception>
         [CanBeNull]
         public static T GetValueOrRegisterParentNotifier<T>(
             [NotNull] this DependencyObject target,
@@ -431,7 +402,7 @@ namespace Anori.WPF.AttachedAncestorProperties
             }
 
             return WalkTreeUp<T>(target, property, parentChangedAction, parentNotifiers, out ancestor);
-            //            return WalkTreeUp(target, property, parentChangedAction, parentNotifiersRegister, out ancestor);
+            // return WalkTreeUp(target, property, parentChangedAction, parentNotifiersRegister, out ancestor);
         }
 
         /// <summary>
@@ -497,8 +468,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// </summary>
         /// <param name="dependencyObject">The dependency object.</param>
         /// <returns></returns>
-        private static bool CheckType(
-            [NotNull] this DependencyObject dependencyObject)
+        private static bool CheckType([NotNull] this DependencyObject dependencyObject)
         {
             if (dependencyObject is ToolTip)
             {
@@ -517,6 +487,24 @@ namespace Anori.WPF.AttachedAncestorProperties
             }
 
             return false;
+        }
+
+        [Conditional("DEBUG")]
+        private static void DebugLogWalk(DependencyObject dependencyObject)
+        {
+            if (dependencyObject is FrameworkElement frameworkElement)
+            {
+                if (!string.IsNullOrEmpty(frameworkElement.Name))
+                {
+                    Debug.WriteLine("Walk item name {1} type {0}", dependencyObject.GetType(), frameworkElement.Name);
+                } else
+                {
+                    Debug.WriteLine("Walk item type {0}", dependencyObject.GetType());
+                }
+            } else
+            {
+                Debug.WriteLine("Walk item type {0}", dependencyObject.GetType());
+            }
         }
 
         /// <summary>
@@ -562,10 +550,8 @@ namespace Anori.WPF.AttachedAncestorProperties
                 parentChangedAction(localTarget);
                 parentNotifiers.UnregisterParentNotifier(localTarget);
 
-                //    if (parentNotifiers.ContainsKey(localTarget))
-                //    {
-                //        parentNotifiers.Remove(localTarget);
-                //    }
+                // if (parentNotifiers.ContainsKey(localTarget)) {
+                // parentNotifiers.Remove(localTarget); }
             }
 
             ParentChangedNotifier changedNotifier = new ParentChangedNotifier(frameworkElement, onParentChangedHandler);
@@ -681,29 +667,10 @@ namespace Anori.WPF.AttachedAncestorProperties
                 }
 
                 dependencyObject = parent;
-            } while (true);
+            }
+            while (true);
 
             return result;
-        }
-
-        [Conditional("DEBUG")]
-        private static void DebugLogWalk(DependencyObject dependencyObject)
-        {
-            if (dependencyObject is FrameworkElement frameworkElement)
-            {
-                if (!string.IsNullOrEmpty(frameworkElement.Name))
-                {
-                    Debug.WriteLine("Walk item name {1} type {0}", dependencyObject.GetType(), frameworkElement.Name);
-                }
-                else
-                {
-                    Debug.WriteLine("Walk item type {0}", dependencyObject.GetType());
-                }
-            }
-            else
-            {
-                Debug.WriteLine("Walk item type {0}", dependencyObject.GetType());
-            }
         }
 
         /// <summary>
@@ -759,7 +726,8 @@ namespace Anori.WPF.AttachedAncestorProperties
                 }
 
                 ancestor = parent;
-            } while (true);
+            }
+            while (true);
 
             return ancestor.GetValueSync<T>(property);
         }
@@ -813,7 +781,8 @@ namespace Anori.WPF.AttachedAncestorProperties
                 }
 
                 ancestor = parent;
-            } while (true);
+            }
+            while (true);
 
             return ancestor.GetValueSync<T>(property);
         }
@@ -853,7 +822,8 @@ namespace Anori.WPF.AttachedAncestorProperties
                 }
 
                 dependencyObject = parent;
-            } while (true);
+            }
+            while (true);
         }
 
         /// <summary>
@@ -898,7 +868,8 @@ namespace Anori.WPF.AttachedAncestorProperties
                 }
 
                 dependencyObject = parent;
-            } while (true);
+            }
+            while (true);
 
             return false;
         }
@@ -968,7 +939,8 @@ namespace Anori.WPF.AttachedAncestorProperties
                 }
 
                 dependencyObject = parent;
-            } while (true);
+            }
+            while (true);
 
             shadow = null;
             setter = null;

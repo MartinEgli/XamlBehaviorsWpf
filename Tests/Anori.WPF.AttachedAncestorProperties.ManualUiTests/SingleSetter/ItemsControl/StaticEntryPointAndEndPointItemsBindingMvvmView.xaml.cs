@@ -6,7 +6,7 @@
     using System.Windows.Controls;
 
     /// <summary>
-    /// Interaction logic for StaticEntryPointAndEndPointItemsBindingMvvmView.xaml
+    /// Interaction logic for StaticEntryPointAndTwoWayEndPointItemsBindingMvvmView.xaml
     /// </summary>
     public partial class StaticEntryPointAndEndPointItemsBindingMvvmView : UserControl
     {

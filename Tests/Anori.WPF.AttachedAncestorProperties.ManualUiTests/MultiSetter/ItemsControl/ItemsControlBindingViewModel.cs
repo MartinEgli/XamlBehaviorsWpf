@@ -35,7 +35,10 @@
             }
             set
             {
-                if (value == this.text) return;
+                if (value == this.text)
+                {
+                    return;
+                }
                 this.text = value;
                 this.OnPropertyChanged();
             }

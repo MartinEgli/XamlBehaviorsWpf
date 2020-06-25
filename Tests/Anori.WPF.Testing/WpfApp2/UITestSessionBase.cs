@@ -4,18 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
+namespace Anori.WPF.Testing
 {
     using System;
-    using System.Runtime.CompilerServices;
     using System.Threading;
+    using System.Timers;
     using System.Windows.Controls;
     using System.Windows.Threading;
-
-    using Anori.WPF.Testing;
-
-
-    using CategoryAttribute = System.ComponentModel.CategoryAttribute;
 
     public abstract class UiTestSessionBase
     {
@@ -80,17 +75,78 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
         {
             if (Session != null)
             {
+                StopWatchDog();
                 return;
             }
+
+            SetupTimer();
 
             Session = CreateSession();
             NUnit.Framework.Assert.IsNotNull(Session);
         }
 
+        private static System.Timers.Timer Timer;
+
+        private static void StartWatchDog()
+        {
+            Timer.Start();
+        }
+
+        private static void Reset()
+        {
+            Timer.Stop();
+            Timer.Start();
+        }
+
+        private static void StopWatchDog()
+        {
+            Timer.Stop();
+        }
+
+        public static void SetupTimer()
+        {
+            Timer = new System.Timers.Timer();
+            Timer.Elapsed += OnElapsed;
+            Timer.Interval = (1000 * Timeout);
+        }
+        private static void OnElapsed(object sender, ElapsedEventArgs e)
+        {
+            Timer.Stop();
+            InternalTearDown();
+        }
+        public static int Timeout { get; set; } = 5;
+
         /// <summary>
         ///     Tears down.
         /// </summary>
         public static void TearDown()
+        {
+            StartWatchDog();
+            //if (Session != null)
+            //{
+            //    Session.Quit();
+            //    Session = null;
+            //}
+
+            //if (harness != null)
+            //{
+            //    harness.Invoke(() =>
+            //    {
+            //        harness.Close();
+            //        harness = null;
+            //    });
+            //}
+
+            //if (windowThread != null)
+            //{
+            //    windowThread.Abort();
+            //}
+
+
+        }
+
+
+        private static void InternalTearDown()
         {
             if (Session != null)
             {

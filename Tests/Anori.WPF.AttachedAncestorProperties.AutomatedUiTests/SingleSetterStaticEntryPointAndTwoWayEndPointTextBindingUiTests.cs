@@ -7,21 +7,33 @@
 namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
 {
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests;
-
-    using System.Threading.Tasks;
-
     using Anori.WPF.Testing;
 
     using NUnit.Framework;
 
     using OpenQA.Selenium.Appium.Windows;
 
-    using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
-    using TestContext = Microsoft.VisualStudio.TestTools.UnitTesting.TestContext;
+    using System.Threading.Tasks;
 
-    [TestFixture, UserInterface]
+    [TestFixture]
+    [UserInterface]
     public class SingleSetterStaticEntryPointAndTwoWayEndPointTextBindingUiTests : UiTestSessionBase
     {
+        /// <summary>
+        ///     Tests the initialize.
+        /// </summary>
+        [SetUp]
+        public void TestInitialize() => SetContent(() => new StaticEntryPointAndTwoWayEndPointTextView());
+
+        /// <summary>
+        ///     Attacheds the ancestor property check text test.
+        /// </summary>
+        [Test]
+        public async Task AttachedAncestorProperty_CheckText_Test()
+        {
+            WindowsElement endpoint = Session.FindElementByAccessibilityId("EndPoint1");
+            Assert.AreEqual("Attached Text", endpoint.Text);
+        }
         /// <summary>
         ///     Classes the cleanup.
         /// </summary>
@@ -33,22 +45,6 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
         /// </summary>
         /// <param name="context">The context.</param>
         [OneTimeSetUp]
-        public static void ClassInitialize(TestContext context) => Setup(context);
-
-        /// <summary>
-        ///     Attacheds the ancestor property check text test.
-        /// </summary>
-        [Test]
-        public async Task AttachedAncestorProperty_CheckText_Test()
-        {
-            WindowsElement endpoint = Session.FindElementByAccessibilityId("EndPoint1");
-            Assert.AreEqual("Attached Text", endpoint.Text);
-        }
-
-        /// <summary>
-        ///     Tests the initialize.
-        /// </summary>
-        [SetUp]
-        public void TestInitialize() => SetContent(() => new StaticEntryPointAndTwoWayEndPointTextView());
+        public static void ClassInitialize() => Setup();
     }
 }

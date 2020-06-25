@@ -6,16 +6,23 @@
 
 namespace Anori.WPF.AttachedAncestorProperties
 {
+    using JetBrains.Annotations;
+
     using System;
     using System.Windows;
 
-    using JetBrains.Annotations;
-
     public abstract class OneWayGetterExtensionBase : GetterExtensionBase
     {
+        /// <summary>
+        /// The setter property
+        /// </summary>
         private readonly DependencyProperty setterProperty;
 
-        public OneWayGetterExtensionBase(DependencyProperty setterProperty)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OneWayGetterExtensionBase"/> class.
+        /// </summary>
+        /// <param name="setterProperty">The setter property.</param>
+        protected OneWayGetterExtensionBase(DependencyProperty setterProperty)
         {
             this.setterProperty = setterProperty;
         }
@@ -39,40 +46,5 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// </summary>
         /// <returns></returns>
         protected override DependencyProperty GetSetterProperty() => this.setterProperty;
-
-    }
-
-    public abstract class OneWayGetterExtensionBase<TOwner> : OneWayGetterExtensionBase
-        where TOwner : AncestorPropertyBase<TOwner>
-
-    {
-        protected OneWayGetterExtensionBase()
-            : base(AncestorPropertyBase<TOwner>.SetterProperty)
-        {
-        }
-    }
-
-    public abstract class OneWayStringGetterExtensionBase<TOwner> : OneWayGetterExtensionBase<TOwner, string>
-        where TOwner : AncestorStringPropertyBase<TOwner>
-
-    {
-        
-    }
-
-
-    public class OneWayStringGetterExtension : OneWayStringGetterExtensionBase<AncestorStringProperty>
-
-    {
-      
-    }
-
-    public abstract class OneWayGetterExtensionBase<TOwner, TValue> : OneWayGetterExtensionBase
-        where TOwner : AncestorPropertyBase<TOwner, TValue>
-
-    {
-        protected OneWayGetterExtensionBase()
-            : base(AncestorPropertyBase<TOwner, TValue>.SetterProperty)
-        {
-        }
     }
 }

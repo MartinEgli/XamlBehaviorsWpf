@@ -13,9 +13,9 @@ namespace Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.Static
     /// <summary>
     ///     Interaction logic for SwitchContentWindow.xaml
     /// </summary>
-    public partial class StaticChangeEntryPointsTreeAndBindableEndPointView2 : UserControl
+    public partial class StaticChangeEntryPointsTreeAndTwoWayEndPointView2 : UserControl
     {
-        public StaticChangeEntryPointsTreeAndBindableEndPointView2()
+        public StaticChangeEntryPointsTreeAndTwoWayEndPointView2()
         {
             this.InitializeComponent();
         }

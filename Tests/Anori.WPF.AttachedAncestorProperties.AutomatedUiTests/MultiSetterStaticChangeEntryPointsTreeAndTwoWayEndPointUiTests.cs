@@ -8,13 +8,10 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
 {
     using System.Threading.Tasks;
 
+    using Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.Static;
     using Anori.WPF.Testing;
 
     using NUnit.Framework;
-
-    using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
-    using StaticChangeEntryPointsTreeAndBindableEndPointView2 = Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.Static.StaticChangeEntryPointsTreeAndBindableEndPointView2;
-    using TestContext = Microsoft.VisualStudio.TestTools.UnitTesting.TestContext;
 
     [TestFixture, UserInterface]
     public class MultiSetterStaticChangeEntryPointsTreeAndTwoWayEndPointUiTests : UiTestSessionBase
@@ -56,7 +53,7 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
         /// </summary>
         /// <param name="context">The context.</param>
         [OneTimeSetUp]
-        public static void ClassInitialize(TestContext context) => Setup(context);
+        public static void ClassInitialize() => Setup();
 
         [Test]
         public async Task AttachedAncestorProperty_CheckText_Test()
@@ -202,6 +199,6 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
         ///     Tests the initialize.
         /// </summary>
         [SetUp]
-        public void TestInitialize() => SetContent(() => new StaticChangeEntryPointsTreeAndBindableEndPointView2());
+        public void TestInitialize() => SetContent(() => new StaticChangeEntryPointsTreeAndTwoWayEndPointView2());
     }
 }

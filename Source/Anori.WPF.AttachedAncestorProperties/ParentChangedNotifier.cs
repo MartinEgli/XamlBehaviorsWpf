@@ -1,11 +1,13 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ParentChangedNotifier.cs" company="Anori Soft">
+// <copyright file="ParentChangedNotifier.cs" company="Anori Soft"
 // Copyright (c) Anori Soft. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
 using Anori.WPF.Extensions;
+
 using JetBrains.Annotations;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +33,10 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// <summary>
         ///     A static list of actions that should be performed on parent change events.
         ///     <para>- Entries are added by each call of the constructor.</para>
-        ///     <para>- All elements are called by the parent changed callback with the particular sender as the key.</para>
+        ///     <para>
+        ///         - All elements are called by the parent changed callback with the particular sender as
+        ///         the key.
+        ///     </para>
         /// </summary>
         private static readonly Dictionary<WeakReference, List<Action>> OnParentChangedList =
             new Dictionary<WeakReference, List<Action>>();
@@ -62,9 +67,9 @@ namespace Anori.WPF.AttachedAncestorProperties
 
             if (!OnParentChangedList.ContainsKey(this.weakElement))
             {
-                var foundOne = false;
+                bool foundOne = false;
 
-                foreach (var key in OnParentChangedList.Keys)
+                foreach (WeakReference key in OnParentChangedList.Keys)
                 {
                     if (!ReferenceEquals(key.Target, element))
                     {
@@ -100,15 +105,14 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// </summary>
         /// <param name="obj">The sender.</param>
         /// <param name="args">The argument.</param>
-        private static void ParentChanged([NotNull] DependencyObject obj,
-                                          DependencyPropertyChangedEventArgs args)
+        private static void ParentChanged([NotNull] DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
             if (!(obj is FrameworkElement notifier))
             {
                 return;
             }
 
-            var weakNotifier =
+            WeakReference weakNotifier =
                 OnParentChangedList.Keys.SingleOrDefault(x => x.IsAlive && ReferenceEquals(x.Target, notifier));
 
             if (weakNotifier == null)
@@ -116,8 +120,8 @@ namespace Anori.WPF.AttachedAncestorProperties
                 return;
             }
 
-            var list = new List<Action>(OnParentChangedList[weakNotifier]);
-            foreach (var onParentChanged in list)
+            List<Action> list = new List<Action>(OnParentChangedList[weakNotifier]);
+            foreach (Action onParentChanged in list)
             {
                 onParentChanged();
             }
@@ -128,23 +132,12 @@ namespace Anori.WPF.AttachedAncestorProperties
         #endregion ParentChanged callback
 
         /// <summary>
-        ///     Sets the binding.
-        /// </summary>
-        private void SetBinding()
-        {
-            var binding = new Binding("Parent") { RelativeSource = new RelativeSource() };
-            binding.RelativeSource.Mode = RelativeSourceMode.FindAncestor;
-            binding.RelativeSource.AncestorType = typeof(FrameworkElement);
-            BindingOperations.SetBinding((FrameworkElement)this.weakElement.Target, ParentProperty, binding);
-        }
-
-        /// <summary>
         ///     Disposes all used resources of the instance.
         /// </summary>
         public void Dispose()
         {
-            var element = this.weakElement;
-            var weakElementReference = element.Target;
+            WeakReference element = this.weakElement;
+            object weakElementReference = element.Target;
 
             if (weakElementReference == null || !element.IsAlive)
             {
@@ -157,7 +150,7 @@ namespace Anori.WPF.AttachedAncestorProperties
 
                 if (OnParentChangedList.ContainsKey(element))
                 {
-                    var list = OnParentChangedList[element];
+                    List<Action> list = OnParentChangedList[element];
                     list.Clear();
                     OnParentChangedList.Remove(element);
                 }
@@ -165,6 +158,17 @@ namespace Anori.WPF.AttachedAncestorProperties
             {
                 this.weakElement = null;
             }
+        }
+
+        /// <summary>
+        ///     Sets the binding.
+        /// </summary>
+        private void SetBinding()
+        {
+            Binding binding = new Binding("Parent") { RelativeSource = new RelativeSource() };
+            binding.RelativeSource.Mode = RelativeSourceMode.FindAncestor;
+            binding.RelativeSource.AncestorType = typeof(FrameworkElement);
+            BindingOperations.SetBinding((FrameworkElement)this.weakElement.Target, ParentProperty, binding);
         }
 
         #region Parent property

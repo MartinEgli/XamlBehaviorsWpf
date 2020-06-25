@@ -1,12 +1,13 @@
-﻿<Window x:Class="Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.ItemsControl.StaticEntryPointAndEndPointItemsBindingMvvmWindow"
+﻿<Window x:Class="Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.ItemsControl.StaticEntryPointAndTwoWayEndPointItemsBindingMvvmWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:itemsControl="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.ItemsControl"
+        xmlns:itemsControl1="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.ItemsControl"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Width="800"
         Height="450"
         d:DataContext="{d:DesignInstance itemsControl:ItemsControlBindingViewModel}"
         mc:Ignorable="d">
-    <itemsControl:StaticEntryPointAndEndPointItemsBindingMvvmView />
+    <itemsControl1:StaticEntryPointAndEndPointItemsBindingMvvmView />
 </Window>

@@ -1,7 +1,7 @@
 ﻿<Window x:Class="AttachedPropertyTests.OneToMultibleStyleWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:attachedForks="clr-namespace:Anori.WPF.AttachedAncestorProperties;assembly=Anori.WPF.AttachedAncestorProperties"
+        xmlns:a="http://schemas.anori.com/xaml/attachedancestorproperties"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Title="OneToMultibleStyleWindow"
@@ -12,11 +12,11 @@
         <Style x:Key="AttachedEndPoint"
                BasedOn="{StaticResource {x:Type TextBlock}}"
                TargetType="{x:Type TextBlock}">
-            <Setter Property="attachedForks:Stylizer.Setters">
+            <Setter Property="a:Stylizer.Setters">
                 <Setter.Value>
-                    <attachedForks:SetterCollection>
-                        <attachedForks:AttachedBindingStringGetterExtensionSetterCreator Property="Text" />
-                    </attachedForks:SetterCollection>
+                    <a:SetterCollection>
+                        <a:AttachedBindingStringGetterExtensionSetterCreator Property="Text" />
+                    </a:SetterCollection>
                 </Setter.Value>
             </Setter>
         </Style>
@@ -24,9 +24,7 @@
     <StackPanel>
         <TextBlock>Entry Point</TextBlock>
         <TextBox x:Name="TextBox">Hallo</TextBox>
-        <StackPanel attachedForks:AttachedAncestorPropertyString.Setter="{Binding Text,
-                                                                                  ElementName=TextBox,
-                                                                                  Mode=TwoWay}">
+        <StackPanel a:AttachedAncestorPropertyString.Setter="{Binding Text, ElementName=TextBox, Mode=TwoWay}">
             <TextBlock>Multible Texts:</TextBlock>
             <Border BorderBrush="Black"
                     BorderThickness="1">

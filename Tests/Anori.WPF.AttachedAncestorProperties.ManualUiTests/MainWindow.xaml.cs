@@ -16,7 +16,7 @@ namespace AttachedPropertyTests
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter;
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Static;
 
-    using StaticChangeEntryPointsTreeAndBindableEndPointWindow2 = Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.Static.StaticChangeEntryPointsTreeAndBindableEndPointWindow2;
+    using StaticChangeEntryPointsTreeAndTwoWayEndPointWindow2 = Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.Static.StaticChangeEntryPointsTreeAndTwoWayEndPointWindow2;
 
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
@@ -170,7 +170,7 @@ namespace AttachedPropertyTests
 
         private void TreeChangeHost_Bindable2_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new StaticChangeEntryPointsTreeAndBindableEndPointWindow2();
+            var dialog = new StaticChangeEntryPointsTreeAndTwoWayEndPointWindow2();
             dialog.ShowDialog();
 
         }
@@ -190,7 +190,7 @@ namespace AttachedPropertyTests
 
         private void MultiStaticEntryEndItemsBindingMvvm_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new StaticEntryPointAndEndPointItemsBindingMvvmWindow();
+            var dialog = new StaticEntryPointAndTwoWayEndPointItemsBindingMvvmWindow();
             dialog.ShowDialog();
         }
     }

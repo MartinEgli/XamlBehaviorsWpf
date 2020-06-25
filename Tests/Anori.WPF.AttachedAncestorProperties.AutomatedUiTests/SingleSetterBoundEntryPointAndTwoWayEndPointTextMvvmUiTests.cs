@@ -17,23 +17,31 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
 
     using System.Threading.Tasks;
 
-    using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
-    using TestContext = Microsoft.VisualStudio.TestTools.UnitTesting.TestContext;
-
     [TestFixture]
     [UserInterface]
     public class SingleSetterBoundEntryPointAndTwoWayEndPointTextMvvmUiTests : UiTestSessionBase
     {
         /// <summary>
-        ///     Tests the initialize.
+        ///     The endpoint
         /// </summary>
-        [SetUp]
-        public void TestInitialize() =>
-            SetContent(
-                () => new BoundEntryPointAndTwoWayEndPointTextMvvmView
-                      {
-                          DataContext = new SimpleAttachedTextBindingViewModel()
-                      });
+        private const string EndPoint = "EndPoint";
+
+        /// <summary>
+        ///     The entrypoint
+        /// </summary>
+        private const string EntryPoint = "EntryPoint";
+
+        /// <summary>
+        ///     Classes the cleanup.
+        /// </summary>
+        [OneTimeTearDown]
+        public static void ClassCleanup() => TearDown();
+
+        /// <summary>
+        ///     Classes the initialize.
+        /// </summary>
+        [OneTimeSetUp]
+        public static void ClassInitialize() => Setup();
 
         /// <summary>
         ///     Attacheds the ancestor property check text end point test.
@@ -136,26 +144,14 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
         }
 
         /// <summary>
-        ///     The endpoint
+        ///     Tests the initialize.
         /// </summary>
-        private const string EndPoint = "EndPoint";
-
-        /// <summary>
-        ///     The entrypoint
-        /// </summary>
-        private const string EntryPoint = "EntryPoint";
-
-        /// <summary>
-        ///     Classes the cleanup.
-        /// </summary>
-        [OneTimeTearDown]
-        public static void ClassCleanup() => TearDown();
-
-        /// <summary>
-        ///     Classes the initialize.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        [OneTimeSetUp]
-        public static void ClassInitialize(TestContext context) => Setup(context);
+        [SetUp]
+        public void TestInitialize() =>
+            SetContent(
+                () => new BoundEntryPointAndTwoWayEndPointTextMvvmView
+                      {
+                          DataContext = new SimpleAttachedTextBindingViewModel()
+                      });
     }
 }

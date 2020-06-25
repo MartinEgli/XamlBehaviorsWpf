@@ -17,9 +17,6 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
 
     using NUnit.Framework;
 
-    using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
-    using TestContext = Microsoft.VisualStudio.TestTools.UnitTesting.TestContext;
-
     [TestFixture, UserInterface]
     public class SingleSetterBoundEntryPointAndTwoTwoWayEndPointTextMvvmUiTestsX : UiTestSessionBase
     {
@@ -47,9 +44,8 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
         /// <summary>
         ///     Classes the initialize.
         /// </summary>
-        /// <param name="context">The context.</param>
         [OneTimeSetUp]
-        public static void ClassInitialize(TestContext context) => Setup(context);
+        public static void ClassInitialize() => Setup();
 
         /// <summary>
         ///     Attacheds the ancestor property check text end point1 test.

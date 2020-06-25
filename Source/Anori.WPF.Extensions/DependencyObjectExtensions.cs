@@ -189,7 +189,6 @@ namespace Anori.WPF.Extensions
             void ValueChangedHandler(object sender, EventArgs args) =>
                 valueChangedAction(((DependencyObject)sender).GetValueSync<T>(property));
 
-            //  var desc = DependencyPropertyDescriptor.FromProperty(property, typeof(AttachedFork<T, TOwner>));
             var desc = DependencyPropertyDescriptor.FromProperty(property, property.OwnerType);
             desc?.AddValueChanged(sourceObject, ValueChangedHandler);
         }

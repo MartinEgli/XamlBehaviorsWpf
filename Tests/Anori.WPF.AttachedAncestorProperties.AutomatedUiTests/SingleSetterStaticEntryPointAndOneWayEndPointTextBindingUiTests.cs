@@ -6,19 +6,31 @@
 
 namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
 {
-    using System.Threading.Tasks;
-
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Static;
     using Anori.WPF.Testing;
 
     using NUnit.Framework;
 
-    using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
-    using TestContext = Microsoft.VisualStudio.TestTools.UnitTesting.TestContext;
+    using OpenQA.Selenium.Appium.Windows;
 
-    [TestFixture, UserInterface]
+    using System.Threading.Tasks;
+
+    [TestFixture]
+    [UserInterface]
     public class SingleSetterStaticEntryPointAndOneWayEndPointTextBindingUiTests : UiTestSessionBase
     {
+        /// <summary>
+        ///     Tests the initialize.
+        /// </summary>
+        [SetUp]
+        public void TestInitialize() => SetContent(() => new StaticEntryPointAndOneWayEndPointTextView());
+
+        [Test]
+        public async Task AttachedAncestorProperty_CheckText_Test()
+        {
+            WindowsElement endPoint = Session.FindElementByAccessibilityId("TextBox1");
+            Assert.AreEqual("Attached Text", endPoint.Text);
+        }
         /// <summary>
         ///     Classes the cleanup.
         /// </summary>
@@ -28,21 +40,7 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
         /// <summary>
         ///     Classes the initialize.
         /// </summary>
-        /// <param name="context">The context.</param>
         [OneTimeSetUp]
-        public static void ClassInitialize(TestContext context) => Setup(context);
-
-        [Test]
-        public async Task AttachedAncestorProperty_CheckText_Test()
-        {
-            var endPoint = Session.FindElementByAccessibilityId("TextBox1");
-            Assert.AreEqual("Attached Text", endPoint.Text);
-        }
-
-        /// <summary>
-        ///     Tests the initialize.
-        /// </summary>
-        [SetUp]
-        public void TestInitialize() => SetContent(() => new StaticEntryPointAndOneWayEndPointTextView());
+        public static void ClassInitialize() => Setup();
     }
 }

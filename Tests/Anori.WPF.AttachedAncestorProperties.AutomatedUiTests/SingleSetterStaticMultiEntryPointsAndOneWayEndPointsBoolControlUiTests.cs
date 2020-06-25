@@ -1,57 +1,44 @@
-﻿// ----------------------------------------------------------------------- <copyright
-// file="SingleSetterStaticMultiEntryPointsAndOneWayEndPointsBoolControlUiTests.cs" company="Anori Soft"
-// Copyright (c) Anori Soft. All rights reserved. </copyright> -----------------------------------------------------------------------
+﻿// -----------------------------------------------------------------------
+// <copyright file="SingleSetterStaticMultiEntryPointsAndOneWayEndPointsBoolControlUiTests.cs" company="Anori Soft"
+// Copyright (c) Anori Soft. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
 {
-    using System.Threading.Tasks;
-    using System.Windows.Automation;
-
-    using Anori.WPF.AttachedAncestorProperties.ManualUiTests;
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Static;
     using Anori.WPF.Testing;
 
     using NUnit.Framework;
 
-    using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
-    using TestContext = Microsoft.VisualStudio.TestTools.UnitTesting.TestContext;
+    using System.Threading.Tasks;
+    using System.Windows.Automation;
+
+    using OpenQA.Selenium.Appium.Windows;
 
     /// <summary>
     /// </summary>
-    /// <seealso cref="UiTestSessionBase"/>
-    [TestFixture, UserInterface]
+    /// <seealso cref="UiTestSessionBase" />
+    [TestFixture]
+    [UserInterface]
     public class SingleSetterStaticMultiEntryPointsAndOneWayEndPointsBoolControlUiTests : UiTestSessionBase
     {
-        private const string EndPointA = "EndPointA";
-        private const string EndPointB = "EndPointB";
-        private const string EndPointC = "EndPointC";
-        private const string EntryPointA = "EntryPointA";
-
-        private const string EntryPointB = "EntryPointB";
-
-        private const string EntryPointC = "EntryPointC";
         /// <summary>
-        /// Classes the cleanup.
+        ///     Tests the initialize.
         /// </summary>
-        [OneTimeTearDown]
-        public static void ClassCleanup() => TearDown();
-
-        /// <summary>
-        /// Classes the initialize.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        [OneTimeSetUp]
-        public static void ClassInitialize(TestContext context) => Setup(context);
+        [SetUp]
+        public void TestInitialize() =>
+            SetContent(() => new StaticMultiEntryPointsAndOneWayAndOneWayEndPointsBoolControlView());
 
         [Test]
         public async Task AttachedAncestorProperty_CheckText_EndPoint_Test()
         {
-            var entryPointA = Session.FindElementByAccessibilityId(EntryPointA);
-            var entryPointB = Session.FindElementByAccessibilityId(EntryPointB);
-            var entryPointC = Session.FindElementByAccessibilityId(EntryPointC);
-            var endPointA = Session.FindElementByAccessibilityId(EndPointA);
-            var endPointB = Session.FindElementByAccessibilityId(EndPointB);
-            var endPointC = Session.FindElementByAccessibilityId(EndPointC);
+            WindowsElement entryPointA = Session.FindElementByAccessibilityId(EntryPointA);
+            WindowsElement entryPointB = Session.FindElementByAccessibilityId(EntryPointB);
+            WindowsElement entryPointC = Session.FindElementByAccessibilityId(EntryPointC);
+            WindowsElement endPointA = Session.FindElementByAccessibilityId(EndPointA);
+            WindowsElement endPointB = Session.FindElementByAccessibilityId(EndPointB);
+            WindowsElement endPointC = Session.FindElementByAccessibilityId(EndPointC);
 
             Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
             Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
@@ -110,17 +97,17 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
         }
 
         /// <summary>
-        /// Attacheds the ancestor property check text entry point test.
+        ///     Attacheds the ancestor property check text entry point test.
         /// </summary>
         [Test]
         public async Task AttachedAncestorProperty_CheckText_EntryPoint_Test()
         {
-            var entryPointA = Session.FindElementByAccessibilityId(EntryPointA);
-            var entryPointB = Session.FindElementByAccessibilityId(EntryPointB);
-            var entryPointC = Session.FindElementByAccessibilityId(EntryPointC);
-            var endPointA = Session.FindElementByAccessibilityId(EndPointA);
-            var endPointB = Session.FindElementByAccessibilityId(EndPointB);
-            var endPointC = Session.FindElementByAccessibilityId(EndPointC);
+            WindowsElement entryPointA = Session.FindElementByAccessibilityId(EntryPointA);
+            WindowsElement entryPointB = Session.FindElementByAccessibilityId(EntryPointB);
+            WindowsElement entryPointC = Session.FindElementByAccessibilityId(EntryPointC);
+            WindowsElement endPointA = Session.FindElementByAccessibilityId(EndPointA);
+            WindowsElement endPointB = Session.FindElementByAccessibilityId(EndPointB);
+            WindowsElement endPointC = Session.FindElementByAccessibilityId(EndPointC);
 
             Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
             Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
@@ -177,11 +164,29 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
             Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
             Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
         }
+
+        private const string EndPointA = "EndPointA";
+
+        private const string EndPointB = "EndPointB";
+
+        private const string EndPointC = "EndPointC";
+
+        private const string EntryPointA = "EntryPointA";
+
+        private const string EntryPointB = "EntryPointB";
+
+        private const string EntryPointC = "EntryPointC";
+
         /// <summary>
-        /// Tests the initialize.
+        ///     Classes the cleanup.
         /// </summary>
-        [SetUp]
-        public void TestInitialize() =>
-            SetContent(() => new StaticMultiEntryPointsAndOneWayAndOneWayEndPointsBoolControlView());
+        [OneTimeTearDown]
+        public static void ClassCleanup() => TearDown();
+
+        /// <summary>
+        ///     Classes the initialize.
+        /// </summary>
+        [OneTimeSetUp]
+        public static void ClassInitialize() => Setup();
     }
 }

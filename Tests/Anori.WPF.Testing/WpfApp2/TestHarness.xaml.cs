@@ -7,6 +7,8 @@ using System.Windows.Threading;
 
 namespace Anori.WPF.Testing
 {
+    using System.Diagnostics;
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -21,6 +23,16 @@ namespace Anori.WPF.Testing
             viewModel=new TestHarnessViewModel();
             this.DataContext = viewModel;
             this.dispatcher = Dispatcher;
+            Closed += OnClosed;
+        }
+        private void OnClosed(object sender, EventArgs e)
+        {
+            Debug.WriteLine("Harness Closed");
+        }
+
+        ~TestHarness()
+        {
+            Debug.WriteLine("Harness Destroyed");
         }
 
         public object ContentDataContext

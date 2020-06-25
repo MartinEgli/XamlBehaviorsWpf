@@ -1,15 +1,15 @@
 ﻿<Window x:Class="AttachedPropertyTests.OneToMultibleCachedWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:attachedForks="clr-namespace:Anori.WPF.AttachedAncestorProperties;assembly=Anori.WPF.AttachedAncestorProperties"
+        xmlns:a="http://schemas.anori.com/xaml/attachedancestorproperties"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Title="OneToMultibleWindow"
         Width="800"
         Height="450"
-        attachedForks:AttachedAncestorPropertyString.Setter="{Binding Text,
-                                                                      ElementName=TextBox,
-                                                                      Mode=TwoWay}"
+        a:AttachedAncestorPropertyString.Setter="{Binding Text,
+                                                          ElementName=TextBox,
+                                                          Mode=TwoWay}"
         mc:Ignorable="d">
     <StackPanel>
         <TextBlock>Entry Point</TextBlock>
@@ -21,7 +21,7 @@
                 <StackPanel x:Name="StackPanelFirstTextBlock">
                     <TextBlock>End Point 1</TextBlock>
                     <TextBlock x:Name="First"
-                               Text="{attachedForks:AttachedBindingStringGetter}" />
+                               Text="{a:AttachedBindingStringGetter}" />
                 </StackPanel>
             </Border>
             <Border BorderBrush="Black"
@@ -29,7 +29,7 @@
                 <StackPanel>
                     <TextBlock>End Point 2</TextBlock>
                     <TextBlock x:Name="Second"
-                               Text="{attachedForks:AttachedBindingStringGetter}" />
+                               Text="{a:AttachedBindingStringGetter}" />
                 </StackPanel>
             </Border>
             <Border BorderBrush="Black"
@@ -37,7 +37,7 @@
                 <StackPanel>
                     <TextBlock>End Point 3</TextBlock>
                     <TextBlock x:Name="Third"
-                               Text="{attachedForks:AttachedBindingStringGetter}" />
+                               Text="{a:AttachedBindingStringGetter}" />
                 </StackPanel>
             </Border>
         </StackPanel>

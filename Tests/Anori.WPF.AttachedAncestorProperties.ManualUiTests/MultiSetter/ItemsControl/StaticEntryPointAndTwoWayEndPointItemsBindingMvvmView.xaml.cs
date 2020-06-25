@@ -8,9 +8,9 @@
     /// <summary>
     /// Interaction logic for StaticEntryPointAndEndPointItemsBindingMvvmView.xaml
     /// </summary>
-    public partial class StaticEntryPointAndEndPointItemsBindingMvvmView : UserControl
+    public partial class StaticEntryPointAndTwoWayEndPointItemsBindingMvvmView : UserControl
     {
-        public StaticEntryPointAndEndPointItemsBindingMvvmView()
+        public StaticEntryPointAndTwoWayEndPointItemsBindingMvvmView()
         {
             InitializeComponent();
             this.ViewModel = new ItemsControlBindingViewModel();

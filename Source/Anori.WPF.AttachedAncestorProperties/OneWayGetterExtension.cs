@@ -10,7 +10,6 @@ namespace Anori.WPF.AttachedAncestorProperties
 
     using System;
     using System.Windows;
-    using System.Windows.Markup;
 
     /// <summary>
     /// </summary>
@@ -28,15 +27,16 @@ namespace Anori.WPF.AttachedAncestorProperties
         }
 
         /// <summary>
-        ///     Creates the specified dependency object.
+        /// Creates the specified dependency object.
         /// </summary>
-        /// <param name="dependencyObject">The dependency object.</param>
         /// <param name="serviceProvider">The service provider.</param>
+        /// <param name="dependencyObject">The dependency object.</param>
+        /// <param name="setterProperty">The setter property.</param>
         /// <returns></returns>
         protected override object Create(
             [NotNull] IServiceProvider serviceProvider,
             [NotNull] DependencyObject dependencyObject,
-            [NotNull]  DependencyProperty setterProperty) =>
+            [NotNull] DependencyProperty setterProperty) =>
             new AncestorPropertyOneWaySetter(dependencyObject, setterProperty, this.UpdateValue).ProvideValue(
                 serviceProvider);
 
@@ -45,6 +45,5 @@ namespace Anori.WPF.AttachedAncestorProperties
         /// </summary>
         /// <returns></returns>
         protected override DependencyProperty GetSetterProperty() => SetterProperty;
-        
     }
 }

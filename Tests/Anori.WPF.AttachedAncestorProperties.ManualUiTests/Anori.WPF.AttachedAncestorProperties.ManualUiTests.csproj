@@ -22,7 +22,7 @@
     <Compile Update="MultiSetter\ItemsControl\AttachedTwoWayItemView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="MultiSetter\ItemsControl\StaticEntryPointAndEndPointItemsBindingMvvmView.xaml.cs">
+    <Compile Update="MultiSetter\ItemsControl\StaticEntryPointAndTwoWayEndPointItemsBindingMvvmView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="MultiSetter\Static\StaticEntryPointAndTwoWayEndPointSwitchContentView.xaml.cs">
@@ -46,16 +46,19 @@
     <Page Update="MultiSetter\ItemsControl\AttachedTwoWayItemView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MultiSetter\ItemsControl\StaticEntryPointAndEndPointItemsBindingMvvmView.xaml">
+    <Page Update="MultiSetter\ItemsControl\StaticEntryPointAndTwoWayEndPointItemsBindingMvvmView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MultiSetter\ItemsControl\StaticEntryPointAndEndPointItemsBindingMvvmWindow.xaml">
+    <Page Update="MultiSetter\ItemsControl\StaticEntryPointAndTwoWayEndPointItemsBindingMvvmWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MultiSetter\Static\StaticEntryPointAndTwoWayEndPointSwitchContentView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MultiSetter\Static\StaticEntryPointAndTwoWayEndPointSwitchContentWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SingleSetter\Controls\AttachedTwoWayTextUserControl.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="SingleSetter\Controls\AttachedBindableUserControl.xaml">
@@ -91,7 +94,7 @@
     <Page Update="SingleSetter\Static\StaticChangeEntryPointsTreeAndTwoWayEndPointView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MultiSetter\Static\StaticChangeEntryPointsTreeAndBindableEndPointView2.xaml">
+    <Page Update="MultiSetter\Static\StaticChangeEntryPointsTreeAndTwoWayEndPointView2.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MultiSetter\Static\StaticChangeEntryPointsTreeAndOneWayEndPointtView2.xaml">
@@ -100,7 +103,7 @@
     <Page Update="SingleSetter\Static\StaticChangeEntryPointsTreeAndOneWayEndPointView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MultiSetter\Static\StaticChangeEntryPointsTreeAndBindableEndPointWindow2.xaml">
+    <Page Update="MultiSetter\Static\StaticChangeEntryPointsTreeAndTwoWayEndPointWindow2.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MultiSetter\Static\StaticChangeEntryPointsTreeAndOneWayEndPointtWindow2.xaml">

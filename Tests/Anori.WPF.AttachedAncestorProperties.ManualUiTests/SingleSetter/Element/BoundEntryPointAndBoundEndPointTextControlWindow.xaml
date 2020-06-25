@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:guiTest="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:element="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Element"
         Title="BoundEntryPointAndTwoWayEndPointTextControlWindow"
         Width="800"
         Height="450"
         mc:Ignorable="d">
-    <guiTest:BoundEntryPointAndTwoWayEndPointTextControlView />
+    <element:BoundEntryPointAndTwoWayEndPointTextControlView />
 </Window>

@@ -6,23 +6,164 @@
 
 namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
 {
-    using System.Threading.Tasks;
-    using System.Windows.Automation;
-
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Static;
     using Anori.WPF.Testing;
 
     using NUnit.Framework;
 
-    using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
-    using TestContext = Microsoft.VisualStudio.TestTools.UnitTesting.TestContext;
+    using System.Threading.Tasks;
+    using System.Windows.Automation;
+
+    using OpenQA.Selenium.Appium.Windows;
 
     /// <summary>
     /// </summary>
     /// <seealso cref="UiTestSessionBase" />
-    [TestFixture, UserInterface]
+    [TestFixture]
+    [UserInterface]
     public class SingleSetterStaticMultiEntryPointsAndTwoWayEndPointsBoolControlUiTests : UiTestSessionBase
     {
+        /// <summary>
+        ///     Tests the initialize.
+        /// </summary>
+        [SetUp]
+        public void TestInitialize() => SetContent(() => new StaticMultiEntryPointsAndTwoWayEndPointsBoolControlView());
+
+        [Test]
+        public async Task AttachedAncestorProperty_CheckText_EndPoint_Test()
+        {
+            WindowsElement entryPointA = Session.FindElementByAccessibilityId(EntryPointA);
+            WindowsElement entryPointB = Session.FindElementByAccessibilityId(EntryPointB);
+            WindowsElement entryPointC = Session.FindElementByAccessibilityId(EntryPointC);
+            WindowsElement endPointA = Session.FindElementByAccessibilityId(EndPointA);
+            WindowsElement endPointB = Session.FindElementByAccessibilityId(EndPointB);
+            WindowsElement endPointC = Session.FindElementByAccessibilityId(EndPointC);
+
+            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
+
+            endPointA.Click();
+            Assert.AreEqual(ToggleState.On, entryPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
+            Assert.AreEqual(ToggleState.On, endPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
+
+            endPointA.Click();
+            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
+
+            endPointB.Click();
+            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
+            Assert.AreEqual(ToggleState.On, entryPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
+            Assert.AreEqual(ToggleState.On, endPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
+
+            endPointB.Click();
+            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
+
+            endPointC.Click();
+            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
+            Assert.AreEqual(ToggleState.On, entryPointC.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
+            Assert.AreEqual(ToggleState.On, endPointC.ToggleState());
+
+            endPointC.Click();
+            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
+        }
+
+        /// <summary>
+        ///     Attacheds the ancestor property check text entry point test.
+        /// </summary>
+        [Test]
+        public async Task AttachedAncestorProperty_CheckText_EntryPoint_Test()
+        {
+            WindowsElement entryPointA = Session.FindElementByAccessibilityId(EntryPointA);
+            WindowsElement entryPointB = Session.FindElementByAccessibilityId(EntryPointB);
+            WindowsElement entryPointC = Session.FindElementByAccessibilityId(EntryPointC);
+            WindowsElement endPointA = Session.FindElementByAccessibilityId(EndPointA);
+            WindowsElement endPointB = Session.FindElementByAccessibilityId(EndPointB);
+            WindowsElement endPointC = Session.FindElementByAccessibilityId(EndPointC);
+
+            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
+
+            entryPointA.Click();
+            Assert.AreEqual(ToggleState.On, entryPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
+            Assert.AreEqual(ToggleState.On, endPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
+
+            entryPointA.Click();
+            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
+
+            entryPointB.Click();
+            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
+            Assert.AreEqual(ToggleState.On, entryPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
+            Assert.AreEqual(ToggleState.On, endPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
+
+            entryPointB.Click();
+            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
+
+            entryPointC.Click();
+            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
+            Assert.AreEqual(ToggleState.On, entryPointC.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
+            Assert.AreEqual(ToggleState.On, endPointC.ToggleState());
+
+            entryPointC.Click();
+            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
+            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
+        }
+
         private const string EndPointA = "EndPointA";
 
         private const string EndPointB = "EndPointB";
@@ -46,147 +187,6 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
         /// </summary>
         /// <param name="context">The context.</param>
         [OneTimeSetUp]
-        public static void ClassInitialize(TestContext context) => Setup(context);
-
-        [Test]
-        public async Task AttachedAncestorProperty_CheckText_EndPoint_Test()
-        {
-            var entryPointA = Session.FindElementByAccessibilityId(EntryPointA);
-            var entryPointB = Session.FindElementByAccessibilityId(EntryPointB);
-            var entryPointC = Session.FindElementByAccessibilityId(EntryPointC);
-            var endPointA   = Session.FindElementByAccessibilityId(EndPointA);
-            var endPointB   = Session.FindElementByAccessibilityId(EndPointB);
-            var endPointC   = Session.FindElementByAccessibilityId(EndPointC);
-
-            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
-
-            endPointA.Click();
-            Assert.AreEqual(ToggleState.On,  entryPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
-            Assert.AreEqual(ToggleState.On,  endPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
-
-            endPointA.Click();
-            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
-
-            endPointB.Click();
-            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
-            Assert.AreEqual(ToggleState.On,  entryPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
-            Assert.AreEqual(ToggleState.On,  endPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
-
-            endPointB.Click();
-            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
-
-            endPointC.Click();
-            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
-            Assert.AreEqual(ToggleState.On,  entryPointC.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
-            Assert.AreEqual(ToggleState.On,  endPointC.ToggleState());
-
-            endPointC.Click();
-            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
-        }
-
-        /// <summary>
-        ///     Attacheds the ancestor property check text entry point test.
-        /// </summary>
-        [Test]
-        public async Task AttachedAncestorProperty_CheckText_EntryPoint_Test()
-        {
-            var entryPointA = Session.FindElementByAccessibilityId(EntryPointA);
-            var entryPointB = Session.FindElementByAccessibilityId(EntryPointB);
-            var entryPointC = Session.FindElementByAccessibilityId(EntryPointC);
-            var endPointA   = Session.FindElementByAccessibilityId(EndPointA);
-            var endPointB   = Session.FindElementByAccessibilityId(EndPointB);
-            var endPointC   = Session.FindElementByAccessibilityId(EndPointC);
-
-            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
-
-            entryPointA.Click();
-            Assert.AreEqual(ToggleState.On,  entryPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
-            Assert.AreEqual(ToggleState.On,  endPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
-
-            entryPointA.Click();
-            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
-
-            entryPointB.Click();
-            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
-            Assert.AreEqual(ToggleState.On,  entryPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
-            Assert.AreEqual(ToggleState.On,  endPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
-
-            entryPointB.Click();
-            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
-
-            entryPointC.Click();
-            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
-            Assert.AreEqual(ToggleState.On,  entryPointC.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
-            Assert.AreEqual(ToggleState.On,  endPointC.ToggleState());
-
-            entryPointC.Click();
-            Assert.AreEqual(ToggleState.Off, entryPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, entryPointC.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointA.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointB.ToggleState());
-            Assert.AreEqual(ToggleState.Off, endPointC.ToggleState());
-        }
-
-        /// <summary>
-        ///     Tests the initialize.
-        /// </summary>
-        [SetUp]
-        public void TestInitialize() => SetContent(() => new StaticMultiEntryPointsAndTwoWayEndPointsBoolControlView());
+        public static void ClassInitialize() => Setup();
     }
 }

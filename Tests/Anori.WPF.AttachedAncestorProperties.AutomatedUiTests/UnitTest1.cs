@@ -1,11 +1,12 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Anori.WPF.AttachedAncestorProperties.ManualUiTests;
-using NUnit.Framework;
-
-namespace Anori.WPF.AttachedForks.UnitTest
+﻿namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+
+    using Anori.WPF.AttachedAncestorProperties.ManualUiTests;
+
+    using NUnit.Framework;
+
     public class Tests
     {
         [SetUp]

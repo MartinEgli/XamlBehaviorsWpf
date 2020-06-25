@@ -11,17 +11,12 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests;
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Mvvm;
     using Anori.WPF.Testing;
-
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+    
     using NUnit.Framework;
 
     using OpenQA.Selenium;
 
-    using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
-    using TestContext = Microsoft.VisualStudio.TestTools.UnitTesting.TestContext;
-
-    [TestClass, UserInterface]
+    [TestFixture, UserInterface]
     public class SingleSetterBoundEntryPointAndOneWayEndPointTextMvvmUiTests : UiTestSessionBase
     {
         /// <summary>
@@ -45,7 +40,7 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
         /// </summary>
         /// <param name="context">The context.</param>
         [OneTimeSetUp]
-        public static void ClassInitialize(TestContext context) => Setup(context);
+        public static void ClassInitialize() => Setup();
 
         [Test]
         public async Task AttachedAncestorProperty_CheckText_EndPoint_Test()

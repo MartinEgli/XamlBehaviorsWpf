@@ -6,27 +6,26 @@
 
 namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
 {
-    using System.Threading.Tasks;
-
-    using Anori.WPF.AttachedAncestorProperties.ManualUiTests;
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Static;
     using Anori.WPF.Testing;
 
     using NUnit.Framework;
 
-    using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
-    using TestContext = Microsoft.VisualStudio.TestTools.UnitTesting.TestContext;
+    using System.Threading.Tasks;
 
-    [TestFixture, UserInterface]
+    using OpenQA.Selenium.Appium.Windows;
+
+    [TestFixture]
+    [UserInterface]
     public class SingleSetterStaticEntryPointAndTwoBoundEndPointTextBindingUiTests : UiTestSessionBase
     {
         /// <summary>
-        /// The endpoint1
+        ///     The endpoint1
         /// </summary>
         private const string Endpoint1 = "EndPoint1";
 
         /// <summary>
-        /// The endpoint2
+        ///     The endpoint2
         /// </summary>
         private const string Endpoint2 = "EndPoint2";
 
@@ -41,13 +40,13 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
         /// </summary>
         /// <param name="context">The context.</param>
         [OneTimeSetUp]
-        public static void ClassInitialize(TestContext context) => Setup(context);
+        public static void ClassInitialize() => Setup();
 
         [Test]
         public async Task AttachedAncestorProperty_CheckText_Test()
         {
-            var endPoint1 = Session.FindElementByAccessibilityId(Endpoint1);
-            var endPoint2 = Session.FindElementByAccessibilityId(Endpoint2);
+            WindowsElement endPoint1 = Session.FindElementByAccessibilityId(Endpoint1);
+            WindowsElement endPoint2 = Session.FindElementByAccessibilityId(Endpoint2);
             Assert.AreEqual("Attached Text", endPoint1.Text);
             Assert.AreEqual("Attached Text", endPoint2.Text);
         }
@@ -55,8 +54,8 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
         [Test]
         public async Task AttachedAncestorProperty_ClearAndAddText_Test()
         {
-            var endPoint1 = Session.FindElementByAccessibilityId(Endpoint1);
-            var endPoint2 = Session.FindElementByAccessibilityId(Endpoint2);
+            WindowsElement endPoint1 = Session.FindElementByAccessibilityId(Endpoint1);
+            WindowsElement endPoint2 = Session.FindElementByAccessibilityId(Endpoint2);
 
             Assert.AreEqual("Attached Text", endPoint1.Text);
             Assert.AreEqual("Attached Text", endPoint2.Text);
@@ -81,8 +80,8 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
         [Test]
         public async Task AttachedAncestorProperty_ClearText_Test()
         {
-            var endPoint1 = Session.FindElementByAccessibilityId(Endpoint1);
-            var endPoint2 = Session.FindElementByAccessibilityId(Endpoint2);
+            WindowsElement endPoint1 = Session.FindElementByAccessibilityId(Endpoint1);
+            WindowsElement endPoint2 = Session.FindElementByAccessibilityId(Endpoint2);
             Assert.AreEqual("Attached Text", endPoint1.Text);
             Assert.AreEqual("Attached Text", endPoint2.Text);
 

@@ -1,16 +1,16 @@
 ﻿<UserControl x:Class="Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Controls.AttachedUserControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:attachedForks="clr-namespace:Anori.WPF.AttachedAncestorProperties;assembly=Anori.WPF.AttachedAncestorProperties"
+             xmlns:a="http://schemas.anori.com/xaml/attachedancestorproperties"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="450"
              d:DesignWidth="800"
              mc:Ignorable="d">
     <StackPanel>
-        <Label IsEnabled="{attachedForks:AttachedBindingBooleanGetter}">Binding Boolean Test Text:</Label>
-        <Label IsEnabled="{attachedForks:AttachedBooleanGetter}">Boolean Test Text:</Label>
-        <TextBox IsEnabled="{attachedForks:AttachedBooleanGetter}"
-                 Text="{attachedForks:AttachedStringGetter}" />
+        <Label IsEnabled="{a:AttachedBindingBooleanGetter}">Binding Boolean Test Text:</Label>
+        <Label IsEnabled="{a:AttachedBooleanGetter}">Boolean Test Text:</Label>
+        <TextBox IsEnabled="{a:AttachedBooleanGetter}"
+                 Text="{a:AttachedStringGetter}" />
     </StackPanel>
 </UserControl>

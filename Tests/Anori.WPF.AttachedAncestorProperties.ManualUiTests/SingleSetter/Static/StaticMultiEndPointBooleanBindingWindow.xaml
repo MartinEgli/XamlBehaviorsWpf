@@ -1,22 +1,21 @@
-﻿<Window
-    x:Class="Anori.WPF.AttachedAncestorProperties.ManualUiTests.StaticMultiEndPointBooleanBindingWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:guiTest="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:singleSetter="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter"
-    Title="ControlBindingWindow"
-    Width="800"
-    Height="450"
-    mc:Ignorable="d">
+﻿<Window x:Class="Anori.WPF.AttachedAncestorProperties.ManualUiTests.StaticMultiEndPointBooleanBindingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:guiTest="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:singleSetter="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter"
+        Title="ControlBindingWindow"
+        Width="800"
+        Height="450"
+        mc:Ignorable="d">
     <StackPanel>
         <TextBlock>Entry Points:</TextBlock>
         <Button Click="Button_Click">Test</Button>
         <StackPanel x:Name="Panel"
-            singleSetter:AttachedAncestorPropertyBooleanA.Setter="True"
-            singleSetter:AttachedAncestorPropertyBooleanB.Setter="True"
-            singleSetter:AttachedAncestorPropertyBooleanC.Setter="True">
+                    singleSetter:AttachedAncestorPropertyBooleanA.Setter="True"
+                    singleSetter:AttachedAncestorPropertyBooleanB.Setter="True"
+                    singleSetter:AttachedAncestorPropertyBooleanC.Setter="True">
             <TextBlock>End Points 1:</TextBlock>
             <CheckBox IsChecked="{singleSetter:AttachedBindingBooleanAGetter UpdateSourceTrigger=PropertyChanged}">End Point A</CheckBox>
             <CheckBox IsChecked="{singleSetter:AttachedBindingBooleanBGetter UpdateSourceTrigger=PropertyChanged}">End Point B</CheckBox>

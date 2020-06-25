@@ -7,9 +7,9 @@
     /// <summary>
     /// Interaction logic for DynamicEndPointTextBindingWindow.xaml
     /// </summary>
-    public partial class StaticEntryPointAndEndPointItemsBindingMvvmWindow : Window
+    public partial class StaticEntryPointAndTwoWayEndPointItemsBindingMvvmWindow : Window
     {
-        public StaticEntryPointAndEndPointItemsBindingMvvmWindow()
+        public StaticEntryPointAndTwoWayEndPointItemsBindingMvvmWindow()
         {
             InitializeComponent();
             ViewModel = new ItemsControlBindingViewModel();
