@@ -1,10 +1,8 @@
-﻿using System.Diagnostics;
-using System.Linq;
-using System.Windows;
-
-namespace Anori.WPF.AttachedAncestorProperties.ManualUiTests
+﻿namespace Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.ItemsControl
 {
-    using Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.ItemsControl;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Windows;
 
     /// <summary>
     /// Interaction logic for DynamicEndPointTextBindingWindow.xaml
@@ -14,17 +12,17 @@ namespace Anori.WPF.AttachedAncestorProperties.ManualUiTests
         public ItemsControlBindingWindow()
         {
             InitializeComponent();
-            ViewModel = new ItemsControlBindingViewModel();
+            ViewModel = new SingleFatSetter.ItemsControl.ItemsControlBindingViewModel();
             this.DataContext = ViewModel;
         }
 
-        public ItemsControlBindingViewModel ViewModel { get; set; }
+        public SingleFatSetter.ItemsControl.ItemsControlBindingViewModel ViewModel { get; set; }
 
         private void AddItem(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("--> Add Item");
 
-            ViewModel.Items.Add(new ItemViewModel());
+            ViewModel.Items.Add(new SingleFatSetter.ItemsControl.ItemViewModel());
         }
 
         private void RemoveItem(object sender, RoutedEventArgs e)

@@ -4,10 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Windows;
-
-namespace Anori.WPF.AttachedAncestorProperties.ManualUiTests
+namespace Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Static
 {
+    using System.Windows;
+
     /// <summary>
     ///     Interaction logic for SwitchContentWindow.xaml
     /// </summary>

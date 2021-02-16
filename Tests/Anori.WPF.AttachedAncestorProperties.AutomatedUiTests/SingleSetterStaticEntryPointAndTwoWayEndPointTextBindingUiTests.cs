@@ -15,6 +15,7 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
 
     using System.Threading.Tasks;
 
+
     [TestFixture]
     [UserInterface]
     public class SingleSetterStaticEntryPointAndTwoWayEndPointTextBindingUiTests : UiTestSessionBase

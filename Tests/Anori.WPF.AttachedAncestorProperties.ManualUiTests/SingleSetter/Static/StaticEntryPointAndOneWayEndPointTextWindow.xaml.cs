@@ -1,8 +1,7 @@
-﻿using System.Windows;
-using AttachedPropertyTests;
-
-namespace Anori.WPF.AttachedAncestorProperties.ManualUiTests
+﻿namespace Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Static
 {
+    using System.Windows;
+
     /// <summary>
     /// Interaction logic for SimpleWindow.xaml
     /// </summary>

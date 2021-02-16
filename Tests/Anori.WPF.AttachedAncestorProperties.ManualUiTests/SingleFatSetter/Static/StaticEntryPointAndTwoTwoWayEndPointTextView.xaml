@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleFatSetter.Static.StaticEntryPointAndTwoTwoWayEndPointTextView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:singleSetter="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleFatSetter"
+             Width="800"
+             Height="450"
+             mc:Ignorable="d">
+    <StackPanel>
+        <!--<TextBlock>Entry Point</TextBlock>-->
+        <StackPanel x:Name="StackPanel"
+                    singleSetter:AttachedAncestorPropertyTextA.Setter="Attached Text">
+            <TextBlock>End Point 1</TextBlock>
+            <TextBox x:Name="EndPoint1"
+                     Text="{singleSetter:AttachedBindingTextAGetterExtension UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock>End Point 2</TextBlock>
+            <TextBox x:Name="EndPoint2"
+                     Text="{singleSetter:AttachedBindingTextAGetterExtension UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>

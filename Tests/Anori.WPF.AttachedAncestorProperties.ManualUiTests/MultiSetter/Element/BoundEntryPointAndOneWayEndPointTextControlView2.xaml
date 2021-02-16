@@ -1,10 +1,10 @@
 ﻿<UserControl x:Class="Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.Element.BoundEntryPointAndOneWayEndPointTextControlView2"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:attachedAncestorProperties="clr-namespace:Anori.WPF.AttachedAncestorProperties;assembly=Anori.WPF.AttachedAncestorProperties"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:multiSetter="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter"
+             xmlns:a="http://schemas.anori.com/xaml/attachedancestorproperties"
              Width="800"
              Height="450"
              mc:Ignorable="d">
@@ -24,11 +24,11 @@
             <TextBlock>End Point</TextBlock>
             <TextBox x:Name="EndPointA"
                      x:FieldModifier="public"
-                     Text="{attachedAncestorProperties:OneWayGetter SetterProperty={x:Static multiSetter:AttachedAncestorProperties.SetterAProperty}}" />
+                     Text="{a:OneWayGetter SetterProperty={x:Static multiSetter:AttachedAncestorProperties.SetterAProperty}}" />
 
             <TextBox x:Name="EndPointB"
                      x:FieldModifier="public"
-                     Text="{attachedAncestorProperties:OneWayGetter SetterProperty={x:Static multiSetter:AttachedAncestorProperties.SetterBProperty}}" />
+                     Text="{a:OneWayGetter SetterProperty={x:Static multiSetter:AttachedAncestorProperties.SetterBProperty}}" />
         </StackPanel>
     </StackPanel>
 </UserControl>

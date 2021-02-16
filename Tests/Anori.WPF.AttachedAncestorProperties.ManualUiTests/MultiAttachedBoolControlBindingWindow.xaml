@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:guiTest="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:singleSetter="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter"
+        xmlns:singleSetter="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleFatSetter"
         Title="ControlBindingWindow"
         Width="800"
         Height="450"

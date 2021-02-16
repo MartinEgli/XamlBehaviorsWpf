@@ -1,13 +1,13 @@
-﻿namespace Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter
+﻿namespace Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Mvvm
 {
     using System.Windows;
 
     /// <summary>
     /// Interaction logic for DynamicEndPointTextBindingWindow.xaml
     /// </summary>
-    public partial class BoundEntryPointAndTwoWayEndPointTextMVVMWindow : Window
+    public partial class BoundEntryPointAndTwoWayEndPointTextMvvmWindow : Window
     {
-        public BoundEntryPointAndTwoWayEndPointTextMVVMWindow()
+        public BoundEntryPointAndTwoWayEndPointTextMvvmWindow()
         {
             InitializeComponent();
         }

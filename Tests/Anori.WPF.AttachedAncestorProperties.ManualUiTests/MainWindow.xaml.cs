@@ -13,10 +13,12 @@ namespace AttachedPropertyTests
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.Element;
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.ItemsControl;
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.Static;
-    using Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter;
+    using Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleFatSetter;
+    using Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.ItemsControl;
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Static;
 
     using StaticChangeEntryPointsTreeAndTwoWayEndPointWindow2 = Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter.Static.StaticChangeEntryPointsTreeAndTwoWayEndPointWindow2;
+    using StaticEntryPointAndTwoWayEndPointTextWindow = Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleFatSetter.Static.StaticEntryPointAndTwoWayEndPointTextWindow;
 
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
@@ -127,7 +129,7 @@ namespace AttachedPropertyTests
 
         private void StaticMultiEndPointBooleanBindingWindow_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new StaticMultiEndPointBooleanBindingWindow();
+            var dialog = new StaticMultiEntryPointsAndTwoTwoWayEndPointsBooleanWindow();
             dialog.ShowDialog();
         }
 

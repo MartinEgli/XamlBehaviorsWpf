@@ -7,7 +7,6 @@
 namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
 {
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests;
-    using Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Mvvm;
     using Anori.WPF.Testing;
 
     using NUnit.Framework;
@@ -16,6 +15,8 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
     using OpenQA.Selenium.Appium.Windows;
 
     using System.Threading.Tasks;
+
+    using Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Mvvm;
 
     [TestFixture]
     [UserInterface]

@@ -7,7 +7,6 @@
 namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
 {
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests;
-    using Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Mvvm;
     using Anori.WPF.Testing;
 
     using NUnit.Framework;
@@ -17,6 +16,7 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
     using System.Threading.Tasks;
 
     using Assert = NUnit.Framework.Assert;
+    using BoundEntryPointAndTwoTwoWayEndPointTextMvvmView = Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Mvvm.BoundEntryPointAndTwoTwoWayEndPointTextMvvmView;
 
     [TestFixture]
     [UserInterface]

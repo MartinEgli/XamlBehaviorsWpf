@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:a="http://schemas.anori.com/xaml/attachedancestorproperties"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:itemsControl="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.ItemsControl"
+             xmlns:itemsControl="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleFatSetter.ItemsControl"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:multiSetter="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter"
              d:DataContext="{d:DesignInstance itemsControl:ItemViewModel}"

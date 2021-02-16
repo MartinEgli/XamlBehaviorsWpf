@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Element.BoundEntryPointAndTwoWayEndPointTextControlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:singleSetter="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter"
+             Width="800"
+             Height="450"
+             mc:Ignorable="d">
+    <StackPanel>
+        <TextBlock>Entry Point</TextBlock>
+        <TextBox x:Name="EntryPoint" />
+        <StackPanel x:Name="StackPanel"
+                    singleSetter:AncestorPropertyTextA.Setter="{Binding Path=Text,
+                                                                                ElementName=EntryPoint,
+                                                                                Mode=TwoWay,
+                                                                                UpdateSourceTrigger=PropertyChanged}">
+            <TextBlock>End Point</TextBlock>
+            <TextBox x:Name="EndPoint"
+                     Text="{singleSetter:TwoWayTextAGetter UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>

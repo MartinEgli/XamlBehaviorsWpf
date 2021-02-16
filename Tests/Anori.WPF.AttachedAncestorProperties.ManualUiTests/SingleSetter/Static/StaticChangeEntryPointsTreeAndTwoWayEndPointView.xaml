@@ -5,6 +5,7 @@
              xmlns:controls="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls1="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleFatSetter.Controls"
              mc:Ignorable="d">
     <StackPanel x:Name="StackPanel">
         <Button x:Name="AddPanel"
@@ -33,13 +34,13 @@
                 <StackPanel x:Name="SubPanel1">
                     <Label>Content 1</Label>
                     <ContentControl x:Name="ContentControl1">
-                        <controls:AttachedBindableTextUserControl />
+                        <controls1:AttachedBindableTextUserControl />
                     </ContentControl>
                 </StackPanel>
                 <StackPanel x:Name="SubPanel2">
                     <Label>Content 2</Label>
                     <ContentControl x:Name="ContentControl2">
-                        <controls:AttachedBindableTextUserControl />
+                        <controls1:AttachedBindableTextUserControl />
                     </ContentControl>
                 </StackPanel>
             </StackPanel>

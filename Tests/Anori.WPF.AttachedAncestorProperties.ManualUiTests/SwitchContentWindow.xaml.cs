@@ -18,7 +18,7 @@ namespace Anori.WPF.AttachedAncestorProperties.ManualUiTests
         public SwitchContentWindow()
         {
             this.InitializeComponent();
-            this.control = new SingleSetter.Controls.AttachedUserControl();
+            this.control = new SingleSetter.Controls.AttachedOneWayUserControl();
         }
 
         private void Button1_Click(object sender, RoutedEventArgs e)

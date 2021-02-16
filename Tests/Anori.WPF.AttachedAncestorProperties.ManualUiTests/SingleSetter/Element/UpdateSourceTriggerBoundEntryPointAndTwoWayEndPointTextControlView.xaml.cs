@@ -1,9 +1,7 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using AttachedPropertyTests;
-
-namespace Anori.WPF.AttachedAncestorProperties.ManualUiTests
+﻿namespace Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Element
 {
+    using System.Windows.Controls;
+
     /// <summary>
     /// Interaction logic for DynamicEndPointTextBindingWindow.xaml
     /// </summary>

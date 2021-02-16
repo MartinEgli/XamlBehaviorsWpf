@@ -8,7 +8,6 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
 {
     using System.Threading.Tasks;
 
-    using Anori.WPF.AttachedAncestorProperties.ManualUiTests;
     using Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Element;
     using Anori.WPF.Testing;
 

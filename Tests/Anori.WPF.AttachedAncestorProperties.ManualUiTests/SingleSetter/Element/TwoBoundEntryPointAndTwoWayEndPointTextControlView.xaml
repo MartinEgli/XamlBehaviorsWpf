@@ -13,23 +13,23 @@
         <TextBlock>Entry Point B</TextBlock>
         <TextBox x:Name="EntryPointB" />
         <StackPanel x:Name="StackPanel"
-                    singleSetter:AttachedAncestorPropertyTextA.Setter="{Binding Path=Text,
+                    singleSetter:AncestorPropertyTextA.Setter="{Binding Path=Text,
                                                                                 ElementName=EntryPointA,
                                                                                 Mode=TwoWay,
                                                                                 UpdateSourceTrigger=PropertyChanged}"
-                    singleSetter:AttachedAncestorPropertyTextB.Setter="{Binding Path=Text,
+                    singleSetter:AncestorPropertyTextB.Setter="{Binding Path=Text,
                                                                                 ElementName=EntryPointB,
                                                                                 Mode=TwoWay,
                                                                                 UpdateSourceTrigger=PropertyChanged}">
             <StackPanel>
                 <TextBlock>End Point A</TextBlock>
                 <TextBox x:Name="EndPointA"
-                         Text="{singleSetter:AttachedBindingTextAGetter UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{singleSetter:TwoWayTextAGetter UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
             <StackPanel>
                 <TextBlock>End Point B</TextBlock>
                 <TextBox x:Name="EndPointB"
-                         Text="{singleSetter:AttachedBindingTextBGetter UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{singleSetter:TwoWayTextBGetter UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
         </StackPanel>
     </StackPanel>

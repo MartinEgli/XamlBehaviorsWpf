@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleFatSetter.Static.StaticChangeEntryPointsTreeAndTwoWayEndPointView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:a="http://schemas.anori.com/xaml/attachedancestorproperties"
+             xmlns:controls="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleFatSetter.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+    <StackPanel x:Name="StackPanel">
+        <Button x:Name="AddPanel"
+                Click="AddPanel_Click">
+            Add AttachedAncestorPropertyHelper Panel
+        </Button>
+        <Button x:Name="RemovePanel"
+                Click="RemovePanel_Click">
+            Remove AttachedAncestorPropertyHelper Panel
+        </Button>
+        <Button x:Name="AddSubPanel"
+                Click="AddSubPanel_Click">
+            Add AttachedAncestorPropertyHelper SubPanel1
+        </Button>
+        <Button x:Name="RemoveSubPanel"
+                Click="RemoveSubPanel_Click">
+            Remove AttachedAncestorPropertyHelper SubPanel1
+        </Button>
+
+        <Border Uid="Border"
+                a:AttachedAncestorPropertyString.Setter="Border"
+                BorderBrush="Pink"
+                BorderThickness="2">
+            <StackPanel x:Name="Panel"
+                        AutomationProperties.AutomationId="BorderA">
+                <StackPanel x:Name="SubPanel1">
+                    <Label>Content 1</Label>
+                    <ContentControl x:Name="ContentControl1">
+                        <controls:AttachedBindableTextUserControl />
+                    </ContentControl>
+                </StackPanel>
+                <StackPanel x:Name="SubPanel2">
+                    <Label>Content 2</Label>
+                    <ContentControl x:Name="ContentControl2">
+                        <controls:AttachedBindableTextUserControl />
+                    </ContentControl>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</UserControl>

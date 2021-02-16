@@ -17,13 +17,13 @@ namespace Anori.WPF.AttachedAncestorProperties
     internal abstract class AncestorPropertySetterBase : INotifyPropertyChanged
     {
         /// <summary>
-        ///     The ancestor object
+        /// The ancestor object
         /// </summary>
         [CanBeNull]
         private DependencyObject ancestor;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="AncestorPropertySetterBase" /> class.
+        /// Initializes a new instance of the <see cref="AncestorPropertySetterBase"/> class.
         /// </summary>
         /// <param name="dependencyObject">The dependency object.</param>
         /// <param name="setterProperty">The setter property.</param>
@@ -37,22 +37,22 @@ namespace Anori.WPF.AttachedAncestorProperties
         }
 
         /// <summary>
-        ///     Occurs when [value changed].
+        /// Occurs when [value changed].
         /// </summary>
         public event Action<DependencyObject> AncestorChanged;
 
         /// <summary>
-        ///     Occurs when a property value changes.
+        /// Occurs when a property value changes.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        ///     Occurs when [value changed].
+        /// Occurs when [value changed].
         /// </summary>
         public event Action<object> ValueChanged;
 
         /// <summary>
-        ///     Gets or sets the ancestor object.
+        /// Gets or sets the ancestor object.
         /// </summary>
         /// <value>The ancestor object.</value>
         public DependencyObject Ancestor
@@ -72,22 +72,22 @@ namespace Anori.WPF.AttachedAncestorProperties
         }
 
         /// <summary>
-        ///     Gets the dependency object.
+        /// Gets the dependency object.
         /// </summary>
         /// <value>The dependency object.</value>
         public DependencyObject DependencyObject { get; }
 
         /// <summary>
-        ///     The setter property
+        /// The setter property
         /// </summary>
         [NotNull]
         protected DependencyProperty SetterProperty { get; }
 
         /// <summary>
-        ///     Called when [ancestor changed].
+        /// Called when [ancestor changed].
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void OnAncestorChanged(object sender, EventArgs e)
         {
             Debug.WriteLine(
@@ -98,7 +98,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         }
 
         /// <summary>
-        ///     Called when [ancestor changed].
+        /// Called when [ancestor changed].
         /// </summary>
         /// <param name="ancestor">The ancestor.</param>
         protected virtual void OnAncestorChanged(DependencyObject ancestor)
@@ -111,10 +111,10 @@ namespace Anori.WPF.AttachedAncestorProperties
         }
 
         /// <summary>
-        ///     Called when [loaded].
+        /// Called when [loaded].
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         protected void OnLoaded(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("On Loaded DependencyObject {0}", (object)((FrameworkElement)this.DependencyObject)?.Name);
@@ -127,7 +127,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         }
 
         /// <summary>
-        ///     Called when [property changed].
+        /// Called when [property changed].
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         [NotifyPropertyChangedInvocator]
@@ -137,10 +137,10 @@ namespace Anori.WPF.AttachedAncestorProperties
         }
 
         /// <summary>
-        ///     Called when [unloaded].
+        /// Called when [unloaded].
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         protected void OnUnloaded(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine(
@@ -155,10 +155,10 @@ namespace Anori.WPF.AttachedAncestorProperties
         }
 
         /// <summary>
-        ///     Hosts the on unsubscribe.
+        /// Hosts the on unsubscribe.
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void OnUnsubscribe(object sender, EventArgs e)
         {
             ((EndPointUpdater)sender).Unsubscribe -= this.OnUnsubscribe;
@@ -167,7 +167,7 @@ namespace Anori.WPF.AttachedAncestorProperties
         }
 
         /// <summary>
-        ///     Called when [value changed].
+        /// Called when [value changed].
         /// </summary>
         /// <param name="value">The value.</param>
         protected virtual void OnValueChanged(object value)
@@ -179,8 +179,19 @@ namespace Anori.WPF.AttachedAncestorProperties
             this.Ancestor?.SetValue(this.SetterProperty, value);
             this.ValueChanged?.Invoke(value);
         }
+
         /// <summary>
-        ///     Updates the ancestor.
+        /// Subscribes the value changed.
+        /// </summary>
+        protected abstract void SubscribeValueChanged();
+
+        /// <summary>
+        /// Unsubscribes the value changed.
+        /// </summary>
+        protected abstract void UnsubscribeValueChanged();
+
+        /// <summary>
+        /// Updates the ancestor.
         /// </summary>
         protected virtual bool UpdateAncestorProperty()
         {
@@ -232,17 +243,13 @@ namespace Anori.WPF.AttachedAncestorProperties
             return true;
         }
 
-        protected abstract void SubscribeValueChanged();
-
-        protected abstract void UnsubscribeValueChanged();
-
         /// <summary>
-        ///     Updates the target.
+        /// Updates the target.
         /// </summary>
         protected abstract void UpdateTarget(object sender);
 
         /// <summary>
-        ///     Updates the value.
+        /// Updates the value.
         /// </summary>
         protected abstract void UpdateValue();
     }

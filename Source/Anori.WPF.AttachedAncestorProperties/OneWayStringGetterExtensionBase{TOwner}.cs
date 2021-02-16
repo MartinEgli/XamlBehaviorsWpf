@@ -7,9 +7,17 @@
 namespace Anori.WPF.AttachedAncestorProperties
 {
     public abstract class OneWayStringGetterExtensionBase<TOwner> : OneWayGetterExtensionBase<TOwner, string>
-        where TOwner : AncestorStringPropertyBase<TOwner>
+        where TOwner : AncestorPropertyStringBase<TOwner>
 
     {
         
+    }
+
+
+    public abstract class OneWayBooleanGetterExtensionBase<TOwner> : OneWayGetterExtensionBase<TOwner, bool>
+        where TOwner : AncestorPropertyBooleanBase<TOwner>
+
+    {
+
     }
 }

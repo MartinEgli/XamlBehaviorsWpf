@@ -10,10 +10,10 @@
     <StackPanel>
         <TextBlock>Entry Point</TextBlock>
         <StackPanel x:Name="StackPanel"
-                    singleSetter:AttachedAncestorPropertyTextA.Setter="Attached Text">
+                    singleSetter:AncestorPropertyTextA.Setter="Attached Text">
             <TextBlock>End Point</TextBlock>
             <TextBox x:Name="TextBox1"
-                     Text="{singleSetter:AttachedTextAGetterExtension}" />
+                     Text="{singleSetter:OneWayTextAGetter}" />
         </StackPanel>
     </StackPanel>
 </UserControl>

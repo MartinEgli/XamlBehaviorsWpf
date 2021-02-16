@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:attachedAncestorProperties="clr-namespace:Anori.WPF.AttachedAncestorProperties;assembly=Anori.WPF.AttachedAncestorProperties"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:itemsControl="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.ItemsControl"
+             xmlns:itemsControl="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleFatSetter.ItemsControl"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:singleSetter="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter"
              d:DesignHeight="450"
              d:DesignWidth="800"
              mc:Ignorable="d">
@@ -17,7 +18,7 @@
                                 Mode=TwoWay,
                                 UpdateSourceTrigger=PropertyChanged}" />
         <StackPanel x:Name="StackPanel"
-                    attachedAncestorProperties:AttachedAncestorPropertyString.Setter="{Binding Path=Text,
+                    singleSetter:AncestorPropertyTextA.Setter="{Binding Path=Text,
                                                                                                Mode=TwoWay,
                                                                                                UpdateSourceTrigger=PropertyChanged}">
             <StackPanel.Resources>

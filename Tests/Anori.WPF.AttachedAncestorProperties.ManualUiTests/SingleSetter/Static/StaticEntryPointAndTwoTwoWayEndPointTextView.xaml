@@ -10,13 +10,13 @@
     <StackPanel>
         <!--<TextBlock>Entry Point</TextBlock>-->
         <StackPanel x:Name="StackPanel"
-                    singleSetter:AttachedAncestorPropertyTextA.Setter="Attached Text">
+                    singleSetter:AncestorPropertyTextA.Setter="Attached Text">
             <TextBlock>End Point 1</TextBlock>
             <TextBox x:Name="EndPoint1"
-                     Text="{singleSetter:AttachedBindingTextAGetterExtension UpdateSourceTrigger=PropertyChanged}" />
+                     Text="{singleSetter:TwoWayTextAGetter UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock>End Point 2</TextBlock>
             <TextBox x:Name="EndPoint2"
-                     Text="{singleSetter:AttachedBindingTextAGetterExtension UpdateSourceTrigger=PropertyChanged}" />
+                     Text="{singleSetter:TwoWayTextAGetter UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
     </StackPanel>
 </UserControl>

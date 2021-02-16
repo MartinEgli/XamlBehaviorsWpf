@@ -122,7 +122,7 @@ namespace Anori.WPF.AttachedAncestorProperties.AutomatedUiTests
         [SetUp]
         public void TestInitialize() =>
             SetContent(
-                () => new BoundEntryPointAndOneWayEndPointTextMVVMView
+                () => new BoundEntryPointAndOneWayEndPointTextMvvmView
                           {
                               DataContext = new SimpleAttachedTextBindingViewModel()
                           });

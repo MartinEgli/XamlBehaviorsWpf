@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:guiTest="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:static="clr-namespace:Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Static"
         Title="DynamicEndPointTextBindingWindow"
         Width="800"
         Height="450"
         mc:Ignorable="d">
-    <guiTest:StaticEntryPointAndTwoWayEndPointTextView />
+    <static:StaticEntryPointAndTwoWayEndPointTextView />
 </Window>

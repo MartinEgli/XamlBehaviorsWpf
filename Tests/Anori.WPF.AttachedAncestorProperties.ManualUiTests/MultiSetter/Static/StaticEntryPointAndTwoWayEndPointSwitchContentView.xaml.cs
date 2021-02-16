@@ -21,7 +21,7 @@ using System.Windows.Shapes;
 
 namespace Anori.WPF.AttachedAncestorProperties.ManualUiTests.MultiSetter
 {
-    using Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleSetter.Controls;
+    using Anori.WPF.AttachedAncestorProperties.ManualUiTests.SingleFatSetter.Controls;
 
     /// <summary>
     ///     Interaction logic for UserControl1.xaml
